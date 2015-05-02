@@ -1,0 +1,2 @@
+StaminaBar = 0 129 128 64
+Testicon = 0 0 128 128
