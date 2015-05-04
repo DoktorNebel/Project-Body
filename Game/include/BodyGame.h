@@ -2,6 +2,7 @@
 
 #include "IGame.h"
 #include "Camera.h"
+#include "Level.h"
 
 namespace bg
 {
@@ -9,9 +10,7 @@ namespace bg
 	{
 	private:
 
-		std::vector<se::Sprite> sprite;
-		se::Camera camera;
-		bool pressed;
+        bc::Level level;
 
 	public:
 

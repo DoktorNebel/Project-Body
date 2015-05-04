@@ -26,8 +26,5 @@
     <ClInclude Include="include\BodyGame.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="include\InputActions.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

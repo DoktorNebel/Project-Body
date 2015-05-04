@@ -13,6 +13,7 @@ namespace se
 
     public:
 
+        Rectangle();
         Rectangle(float top, float bottom, float left, float right);
         ~Rectangle();
 

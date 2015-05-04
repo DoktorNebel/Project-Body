@@ -75,7 +75,7 @@ namespace se
             while (fscanf(map, "%s = %d %d %d %d", name, &xPos, &yPos, &width, &height) != EOF)
             {
                 Rectangle rect(yPos, yPos + height, xPos, xPos + width);
-                Sprite sprite(ids[i], rect, Vector2(xPos, yPos), width, height);
+                Sprite sprite(ids[i], rect, Vector2(0, 0), width, height);
 
                 Content::spriteNames.push_back(name);
                 Content::sprites.push_back(sprite);

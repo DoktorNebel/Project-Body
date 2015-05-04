@@ -3,6 +3,16 @@
 
 namespace se
 {
+    Rectangle::Rectangle()
+        : top(0)
+        , bottom(0)
+        , left(0)
+        , right(0)
+    {
+
+    }
+
+
     Rectangle::Rectangle(float top, float bottom, float left, float right)
         : top(top)
         , bottom(bottom)

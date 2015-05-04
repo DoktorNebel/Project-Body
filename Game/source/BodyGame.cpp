@@ -20,47 +20,26 @@ namespace bg
 
 
 	void BodyGame::initialize()
-	{
-		this->engine->setActiveCamera(this->camera);
+    {
+        this->level.initialize("", this->engine);
 
-		for (int i = 0; i < 1000; ++i)
-		{
-			std::string spriteName = rand() % 2 ? "StaminaBar" : "Testicon";
-			this->sprite.push_back(se::Content::getSprite(spriteName));
-			this->sprite[i].setPosition(se::Vector2(rand() % 801 - 400, rand() % 601 - 300));
-			this->sprite[i].setRotation((float)(rand() & 360));
-			this->sprite[i].setDepth((spriteName == "StaminaBar") * -1.0f);
-			this->sprite[i].setScale(se::Vector2(0.2f, 0.2f));
-		}
-
-		se::Input::bindKeyboardKeyAction(InputActions::Screenshake, sf::Keyboard::Space);
+        se::Input::bindKeyboardKeyAction(InputActions::Left, sf::Keyboard::Left);
+        se::Input::bindKeyboardKeyAction(InputActions::Right, sf::Keyboard::Right);
+        se::Input::bindKeyboardKeyAction(InputActions::Up, sf::Keyboard::Up);
+        se::Input::bindKeyboardKeyAction(InputActions::Down, sf::Keyboard::Down);
+        se::Input::bindKeyboardKeyAction(InputActions::Shoot, sf::Keyboard::E);
 	}
 
 
 	void BodyGame::update(float elapsedTime)
 	{
-		if (se::Input::actionPressed(InputActions::Screenshake))
-		{
-			this->camera.addScreenshake(5, 0.3f);
-			this->pressed = true;
-		}
-
-		this->camera.update(elapsedTime);
-
-		for (int i = 0; i < this->sprite.size(); ++i)
-		{
-			this->sprite[i].move(se::Vector2((rand() % 11) - 5, (rand() % 11) - 5) * se::Vector2(elapsedTime * 10.0f, elapsedTime * 10.0f));
-			this->sprite[i].rotate((rand() % 11) * elapsedTime);
-		}
+        this->level.update(elapsedTime);
 	}
 
 
 	void BodyGame::draw()
 	{
-		for (int i = 0; i < this->sprite.size(); ++i)
-		{
-			engine->draw(this->sprite[i]);
-		}
+        this->level.draw();
 	}
 
 
