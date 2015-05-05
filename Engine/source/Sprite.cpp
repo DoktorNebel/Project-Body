@@ -48,14 +48,8 @@ namespace se
         Matrix translation = Math::TranslationMatrix(this->position.x, this->position.y, this->depth);
         Matrix rotation = Math::RotationMatrixZ(this->rotation);
         Matrix scale = Math::ScalingMatrix(this->size.x * this->width, this->size.y * this->height, 1.0f);
-        //Matrix scale = Math::ScalingMatrix(this->size.x, this->size.y, 1.0f);
-
-        //Matrix result = Math::TranslationMatrix(this->position.x, this->position.y, this->depth);
-        //result *= Math::RotationMatrixZ(this->rotation);
-        //result *= Math::ScalingMatrix(this->size.x * this->width, this->size.y * this->height, 1.0f);
 
         return translation * rotation * scale;
-        //return Math::IdentityMatrix();
     }
 
 
@@ -81,16 +75,16 @@ namespace se
     {
         Vector2 newVerts[4];
 
-        Vector2 pos = this->position;
+        Vector2 pos = this->position + Vector2(-this->width / 2 * this->size.x, -this->height / 2 * this->size.y);
         newVerts[0] = Vector2(pos.x * cos(this->rotation) - pos.y * sin(this->rotation), pos.x * sin(this->rotation) + pos.y * cos(this->rotation));
 
-        pos = this->position + Vector2(this->textureRect.right - this->textureRect.left, 0);
+        pos = this->position + Vector2(-this->width / 2 * this->size.x, this->height / 2 * this->size.y);
         newVerts[1] = Vector2(pos.x * cos(this->rotation) - pos.y * sin(this->rotation), pos.x * sin(this->rotation) + pos.y * cos(this->rotation));
 
-        pos = this->position + Vector2(0, this->textureRect.bottom - this->textureRect.top);
+        pos = this->position + Vector2(this->width / 2 * this->size.x, this->height / 2 * this->size.y);
         newVerts[2] = Vector2(pos.x * cos(this->rotation) - pos.y * sin(this->rotation), pos.x * sin(this->rotation) + pos.y * cos(this->rotation));
 
-        pos = this->position + Vector2(this->textureRect.right - this->textureRect.left, this->textureRect.bottom - this->textureRect.top);
+        pos = this->position + Vector2(this->width / 2 * this->size.x, -this->height / 2 * this->size.y);
         newVerts[3] = Vector2(pos.x * cos(this->rotation) - pos.y * sin(this->rotation), pos.x * sin(this->rotation) + pos.y * cos(this->rotation));
 
         float minX = newVerts[0].x;

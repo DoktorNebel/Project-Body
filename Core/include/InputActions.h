@@ -2,7 +2,7 @@
 
 namespace bg
 {
-	struct InputActions
+	struct InputAction
 	{
 		enum Type
 		{

@@ -1,5 +1,9 @@
 #include "Level.h"
 
+#include "Spawner.h"
+#include "Content.h"
+#include "PlayerModifier.h"
+
 namespace bc
 {
     Level::Level()
@@ -18,18 +22,22 @@ namespace bc
     {
         this->engine = engine;
 
-        this->collisionConfigs.push_back(std::pair<Index::Type, Index::Type>(Index::Players, Index::EnemyProjectiles));
-        this->collisionConfigs.push_back(std::pair<Index::Type, Index::Type>(Index::Players, Index::Enemies));
-        this->collisionConfigs.push_back(std::pair<Index::Type, Index::Type>(Index::Players, Index::Items));
-        this->collisionConfigs.push_back(std::pair<Index::Type, Index::Type>(Index::Players, Index::LevelElements));
-        this->collisionConfigs.push_back(std::pair<Index::Type, Index::Type>(Index::Enemies, Index::PlayerProjectiles));
-
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::EnemyProjectiles));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::Enemies));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::Items));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::LevelElements));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Enemies, CollisionGroup::PlayerProjectiles));
+        
         this->engine->setActiveCamera(this->camera);
 
         this->entities.resize(6);
-        this->entities[Index::Players].push_back(new Player());
-        this->hitboxes.resize(this->entities.size());
-        this->hitboxes[Index::Players].resize(1);
+        this->hitboxes.resize(6);
+
+        Spawner::initialize(&this->hitboxes, &this->entities);
+
+        std::vector<IModifier*> modifiers;
+        modifiers.push_back(new PlayerModifier());
+        Spawner::spawn(se::Vector2(0, -200), Entity(se::Content::getSprite("StaminaBar"), modifiers), CollisionGroup::Players);
     }
 
 
@@ -39,8 +47,8 @@ namespace bc
         {
             for (int j = 0; j < this->entities[i].size(); ++j)
             {
-                this->entities[i][j]->update(elapsedTime);
-                this->hitboxes[i][j] = this->entities[i][j]->getHitbox();
+                this->entities[i][j].update(elapsedTime);
+                this->hitboxes[i][j] = this->entities[i][j].getHitbox();
             }
         }
 
@@ -54,53 +62,14 @@ namespace bc
                 {
                     if (this->hitboxes[this->collisionConfigs[i].first][j].overlap(this->hitboxes[this->collisionConfigs[i].second][k]))
                     {
-                        switch (this->collisionConfigs[i].second)
-                        {
-                        case Index::Enemies:
-                            this->entities[this->collisionConfigs[i].first][j]->hit((Enemy*)this->entities[this->collisionConfigs[i].second][k]);
-                            break;
-                        case Index::EnemyProjectiles:
-                            this->entities[this->collisionConfigs[i].first][j]->hit((Projectile*)this->entities[this->collisionConfigs[i].second][k]);
-                            break;
-                        case Index::PlayerProjectiles:
-                            this->entities[this->collisionConfigs[i].first][j]->hit((Projectile*)this->entities[this->collisionConfigs[i].second][k]);
-                            break;
-                        case Index::Items:
-                            this->entities[this->collisionConfigs[i].first][j]->hit((Item*)this->entities[this->collisionConfigs[i].second][k]);
-                            break;
-                        case Index::LevelElements:
-                            this->entities[this->collisionConfigs[i].first][j]->hit((LevelElement*)this->entities[this->collisionConfigs[i].second][k]);
-                            break;
-                        case Index::Players:
-                            this->entities[this->collisionConfigs[i].first][j]->hit((Player*)this->entities[this->collisionConfigs[i].second][k]);
-                            break;
-                        }
-
-                        switch (this->collisionConfigs[i].first)
-                        {
-                        case Index::Players:
-                            this->entities[this->collisionConfigs[i].second][k]->hit((Player*)this->entities[this->collisionConfigs[i].first][j]);
-                            break;
-                        case Index::Enemies:
-                            this->entities[this->collisionConfigs[i].second][k]->hit((Enemy*)this->entities[this->collisionConfigs[i].first][j]);
-                            break;
-                        case Index::EnemyProjectiles:
-                            this->entities[this->collisionConfigs[i].second][k]->hit((Projectile*)this->entities[this->collisionConfigs[i].first][j]);
-                            break;
-                        case Index::PlayerProjectiles:
-                            this->entities[this->collisionConfigs[i].second][k]->hit((Projectile*)this->entities[this->collisionConfigs[i].first][j]);
-                            break;
-                        case Index::Items:
-                            this->entities[this->collisionConfigs[i].second][k]->hit((Item*)this->entities[this->collisionConfigs[i].first][j]);
-                            break;
-                        case Index::LevelElements:
-                            this->entities[this->collisionConfigs[i].second][k]->hit((LevelElement*)this->entities[this->collisionConfigs[i].first][j]);
-                            break;
-                        }
+                        this->entities[this->collisionConfigs[i].first][j].hit(&this->entities[this->collisionConfigs[i].second][k]);
+                        this->entities[this->collisionConfigs[i].second][k].hit(&this->entities[this->collisionConfigs[i].first][j]);
                     }
                 }
             }
         }
+
+        Spawner::update(elapsedTime);
     }
 
 
@@ -110,7 +79,7 @@ namespace bc
         {
             for (int j = 0; j < this->entities[i].size(); ++j)
             {
-                this->engine->draw(this->entities[i][j]->getSprite());
+                this->engine->draw(this->entities[i][j].getSprite());
             }
         }
     }

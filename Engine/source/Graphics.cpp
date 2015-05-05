@@ -186,20 +186,23 @@ namespace se
 
             for (int i = 0; i < this->textureIds.size(); ++i)
             {
-                glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, this->textureIds[i]);
+                if (this->matrices[i].size() > 0)
+                {
+                    glActiveTexture(GL_TEXTURE0);
+                    glBindTexture(GL_TEXTURE_2D, this->textureIds[i]);
 
-                glBindBuffer(GL_ARRAY_BUFFER, this->matricesBuffer);
-                glBufferData(GL_ARRAY_BUFFER, this->matrices[i].size() * sizeof(Matrix), &this->matrices[i][0], GL_DYNAMIC_DRAW);
+                    glBindBuffer(GL_ARRAY_BUFFER, this->matricesBuffer);
+                    glBufferData(GL_ARRAY_BUFFER, this->matrices[i].size() * sizeof(Matrix), &this->matrices[i][0], GL_DYNAMIC_DRAW);
 
-                glBindBuffer(GL_ARRAY_BUFFER, this->uvBuffer);
-                glBufferData(GL_ARRAY_BUFFER, this->uvs[i].size() * sizeof(Vector2), &this->uvs[i][0], GL_DYNAMIC_DRAW);
+                    glBindBuffer(GL_ARRAY_BUFFER, this->uvBuffer);
+                    glBufferData(GL_ARRAY_BUFFER, this->uvs[i].size() * sizeof(Vector2), &this->uvs[i][0], GL_DYNAMIC_DRAW);
 
 
-                glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, 0, this->matrices[i].size());
+                    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, 0, this->matrices[i].size());
 
-                this->matrices[i].clear();
-                this->uvs[i].clear();
+                    this->matrices[i].clear();
+                    this->uvs[i].clear();
+                }
             }
 
             glBindVertexArray(0);

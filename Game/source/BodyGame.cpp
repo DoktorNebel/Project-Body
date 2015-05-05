@@ -23,11 +23,11 @@ namespace bg
     {
         this->level.initialize("", this->engine);
 
-        se::Input::bindKeyboardKeyAction(InputActions::Left, sf::Keyboard::Left);
-        se::Input::bindKeyboardKeyAction(InputActions::Right, sf::Keyboard::Right);
-        se::Input::bindKeyboardKeyAction(InputActions::Up, sf::Keyboard::Up);
-        se::Input::bindKeyboardKeyAction(InputActions::Down, sf::Keyboard::Down);
-        se::Input::bindKeyboardKeyAction(InputActions::Shoot, sf::Keyboard::E);
+        se::Input::bindKeyboardKeyAction(InputAction::Left, sf::Keyboard::Left);
+        se::Input::bindKeyboardKeyAction(InputAction::Right, sf::Keyboard::Right);
+        se::Input::bindKeyboardKeyAction(InputAction::Up, sf::Keyboard::Up);
+        se::Input::bindKeyboardKeyAction(InputAction::Down, sf::Keyboard::Down);
+        se::Input::bindKeyboardKeyAction(InputAction::Shoot, sf::Keyboard::E);
 	}
 
 
