@@ -17,26 +17,23 @@ namespace se
     {
     private:
 
-        bool running;
-        IGame& game;
-        sf::Window window;
-        Graphics graphics;
-        std::chrono::system_clock::time_point lastUpdate;
-        Camera* camera;
-		EngineSettings settings;
+        static bool running;
+        static IGame* game;
+        static sf::Window* window;
+        static Graphics graphics;
+        static std::chrono::system_clock::time_point lastUpdate;
+        static Camera* camera;
+		static EngineSettings settings;
 
     public:
 
-        Engine(IGame& game, EngineSettings settings);
-        ~Engine();
-
-    public:
-
-		EngineSettings& getSettings();
-		void reloadSettings();
-        void setActiveCamera(Camera& camera);
-        void run();
-        void draw(Sprite& sprite);
+        static void initialize(IGame* game, EngineSettings settings);
+		static EngineSettings& getSettings();
+        static void reloadSettings();
+        static Camera& getActiveCamera();
+        static void setActiveCamera(Camera& camera);
+        static void run();
+        static void draw(Sprite& sprite);
     };
 }
 

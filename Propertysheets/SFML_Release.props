@@ -6,7 +6,7 @@
   <ItemDefinitionGroup>
     <Link>
       <AdditionalDependencies>winmm.lib;sfml-system-s.lib;sfml-window-s.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)external\lib\SFML;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\lib\SFML\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)external\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

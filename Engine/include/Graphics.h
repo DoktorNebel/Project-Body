@@ -32,6 +32,7 @@ namespace se
 
     public:
 
+        Graphics();
         Graphics(EngineSettings& settings);
         ~Graphics();
 

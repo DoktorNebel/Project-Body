@@ -1,0 +1,5 @@
+Funke1 = 75 0 8 8
+Funke2 = 75 9 8 8
+PlayerProjectile = 65 0 9 34
+TestPlayer = 0 0 64 64
+Virus1 = 0 65 32 32

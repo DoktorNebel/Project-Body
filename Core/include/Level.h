@@ -17,8 +17,8 @@ namespace bc
         std::vector<std::vector<se::Rectangle>> hitboxes;
         std::vector<std::vector<bc::Entity>> entities;
         std::vector<std::pair<CollisionGroup::Type, CollisionGroup::Type>> collisionConfigs;
-        se::Engine* engine;
         se::Camera camera;
+        float spawn;
 
     public:
 
@@ -27,7 +27,7 @@ namespace bc
 
     public:
 
-        void initialize(std::string source, se::Engine* engine);
+        void initialize(std::string source);
         void update(float elapsedTime);
         void draw();
     };

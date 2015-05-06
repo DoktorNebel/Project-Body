@@ -11,7 +11,8 @@ namespace bc
             PlayerProjectiles,
             EnemyProjectiles,
             Items,
-            LevelElements
+            LevelElements,
+            Particles
         };
     };
 }

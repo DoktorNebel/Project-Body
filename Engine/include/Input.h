@@ -54,7 +54,7 @@ namespace se
 		static bool actionPressed(int action);
 		static bool actionReleased(int action);
 		static float getActionValue(int action);
-		static void setWindow(sf::Window& window);
+		static void setWindow(sf::Window* window);
 		static void update();
 	};
 }

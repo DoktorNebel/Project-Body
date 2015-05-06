@@ -60,17 +60,21 @@ namespace bc
     }
 
 
-    void Entity::hit(Entity* otherEntity)
+    void Entity::hit(Entity* otherEntity, CollisionGroup::Type collisionGroup)
     {
         for (int i = 0; i < this->modifiers.size(); ++i)
         {
-            this->modifiers[i]->onHit(otherEntity);
+            this->modifiers[i]->onHit(otherEntity, collisionGroup);
         }
     }
 
 
     void Entity::update(float elapsedTime)
     {
+        for (int i = 0; i < this->modifiers.size(); ++i)
+        {
+            this->modifiers[i]->entity = this;
+        }
         for (int i = 0; i < this->modifiers.size(); ++i)
         {
             this->modifiers[i]->onUpdate(elapsedTime);

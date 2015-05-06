@@ -125,9 +125,9 @@ namespace se
 	}
 
 
-	void Input::setWindow(sf::Window& window)
+	void Input::setWindow(sf::Window* window)
 	{
-		Input::window = &window;
+		Input::window = window;
 	}
 
 

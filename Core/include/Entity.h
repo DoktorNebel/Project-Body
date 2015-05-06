@@ -4,6 +4,7 @@
 #include "Sprite.h"
 #include <vector>
 #include "IModifier.h"
+#include "Collisiongroup.h"
 
 namespace bc
 {
@@ -28,7 +29,7 @@ namespace bc
         se::Rectangle getHitbox();
         se::Sprite& getSprite();
         bool isDead();
-        void hit(Entity* otherEntity);
+        void hit(Entity* otherEntity, CollisionGroup::Type collisionGroup);
         void update(float elapsedTime);
     };
 }

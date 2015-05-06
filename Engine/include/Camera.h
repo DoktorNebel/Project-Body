@@ -10,7 +10,7 @@ namespace se
 
         Vector2 position;
         float zoomFactor;
-		int screenshake;
+		float screenshake;
 		float screenshakeDuration;
 		float initialScreenshakeDuration;
 
@@ -28,6 +28,6 @@ namespace se
         void zoom(float factor);
         void setZoom(float zoom);
 		void update(float elapsedTime);
-		void addScreenshake(int strength, float duration);
+		void addScreenshake(float strength, float duration);
     };
 }

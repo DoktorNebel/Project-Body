@@ -8,9 +8,9 @@ int main()
 	settings.fullscreen = false;
 	settings.resolutionWidth = 1280;
 	settings.resolutionHeight = 720;
-    se::Engine engine(game, settings);
+    se::Engine::initialize(&game, settings);
 
-    engine.run();
+    se::Engine::run();
 
     return 0;
 }

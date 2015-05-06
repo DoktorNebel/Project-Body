@@ -75,17 +75,19 @@ namespace se
     {
         Vector2 newVerts[4];
 
+        float radRot = this->rotation * 0.0174532925f;
+
         Vector2 pos = this->position + Vector2(-this->width / 2 * this->size.x, -this->height / 2 * this->size.y);
-        newVerts[0] = Vector2(pos.x * cos(this->rotation) - pos.y * sin(this->rotation), pos.x * sin(this->rotation) + pos.y * cos(this->rotation));
+        newVerts[0] = Vector2(pos.x * cos(radRot) - pos.y * sin(radRot), pos.x * sin(radRot) + pos.y * cos(radRot));
 
         pos = this->position + Vector2(-this->width / 2 * this->size.x, this->height / 2 * this->size.y);
-        newVerts[1] = Vector2(pos.x * cos(this->rotation) - pos.y * sin(this->rotation), pos.x * sin(this->rotation) + pos.y * cos(this->rotation));
+        newVerts[1] = Vector2(pos.x * cos(radRot) - pos.y * sin(radRot), pos.x * sin(radRot) + pos.y * cos(radRot));
 
         pos = this->position + Vector2(this->width / 2 * this->size.x, this->height / 2 * this->size.y);
-        newVerts[2] = Vector2(pos.x * cos(this->rotation) - pos.y * sin(this->rotation), pos.x * sin(this->rotation) + pos.y * cos(this->rotation));
+        newVerts[2] = Vector2(pos.x * cos(radRot) - pos.y * sin(radRot), pos.x * sin(radRot) + pos.y * cos(radRot));
 
         pos = this->position + Vector2(this->width / 2 * this->size.x, -this->height / 2 * this->size.y);
-        newVerts[3] = Vector2(pos.x * cos(this->rotation) - pos.y * sin(this->rotation), pos.x * sin(this->rotation) + pos.y * cos(this->rotation));
+        newVerts[3] = Vector2(pos.x * cos(radRot) - pos.y * sin(radRot), pos.x * sin(radRot) + pos.y * cos(radRot));
 
         float minX = newVerts[0].x;
         float maxX = newVerts[0].x;

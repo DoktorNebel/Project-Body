@@ -16,6 +16,6 @@ namespace bc
 
         virtual void onCreate();
         virtual void onUpdate(float elapsedTime);
-        virtual void onHit(Entity* otherEntity);
+        virtual void onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup);
     };
 }

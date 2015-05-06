@@ -8,10 +8,6 @@ namespace se
     {
     public:
 
-        Engine* engine;
-
-    public:
-
         virtual void initialize() = 0;
         virtual void update(float elapsedTime) = 0;
         virtual void draw() = 0;

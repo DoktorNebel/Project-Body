@@ -5,6 +5,19 @@
 
 namespace se
 {
+    Graphics::Graphics()
+        : vao(0)
+        , vertexBuffer(0)
+        , indexBuffer(0)
+        , matricesBuffer(0)
+        , uvBuffer(0)
+        , renderWidth(0)
+        , renderHeight(0)
+    {
+
+    }
+
+
 	Graphics::Graphics(EngineSettings& settings)
         : vao(0)
         , vertexBuffer(0)
