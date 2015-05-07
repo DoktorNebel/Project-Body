@@ -34,7 +34,7 @@ namespace bc
         this->entity->getSprite().setScale(se::Vector2(2, 2) * this->lifeTime / this->startLifeTime);
         this->lifeTime -= elapsedTime;
         if (this->lifeTime <= 0.0f)
-            this->entity->health = 0.0f;
+            this->entity->dead = true;
     }
 
 

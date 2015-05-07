@@ -14,6 +14,7 @@ namespace bc
 
         float maxHealth;
         float health;
+        bool dead;
         se::Sprite sprite;
         std::vector<IModifier*> modifiers;
 
@@ -28,7 +29,6 @@ namespace bc
 
         se::Rectangle getHitbox();
         se::Sprite& getSprite();
-        bool isDead();
         void hit(Entity* otherEntity, CollisionGroup::Type collisionGroup);
         void update(float elapsedTime);
     };

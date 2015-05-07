@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\include\AnimatedSprite.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Content.h" />
     <ClInclude Include="include\EngineSettings.h" />
@@ -27,6 +28,7 @@
     <ClInclude Include="include\Vector4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\AnimatedSprite.cpp" />
     <ClCompile Include="source\Camera.cpp" />
     <ClCompile Include="source\Content.cpp" />
     <ClCompile Include="source\Engine.cpp" />

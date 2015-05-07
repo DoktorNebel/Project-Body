@@ -21,7 +21,6 @@ namespace bc
 
     void Level::initialize(std::string source)
     {
-
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::EnemyProjectiles));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::Enemies));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::Items));
@@ -40,6 +39,65 @@ namespace bc
         Spawner::spawn(se::Vector2(0, -200), Entity(se::Content::getSprite("TestPlayer"), modifiers), CollisionGroup::Players);
 
         this->spawn = 0.1f;
+
+        this->totalElapsedTime = 0.0f;
+        this->currentScrollKey = 0;
+
+        ScrollKey key;
+        key.time = 0.0f;
+        key.speed = 0.0f;
+        this->scrollSpeeds.push_back(key);
+        key.time = 5.0f;
+        key.speed = 300.0f;
+        this->scrollSpeeds.push_back(key);
+        key.time = 10.0f;
+        key.speed = 1000.0f;
+        this->scrollSpeeds.push_back(key);
+        key.time = 15.0f;
+        key.speed = 300.0f;
+        this->scrollSpeeds.push_back(key);
+        key.time = 120.0f;
+        key.speed = 100.0f;
+        this->scrollSpeeds.push_back(key);
+
+        this->backgroundSpeeds.push_back(1.0f);
+        this->backgroundSpeeds.push_back(0.8f);
+        this->backgroundSpeeds.push_back(0.6f);
+        this->backgroundSpeeds.push_back(0.4f);
+
+        this->backgroundSprites.push_back(std::vector<se::Sprite>());
+        this->backgroundSprites.push_back(std::vector<se::Sprite>());
+        this->backgroundSprites.push_back(std::vector<se::Sprite>());
+        this->backgroundSprites.push_back(std::vector<se::Sprite>());
+        for (int i = 0; i < 50; ++i)
+        {
+            this->backgroundSprites[0].push_back(se::Content::getSprite("BG-Tile-1-Links"));
+            this->backgroundSprites[0].back().setScale(se::Vector2(3.0f, 3.0f));
+            this->backgroundSprites[0].back().setPosition(se::Vector2(-this->backgroundSprites[0].back().getWidth() * this->backgroundSprites[0].back().getScale().x, -this->backgroundSprites[0].back().getHeight() / 2 * this->backgroundSprites[0].back().getScale().y + i * 256 * this->backgroundSprites[0].back().getScale().y));
+            this->backgroundSprites[0].back().setDepth(0.5f);
+            this->backgroundSprites[0].push_back(se::Content::getSprite("BG-Tile-1-Rechts"));
+            this->backgroundSprites[0].back() = this->backgroundSprites[0].back();
+            this->backgroundSprites[0].back().setScale(se::Vector2(3.0f, 3.0f));
+            this->backgroundSprites[0].back().setPosition(se::Vector2(this->backgroundSprites[0].back().getWidth() * this->backgroundSprites[0].back().getScale().x, -this->backgroundSprites[0].back().getHeight() / 2 * this->backgroundSprites[0].back().getScale().y + i * 256 * this->backgroundSprites[0].back().getScale().y));
+            this->backgroundSprites[0].back().setDepth(0.5f);
+        }
+        for (int i = 0; i < 25; ++i)
+        {
+            this->backgroundSprites[1].push_back(se::Content::getSprite("BG-Tile-2"));
+            this->backgroundSprites[1].back().setScale(se::Vector2(3.0f, 3.0f));
+            this->backgroundSprites[1].back().setPosition(se::Vector2(0.0f, i * 512 * this->backgroundSprites[1].back().getScale().y));
+            this->backgroundSprites[1].back().setDepth(0.6f);
+
+            this->backgroundSprites[2].push_back(se::Content::getSprite("BG-Tile-3"));
+            this->backgroundSprites[2].back().setScale(se::Vector2(3.0f, 3.0f));
+            this->backgroundSprites[2].back().setPosition(se::Vector2(0.0f, i * 512 * this->backgroundSprites[2].back().getScale().y));
+            this->backgroundSprites[2].back().setDepth(0.7f);
+
+            this->backgroundSprites[3].push_back(se::Content::getSprite("BG-Tile-4"));
+            this->backgroundSprites[3].back().setScale(se::Vector2(3.0f, 3.0f));
+            this->backgroundSprites[3].back().setPosition(se::Vector2(0.0f, i * 511 * this->backgroundSprites[3].back().getScale().y));
+            this->backgroundSprites[3].back().setDepth(0.8f);
+        }
     }
 
 
@@ -49,6 +107,7 @@ namespace bc
         std::vector<Entity>::iterator entEnd;
         std::vector<se::Rectangle>::iterator rectIter;
 
+        //updating
         for (int i = 0; i < this->entities.size(); ++i)
         {
             entIter = this->entities[i].begin();
@@ -57,7 +116,7 @@ namespace bc
             while (entIter != entEnd)
             {
                 entIter->update(elapsedTime);
-                if (entIter->isDead())
+                if (entIter->dead)
                 {
                     entIter = this->entities[i].erase(entIter);
                     entEnd = this->entities[i].end();
@@ -88,16 +147,52 @@ namespace bc
             }
         }
 
+        //spawning
         this->spawn -= elapsedTime;
         if (this->spawn <= 0.0f)
         {
             this->spawn = 0.1f;
             std::vector<IModifier*> modifiers;
-            modifiers.push_back(new EnemyModifier());
+            se::AnimatedSprite sprite;
+            sprite.addAnimation("Idle");
+            sprite.setSpeed("Idle", 0.3f);
+            sprite.addAnimation("Death");
+            sprite.setSpeed("Death", 0.2f);
+            sprite.addSprite("Idle", se::Content::getSprite("Virus1"));
+            sprite.addSprite("Idle", se::Content::getSprite("Virus2"));
+            sprite.addSprite("Idle", se::Content::getSprite("Virus3"));
+            sprite.addSprite("Idle", se::Content::getSprite("Virus4"));
+            sprite.addSprite("Death", se::Content::getSprite("VirusDie1"));
+            sprite.addSprite("Death", se::Content::getSprite("VirusDie2"));
+            sprite.addSprite("Death", se::Content::getSprite("VirusDie3"));
+            sprite.addSprite("Death", se::Content::getSprite("VirusDie4"));
+            sprite.addSprite("Death", se::Content::getSprite("VirusDie5"));
+            modifiers.push_back(new EnemyModifier(sprite));
             Spawner::spawn(se::Vector2(rand() % 501 - 250, 400), bc::Entity(se::Content::getSprite("Virus1"), modifiers), CollisionGroup::Enemies);
         }
 
         Spawner::update(elapsedTime);
+
+        //background scrolling
+        this->totalElapsedTime += elapsedTime;
+
+        float currentScrollSpeed = 0.0f;
+        if (this->currentScrollKey + 1 < this->scrollSpeeds.size())
+        {
+            float factor = (this->totalElapsedTime - this->scrollSpeeds[this->currentScrollKey].time) / (this->scrollSpeeds[this->currentScrollKey + 1].time - this->scrollSpeeds[this->currentScrollKey].time);
+            currentScrollSpeed = (1 - factor) * this->scrollSpeeds[this->currentScrollKey].speed + factor * this->scrollSpeeds[this->currentScrollKey + 1].speed;
+            
+            if (this->totalElapsedTime > this->scrollSpeeds[this->currentScrollKey + 1].time)
+                ++this->currentScrollKey;
+        }
+
+        for (int i = 0; i < this->backgroundSprites.size(); ++i)
+        {
+            for (int j = 0; j < this->backgroundSprites[i].size(); ++j)
+            {
+                this->backgroundSprites[i][j].move(se::Vector2(0.0f, currentScrollSpeed * -this->backgroundSpeeds[i] * elapsedTime));
+            }
+        }
 
         this->camera.update(elapsedTime);
     }
@@ -105,6 +200,14 @@ namespace bc
 
     void Level::draw()
     {
+        for (int i = 0; i < this->backgroundSprites.size(); ++i)
+        {
+            for (int j = 0; j < this->backgroundSprites[i].size(); ++j)
+            {
+                se::Engine::draw(this->backgroundSprites[i][j]);
+            }
+        }
+
         for (int i = 0; i < this->entities.size(); ++i)
         {
             for (int j = 0; j < this->entities[i].size(); ++j)

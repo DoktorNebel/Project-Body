@@ -14,11 +14,24 @@ namespace bc
     {
     private:
 
+        struct ScrollKey
+        {
+            float time;
+            float speed;
+        };
+
+    private:
+
         std::vector<std::vector<se::Rectangle>> hitboxes;
         std::vector<std::vector<bc::Entity>> entities;
         std::vector<std::pair<CollisionGroup::Type, CollisionGroup::Type>> collisionConfigs;
         se::Camera camera;
         float spawn;
+        float totalElapsedTime;
+        int currentScrollKey;
+        std::vector<ScrollKey> scrollSpeeds;
+        std::vector<float> backgroundSpeeds;
+        std::vector<std::vector<se::Sprite>> backgroundSprites;
 
     public:
 

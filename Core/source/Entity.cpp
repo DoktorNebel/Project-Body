@@ -11,6 +11,7 @@ namespace bc
     Entity::Entity(const Entity& other)
         : health(other.health)
         , maxHealth(other.maxHealth)
+        , dead(other.dead)
         , sprite(other.sprite)
         , modifiers(other.modifiers)
     {
@@ -25,6 +26,7 @@ namespace bc
     Entity::Entity(se::Sprite sprite, std::vector<IModifier*> modifiers)
         : health(100.0f)
         , maxHealth(100.0f)
+        , dead(false)
         , sprite(sprite)
         , modifiers(modifiers)
     {
@@ -51,12 +53,6 @@ namespace bc
     se::Sprite& Entity::getSprite()
     {
         return this->sprite;
-    }
-
-
-    bool Entity::isDead()
-    {
-        return this->health <= 0.0f;
     }
 
 

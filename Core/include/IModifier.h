@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Collisiongroup.h"
 
 namespace bc
 {
