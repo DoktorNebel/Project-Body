@@ -57,6 +57,7 @@ namespace se
         this->sprites[this->currentAnimationIndex][this->currentSpriteIndex].setRotation(this->rotation);
         this->sprites[this->currentAnimationIndex][this->currentSpriteIndex].setScale(this->size);
         this->sprites[this->currentAnimationIndex][this->currentSpriteIndex].setDepth(this->depth);
+        this->sprites[this->currentAnimationIndex][this->currentSpriteIndex].setColor(this->color);
         return this->sprites[this->currentAnimationIndex][this->currentSpriteIndex];
     }
 
@@ -118,6 +119,18 @@ namespace se
     void AnimatedSprite::setDepth(float depth)
     {
         this->depth = depth;
+    }
+
+
+    Vector4 AnimatedSprite::getColor()
+    {
+        return this->color;
+    }
+
+
+    void AnimatedSprite::setColor(Vector4 color)
+    {
+        this->color = color;
     }
 
 

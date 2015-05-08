@@ -41,12 +41,14 @@ namespace se
 
     namespace Math
     {
+        float Length(const Vector2& vector);
         float Length(const Vector3& vector);
         Vector3 Cross(const Vector3& first, const Vector3& second);
         float Dot(const Vector3& first, const Vector3& second);
         Vector3& Normalize(Vector3& vector);
         Vector3 GetNormalized(const Vector3& vector);
         float Angle(const Vector3& first, const Vector3& second);
+        float Distance(const Vector2& first, const Vector2& second);
 
         Matrix IdentityMatrix();
         Matrix TranslationMatrix(float x, float y, float z);

@@ -226,6 +226,12 @@ namespace se
         //
         //Vector functions
         //
+        float Length(const Vector2& vector)
+        {
+            return sqrt(vector.x * vector.x + vector.y * vector.y);
+        }
+
+
         float Length(const Vector3& vector)
         {
             return sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
@@ -267,6 +273,12 @@ namespace se
         float Angle(const Vector3& first, const Vector3& second)
         {
             return acos(Math::Dot(first, second) / (Math::Length(first) * Math::Length(second)));
+        }
+
+
+        float Distance(const Vector2& first, const Vector2& second)
+        {
+            return Math::Length(second - first);
         }
 
 

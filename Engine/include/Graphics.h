@@ -21,12 +21,14 @@ namespace se
         unsigned int indexBuffer;
         unsigned int matricesBuffer;
         unsigned int uvBuffer;
+        unsigned int colorBuffer;
         unsigned int vao;
         unsigned int programId;
         std::vector<unsigned int> textureIds;
         std::vector<Vector2> textureSizes;
         std::vector<std::vector<Matrix>> matrices;
         std::vector<std::vector<Vector2>> uvs;
+        std::vector <std::vector<se::Vector4>> colors;
 		float renderWidth;
 		float renderHeight;
 

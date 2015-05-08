@@ -21,7 +21,7 @@ namespace bg
 
 	void BodyGame::initialize()
     {
-        this->level.initialize("");
+        this->level.initialize("Test");
 
         se::Input::bindKeyboardKeyAction(InputAction::Left, sf::Keyboard::Left);
         se::Input::bindKeyboardKeyAction(InputAction::Right, sf::Keyboard::Right);

@@ -36,6 +36,7 @@ namespace se
         glGenBuffers(1, &this->indexBuffer);
         glGenBuffers(1, &this->matricesBuffer);
         glGenBuffers(1, &this->uvBuffer);
+        glGenBuffers(1, &this->colorBuffer);
         
 
         Vector3 vertices[4] =
@@ -76,6 +77,11 @@ namespace se
             glVertexAttribDivisor(i, 1);
         }
 
+        glBindBuffer(GL_ARRAY_BUFFER, this->colorBuffer);
+        glEnableVertexAttribArray(9);
+        glVertexAttribPointer(9, 4, GL_FLOAT, false, sizeof(Vector4), 0);
+        glVertexAttribDivisor(9, 1);
+
         glBindVertexArray(0);
 
         glClearColor(0.01f, 0.05f, 0.15f, 0.0f);
@@ -90,6 +96,7 @@ namespace se
         Content::loadTextures(this->textureIds, this->textureSizes);
         this->matrices.resize(this->textureIds.size());
         this->uvs.resize(this->textureIds.size());
+        this->colors.resize(this->textureIds.size());
 
         this->loadShaders();
     }
@@ -170,6 +177,8 @@ namespace se
         this->uvs[texturePos].push_back(Vector2(textureRect.right / textureSize.x, textureRect.bottom / textureSize.y));
         this->uvs[texturePos].push_back(Vector2(textureRect.right / textureSize.x, textureRect.top / textureSize.y));
         this->uvs[texturePos].push_back(Vector2(textureRect.left / textureSize.x, textureRect.top / textureSize.y));
+
+        this->colors[texturePos].push_back(sprite.getColor());
     }
 
 
@@ -210,11 +219,15 @@ namespace se
                     glBindBuffer(GL_ARRAY_BUFFER, this->uvBuffer);
                     glBufferData(GL_ARRAY_BUFFER, this->uvs[i].size() * sizeof(Vector2), &this->uvs[i][0], GL_DYNAMIC_DRAW);
 
+                    glBindBuffer(GL_ARRAY_BUFFER, this->colorBuffer);
+                    glBufferData(GL_ARRAY_BUFFER, this->colors[i].size() * sizeof(Vector4), &this->colors[i][0], GL_DYNAMIC_DRAW);
+
 
                     glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, 0, this->matrices[i].size());
 
                     this->matrices[i].clear();
                     this->uvs[i].clear();
+                    this->colors[i].clear();
                 }
             }
 

@@ -11,6 +11,8 @@ namespace bc
 
         se::AnimatedSprite animatedSprite;
         se::Vector2 position;
+        float hitMarkerTime;
+        float timer;
 
     public:
 

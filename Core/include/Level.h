@@ -26,7 +26,6 @@ namespace bc
         std::vector<std::vector<bc::Entity>> entities;
         std::vector<std::pair<CollisionGroup::Type, CollisionGroup::Type>> collisionConfigs;
         se::Camera camera;
-        float spawn;
         float totalElapsedTime;
         int currentScrollKey;
         std::vector<ScrollKey> scrollSpeeds;

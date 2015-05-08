@@ -14,6 +14,7 @@ namespace se
         , height(0)
         , rotation(0.0f)
         , depth(0.0f)
+        , color(1.0f, 1.0f, 1.0f, 1.0f)
     {
 
     }
@@ -28,6 +29,7 @@ namespace se
         , height(height)
         , rotation(0.0f)
         , depth(0.0f)
+        , color(1.0f, 1.0f, 1.0f, 1.0f)
     {
     }
 
@@ -77,17 +79,21 @@ namespace se
 
         float radRot = this->rotation * 0.0174532925f;
 
-        Vector2 pos = this->position + Vector2(-this->width / 2 * this->size.x, -this->height / 2 * this->size.y);
-        newVerts[0] = Vector2(pos.x * cos(radRot) - pos.y * sin(radRot), pos.x * sin(radRot) + pos.y * cos(radRot));
+        Vector2 pos = this->position + Vector2(-this->width / 3 * this->size.x, -this->height / 3 * this->size.y);
+        newVerts[0] = Vector2(this->position.x + (pos.x - this->position.x) * cos(radRot) - this->position.y + (pos.y - this->position.y) * sin(radRot),
+            this->position.x + (pos.x - this->position.x) * sin(radRot) + this->position.y + (pos.y - this->position.y) * cos(radRot));
 
-        pos = this->position + Vector2(-this->width / 2 * this->size.x, this->height / 2 * this->size.y);
-        newVerts[1] = Vector2(pos.x * cos(radRot) - pos.y * sin(radRot), pos.x * sin(radRot) + pos.y * cos(radRot));
+        pos = this->position + Vector2(-this->width / 3 * this->size.x, this->height / 3 * this->size.y);
+        newVerts[1] = Vector2(this->position.x + (pos.x - this->position.x) * cos(radRot) - this->position.y + (pos.y - this->position.y) * sin(radRot),
+            this->position.x + (pos.x - this->position.x) * sin(radRot) + this->position.y + (pos.y - this->position.y) * cos(radRot));
 
-        pos = this->position + Vector2(this->width / 2 * this->size.x, this->height / 2 * this->size.y);
-        newVerts[2] = Vector2(pos.x * cos(radRot) - pos.y * sin(radRot), pos.x * sin(radRot) + pos.y * cos(radRot));
+        pos = this->position + Vector2(this->width / 3 * this->size.x, this->height / 3 * this->size.y);
+        newVerts[2] = Vector2(this->position.x + (pos.x - this->position.x) * cos(radRot) - this->position.y + (pos.y - this->position.y) * sin(radRot),
+            this->position.x + (pos.x - this->position.x) * sin(radRot) + this->position.y + (pos.y - this->position.y) * cos(radRot));
 
-        pos = this->position + Vector2(this->width / 2 * this->size.x, -this->height / 2 * this->size.y);
-        newVerts[3] = Vector2(pos.x * cos(radRot) - pos.y * sin(radRot), pos.x * sin(radRot) + pos.y * cos(radRot));
+        pos = this->position + Vector2(this->width / 3 * this->size.x, -this->height / 3 * this->size.y);
+        newVerts[3] = Vector2(this->position.x + (pos.x - this->position.x) * cos(radRot) - this->position.y + (pos.y - this->position.y) * sin(radRot),
+            this->position.x + (pos.x - this->position.x) * sin(radRot) + this->position.y + (pos.y - this->position.y) * cos(radRot));
 
         float minX = newVerts[0].x;
         float maxX = newVerts[0].x;
@@ -163,5 +169,17 @@ namespace se
     void Sprite::setDepth(float depth)
     {
         this->depth = depth;
+    }
+
+
+    Vector4 Sprite::getColor()
+    {
+        return this->color;
+    }
+
+
+    void Sprite::setColor(Vector4 color)
+    {
+        this->color = color;
     }
 }

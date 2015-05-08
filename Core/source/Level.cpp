@@ -25,6 +25,7 @@ namespace bc
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::Enemies));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::Items));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::LevelElements));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::PlayerProjectiles, CollisionGroup::LevelElements));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Enemies, CollisionGroup::PlayerProjectiles));
         
         se::Engine::setActiveCamera(this->camera);
@@ -32,13 +33,11 @@ namespace bc
         this->entities.resize(7);
         this->hitboxes.resize(7);
 
-        Spawner::initialize(&this->hitboxes, &this->entities);
+        Spawner::initialize(&this->hitboxes, &this->entities, source);
 
         std::vector<IModifier*> modifiers;
         modifiers.push_back(new PlayerModifier());
         Spawner::spawn(se::Vector2(0, -200), Entity(se::Content::getSprite("TestPlayer"), modifiers), CollisionGroup::Players);
-
-        this->spawn = 0.1f;
 
         this->totalElapsedTime = 0.0f;
         this->currentScrollKey = 0;
@@ -147,34 +146,13 @@ namespace bc
             }
         }
 
-        //spawning
-        this->spawn -= elapsedTime;
-        if (this->spawn <= 0.0f)
-        {
-            this->spawn = 0.1f;
-            std::vector<IModifier*> modifiers;
-            se::AnimatedSprite sprite;
-            sprite.addAnimation("Idle");
-            sprite.setSpeed("Idle", 0.3f);
-            sprite.addAnimation("Death");
-            sprite.setSpeed("Death", 0.2f);
-            sprite.addSprite("Idle", se::Content::getSprite("Virus1"));
-            sprite.addSprite("Idle", se::Content::getSprite("Virus2"));
-            sprite.addSprite("Idle", se::Content::getSprite("Virus3"));
-            sprite.addSprite("Idle", se::Content::getSprite("Virus4"));
-            sprite.addSprite("Death", se::Content::getSprite("VirusDie1"));
-            sprite.addSprite("Death", se::Content::getSprite("VirusDie2"));
-            sprite.addSprite("Death", se::Content::getSprite("VirusDie3"));
-            sprite.addSprite("Death", se::Content::getSprite("VirusDie4"));
-            sprite.addSprite("Death", se::Content::getSprite("VirusDie5"));
-            modifiers.push_back(new EnemyModifier(sprite));
-            Spawner::spawn(se::Vector2(rand() % 501 - 250, 400), bc::Entity(se::Content::getSprite("Virus1"), modifiers), CollisionGroup::Enemies);
-        }
-
         Spawner::update(elapsedTime);
 
         //background scrolling
         this->totalElapsedTime += elapsedTime;
+
+        if (this->entities[CollisionGroup::Players].size() > 0)
+            this->camera.setPosition(se::Vector2(this->entities[CollisionGroup::Players][0].getSprite().getPosition().x / se::Engine::getSettings().resolutionWidth, 0.0f));
 
         float currentScrollSpeed = 0.0f;
         if (this->currentScrollKey + 1 < this->scrollSpeeds.size())
@@ -192,6 +170,11 @@ namespace bc
             {
                 this->backgroundSprites[i][j].move(se::Vector2(0.0f, currentScrollSpeed * -this->backgroundSpeeds[i] * elapsedTime));
             }
+        }
+
+        for (int i = 0; i < this->entities[CollisionGroup::LevelElements].size(); ++i)
+        {
+            this->entities[CollisionGroup::LevelElements][i].getSprite().move(se::Vector2(0.0f, -currentScrollSpeed * elapsedTime));
         }
 
         this->camera.update(elapsedTime);

@@ -20,6 +20,7 @@ namespace se
         Vector2 size;
         float rotation;
         float depth;
+        Vector4 color;
         bool finished;
 
     public:
@@ -45,6 +46,8 @@ namespace se
         float getRotation();
         void setRotation(float rotation);
         void setDepth(float depth);
+        Vector4 getColor();
+        void setColor(Vector4 color);
         bool finishedAnimation();
         void update(float elapsedTime);
     };

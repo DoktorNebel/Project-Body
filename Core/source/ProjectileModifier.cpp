@@ -41,7 +41,15 @@ namespace bc
 
     void ProjectileModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup)
     {
-        otherEntity->health -= 10.0f;
-        this->entity->health = 0.0f;
+        if (collisionGroup == CollisionGroup::LevelElements)
+        {
+            std::vector<IModifier*> modifiers;
+            modifiers.push_back(new ParticleModifier(this->velocity * -0.5f + se::Vector2(rand() % 1501 - 750, rand() % 1501 - 750), rand() % 501 / 2000.0f));
+            Spawner::spawn(this->entity->getSprite().getPosition(), Entity(se::Content::getSprite("Funke1"), modifiers), CollisionGroup::Particles);
+        }
+        if (otherEntity->health > 0.0f)
+            otherEntity->health -= 10.0f;
+
+        this->entity->dead = true;
     }
 }

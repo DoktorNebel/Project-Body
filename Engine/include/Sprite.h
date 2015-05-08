@@ -18,6 +18,7 @@ namespace se
         float height;
         float rotation;
         float depth;
+        Vector4 color;
 
     public:
 
@@ -43,5 +44,7 @@ namespace se
         float getRotation();
         void setRotation(float rotation);
         void setDepth(float depth);
+        Vector4 getColor();
+        void setColor(Vector4 color);
     };
 }
