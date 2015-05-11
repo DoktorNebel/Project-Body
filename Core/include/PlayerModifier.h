@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IModifier.h"
+#include <vector>
 
 namespace bc
 {
@@ -11,6 +12,12 @@ namespace bc
         float speed;
         float fireRate;
         float fireCounter;
+        std::vector<std::vector<Entity>>* entities;
+
+    public:
+
+        PlayerModifier(std::vector<std::vector<Entity>>* entities);
+        ~PlayerModifier();
 
     public:
 

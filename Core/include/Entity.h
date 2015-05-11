@@ -14,6 +14,7 @@ namespace bc
 
         float maxHealth;
         float health;
+        float damage;
         bool dead;
         se::Sprite sprite;
         std::vector<IModifier*> modifiers;

@@ -10,8 +10,6 @@ namespace bc
     EnemyModifier::EnemyModifier(se::AnimatedSprite animatedSprite)
         : animatedSprite(animatedSprite)
         , position(0.0f, 0.0f)
-        , hitMarkerTime(0.005f)
-        , timer(0.0f)
     {
 
     }
@@ -33,14 +31,18 @@ namespace bc
     {
         this->animatedSprite.update(elapsedTime);
 
+        this->animatedSprite.setPosition(this->entity->getSprite().getPosition());
+        this->animatedSprite.setColor(se::Vector4(1.0f, 1.0f, 1.0f, 1.0f));//this->entity->getSprite().getColor());
+
         if (this->entity->health <= 0.0f)
         {
             if (this->animatedSprite.getCurrentAnimation() != "Death")
             {
                 se::Engine::getActiveCamera().addScreenshake(1.0f * this->entity->maxHealth / 200.0f, 0.05f * this->entity->maxHealth / 200.0f);
-                int minParticles = this->entity->maxHealth / 4;
-                minParticles = minParticles < 20 ? 20 : minParticles;
-                for (int i = 0; i < minParticles; ++i)
+                int particleCount = this->entity->maxHealth / 4;
+                particleCount = particleCount < 20 ? 20 : particleCount;
+                particleCount = particleCount > 200 ? 200 : particleCount;
+                for (int i = 0; i < particleCount; ++i)
                 {
                     std::vector<IModifier*> modifiers;
                     modifiers.push_back(new ParticleModifier(se::Vector2(rand() % 2001 - 1000, rand() % 2001 - 1000), rand() % 501 / 1000.0f));
@@ -61,23 +63,11 @@ namespace bc
                 this->entity->dead = true;
             this->entity->sprite = this->animatedSprite.getCurrentSprite();
         }
-
-        this->timer += elapsedTime;
-        if (this->timer >= this->hitMarkerTime)
-        {
-            this->animatedSprite.setColor(se::Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-        }
-        else
-        {
-            this->animatedSprite.setColor(this->entity->getSprite().getColor());
-        }
     }
 
 
     void EnemyModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup)
     {
-        this->animatedSprite.setColor(se::Vector4(3.0f, 3.0f, 3.0f, 1.0f));
-        this->timer = 0.0f;
         if (this->entity->health > 0.0f)
             otherEntity->health -= this->entity->maxHealth / 5.0f;
     }

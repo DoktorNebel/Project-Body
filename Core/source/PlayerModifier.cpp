@@ -8,9 +8,23 @@
 #include "ProjectileModifier.h"
 #include "MathFunctions.h"
 #include "Engine.h"
+#include "StickyShotModifier.h"
 
 namespace bc
 {
+    PlayerModifier::PlayerModifier(std::vector<std::vector<Entity>>* entities)
+        : entities(entities)
+    {
+
+    }
+
+
+    PlayerModifier::~PlayerModifier()
+    {
+
+    }
+
+
     void PlayerModifier::onCreate()
     {
         this->speed = 500.0f;
@@ -36,6 +50,14 @@ namespace bc
             this->fireCounter = 0.0f;
             std::vector<IModifier*> modifiers;
             modifiers.push_back(new ProjectileModifier(se::Vector2(rand() % 201 - 100, 3000.0f), 0.3f));
+            Spawner::spawn(this->entity->getSprite().getPosition() + se::Vector2(rand() % 9 - 4, 16.0f), Entity(se::Content::getSprite("PlayerProjectile"), modifiers), CollisionGroup::PlayerProjectiles);
+        }
+
+        if (se::Input::actionPressed(bg::InputAction::StickyShot))
+        {
+            std::vector<IModifier*> modifiers;
+            modifiers.push_back(new ProjectileModifier(se::Vector2(rand() % 21 - 10, 700.0f), 2.0f));
+            modifiers.push_back(new StickyShotModifier(this->entities));
             Spawner::spawn(this->entity->getSprite().getPosition() + se::Vector2(rand() % 9 - 4, 16.0f), Entity(se::Content::getSprite("PlayerProjectile"), modifiers), CollisionGroup::PlayerProjectiles);
         }
 

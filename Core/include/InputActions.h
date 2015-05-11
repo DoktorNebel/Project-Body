@@ -6,11 +6,12 @@ namespace bg
 	{
 		enum Type
 		{
-			Left,
+            Left,
             Right,
             Up,
             Down,
-            Shoot
+            Shoot,
+            StickyShot
 		};
 	};
 }

@@ -10,7 +10,6 @@ namespace bc
     private:
 
         std::vector<std::vector<Entity>>* entities;
-        std::vector<Entity*> affectedEntities;
         float radius;
 
     public:

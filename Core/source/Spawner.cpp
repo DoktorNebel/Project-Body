@@ -4,6 +4,7 @@
 #include "AnimatedSprite.h"
 #include "Content.h"
 #include "EnemyModifier.h"
+#include "HitMarkerModifier.h"
 
 namespace bc
 {
@@ -23,8 +24,8 @@ namespace bc
         if (name == "Virus")
         {
             result.dead = false;
-            result.health = 20.0f;
-            result.maxHealth = 20.0f;
+            result.health = 500.0f;
+            result.maxHealth = 500.0f;
             std::vector<IModifier*> modifiers;
             se::AnimatedSprite sprite;
             sprite.addAnimation("Idle");
@@ -42,6 +43,7 @@ namespace bc
             sprite.addSprite("Death", se::Content::getSprite("VirusDie5"));
             sprite.setScale(se::Vector2(1.5f, 1.5f));
             modifiers.push_back(new EnemyModifier(sprite));
+            modifiers.push_back(new HitMarkerModifier());
             result.modifiers = modifiers;
             result.sprite = se::Content::getSprite("Virus1");
         }
@@ -89,12 +91,17 @@ namespace bc
         }
 
         fclose(file);
+
+        (*Spawner::entities)[CollisionGroup::Enemies].reserve(Spawner::timedSpawns.size());
+        (*Spawner::hitboxes)[CollisionGroup::Enemies].reserve(Spawner::timedSpawns.size());
     }
 
 
     void Spawner::update(float elapsedTime)
     {
         Spawner::totalElapsedTime += elapsedTime;
+
+        unsigned int id;
 
         while (Spawner::nextSpawn < Spawner::spawnTimes.size() && Spawner::totalElapsedTime >= Spawner::spawnTimes[Spawner::nextSpawn])
         {

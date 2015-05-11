@@ -278,7 +278,8 @@ namespace se
 
         float Distance(const Vector2& first, const Vector2& second)
         {
-            return Math::Length(second - first);
+            float value = Math::Length(second - first);
+            return value < 0 ? -value : value;
         }
 
 

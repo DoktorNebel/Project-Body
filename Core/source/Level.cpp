@@ -36,7 +36,7 @@ namespace bc
         Spawner::initialize(&this->hitboxes, &this->entities, source);
 
         std::vector<IModifier*> modifiers;
-        modifiers.push_back(new PlayerModifier());
+        modifiers.push_back(new PlayerModifier(&this->entities));
         Spawner::spawn(se::Vector2(0, -200), Entity(se::Content::getSprite("TestPlayer"), modifiers), CollisionGroup::Players);
 
         this->totalElapsedTime = 0.0f;
