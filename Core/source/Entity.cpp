@@ -9,40 +9,64 @@ namespace bc
 
 
     Entity::Entity(const Entity& other)
-        : health(other.health)
+        : id(other.id)
+        , health(other.health)
         , maxHealth(other.maxHealth)
         , damage(other.damage)
         , dead(other.dead)
         , sprite(other.sprite)
         , modifiers(other.modifiers)
     {
-        for (int i = 0; i < this->modifiers.size(); ++i)
-        {
-            this->modifiers[i]->entity = this;
-            this->modifiers[i]->onCreate();
-        }
+
     }
 
 
     Entity::Entity(se::Sprite sprite, std::vector<IModifier*> modifiers)
-        : health(100.0f)
+        : id(0)
+        , health(100.0f)
         , maxHealth(100.0f)
         , damage(10.0f)
         , dead(false)
         , sprite(sprite)
         , modifiers(modifiers)
     {
-        for (int i = 0; i < this->modifiers.size(); ++i)
-        {
-            this->modifiers[i]->entity = this;
-            this->modifiers[i]->onCreate();
-        }
+
     }
 
 
     Entity::~Entity()
     {
 
+    }
+
+
+    Entity& Entity::operator=(const Entity& rhs)
+    {
+        this->id = rhs.id;
+        this->health = rhs.health;
+        this->maxHealth = rhs.maxHealth;
+        this->damage = rhs.damage;
+        this->dead = rhs.dead;
+        this->sprite = rhs.sprite;
+        this->modifiers = rhs.modifiers;
+
+        return *this;
+    }
+
+
+    bool Entity::operator==(const Entity& rhs)
+    {
+        return this->id == rhs.id;
+    }
+
+
+    void Entity::init()
+    {
+        for (int i = 0; i < this->modifiers.size(); ++i)
+        {
+            this->modifiers[i]->entity = this;
+            this->modifiers[i]->onCreate();
+        }
     }
 
 
@@ -72,10 +96,17 @@ namespace bc
         for (int i = 0; i < this->modifiers.size(); ++i)
         {
             this->modifiers[i]->entity = this;
-        }
-        for (int i = 0; i < this->modifiers.size(); ++i)
-        {
             this->modifiers[i]->onUpdate(elapsedTime);
+        }
+    }
+
+
+    void Entity::destroy()
+    {
+        while (this->modifiers.size() > 0)
+        {
+            delete this->modifiers.back();
+            this->modifiers.pop_back();
         }
     }
 }

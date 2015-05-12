@@ -58,6 +58,7 @@ namespace bc
                 std::vector<Entity*> otherEntities = affectedEntities;
                 otherEntities.erase(std::find(otherEntities.begin(), otherEntities.end(), affectedEntities[i]));
                 GooModifier* modifier = new GooModifier(otherEntities, midPoint);
+                modifier->entity = affectedEntities[i];
                 modifier->onCreate();
                 affectedEntities[i]->modifiers.push_back(modifier);
             }

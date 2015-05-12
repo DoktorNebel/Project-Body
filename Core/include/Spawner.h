@@ -23,19 +23,24 @@ namespace bc
         static std::vector<float> spawnTimes;
         static std::vector<Spawn> timedSpawns;
         static std::vector<Spawn> immediateSpawns;
+        static std::vector<Spawn> killList;
         static float totalElapsedTime;
         static std::vector<std::vector<se::Rectangle>>* hitboxes;
         static std::vector<std::vector<bc::Entity>>* entities;
         static int nextSpawn;
+        static unsigned int highestId;
+        static std::vector<unsigned int> freeIds;
 
     private:
 
         static Entity createEnemy(std::string name);
+        static unsigned int getFreeId();
 
     public:
 
         static void initialize(std::vector<std::vector<se::Rectangle>>* hitboxes, std::vector<std::vector<bc::Entity>>* entities, std::string levelName);
         static void update(float elapsedTime);
         static void spawn(se::Vector2 position, Entity entity, CollisionGroup::Type collisionGroup);
+        static void kill(Entity entity, CollisionGroup::Type collisionGroup);
     };
 }

@@ -4,6 +4,7 @@
 #include "Content.h"
 #include "PlayerModifier.h"
 #include "EnemyModifier.h"
+#include "MathFunctions.h"
 
 namespace bc
 {
@@ -109,24 +110,12 @@ namespace bc
         //updating
         for (int i = 0; i < this->entities.size(); ++i)
         {
-            entIter = this->entities[i].begin();
-            entEnd = this->entities[i].end();
-            rectIter = this->hitboxes[i].begin();
-            while (entIter != entEnd)
+            for (int j = 0; j < this->entities[i].size(); ++j)
             {
-                entIter->update(elapsedTime);
-                if (entIter->dead)
-                {
-                    entIter = this->entities[i].erase(entIter);
-                    entEnd = this->entities[i].end();
-                    rectIter = this->hitboxes[i].erase(rectIter);
-                }
-                else
-                {
-                    *rectIter = entIter->getHitbox();
-                    ++entIter;
-                    ++rectIter;
-                }
+                if (this->entities[i][j].dead)
+                    Spawner::kill(this->entities[i][j], (CollisionGroup::Type)i);
+                this->entities[i][j].update(elapsedTime);
+                this->hitboxes[i][j] = this->entities[i][j].getHitbox();
             }
         }
 
@@ -152,14 +141,14 @@ namespace bc
         this->totalElapsedTime += elapsedTime;
 
         if (this->entities[CollisionGroup::Players].size() > 0)
-            this->camera.setPosition(se::Vector2(this->entities[CollisionGroup::Players][0].getSprite().getPosition().x / se::Engine::getSettings().resolutionWidth, 0.0f));
+            this->camera.setPosition(se::Vector2(this->entities[CollisionGroup::Players][0].getSprite().getPosition().x / (se::Engine::getSettings().resolutionWidth / 2), 0.0f));
 
         float currentScrollSpeed = 0.0f;
         if (this->currentScrollKey + 1 < this->scrollSpeeds.size())
         {
             float factor = (this->totalElapsedTime - this->scrollSpeeds[this->currentScrollKey].time) / (this->scrollSpeeds[this->currentScrollKey + 1].time - this->scrollSpeeds[this->currentScrollKey].time);
-            currentScrollSpeed = (1 - factor) * this->scrollSpeeds[this->currentScrollKey].speed + factor * this->scrollSpeeds[this->currentScrollKey + 1].speed;
-            
+            currentScrollSpeed = se::Math::Lerp(this->scrollSpeeds[this->currentScrollKey].speed, this->scrollSpeeds[this->currentScrollKey + 1].speed, factor);
+
             if (this->totalElapsedTime > this->scrollSpeeds[this->currentScrollKey + 1].time)
                 ++this->currentScrollKey;
         }
@@ -168,9 +157,11 @@ namespace bc
         {
             for (int j = 0; j < this->backgroundSprites[i].size(); ++j)
             {
-                this->backgroundSprites[i][j].move(se::Vector2(0.0f, currentScrollSpeed * -this->backgroundSpeeds[i] * elapsedTime));
+                this->backgroundSprites[i][j].move(se::Vector2((this->camera.getPosition().x - this->lastCameraPos.x) * (1 - this->backgroundSpeeds[i]) * (se::Engine::getSettings().resolutionWidth / 2), currentScrollSpeed * -this->backgroundSpeeds[i] * elapsedTime));
             }
         }
+
+        this->lastCameraPos = this->camera.getPosition();
 
         for (int i = 0; i < this->entities[CollisionGroup::LevelElements].size(); ++i)
         {

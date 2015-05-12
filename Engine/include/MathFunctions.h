@@ -41,6 +41,8 @@ namespace se
 
     namespace Math
     {
+        float Lerp(float min, float max, float lerpValue);
+
         float Length(const Vector2& vector);
         float Length(const Vector3& vector);
         Vector3 Cross(const Vector3& first, const Vector3& second);

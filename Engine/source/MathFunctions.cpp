@@ -224,6 +224,15 @@ namespace se
     namespace Math
     {
         //
+        //Miscellaneous functions
+        //
+        float Lerp(float min, float max, float lerpValue)
+        {
+            return min + (max - min) * lerpValue;
+        }
+
+
+        //
         //Vector functions
         //
         float Length(const Vector2& vector)

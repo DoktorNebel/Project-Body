@@ -3,7 +3,7 @@
 #include "Entity.h"
 #include "MathFunctions.h"
 #include "Spawner.h"
-#include "ParticleModifier.h"
+#include "GooParticleModifier.h"
 #include "Content.h"
 
 namespace bc
@@ -24,19 +24,20 @@ namespace bc
     }
 
 
+    se::Vector2 GooModifier::getMidPoint()
+    {
+        return this->midPoint;
+    }
+
+
     void GooModifier::onCreate()
     {
-        for (int i = 0; i < this->otherEntities.size(); ++i)
+        for (int j = 0; j < 10; ++j)
         {
-            for (int j = 0; j < 10; ++j)
-            {
-                std::vector<IModifier*> modifiers;
-                modifiers.push_back(new ParticleModifier(se::Vector2(0.0f, 0.0f), 100.0f));
-                Entity entity(se::Content::getSprite("Funke1"), modifiers);
-                entity.getSprite().setColor(se::Vector4(0.1f, 1.0f, 0.1f, 1.0f));
-                entity.getSprite().setScale(se::Vector2(5.0f, 5.0f));
-                Spawner::spawn(this->midPoint + (this->otherEntities[i]->getSprite().getPosition() - this->midPoint) * j / 10, entity, CollisionGroup::Particles);
-            }
+            std::vector<IModifier*> modifiers;
+            modifiers.push_back(new GooParticleModifier(this));
+            Entity entity(se::Content::getSprite("Funke1"), modifiers);
+            Spawner::spawn(this->midPoint + (this->entity->getSprite().getPosition() - this->midPoint) * j / 10 + se::Vector2(rand() % 6, rand() % 6), entity, CollisionGroup::Particles);
         }
     }
 

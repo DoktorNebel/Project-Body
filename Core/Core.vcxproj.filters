@@ -54,6 +54,9 @@
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\HitMarkerModifier.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\GooParticleModifier.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\Level.cpp">
@@ -84,6 +87,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\HitMarkerModifier.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\GooParticleModifer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

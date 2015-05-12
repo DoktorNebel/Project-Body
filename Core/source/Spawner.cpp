@@ -15,6 +15,9 @@ namespace bc
     std::vector<std::vector<se::Rectangle>>* Spawner::hitboxes = 0;
     std::vector<std::vector<bc::Entity>>* Spawner::entities = 0;
     int Spawner::nextSpawn = 0;
+    unsigned int Spawner::highestId = 0;
+    std::vector<unsigned int> Spawner::freeIds = std::vector<unsigned int>();
+    std::vector<Spawner::Spawn> Spawner::killList = std::vector<Spawner::Spawn>();
 
 
     Entity Spawner::createEnemy(std::string name)
@@ -46,6 +49,24 @@ namespace bc
             modifiers.push_back(new HitMarkerModifier());
             result.modifiers = modifiers;
             result.sprite = se::Content::getSprite("Virus1");
+        }
+
+        return result;
+    }
+
+
+    unsigned int Spawner::getFreeId()
+    {
+        unsigned int result;
+
+        if (Spawner::freeIds.size() > 0)
+        {
+            result = Spawner::freeIds.back();
+            Spawner::freeIds.pop_back();
+        }
+        else
+        {
+            result = ++Spawner::highestId;
         }
 
         return result;
@@ -93,6 +114,7 @@ namespace bc
         fclose(file);
 
         (*Spawner::entities)[CollisionGroup::Enemies].reserve(Spawner::timedSpawns.size());
+        (*Spawner::entities)[CollisionGroup::Particles].reserve(5000);
         (*Spawner::hitboxes)[CollisionGroup::Enemies].reserve(Spawner::timedSpawns.size());
     }
 
@@ -105,7 +127,9 @@ namespace bc
 
         while (Spawner::nextSpawn < Spawner::spawnTimes.size() && Spawner::totalElapsedTime >= Spawner::spawnTimes[Spawner::nextSpawn])
         {
+            Spawner::timedSpawns[Spawner::nextSpawn].entity.id = Spawner::getFreeId();
             Spawner::timedSpawns[Spawner::nextSpawn].entity.getSprite().setPosition(Spawner::timedSpawns[Spawner::nextSpawn].position);
+            Spawner::timedSpawns[Spawner::nextSpawn].entity.init();
             (*Spawner::hitboxes)[Spawner::timedSpawns[Spawner::nextSpawn].collisionGroup].push_back(Spawner::timedSpawns[Spawner::nextSpawn].entity.getSprite().getRect());
             (*Spawner::entities)[Spawner::timedSpawns[Spawner::nextSpawn].collisionGroup].push_back(Spawner::timedSpawns[Spawner::nextSpawn].entity);
             ++Spawner::nextSpawn;
@@ -113,12 +137,37 @@ namespace bc
 
         for (int i = 0; i < Spawner::immediateSpawns.size(); ++i)
         {
+            Spawner::immediateSpawns[i].entity.id = Spawner::getFreeId();
             Spawner::immediateSpawns[i].entity.getSprite().setPosition(Spawner::immediateSpawns[i].position);
+            Spawner::immediateSpawns[i].entity.init();
             (*Spawner::hitboxes)[Spawner::immediateSpawns[i].collisionGroup].push_back(Spawner::immediateSpawns[i].entity.getSprite().getRect());
             (*Spawner::entities)[Spawner::immediateSpawns[i].collisionGroup].push_back(Spawner::immediateSpawns[i].entity);
         }
 
         Spawner::immediateSpawns.clear();
+
+        for (int i = 0; i < Spawner::killList.size(); ++i)
+        {
+            Spawner::freeIds.push_back(Spawner::killList[i].entity.id);
+
+            int pos = std::find((*Spawner::entities)[Spawner::killList[i].collisionGroup].begin(), (*Spawner::entities)[Spawner::killList[i].collisionGroup].end(), Spawner::killList[i].entity) - (*Spawner::entities)[Spawner::killList[i].collisionGroup].begin();
+
+            (*Spawner::entities)[Spawner::killList[i].collisionGroup][pos].destroy();
+
+            if (pos != (*Spawner::entities)[Spawner::killList[i].collisionGroup].size() - 1)
+            {
+                (*Spawner::entities)[Spawner::killList[i].collisionGroup][pos] = std::move((*Spawner::entities)[Spawner::killList[i].collisionGroup].back());
+            }
+            (*Spawner::entities)[Spawner::killList[i].collisionGroup].pop_back();
+            
+            if (pos != (*Spawner::hitboxes)[Spawner::killList[i].collisionGroup].size() - 1)
+            {
+                (*Spawner::hitboxes)[Spawner::killList[i].collisionGroup][pos] = std::move((*Spawner::hitboxes)[Spawner::killList[i].collisionGroup].back());
+            }
+            (*Spawner::hitboxes)[Spawner::killList[i].collisionGroup].pop_back();
+        }
+
+        Spawner::killList.clear();
     }
 
 
@@ -130,5 +179,16 @@ namespace bc
         spawn.collisionGroup = collisionGroup;
 
         Spawner::immediateSpawns.push_back(spawn);
+    }
+
+
+    void Spawner::kill(Entity entity, CollisionGroup::Type collisionGroup)
+    {
+        Spawn spawn;
+        spawn.position = se::Vector2();
+        spawn.entity = entity;
+        spawn.collisionGroup = collisionGroup;
+
+        Spawner::killList.push_back(spawn);
     }
 }

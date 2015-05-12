@@ -12,6 +12,7 @@ namespace bc
     {
     public:
 
+        unsigned int id;
         float maxHealth;
         float health;
         float damage;
@@ -28,9 +29,16 @@ namespace bc
 
     public:
 
+        Entity& operator=(const Entity& rhs);
+        bool operator==(const Entity& rhs);
+
+    public:
+
+        void init();
         se::Rectangle getHitbox();
         se::Sprite& getSprite();
         void hit(Entity* otherEntity, CollisionGroup::Type collisionGroup);
         void update(float elapsedTime);
+        void destroy();
     };
 }
