@@ -261,6 +261,23 @@ namespace se
         }
 
 
+		Vector2& Normalize(Vector2& vector)
+		{
+			vector /= Math::Length(vector);
+
+			return vector;
+		}
+
+
+		Vector2 GetNormalized(const Vector2& vector)
+		{
+			float length = Math::Length(vector);
+
+			return Vector2(vector.x / length,
+				vector.y / length);
+		}
+
+
         Vector3& Normalize(Vector3& vector)
         {
             vector /= Math::Length(vector);

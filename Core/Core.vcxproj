@@ -74,33 +74,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\Collisiongroup.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\EnemyModifier.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\Entity.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\GooModifier.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\GooParticleModifier.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\HitMarkerModifier.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\IModifier.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\InputActions.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\Level.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\ParticleModifier.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\PlayerModifier.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\ProjectileModifier.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\Spawner.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\StickyShotModifier.h" />
+    <ClInclude Include="include\Collisiongroup.h" />
+    <ClInclude Include="include\EnemyModifier.h" />
+    <ClInclude Include="include\Entity.h" />
+    <ClInclude Include="include\GooModifier.h" />
+    <ClInclude Include="include\GooParticleModifier.h" />
+    <ClInclude Include="include\HitMarkerModifier.h" />
+    <ClInclude Include="include\IModifier.h" />
+    <ClInclude Include="include\InputActions.h" />
+    <ClInclude Include="include\Level.h" />
+    <ClInclude Include="include\MovementPatternModifier.h" />
+    <ClInclude Include="include\ParticleModifier.h" />
+    <ClInclude Include="include\PlayerModifier.h" />
+    <ClInclude Include="include\ProjectileModifier.h" />
+    <ClInclude Include="include\Spawner.h" />
+    <ClInclude Include="include\StickyShotModifier.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\EnemyModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\Entity.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\GooModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\GooParticleModifer.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\HitMarkerModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\Level.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\ParticleModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\PlayerModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\ProjectileModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\Spawner.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\StickyShotModifier.cpp" />
+    <ClCompile Include="source\EnemyModifier.cpp" />
+    <ClCompile Include="source\Entity.cpp" />
+    <ClCompile Include="source\GooModifier.cpp" />
+    <ClCompile Include="source\GooParticleModifer.cpp" />
+    <ClCompile Include="source\HitMarkerModifier.cpp" />
+    <ClCompile Include="source\Level.cpp" />
+    <ClCompile Include="source\MovementPatternModifier.cpp" />
+    <ClCompile Include="source\ParticleModifier.cpp" />
+    <ClCompile Include="source\PlayerModifier.cpp" />
+    <ClCompile Include="source\ProjectileModifier.cpp" />
+    <ClCompile Include="source\Spawner.cpp" />
+    <ClCompile Include="source\StickyShotModifier.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
