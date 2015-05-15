@@ -34,11 +34,17 @@ namespace bc
         this->entities.resize(7);
         this->hitboxes.resize(7);
 
-        Spawner::initialize(&this->hitboxes, &this->entities, source);
-
+        //spawn player
         std::vector<IModifier*> modifiers;
         modifiers.push_back(new PlayerModifier(&this->entities));
-        Spawner::spawn(se::Vector2(0, -200), Entity(se::Content::getSprite("TestPlayer"), modifiers), CollisionGroup::Players);
+        Entity player(se::Content::getSprite("TestPlayer"), modifiers);
+        player.id = 0;
+        player.getSprite().setPosition(se::Vector2(0, -200));
+        player.init();
+        this->hitboxes[CollisionGroup::Players].push_back(player.getSprite().getRect());
+        this->entities[CollisionGroup::Players].push_back(player);
+
+        Spawner::initialize(&this->hitboxes, &this->entities, source);
 
         this->totalElapsedTime = 0.0f;
         this->currentScrollKey = 0;
@@ -157,11 +163,11 @@ namespace bc
         {
             for (int j = 0; j < this->backgroundSprites[i].size(); ++j)
             {
-                this->backgroundSprites[i][j].move(se::Vector2((this->camera.getPosition().x - this->lastCameraPos.x) * (1 - this->backgroundSpeeds[i]) * (se::Engine::getSettings().resolutionWidth / 2), currentScrollSpeed * -this->backgroundSpeeds[i] * elapsedTime));
+                this->backgroundSprites[i][j].move(se::Vector2((this->camera.getActualPosition().x - this->lastCameraPos.x) * (1 - this->backgroundSpeeds[i]) * (se::Engine::getSettings().resolutionWidth / 2), currentScrollSpeed * -this->backgroundSpeeds[i] * elapsedTime));
             }
         }
 
-        this->lastCameraPos = this->camera.getPosition();
+        this->lastCameraPos = this->camera.getActualPosition();
 
         for (int i = 0; i < this->entities[CollisionGroup::LevelElements].size(); ++i)
         {

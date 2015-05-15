@@ -27,7 +27,7 @@ namespace bc
         this->entity->getSprite().setRotation(atan2(this->velocity.x, this->velocity.y) * -57.2957795f);
         this->entity->getSprite().setDepth(0.1f);
         this->entity->getSprite().setScale(se::Vector2(2.0f, 2.0f));
-        this->entity->damage = 10.0f;
+        this->entity->damage = 1.0f;
     }
 
 

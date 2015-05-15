@@ -39,9 +39,15 @@ namespace se
     }
 
 
-    void AnimatedSprite::changeAnimation(std::string animationName)
+    bool AnimatedSprite::changeAnimation(std::string animationName)
     {
-        this->currentAnimationIndex = std::find(this->animationNames.begin(), this->animationNames.end(), animationName) - this->animationNames.begin();
+        int pos = std::find(this->animationNames.begin(), this->animationNames.end(), animationName) - this->animationNames.begin();
+        if (pos >= this->animationNames.size())
+            return false;
+
+        this->currentAnimationIndex = pos;
+
+        return true;
     }
 
 

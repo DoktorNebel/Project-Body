@@ -38,8 +38,8 @@ namespace bc
         {
             if (this->animatedSprite.getCurrentAnimation() != "Death")
             {
-                se::Engine::getActiveCamera().addScreenshake(1.0f * this->entity->maxHealth / 200.0f, 0.05f * this->entity->maxHealth / 200.0f);
-                int particleCount = this->entity->maxHealth / 4;
+                se::Engine::getActiveCamera().addScreenshake(1.0f * this->entity->maxHealth / 20.0f, 0.05f * this->entity->maxHealth / 20.0f);
+                int particleCount = this->entity->maxHealth;
                 particleCount = particleCount < 20 ? 20 : particleCount;
                 particleCount = particleCount > 200 ? 200 : particleCount;
                 for (int i = 0; i < particleCount; ++i)
@@ -48,7 +48,9 @@ namespace bc
                     modifiers.push_back(new ParticleModifier(se::Vector2(rand() % 2001 - 1000, rand() % 2001 - 1000), rand() % 501 / 1000.0f));
                     Spawner::spawn(this->entity->getSprite().getPosition(), Entity(se::Content::getSprite("Funke1"), modifiers), CollisionGroup::Particles);
                 }
-                this->animatedSprite.changeAnimation("Death");
+
+                if (!this->animatedSprite.changeAnimation("Death"))
+                    this->entity->dead = true;
             }
 
             if (this->animatedSprite.finishedAnimation())
@@ -58,9 +60,6 @@ namespace bc
         }
         else
         {
-            this->animatedSprite.move(se::Vector2(0.0f, -100.0f * elapsedTime));
-            if (this->animatedSprite.getPosition().y < -(int)se::Engine::getSettings().resolutionHeight / 2)
-                this->entity->dead = true;
             this->entity->sprite = this->animatedSprite.getCurrentSprite();
         }
     }

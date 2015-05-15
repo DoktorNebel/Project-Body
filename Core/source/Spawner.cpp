@@ -5,6 +5,8 @@
 #include "Content.h"
 #include "EnemyModifier.h"
 #include "HitMarkerModifier.h"
+#include "HomingMovementModifier.h"
+#include "Other\tinydir.h"
 
 namespace bc
 {
@@ -15,21 +17,23 @@ namespace bc
     std::vector<std::vector<se::Rectangle>>* Spawner::hitboxes = 0;
     std::vector<std::vector<bc::Entity>>* Spawner::entities = 0;
     int Spawner::nextSpawn = 0;
-    unsigned int Spawner::highestId = 0;
+    unsigned int Spawner::highestId = 1;
     std::vector<unsigned int> Spawner::freeIds = std::vector<unsigned int>();
     std::vector<Spawner::Spawn> Spawner::killList = std::vector<Spawner::Spawn>();
+    std::vector<std::string> Spawner::movementPatternNames = std::vector<std::string>();
+    std::vector<std::vector<MovementPatternModifier::Waypoint>> Spawner::movementPatterns = std::vector<std::vector<MovementPatternModifier::Waypoint>>();
 
 
-    Entity Spawner::createEnemy(std::string name)
+    Entity Spawner::createEnemy(std::string name, std::string movementPattern)
     {
         Entity result;
+        std::vector<IModifier*> modifiers;
 
         if (name == "Virus")
         {
             result.dead = false;
-            result.health = 500.0f;
-            result.maxHealth = 500.0f;
-            std::vector<IModifier*> modifiers;
+            result.health = 1.0f;
+            result.maxHealth = 1.0f;
             se::AnimatedSprite sprite;
             sprite.addAnimation("Idle");
             sprite.setSpeed("Idle", 0.3f);
@@ -47,9 +51,41 @@ namespace bc
             sprite.setScale(se::Vector2(1.5f, 1.5f));
             modifiers.push_back(new EnemyModifier(sprite));
             modifiers.push_back(new HitMarkerModifier());
-            result.modifiers = modifiers;
             result.sprite = se::Content::getSprite("Virus1");
         }
+        else if (name == "Bug")
+        {
+            result.dead = false;
+            result.health = 250.0f;
+            result.maxHealth = 250.0f;
+            se::AnimatedSprite sprite;
+            sprite.addAnimation("Idle");
+            sprite.setSpeed("Idle", 0.5f);
+            sprite.addSprite("Idle", se::Content::getSprite("KillaBug1"));
+            sprite.addSprite("Idle", se::Content::getSprite("KillaBug2"));
+            sprite.addSprite("Idle", se::Content::getSprite("KillaBug3"));
+            sprite.addSprite("Idle", se::Content::getSprite("KillaBug4"));
+            sprite.addSprite("Idle", se::Content::getSprite("KillaBug5"));
+            sprite.addSprite("Idle", se::Content::getSprite("KillaBug6"));
+            sprite.setScale(se::Vector2(2.0f, 2.0f));
+            modifiers.push_back(new EnemyModifier(sprite));
+            modifiers.push_back(new HitMarkerModifier());
+            result.sprite = se::Content::getSprite("KillaBug1");
+        }
+
+        IModifier* movement;
+        if (movementPattern == "Seek_Player")
+        {
+            movement = new HomingMovementModifier(&(*Spawner::entities)[CollisionGroup::Players][0], 100.0f);
+        }
+        else
+        {
+            int pos = std::find(Spawner::movementPatternNames.begin(), Spawner::movementPatternNames.end(), movementPattern) - Spawner::movementPatternNames.begin();
+            movement = new MovementPatternModifier(pos < Spawner::movementPatternNames.size() ? Spawner::movementPatterns[pos] : std::vector<MovementPatternModifier::Waypoint>());
+        }
+
+        modifiers.push_back(movement);
+        result.modifiers = modifiers;
 
         return result;
     }
@@ -78,18 +114,70 @@ namespace bc
         Spawner::hitboxes = hitboxes;
         Spawner::entities = entities;
 
-        std::string filePath = "../Content/Levels/" + levelName + "/Enemies.txt";
+        //get movement pattern filenames
+        std::vector<std::string> fileNames;
+        tinydir_dir dir;
+        tinydir_open_sorted(&dir, "../Content/Movement Patterns/");
 
-        FILE* file = fopen(filePath.c_str(), "r");
+        for (int i = 0; i < dir.n_files; ++i)
+        {
+            tinydir_file tdfile;
+            tinydir_readfile_n(&dir, &tdfile, i);
+
+            if (!tdfile.is_dir && strcmp(tdfile.name, "Thumbs.db"))
+            {
+                fileNames.push_back(tdfile.name);
+            }
+        }
+
+        tinydir_close(&dir);
+
+        //get movement patterns
+        std::string filePath;
+        FILE* file;
+        float time, xPos, yPos, speed, waitTime;
+        char special[256];
+        for (int i = 0; i < fileNames.size(); ++i)
+        {
+            filePath = "../Content/Movement Patterns/" + fileNames[i];
+
+            file = fopen(filePath.c_str(), "r");
+
+            char patternName[256];
+            sscanf(fileNames[i].c_str(), "%[^.]", patternName);
+            Spawner::movementPatternNames.push_back(patternName);
+            std::vector<MovementPatternModifier::Waypoint> waypoints;
+            int result;
+            while ((result = fscanf(file, "%f %f %f %f %s", &xPos, &yPos, &speed, &waitTime, special)) != EOF)
+            {
+                MovementPatternModifier::Waypoint waypoint;
+                waypoint.position = se::Vector2(xPos, yPos);
+                waypoint.speed = speed;
+                waypoint.waitTime = waitTime;
+                if (result > 4)
+                {
+                    waypoint.controlPoint = !strcmp(special, "control");
+                }
+                waypoints.push_back(waypoint);
+            }
+            Spawner::movementPatterns.push_back(waypoints);
+
+            fclose(file);
+        }
+
+        //get enemy spawns
+        filePath = "../Content/Levels/" + levelName + "/Enemies.txt";
+
+        file = fopen(filePath.c_str(), "r");
 
         char enemyName[256];
-        float time, xPos, yPos;
-        while (fscanf(file, "%s %f %f %f", enemyName, &time, &xPos, &yPos) != EOF)
+        char patternName[256];
+        while (fscanf(file, "%s %s %f %f %f", enemyName, patternName, &time, &xPos, &yPos) != EOF)
         {
             Spawner::spawnTimes.push_back(time);
             Spawn spawn;
             spawn.collisionGroup = CollisionGroup::Enemies;
-            spawn.entity = Spawner::createEnemy(enemyName);
+            spawn.entity = Spawner::createEnemy(enemyName, patternName);
             spawn.position = se::Vector2(xPos, yPos);
             Spawner::timedSpawns.push_back(spawn);
         }
@@ -97,6 +185,7 @@ namespace bc
         fclose(file);
 
 
+        //get level walls
         filePath = "../Content/Levels/" + levelName + "/Walls.txt";
 
         file = fopen(filePath.c_str(), "r");
@@ -112,6 +201,8 @@ namespace bc
         }
 
         fclose(file);
+
+
 
         (*Spawner::entities)[CollisionGroup::Enemies].reserve(Spawner::timedSpawns.size());
         (*Spawner::entities)[CollisionGroup::Particles].reserve(5000);

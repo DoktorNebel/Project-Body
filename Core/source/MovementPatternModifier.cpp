@@ -21,12 +21,19 @@ namespace bc
 	}
 
 
+    void MovementPatternModifier::adjustWaypoints(int startPoint)
+    {
+        se::Vector2 difference = this->entity->getSprite().getPosition() - this->waypoints[startPoint].position;
+        for (int i = startPoint; i < this->waypoints.size(); ++i)
+        {
+            this->waypoints[i].position += difference;
+        }
+    }
+
+
 	void MovementPatternModifier::onCreate()
 	{
-		for (int i = 0; i < this->waypoints.size(); ++i)
-		{
-			this->waypoints[i].position += this->entity->getSprite().getPosition();
-		}
+        this->adjustWaypoints(0);
 	}
 
 
@@ -45,8 +52,9 @@ namespace bc
 				se::Vector2 direction = se::Math::GetNormalized(this->waypoints[this->nextWaypoint].position - this->waypoints[this->nextWaypoint - 1].position);
 				this->entity->getSprite().move(direction * currentSpeed * elapsedTime);
 
-				if (se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint].position) <= 1.0f)
+				if (se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint].position) <= 2.0f)
 				{
+                    this->adjustWaypoints(this->nextWaypoint);
 					this->waitTimer = this->waypoints[this->nextWaypoint].waitTime;
 					++this->nextWaypoint;
 				}
@@ -56,14 +64,16 @@ namespace bc
 				se::Vector2 p1 = this->waypoints[this->nextWaypoint - 1].position + (this->waypoints[this->nextWaypoint].position - this->waypoints[this->nextWaypoint - 1].position) * this->curveProgress;
 				se::Vector2 p2 = this->waypoints[this->nextWaypoint].position + (this->waypoints[this->nextWaypoint + 1].position - this->waypoints[this->nextWaypoint].position) * this->curveProgress;
 				se::Vector2 newPosition = p1 + (p2 - p1) * this->curveProgress;
-				this->entity->getSprite().setPosition(newPosition);
-				float currentSpeed = se::Math::Lerp(this->waypoints[this->nextWaypoint - 1].speed, this->waypoints[this->nextWaypoint + 1].speed, this->curveProgress);
-				this->curveProgress += currentSpeed * elapsedTime;
+				this->entity->getSprite().move(newPosition - this->entity->getSprite().getPosition());
+                float currentSpeed = se::Math::Lerp(this->waypoints[this->nextWaypoint - 1].speed, this->waypoints[this->nextWaypoint + 1].speed, this->curveProgress);
+                this->curveProgress += (currentSpeed * elapsedTime) / se::Math::Distance(this->waypoints[this->nextWaypoint - 1].position, this->waypoints[this->nextWaypoint + 1].position);
 
-				if (se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint + 1].position) <= 1.0f)
-				{
+				if (se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint + 1].position) <= 2.0f)
+                {
+                    this->adjustWaypoints(this->nextWaypoint + 1);
 					this->waitTimer = this->waypoints[this->nextWaypoint + 1].waitTime;
-					++this->nextWaypoint;
+                    ++this->nextWaypoint;
+                    this->curveProgress = 0.0f;
 				}
 			}
 		}

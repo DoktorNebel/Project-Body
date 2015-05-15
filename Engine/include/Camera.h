@@ -22,6 +22,7 @@ namespace se
     public:
 
         Vector2 getPosition();
+        Vector2 getActualPosition();
         void move(Vector2 translation);
         void setPosition(Vector2 position);
         float getZoom();

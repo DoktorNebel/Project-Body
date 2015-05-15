@@ -25,6 +25,7 @@ namespace bc
 
     void StickyShotModifier::onCreate()
     {
+        this->entity->damage = 0.0f;
         this->entity->getSprite().setScale(se::Vector2(3.0f, 3.0f));
         this->entity->getSprite().setColor(se::Vector4(0.1f, 1.0f, 0.1f, 1.0f));
     }

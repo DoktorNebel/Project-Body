@@ -4,6 +4,7 @@
 #include "Vector2.h"
 #include "Entity.h"
 #include "Collisiongroup.h"
+#include "MovementPatternModifier.h"
 
 namespace bc
 {
@@ -30,10 +31,12 @@ namespace bc
         static int nextSpawn;
         static unsigned int highestId;
         static std::vector<unsigned int> freeIds;
+        static std::vector<std::string> movementPatternNames;
+        static std::vector<std::vector<MovementPatternModifier::Waypoint>> movementPatterns;
 
     private:
 
-        static Entity createEnemy(std::string name);
+        static Entity createEnemy(std::string name, std::string movementPattern);
         static unsigned int getFreeId();
 
     public:

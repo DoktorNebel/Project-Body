@@ -33,7 +33,7 @@ namespace se
         void addAnimation(std::string name);
         void addSprite(std::string animationName, se::Sprite sprite);
         void setSpeed(std::string animationName, float speed);
-        void changeAnimation(std::string animationName);
+        bool changeAnimation(std::string animationName);
         std::string getCurrentAnimation();
         se::Sprite& getCurrentSprite();
         void move(Vector2 translation);

@@ -29,6 +29,12 @@ namespace se
     }
 
 
+    Vector2 Camera::getActualPosition()
+    {
+        return this->position;
+    }
+
+
     void Camera::move(Vector2 translation)
     {
         this->position += translation;

@@ -30,6 +30,10 @@ namespace bc
 		MovementPatternModifier(std::vector<Waypoint> waypoints);
 		~MovementPatternModifier();
 
+    private:
+
+        void adjustWaypoints(int startPoint);
+
 	public:
 
 		virtual void onCreate();
