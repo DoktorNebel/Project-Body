@@ -24,6 +24,7 @@ KillaBug4 = 516 836 64 64
 KillaBug5 = 901 513 64 64
 KillaBug6 = 581 772 64 64
 Mitte = 708 707 64 64
+Pixel = 9 997 1 1
 PlayerProjectile = 297 964 9 34
 S-Kurve-Links-1 = 514 642 128 128
 S-Kurve-Links-2 = 643 513 128 128

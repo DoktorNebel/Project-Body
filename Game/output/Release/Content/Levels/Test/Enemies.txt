@@ -1,18 +1,30 @@
-Virus 0.0 0 400
-Virus 0.1 100 400
-Virus 0.1 65 400
-Virus 0.3 -31 400
-Virus 0.7 34 400
-Virus 1.0 466 400
-Virus 1.0 -453 400
-Virus 1.3 20 400
-Virus 1.6 340 400
-Virus 2.4 550 400
-Virus 2.44 500 400
-Virus 2.46 450 400
-Virus 2.48 560 400
-Virus 2.5 520 400
-Virus 2.53 480 400
-Virus 2.56 580 400
-Virus 2.6 500 400
-Virus 2.7 550 400
+Virus Down_Straight 0.0 0 400
+Virus Down_Straight 0.1 100 400
+Virus Down_Straight 0.1 65 400
+Virus Down_Straight 0.3 -31 400
+Virus Down_Straight 0.7 34 400
+Virus Down_Straight 1.0 466 400
+Virus Down_Curvy 1.0 -453 400
+Virus Down_Curvy 1.3 20 400
+Virus Down_Curvy 1.6 340 400
+Virus Down_Curvy 2.4 550 400
+Virus Down_Curvy 2.44 500 400
+Virus Down_Curvy 2.46 450 400
+Virus Down_Curvy 2.48 560 400
+Virus Down_Curvy 2.5 520 400
+Virus Down_Curvy 2.53 480 400
+Virus Down_Curvy 2.56 580 400
+Virus Down_Curvy 2.6 500 400
+Virus Down_Curvy 2.7 550 400
+Virus Arc_Left 5.1 -900 220
+Virus Arc_Right 5.1 900 220
+Virus Arc_Left 5.2 -900 220
+Virus Arc_Right 5.2 900 220
+Virus Arc_Left 5.3 -900 220
+Virus Arc_Right 5.3 900 220
+Virus Arc_Left 5.4 -900 220
+Virus Arc_Right 5.4 900 220
+Virus Arc_Left 5.5 -900 220
+Virus Arc_Right 5.5 900 220
+Virus Seek_Player 7 0 400
+Bug Down_Wait 10 0 0

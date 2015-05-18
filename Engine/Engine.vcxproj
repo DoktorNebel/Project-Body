@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\include\Color.h" />
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\include\Polygon.h" />
     <ClInclude Include="include\AnimatedSprite.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Content.h" />
@@ -28,6 +30,7 @@
     <ClInclude Include="include\Vector4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\Polygon.cpp" />
     <ClCompile Include="source\AnimatedSprite.cpp" />
     <ClCompile Include="source\Camera.cpp" />
     <ClCompile Include="source\Content.cpp" />

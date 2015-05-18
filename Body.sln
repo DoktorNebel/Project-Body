@@ -20,6 +20,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Editor", "Editor\Editor.vcx
 		{4E58BF98-7831-42FC-8797-EAD1A072CBBF} = {4E58BF98-7831-42FC-8797-EAD1A072CBBF}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CollisionTest", "CollisionTest\CollisionTest.vcxproj", "{265C6844-B2A1-48A8-B7D7-75B263F23E53}"
+	ProjectSection(ProjectDependencies) = postProject
+		{880B77AC-5B4D-4544-AB3C-3599E0BDFC10} = {880B77AC-5B4D-4544-AB3C-3599E0BDFC10}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -42,6 +47,10 @@ Global
 		{D197C4EE-3068-4040-9D73-6C64210D38B7}.Debug|Win32.Build.0 = Debug|Win32
 		{D197C4EE-3068-4040-9D73-6C64210D38B7}.Release|Win32.ActiveCfg = Release|Win32
 		{D197C4EE-3068-4040-9D73-6C64210D38B7}.Release|Win32.Build.0 = Release|Win32
+		{265C6844-B2A1-48A8-B7D7-75B263F23E53}.Debug|Win32.ActiveCfg = Debug|Win32
+		{265C6844-B2A1-48A8-B7D7-75B263F23E53}.Debug|Win32.Build.0 = Debug|Win32
+		{265C6844-B2A1-48A8-B7D7-75B263F23E53}.Release|Win32.ActiveCfg = Release|Win32
+		{265C6844-B2A1-48A8-B7D7-75B263F23E53}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
