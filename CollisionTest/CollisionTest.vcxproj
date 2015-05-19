@@ -11,11 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\CollisionTest\source\Main.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\CollisionTest\source\TestGame.cpp" />
+    <ClCompile Include="source\Main.cpp" />
+    <ClCompile Include="source\TestGame.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\CollisionTest\include\TestGame.h" />
+    <ClInclude Include="include\TestGame.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{265C6844-B2A1-48A8-B7D7-75B263F23E53}</ProjectGuid>

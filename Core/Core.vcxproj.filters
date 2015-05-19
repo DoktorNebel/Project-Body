@@ -60,7 +60,7 @@
     <ClInclude Include="include\MovementPatternModifier.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\HomingMovementModifier.h">
+    <ClInclude Include="include\HomingMovementModifier.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
@@ -101,7 +101,7 @@
     <ClCompile Include="source\MovementPatternModifier.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\HomingMovementModifier.cpp">
+    <ClCompile Include="source\HomingMovementModifier.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

@@ -8,6 +8,7 @@ namespace test
 
         std::vector<se::Sprite> lines;
         se::Sprite sprite;
+		se::Camera camera;
 
     public:
 

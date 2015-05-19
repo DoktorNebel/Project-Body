@@ -15,15 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\CollisionTest\source\Main.cpp">
+    <ClCompile Include="source\Main.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\CollisionTest\source\TestGame.cpp">
+    <ClCompile Include="source\TestGame.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\CollisionTest\include\TestGame.h">
+    <ClInclude Include="include\TestGame.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
