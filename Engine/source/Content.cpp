@@ -35,14 +35,19 @@ namespace se
                 {
                     if (hitboxPoints.size() > 0)
                     {
-                        float newAngle = abs(atan2(y - hitboxPoints.back().y, x - hitboxPoints.back().x));
+                        float newAngle = abs(atan2(y - lastPixel.y, x - lastPixel.x));
                         if (resetAngle)
                         {
                             angle = newAngle;
                             resetAngle = false;
                         }
 
-						if (abs(newAngle - angle) > tolerance / Math::Distance(lastPixel, se::Vector2(x, y)))
+                        if (lastPixel.x != -1.0f && se::Math::Distance(se::Vector2(x, y), lastPixel) > 20.0f)
+                        {
+                            hitboxPoints.push_back(lastPixel);
+                            resetAngle = true;
+                        }
+						if (abs(newAngle - angle) > tolerance)
                         {
                             hitboxPoints.push_back(se::Vector2(x, y));
                             resetAngle = true;
@@ -77,14 +82,19 @@ namespace se
             {
 				if (image[y * imageWidth + x].a > alphaTolerance)
                 {
-					float newAngle = abs(atan2(y - hitboxPoints.back().y, x - hitboxPoints.back().x));
+                    float newAngle = abs(atan2(y - lastPixel.y, x - lastPixel.x));
                     if (resetAngle)
                     {
                         angle = newAngle;
                         resetAngle = false;
                     }
 
-					if (abs(newAngle - angle) > tolerance / Math::Distance(lastPixel, se::Vector2(x, y)))
+                    if (lastPixel.x != -1.0f && se::Math::Distance(se::Vector2(x, y), lastPixel) > 20.0f)
+                    {
+                        hitboxPoints.push_back(lastPixel);
+                        resetAngle = true;
+                    }
+					if (abs(newAngle - angle) > tolerance)
                     {
                         hitboxPoints.push_back(se::Vector2(x, y));
                         resetAngle = true;
@@ -114,14 +124,19 @@ namespace se
             {
 				if (image[y * imageWidth + x].a > alphaTolerance)
                 {
-					float newAngle = abs(atan2(y - hitboxPoints.back().y, x - hitboxPoints.back().x));
+                    float newAngle = abs(atan2(y - lastPixel.y, x - lastPixel.x));
                     if (resetAngle)
                     {
                         angle = newAngle;
                         resetAngle = false;
                     }
 
-					if (abs(newAngle - angle) > tolerance / Math::Distance(lastPixel, se::Vector2(x, y)))
+                    if (lastPixel.x != -1.0f && se::Math::Distance(se::Vector2(x, y), lastPixel) > 20.0f)
+                    {
+                        hitboxPoints.push_back(lastPixel);
+                        resetAngle = true;
+                    }
+					if (abs(newAngle - angle) > tolerance)
                     {
                         hitboxPoints.push_back(se::Vector2(x, y));
                         resetAngle = true;
@@ -151,14 +166,19 @@ namespace se
             {
 				if (image[y * imageWidth + x].a > alphaTolerance)
                 {
-					float newAngle = abs(atan2(y - hitboxPoints.back().y, x - hitboxPoints.back().x));
+                    float newAngle = abs(atan2(y - lastPixel.y, x - lastPixel.x));
                     if (resetAngle)
                     {
                         angle = newAngle;
                         resetAngle = false;
                     }
 
-                    if (abs(newAngle - angle) > tolerance / Math::Distance(lastPixel, se::Vector2(x, y)))
+                    if (lastPixel.x != -1.0f && se::Math::Distance(se::Vector2(x, y), lastPixel) > 20.0f)
+                    {
+                        hitboxPoints.push_back(lastPixel);
+                        resetAngle = true;
+                    }
+                    if (abs(newAngle - angle) > tolerance)
                     {
                         hitboxPoints.push_back(se::Vector2(x, y));
                         resetAngle = true;
@@ -179,6 +199,26 @@ namespace se
 		{
 			hitboxPoints.push_back(lastPixel);
 		}
+
+        int size = hitboxPoints.size() - 1;
+        for (int i = 0; i < size; ++i)
+        {
+            if (Math::Distance(hitboxPoints[i], hitboxPoints[i + 1]) < 5.0f)
+            {
+                Vector2 newPoint = (hitboxPoints[i] + hitboxPoints[i + 1]) / 2.0f;
+                hitboxPoints[i] = newPoint;
+                hitboxPoints.erase(hitboxPoints.begin() + i + 1);
+                --size;
+            }
+        }
+
+        if (Math::Distance(hitboxPoints[0], hitboxPoints.back()) < 5.0f)
+        {
+            Vector2 newPoint = (hitboxPoints[0] + hitboxPoints.back()) / 2.0f;
+            hitboxPoints[0] = newPoint;
+            hitboxPoints.pop_back();
+            --size;
+        }
 
 		for (int i = 0; i < hitboxPoints.size(); ++i)
 		{
@@ -305,7 +345,7 @@ namespace se
                 }
                 else
                 {
-					std::vector<se::Vector2> bla = Content::generateHitbox((se::Color*)image, x, y, Content::sprites[j], 0, 20.0f);
+					std::vector<se::Vector2> bla = Content::generateHitbox((se::Color*)image, x, y, Content::sprites[j], 0, 40.0f);
                     Content::hitboxes.push_back(Polygon(bla));
                 }
             }

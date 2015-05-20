@@ -15,6 +15,7 @@
     <ClCompile Include="source\TestGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\CollisionTest\include\InputActions.h" />
     <ClInclude Include="include\TestGame.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

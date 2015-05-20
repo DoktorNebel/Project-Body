@@ -6,6 +6,7 @@ namespace test
     {
     private:
 
+        se::Polygon poly;
         std::vector<se::Sprite> lines;
         se::Sprite sprite;
 		se::Camera camera;
