@@ -247,11 +247,23 @@ namespace se
         }
 
 
+        Vector2 Perpendicular(const Vector2& vector)
+        {
+            return Vector2(-vector.y, vector.x);
+        }
+
+
         Vector3 Cross(const Vector3& first, const Vector3& second)
         {
             return Vector3(first.y * second.z - first.z * second.y,
                 first.z * second.x - first.x * second.z,
                 first.x * second.y - first.y * second.x);
+        }
+
+
+        float Dot(const Vector2& first, const Vector2& second)
+        {
+            return first.x * second.x + first.y * second.y;
         }
 
 

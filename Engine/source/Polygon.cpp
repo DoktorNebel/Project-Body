@@ -29,9 +29,70 @@ namespace se
     }
 
 
-    bool Polygon::overlap(Polygon& other)
+    bool Polygon::overlap(const Polygon& other, Vector2* projectionNormal, float* projectionScalar)
     {
-        return false;
+        std::vector<Vector2> axes;
+        for (int i = 0; i < this->points.size(); ++i)
+        {
+            axes.push_back(Math::GetNormalized(Math::Perpendicular(this->points[(i + 1) % this->points.size()] - this->points[i])));
+        }
+
+        for (int i = 0; i < other.points.size(); ++i)
+        {
+            axes.push_back(Math::GetNormalized(Math::Perpendicular(other.points[(i + 1) % other.points.size()] - other.points[i])));
+        }
+
+        int minAxis;
+        float minLength = 1000000.0f;
+
+        for (int i = 0; i < axes.size(); ++i)
+        {
+            float firstMin;
+            float firstMax = firstMin = Math::Dot(this->points[0], axes[i]);
+            for (int j = 1; j < this->points.size(); ++j)
+            {
+                float value = Math::Dot(this->points[j], axes[i]);
+                if (value < firstMin)
+                    firstMin = value;
+                else if (value > firstMax)
+                    firstMax = value;
+            }
+
+            float secondMin;
+            float secondMax = secondMin = Math::Dot(other.points[0], axes[i]);
+            for (int j = 1; j < other.points.size(); ++j)
+            {
+                float value = Math::Dot(other.points[j], axes[i]);
+                if (value < secondMin)
+                    secondMin = value;
+                else if (value > secondMax)
+                    secondMax = value;
+            }
+
+            if (firstMin > secondMax || firstMax < secondMin)
+            {
+                return false;
+            }
+            else
+            {
+                float length;
+                if ((length = Math::Length(axes[i] * (firstMin - secondMax))) < minLength)
+                {
+                    minLength = length;
+                    minAxis = i;
+                }
+                if ((length = Math::Length(axes[i] * (firstMax - secondMin))) < minLength)
+                {
+                    minLength = length;
+                    minAxis = i;
+                }
+            }
+        }
+
+        *projectionNormal = axes[minAxis];
+        *projectionScalar = minLength;
+
+        return true;
     }
 
 
@@ -77,8 +138,6 @@ namespace se
             float newY = this->points[i].x * s + this->points[i].y * c;
 
             this->points[i] = Vector2(newX, newY) + this->position;
-            //this->points[i] = Vector2(this->position.x + (this->points[i].x - this->position.x) * c - this->position.y + (this->points[i].y - this->position.y) * s,
-            //    this->position.x + (this->points[i].x - this->position.x) * s + this->position.y + (this->points[i].y - this->position.y) * c);
         }
     }
 

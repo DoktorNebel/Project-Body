@@ -45,7 +45,9 @@ namespace se
 
         float Length(const Vector2& vector);
         float Length(const Vector3& vector);
+        Vector2 Perpendicular(const Vector2& vector);
         Vector3 Cross(const Vector3& first, const Vector3& second);
+        float Dot(const Vector2& first, const Vector2& second);
 		float Dot(const Vector3& first, const Vector3& second);
 		Vector2& Normalize(Vector2& vector);
 		Vector2 GetNormalized(const Vector2& vector);

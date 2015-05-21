@@ -7,8 +7,10 @@ namespace test
     private:
 
         se::Polygon poly;
+        se::Polygon poly2;
         std::vector<se::Sprite> lines;
         se::Sprite sprite;
+        se::Sprite sprite2;
 		se::Camera camera;
 
     public:

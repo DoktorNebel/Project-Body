@@ -22,7 +22,7 @@ namespace se
 
     public:
 
-        bool overlap(Polygon& other);
+        bool overlap(const Polygon& other, Vector2* projectionNormal, float* projectionScalar);
         const std::vector<Vector2>& getPoints();
         void setPosition(Vector2 position);
         void move(Vector2 movement);
