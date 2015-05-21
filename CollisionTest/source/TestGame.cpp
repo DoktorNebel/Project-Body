@@ -33,10 +33,10 @@ namespace test
         se::Input::bindKeyboardKeyAction(InputAction::ScaleUp, sf::Keyboard::W);
         se::Input::bindKeyboardKeyAction(InputAction::ScaleDown, sf::Keyboard::S);
 
-        this->sprite = se::Content::getSprite("PlayerProjectile");
+        this->sprite = se::Content::getSprite("Eck-Links-Oben");
         this->sprite.scale(se::Vector2(1.5f, 1.5f));
 
-        this->poly = se::Content::getHitbox("PlayerProjectile");
+        this->poly = se::Content::getHitbox("Eck-Links-Oben");
 
 
         this->sprite2 = se::Content::getSprite("KillaBug1");

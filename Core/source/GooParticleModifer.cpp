@@ -57,7 +57,7 @@ namespace bc
     }
 
 
-    void GooParticleModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup)
+    void GooParticleModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
 
     }

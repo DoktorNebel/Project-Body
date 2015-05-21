@@ -38,6 +38,7 @@ namespace bc
         std::vector<IModifier*> modifiers;
         modifiers.push_back(new PlayerModifier(&this->entities));
         Entity player(se::Content::getSprite("TestPlayer"), modifiers);
+        player.hitbox = se::Content::getHitbox("TestPlayer");
         player.id = 0;
         player.getSprite().setPosition(se::Vector2(0, -200));
         player.init();
@@ -121,7 +122,7 @@ namespace bc
                 if (this->entities[i][j].dead)
                     Spawner::kill(this->entities[i][j], (CollisionGroup::Type)i);
                 this->entities[i][j].update(elapsedTime);
-                this->hitboxes[i][j] = this->entities[i][j].getHitbox();
+                this->hitboxes[i][j] = this->entities[i][j].getHitRect();
             }
         }
 
@@ -134,8 +135,13 @@ namespace bc
                 {
                     if (this->hitboxes[this->collisionConfigs[i].first][j].overlap(this->hitboxes[this->collisionConfigs[i].second][k]))
                     {
-                        this->entities[this->collisionConfigs[i].first][j].hit(&this->entities[this->collisionConfigs[i].second][k], this->collisionConfigs[i].second);
-                        this->entities[this->collisionConfigs[i].second][k].hit(&this->entities[this->collisionConfigs[i].first][j], this->collisionConfigs[i].first);
+                        se::Vector2 projectionNormal;
+                        float projectionScalar;
+                        if (this->entities[this->collisionConfigs[i].first][j].getHitbox().overlap(this->entities[this->collisionConfigs[i].second][k].getHitbox(), &projectionNormal, &projectionScalar))
+                        {
+                            this->entities[this->collisionConfigs[i].first][j].hit(&this->entities[this->collisionConfigs[i].second][k], this->collisionConfigs[i].second, projectionNormal, -projectionScalar);
+                            this->entities[this->collisionConfigs[i].second][k].hit(&this->entities[this->collisionConfigs[i].first][j], this->collisionConfigs[i].first, projectionNormal, projectionScalar);
+                        }
                     }
                 }
             }

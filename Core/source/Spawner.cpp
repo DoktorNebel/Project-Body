@@ -52,6 +52,7 @@ namespace bc
             modifiers.push_back(new EnemyModifier(sprite));
             modifiers.push_back(new HitMarkerModifier());
             result.sprite = se::Content::getSprite("Virus1");
+            result.hitbox = se::Content::getHitbox("Virus1");
         }
         else if (name == "Bug")
         {
@@ -71,6 +72,7 @@ namespace bc
             modifiers.push_back(new EnemyModifier(sprite));
             modifiers.push_back(new HitMarkerModifier());
             result.sprite = se::Content::getSprite("KillaBug1");
+            result.hitbox = se::Content::getHitbox("KillaBug1");
         }
 
         IModifier* movement;
@@ -196,6 +198,7 @@ namespace bc
             Spawn spawn;
             spawn.collisionGroup = CollisionGroup::LevelElements;
             spawn.entity = Entity(se::Content::getSprite(tileName), std::vector<IModifier*>());
+            spawn.entity.hitbox = se::Content::getHitbox(tileName);
             spawn.position = se::Vector2(xPos, yPos);
             Spawner::immediateSpawns.push_back(spawn);
         }
@@ -262,11 +265,12 @@ namespace bc
     }
 
 
-    void Spawner::spawn(se::Vector2 position, Entity entity, CollisionGroup::Type collisionGroup)
+    void Spawner::spawn(se::Vector2 position, std::string spriteName, std::vector<IModifier*> modifiers, CollisionGroup::Type collisionGroup)
     {
         Spawner::Spawn spawn;
         spawn.position = position;
-        spawn.entity = entity;
+        spawn.entity = Entity(se::Content::getSprite(spriteName), modifiers);
+        spawn.entity.hitbox = se::Content::getHitbox(spriteName);
         spawn.collisionGroup = collisionGroup;
 
         Spawner::immediateSpawns.push_back(spawn);

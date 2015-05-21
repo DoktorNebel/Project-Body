@@ -37,7 +37,7 @@ namespace bc
     }
 
 
-    void StickyShotModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup)
+    void StickyShotModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
         if (collisionGroup == CollisionGroup::Enemies)
         {
@@ -68,9 +68,7 @@ namespace bc
             {
                 std::vector<IModifier*> modifiers;
                 modifiers.push_back(new ParticleModifier(se::Vector2(rand() % 2001 - 1000, rand() % 2001 - 1000), rand() % 501 / 1000.0f));
-                se::Sprite sprite = se::Content::getSprite("Funke1");
-                sprite.setColor(se::Vector4(0.1f, 1.0f, 0.1f, 1.0f));
-                Spawner::spawn(this->entity->getSprite().getPosition(), Entity(sprite, modifiers), CollisionGroup::Particles);
+                Spawner::spawn(this->entity->getSprite().getPosition(), "Funke1", modifiers, CollisionGroup::Particles);
             }
         }
     }

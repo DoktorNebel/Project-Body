@@ -43,7 +43,7 @@ namespace bc
 
         static void initialize(std::vector<std::vector<se::Rectangle>>* hitboxes, std::vector<std::vector<bc::Entity>>* entities, std::string levelName);
         static void update(float elapsedTime);
-        static void spawn(se::Vector2 position, Entity entity, CollisionGroup::Type collisionGroup);
+        static void spawn(se::Vector2 position, std::string spriteName, std::vector<IModifier*> modifiers, CollisionGroup::Type collisionGroup);
         static void kill(Entity entity, CollisionGroup::Type collisionGroup);
     };
 }

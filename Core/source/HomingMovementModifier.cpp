@@ -32,7 +32,7 @@ namespace bc
     }
 
 
-    void HomingMovementModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup)
+    void HomingMovementModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
 
     }

@@ -38,7 +38,7 @@ namespace bc
     }
 
 
-    void ParticleModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup)
+    void ParticleModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
 
     }

@@ -15,6 +15,7 @@ namespace bc
         , damage(other.damage)
         , dead(other.dead)
         , sprite(other.sprite)
+        , hitbox(other.hitbox)
         , modifiers(other.modifiers)
     {
 
@@ -48,6 +49,7 @@ namespace bc
         this->damage = rhs.damage;
         this->dead = rhs.dead;
         this->sprite = rhs.sprite;
+        this->hitbox = rhs.hitbox;
         this->modifiers = rhs.modifiers;
 
         return *this;
@@ -70,9 +72,18 @@ namespace bc
     }
 
 
-    se::Rectangle Entity::getHitbox()
+    se::Rectangle Entity::getHitRect()
     {
         return this->sprite.getRect();
+    }
+
+
+    se::Polygon& Entity::getHitbox()
+    {
+        this->hitbox.setPosition(this->sprite.getPosition());
+        this->hitbox.setRotation(this->sprite.getRotation());
+        this->hitbox.setScale(this->sprite.getScale());
+        return this->hitbox;
     }
 
 
@@ -82,11 +93,11 @@ namespace bc
     }
 
 
-    void Entity::hit(Entity* otherEntity, CollisionGroup::Type collisionGroup)
+    void Entity::hit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
         for (int i = 0; i < this->modifiers.size(); ++i)
         {
-            this->modifiers[i]->onHit(otherEntity, collisionGroup);
+            this->modifiers[i]->onHit(otherEntity, collisionGroup, projectionVector, projectionScalar);
         }
     }
 

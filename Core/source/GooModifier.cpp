@@ -36,8 +36,7 @@ namespace bc
         {
             std::vector<IModifier*> modifiers;
             modifiers.push_back(new GooParticleModifier(this));
-            Entity entity(se::Content::getSprite("Funke1"), modifiers);
-            Spawner::spawn(this->midPoint + (this->entity->getSprite().getPosition() - this->midPoint) * j / 10 + se::Vector2(rand() % 6, rand() % 6), entity, CollisionGroup::Particles);
+            Spawner::spawn(this->midPoint + (this->entity->getSprite().getPosition() - this->midPoint) * j / 10 + se::Vector2(rand() % 6, rand() % 6), "Funke1", modifiers, CollisionGroup::Particles);
         }
     }
 
@@ -78,7 +77,7 @@ namespace bc
     }
 
 
-    void GooModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup)
+    void GooModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
         this->timer = 0.0f;
         if (collisionGroup == CollisionGroup::PlayerProjectiles)
@@ -87,7 +86,7 @@ namespace bc
             {
                 if (otherEntities[i]->health > 0.0f)
                 {
-                    this->otherEntities[i]->hit(otherEntity, CollisionGroup::Players);
+                    this->otherEntities[i]->hit(otherEntity, CollisionGroup::Players, projectionVector, projectionScalar);
                     this->otherEntities[i]->health -= otherEntity->damage;
                 }
             }

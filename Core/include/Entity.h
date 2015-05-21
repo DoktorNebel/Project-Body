@@ -5,6 +5,7 @@
 #include <vector>
 #include "IModifier.h"
 #include "Collisiongroup.h"
+#include "Polygon.h"
 
 namespace bc
 {
@@ -18,6 +19,7 @@ namespace bc
         float damage;
         bool dead;
         se::Sprite sprite;
+        se::Polygon hitbox;
         std::vector<IModifier*> modifiers;
 
     public:
@@ -35,9 +37,10 @@ namespace bc
     public:
 
         void init();
-        se::Rectangle getHitbox();
+        se::Rectangle getHitRect();
+        se::Polygon& getHitbox();
         se::Sprite& getSprite();
-        void hit(Entity* otherEntity, CollisionGroup::Type collisionGroup);
+        void hit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar);
         void update(float elapsedTime);
         void destroy();
     };

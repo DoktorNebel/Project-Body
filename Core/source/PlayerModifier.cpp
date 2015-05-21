@@ -50,7 +50,7 @@ namespace bc
             this->fireCounter = 0.0f;
             std::vector<IModifier*> modifiers;
             modifiers.push_back(new ProjectileModifier(se::Vector2(rand() % 201 - 100, 3000.0f), 0.3f));
-            Spawner::spawn(this->entity->getSprite().getPosition() + se::Vector2(rand() % 9 - 4, 16.0f), Entity(se::Content::getSprite("PlayerProjectile"), modifiers), CollisionGroup::PlayerProjectiles);
+            Spawner::spawn(this->entity->getSprite().getPosition() + se::Vector2(rand() % 9 - 4, 16.0f), "PlayerProjectile", modifiers, CollisionGroup::PlayerProjectiles);
         }
 
         if (se::Input::actionPressed(bg::InputAction::StickyShot))
@@ -58,7 +58,7 @@ namespace bc
             std::vector<IModifier*> modifiers;
             modifiers.push_back(new ProjectileModifier(se::Vector2(rand() % 21 - 10, 700.0f), 2.0f));
             modifiers.push_back(new StickyShotModifier(this->entities));
-            Spawner::spawn(this->entity->getSprite().getPosition() + se::Vector2(rand() % 9 - 4, 16.0f), Entity(se::Content::getSprite("PlayerProjectile"), modifiers), CollisionGroup::PlayerProjectiles);
+            Spawner::spawn(this->entity->getSprite().getPosition() + se::Vector2(rand() % 9 - 4, 16.0f), "PlayerProjectile", modifiers, CollisionGroup::PlayerProjectiles);
         }
 
         if (this->entity->health <= 0.0f)
@@ -68,10 +68,9 @@ namespace bc
     }
 
 
-    void PlayerModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup)
+    void PlayerModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
+        this->entity->getSprite().move(projectionVector * projectionScalar);
         otherEntity->health -= this->entity->maxHealth;
-        if (collisionGroup == CollisionGroup::LevelElements)
-            this->entity->dead = true;
     }
 }

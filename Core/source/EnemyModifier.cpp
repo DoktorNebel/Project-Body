@@ -46,7 +46,7 @@ namespace bc
                 {
                     std::vector<IModifier*> modifiers;
                     modifiers.push_back(new ParticleModifier(se::Vector2(rand() % 2001 - 1000, rand() % 2001 - 1000), rand() % 501 / 1000.0f));
-                    Spawner::spawn(this->entity->getSprite().getPosition(), Entity(se::Content::getSprite("Funke1"), modifiers), CollisionGroup::Particles);
+                    Spawner::spawn(this->entity->getSprite().getPosition(), "Funke1", modifiers, CollisionGroup::Particles);
                 }
 
                 if (!this->animatedSprite.changeAnimation("Death"))
@@ -65,7 +65,7 @@ namespace bc
     }
 
 
-    void EnemyModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup)
+    void EnemyModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
         if (this->entity->health > 0.0f)
             otherEntity->health -= this->entity->maxHealth / 5.0f;

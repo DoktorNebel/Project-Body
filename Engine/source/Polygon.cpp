@@ -42,7 +42,7 @@ namespace se
             axes.push_back(Math::GetNormalized(Math::Perpendicular(other.points[(i + 1) % other.points.size()] - other.points[i])));
         }
 
-        int minAxis;
+        int minAxis = -1;
         float minLength = 1000000.0f;
 
         for (int i = 0; i < axes.size(); ++i)
