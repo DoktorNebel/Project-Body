@@ -23,6 +23,7 @@ namespace bc
 
     void HitMarkerModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
-        this->timer = 0.0f;
+        if (collisionGroup != CollisionGroup::LevelElements)
+            this->timer = 0.0f;
     }
 }

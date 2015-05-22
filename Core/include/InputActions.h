@@ -11,7 +11,8 @@ namespace bg
             Up,
             Down,
             Shoot,
-            StickyShot
+            StickyShot,
+            FasterCheat
 		};
 	};
 }

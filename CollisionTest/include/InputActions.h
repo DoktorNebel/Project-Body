@@ -13,7 +13,7 @@ namespace test
             RotateLeft,
             RotateRight,
             ScaleUp,
-            ScaleDown
+            ScaleDown,
         };
     };
 }

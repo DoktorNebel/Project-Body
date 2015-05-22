@@ -27,4 +27,7 @@ Virus Arc_Right 5.4 900 220
 Virus Arc_Left 5.5 -900 220
 Virus Arc_Right 5.5 900 220
 Virus Seek_Player 7 0 400
-Bug Arc_Left 10 0 0
+Bug Down_Wait 10 0 400
+Booger None 15 0 400
+Booger None 15.3 200 400
+Booger None 15.5 -100 400

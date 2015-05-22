@@ -24,7 +24,7 @@ namespace bc
 
     void ParticleModifier::onCreate()
     {
-
+        this->entity->getSprite().setScale(se::Vector2(2.0f, 2.0f));
     }
 
 

@@ -5,6 +5,8 @@
 #include "PlayerModifier.h"
 #include "EnemyModifier.h"
 #include "MathFunctions.h"
+#include "Input.h"
+#include "InputActions.h"
 
 namespace bc
 {
@@ -28,6 +30,7 @@ namespace bc
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::LevelElements));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::PlayerProjectiles, CollisionGroup::LevelElements));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Enemies, CollisionGroup::PlayerProjectiles));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::LevelElements, CollisionGroup::LevelElements));
         
         se::Engine::setActiveCamera(this->camera);
 
@@ -50,22 +53,19 @@ namespace bc
         this->totalElapsedTime = 0.0f;
         this->currentScrollKey = 0;
 
+        std::string path = "../Content/Levels/" + source + "/Scrolling.txt";
+        FILE* file = fopen(path.c_str(), "r");
+
         ScrollKey key;
-        key.time = 0.0f;
-        key.speed = 0.0f;
-        this->scrollSpeeds.push_back(key);
-        key.time = 5.0f;
-        key.speed = 300.0f;
-        this->scrollSpeeds.push_back(key);
-        key.time = 10.0f;
-        key.speed = 1000.0f;
-        this->scrollSpeeds.push_back(key);
-        key.time = 15.0f;
-        key.speed = 300.0f;
-        this->scrollSpeeds.push_back(key);
-        key.time = 120.0f;
-        key.speed = 100.0f;
-        this->scrollSpeeds.push_back(key);
+        float time, speed;
+        while (fscanf(file, "%f %f", &time, &speed) != EOF)
+        {
+            key.time = time;
+            key.speed = speed;
+            this->scrollSpeeds.push_back(key);
+        }
+
+        fclose(file);
 
         this->backgroundSpeeds.push_back(1.0f);
         this->backgroundSpeeds.push_back(0.8f);
@@ -110,6 +110,12 @@ namespace bc
 
     void Level::update(float elapsedTime)
     {
+        if (se::Input::getActionValue(bg::InputAction::FasterCheat))
+        {
+            elapsedTime *= 5.0f;
+            this->entities[CollisionGroup::Players][0].health = 100.0f;
+        }
+
         std::vector<Entity>::iterator entIter;
         std::vector<Entity>::iterator entEnd;
         std::vector<se::Rectangle>::iterator rectIter;
@@ -133,6 +139,9 @@ namespace bc
             {
                 for (int k = 0; k < this->hitboxes[this->collisionConfigs[i].second].size(); ++k)
                 {
+                    if (this->collisionConfigs[i].first == this->collisionConfigs[i].second && j == k)
+                        break;
+
                     if (this->hitboxes[this->collisionConfigs[i].first][j].overlap(this->hitboxes[this->collisionConfigs[i].second][k]))
                     {
                         se::Vector2 projectionNormal;

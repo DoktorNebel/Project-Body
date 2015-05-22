@@ -6,6 +6,8 @@
 #include "EnemyModifier.h"
 #include "HitMarkerModifier.h"
 #include "HomingMovementModifier.h"
+#include "BoogerModifier.h"
+#include "ShooterModifier.h"
 #include "Other\tinydir.h"
 
 namespace bc
@@ -74,8 +76,28 @@ namespace bc
             result.sprite = se::Content::getSprite("KillaBug1");
             result.hitbox = se::Content::getHitbox("KillaBug1");
         }
+        else if (name == "Booger")
+        {
+            result.dead = false;
+            result.health = 300.0f;
+            result.maxHealth = 300.0f;
+            modifiers.push_back(new BoogerModifier());
+            modifiers.push_back(new HitMarkerModifier());
+            result.sprite = se::Content::getSprite("Popel");
+            result.hitbox = se::Content::getHitbox("Popel");
+        }
+        else if (name == "Shooter")
+        {
+            result.dead = false;
+            result.health = 100.0f;
+            result.maxHealth = 100.0f;
+            modifiers.push_back(new ShooterModifier(Spawner::entities));
+            modifiers.push_back(new HitMarkerModifier());
+            result.sprite = se::Content::getSprite("Shooter");
+            result.hitbox = se::Content::getHitbox("Shooter");
+        }
 
-        IModifier* movement;
+        IModifier* movement = 0;
         if (movementPattern == "Seek_Player")
         {
             movement = new HomingMovementModifier(&(*Spawner::entities)[CollisionGroup::Players][0], 100.0f);
@@ -83,10 +105,13 @@ namespace bc
         else
         {
             int pos = std::find(Spawner::movementPatternNames.begin(), Spawner::movementPatternNames.end(), movementPattern) - Spawner::movementPatternNames.begin();
-            movement = new MovementPatternModifier(pos < Spawner::movementPatternNames.size() ? Spawner::movementPatterns[pos] : std::vector<MovementPatternModifier::Waypoint>());
+            if (pos < Spawner::movementPatternNames.size())
+                movement = new MovementPatternModifier(pos < Spawner::movementPatternNames.size() ? Spawner::movementPatterns[pos] : std::vector<MovementPatternModifier::Waypoint>());
         }
 
-        modifiers.push_back(movement);
+        if (movement != 0)
+            modifiers.push_back(movement);
+
         result.modifiers = modifiers;
 
         return result;
@@ -178,7 +203,7 @@ namespace bc
         {
             Spawner::spawnTimes.push_back(time);
             Spawn spawn;
-            spawn.collisionGroup = CollisionGroup::Enemies;
+            spawn.collisionGroup = strcmp(enemyName, "Booger") == 0 || strcmp(enemyName, "Shooter") == 0 ? CollisionGroup::LevelElements : CollisionGroup::Enemies;
             spawn.entity = Spawner::createEnemy(enemyName, patternName);
             spawn.position = se::Vector2(xPos, yPos);
             Spawner::timedSpawns.push_back(spawn);
