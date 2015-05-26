@@ -28,7 +28,12 @@ namespace bc
 	public:
 
 		MovementPatternModifier(std::vector<Waypoint> waypoints);
+        MovementPatternModifier(const MovementPatternModifier& other);
 		~MovementPatternModifier();
+
+    public:
+
+        MovementPatternModifier& operator=(const MovementPatternModifier& rhs);
 
     private:
 

@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "Spawner.h"
 #include "ShooterHeadModifier.h"
+#include "HitMarkerModifier.h"
 
 namespace bc
 {
@@ -29,11 +30,12 @@ namespace bc
             }
         }
 
-        this->entity->getSprite().setRotation(atan2(this->entity->getSprite().getPosition().y - pos.y, this->entity->getSprite().getPosition().x - pos.x) * 57.2957795f);
+        this->entity->getSprite().setRotation(atan2(pos.y - this->entity->getSprite().getPosition().y, pos.x - this->entity->getSprite().getPosition().x) * 57.2957795f + 90.0f);
 
         std::vector<IModifier*> modifiers;
         modifiers.push_back(new ShooterHeadModifier(this->entities, this));
-        Spawner::spawn(this->entity->getSprite().getPosition(), "ShooterHead", modifiers, CollisionGroup::Enemies);
+        modifiers.push_back(new HitMarkerModifier());
+        Spawner::spawn(this->entity->getSprite().getPosition(), "ShooterHead", modifiers, CollisionGroup::LevelElements);
     }
 
 

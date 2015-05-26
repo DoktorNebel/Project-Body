@@ -70,7 +70,8 @@ namespace bc
 
     void PlayerModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
-        this->entity->getSprite().move(projectionVector * projectionScalar);
+        if (collisionGroup == CollisionGroup::LevelElements)
+            this->entity->getSprite().move(projectionVector * projectionScalar);
         otherEntity->health -= this->entity->maxHealth;
     }
 }

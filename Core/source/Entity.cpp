@@ -24,9 +24,9 @@ namespace bc
 
     Entity::Entity(se::Sprite sprite, std::vector<IModifier*> modifiers)
         : id(0)
-        , health(100.0f)
-        , maxHealth(100.0f)
-        , damage(10.0f)
+        , health(1.0f)
+        , maxHealth(1.0f)
+        , damage(1.0f)
         , dead(false)
         , sprite(sprite)
         , modifiers(modifiers)

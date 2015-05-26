@@ -8,6 +8,8 @@
 #include "HomingMovementModifier.h"
 #include "BoogerModifier.h"
 #include "ShooterModifier.h"
+#include "BigVirusModifier.h"
+#include "WormElementModifier.h"
 #include "Other\tinydir.h"
 
 namespace bc
@@ -56,6 +58,26 @@ namespace bc
             result.sprite = se::Content::getSprite("Virus1");
             result.hitbox = se::Content::getHitbox("Virus1");
         }
+        if (name == "Big_Virus")
+        {
+            result.dead = false;
+            result.health = 5.0f;
+            result.maxHealth = 5.0f;
+            se::AnimatedSprite sprite;
+            sprite.addAnimation("Idle");
+            sprite.setSpeed("Idle", 0.3f);
+            sprite.addSprite("Idle", se::Content::getSprite("Virus1"));
+            sprite.addSprite("Idle", se::Content::getSprite("Virus2"));
+            sprite.addSprite("Idle", se::Content::getSprite("Virus3"));
+            sprite.addSprite("Idle", se::Content::getSprite("Virus4"));
+            sprite.setScale(se::Vector2(3.0f, 3.0f));
+            sprite.setColor(se::Vector4(0.5f, 1.0f, 0.5f, 1.0f));
+            modifiers.push_back(new EnemyModifier(sprite));
+            modifiers.push_back(new BigVirusModifier());
+            modifiers.push_back(new HitMarkerModifier());
+            result.sprite = se::Content::getSprite("Virus1");
+            result.hitbox = se::Content::getHitbox("Virus1");
+        }
         else if (name == "Bug")
         {
             result.dead = false;
@@ -76,6 +98,21 @@ namespace bc
             result.sprite = se::Content::getSprite("KillaBug1");
             result.hitbox = se::Content::getHitbox("KillaBug1");
         }
+        else if (name == "Little_Bug")
+        {
+            result.dead = false;
+            result.health = 20.0f;
+            result.maxHealth = 20.0f;
+            se::AnimatedSprite sprite;
+            sprite.addAnimation("Idle");
+            sprite.setSpeed("Idle", 0.5f);
+            sprite.addSprite("Idle", se::Content::getSprite("Kefer"));
+            sprite.setScale(se::Vector2(2.0f, 2.0f));
+            modifiers.push_back(new EnemyModifier(sprite));
+            modifiers.push_back(new HitMarkerModifier());
+            result.sprite = se::Content::getSprite("Kefer");
+            result.hitbox = se::Content::getHitbox("Kefer");
+        }
         else if (name == "Booger")
         {
             result.dead = false;
@@ -94,13 +131,39 @@ namespace bc
             modifiers.push_back(new ShooterModifier(Spawner::entities));
             modifiers.push_back(new HitMarkerModifier());
             result.sprite = se::Content::getSprite("Shooter");
+            result.sprite.scale(se::Vector2(1.5f, 1.5f));
             result.hitbox = se::Content::getHitbox("Shooter");
+        }
+        else if (name == "Neurax_Worm")
+        {
+            result.dead = false;
+            result.health = 50.0f;
+            result.maxHealth = 50.0f;
+            se::AnimatedSprite sprite;
+            sprite.addAnimation("Idle");
+            sprite.setSpeed("Idle", 0.3f);
+            sprite.addAnimation("Death");
+            sprite.setSpeed("Death", 0.3f);
+            sprite.addSprite("Idle", se::Content::getSprite("Worm_Head"));
+            sprite.addSprite("Death", se::Content::getSprite("Worm_Explosion_1"));
+            sprite.addSprite("Death", se::Content::getSprite("Worm_Explosion_2"));
+            sprite.addSprite("Death", se::Content::getSprite("Worm_Explosion_3"));
+            sprite.setScale(se::Vector2(1.0f, 1.0f));
+            modifiers.push_back(new EnemyModifier(sprite));
+            modifiers.push_back(new WormElementModifier(true, 10, 0));
+            modifiers.push_back(new HitMarkerModifier());
+            result.sprite = se::Content::getSprite("Worm_Head");
+            result.hitbox = se::Content::getHitbox("Worm_Head");
         }
 
         IModifier* movement = 0;
         if (movementPattern == "Seek_Player")
         {
-            movement = new HomingMovementModifier(&(*Spawner::entities)[CollisionGroup::Players][0], 100.0f);
+            movement = new HomingMovementModifier(&(*Spawner::entities)[CollisionGroup::Players][0], 100.0f, false);
+        }
+        else if (movementPattern == "Seek_Player_Delayed")
+        {
+            movement = new HomingMovementModifier(&(*Spawner::entities)[CollisionGroup::Players][0], 100.0f, true);
         }
         else
         {
@@ -248,6 +311,8 @@ namespace bc
         {
             Spawner::timedSpawns[Spawner::nextSpawn].entity.id = Spawner::getFreeId();
             Spawner::timedSpawns[Spawner::nextSpawn].entity.getSprite().setPosition(Spawner::timedSpawns[Spawner::nextSpawn].position);
+            if (Spawner::timedSpawns[Spawner::nextSpawn].collisionGroup == CollisionGroup::LevelElements)
+                Spawner::timedSpawns[Spawner::nextSpawn].entity.getSprite().setDepth(0.1f);
             Spawner::timedSpawns[Spawner::nextSpawn].entity.init();
             (*Spawner::hitboxes)[Spawner::timedSpawns[Spawner::nextSpawn].collisionGroup].push_back(Spawner::timedSpawns[Spawner::nextSpawn].entity.getSprite().getRect());
             (*Spawner::entities)[Spawner::timedSpawns[Spawner::nextSpawn].collisionGroup].push_back(Spawner::timedSpawns[Spawner::nextSpawn].entity);
@@ -258,6 +323,8 @@ namespace bc
         {
             Spawner::immediateSpawns[i].entity.id = Spawner::getFreeId();
             Spawner::immediateSpawns[i].entity.getSprite().setPosition(Spawner::immediateSpawns[i].position);
+            if (Spawner::immediateSpawns[i].collisionGroup == CollisionGroup::LevelElements)
+                Spawner::immediateSpawns[i].entity.getSprite().setDepth(0.1f);
             Spawner::immediateSpawns[i].entity.init();
             (*Spawner::hitboxes)[Spawner::immediateSpawns[i].collisionGroup].push_back(Spawner::immediateSpawns[i].entity.getSprite().getRect());
             (*Spawner::entities)[Spawner::immediateSpawns[i].collisionGroup].push_back(Spawner::immediateSpawns[i].entity);

@@ -25,9 +25,7 @@ namespace bc
 
     void ProjectileModifier::onCreate()
     {
-        //this->lifeTime = 10.0f;
-        //this->speed = 100.0f;
-        this->entity->getSprite().setDepth(0.1f);
+        this->entity->getSprite().setDepth(-0.1f);
         this->entity->getSprite().setScale(se::Vector2(2.0f, 2.0f));
         this->entity->damage = 1.0f;
     }

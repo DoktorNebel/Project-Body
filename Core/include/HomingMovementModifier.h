@@ -9,11 +9,13 @@ namespace bc
     private:
 
         Entity* targetEntity;
+        se::Vector2 targetPoint;
         float speed;
+        bool delayed;
 
     public:
 
-        HomingMovementModifier(Entity* targetEntity, float speed);
+        HomingMovementModifier(Entity* targetEntity, float speed, bool delayed);
         ~HomingMovementModifier();
 
     public:

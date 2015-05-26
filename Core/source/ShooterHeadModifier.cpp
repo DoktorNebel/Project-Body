@@ -5,6 +5,7 @@
 #include "ProjectileModifier.h"
 #include "Spawner.h"
 #include "ShooterModifier.h"
+#include "Engine.h"
 
 namespace bc
 {
@@ -20,7 +21,7 @@ namespace bc
 
     void ShooterHeadModifier::onCreate()
     {
-
+        this->entity->getSprite().scale(se::Vector2(1.5f, 1.5f));
     }
 
 
@@ -38,18 +39,20 @@ namespace bc
             }
         }
 
-        this->entity->getSprite().setRotation(atan2(this->entity->getSprite().getPosition().y - pos.y, this->entity->getSprite().getPosition().x - pos.x) * 57.2957795f);
+        this->entity->getSprite().setRotation(atan2(pos.y - this->entity->getSprite().getPosition().y, pos.x - this->entity->getSprite().getPosition().x) * 57.2957795f - 90.0f);
 
         this->timer += elapsedTime;
         if (this->timer >= this->fireRate)
         {
+            this->timer = 0.0f;
             std::vector<IModifier*> modifiers;
-            se::Vector2 velocity(cos(this->entity->getSprite().getRotation() * 0.0174532925f), sin(this->entity->getSprite().getRotation() * 0.0174532925f));
-            modifiers.push_back(new ProjectileModifier(velocity * 100.0f, 5.0f));
+            se::Vector2 velocity(cos((this->entity->getSprite().getRotation() + 90.0f) * 0.0174532925f), sin((this->entity->getSprite().getRotation() + 90.0f) * 0.0174532925f));
+            modifiers.push_back(new ProjectileModifier(velocity * 500.0f, 5.0f));
             Spawner::spawn(this->entity->getSprite().getPosition(), "EnemyShoot1", modifiers, CollisionGroup::EnemyProjectiles);
         }
 
-        if (this->entity->health <= 0.0f)
+        if (this->entity->health <= 0.0f || this->entity->getSprite().getPosition().x < -50 || this->entity->getSprite().getPosition().x > se::Engine::getSettings().resolutionWidth + 50 ||
+            this->entity->getSprite().getPosition().y < -50 || this->entity->getSprite().getPosition().y > se::Engine::getSettings().resolutionHeight + 50)
         {
             this->entity->dead = true;
             this->shooter->entity->dead = true;

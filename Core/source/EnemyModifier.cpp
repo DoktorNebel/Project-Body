@@ -32,7 +32,7 @@ namespace bc
         this->animatedSprite.update(elapsedTime);
 
         this->animatedSprite.setPosition(this->entity->getSprite().getPosition());
-        this->animatedSprite.setColor(se::Vector4(1.0f, 1.0f, 1.0f, 1.0f));//this->entity->getSprite().getColor());
+        this->animatedSprite.setColor(this->entity->getSprite().getColor());
 
         if (this->entity->health <= 0.0f)
         {
