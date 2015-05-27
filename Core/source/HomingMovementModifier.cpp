@@ -41,7 +41,7 @@ namespace bc
         {
             direction = se::Math::GetNormalized(this->targetEntity->getSprite().getPosition() - this->entity->getSprite().getPosition());
         }
-        this->entity->getSprite().setRotation(atan2(direction.y, direction.x) * 57.2957795f + 90.0f);
+        this->entity->getSprite().setRotation(atan2(direction.y, direction.x) * 57.2957795f - 90.0f);
         this->entity->getSprite().move(direction * this->speed * elapsedTime);
     }
 

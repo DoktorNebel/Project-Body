@@ -5,6 +5,7 @@
 #include "Engine.h"
 #include "Spawner.h"
 #include "ParticleModifier.h"
+#include "AnimatedParticleModifier.h"
 
 namespace bc
 {
@@ -46,8 +47,18 @@ namespace bc
         if (collisionGroup == CollisionGroup::LevelElements)
         {
             std::vector<IModifier*> modifiers;
-            modifiers.push_back(new ParticleModifier(this->direction * -0.5f + se::Vector2(rand() % 1501 - 750, rand() % 1501 - 750), rand() % 501 / 2000.0f));
+            modifiers.push_back(new ParticleModifier(this->direction * -0.5f + se::Vector2(rand() % 1501 - 750, rand() % 1501 - 750), se::Vector2(2.0f, 2.0f), rand() % 501 / 2000.0f));
             Spawner::spawn(this->entity->getSprite().getPosition(), "Funke1", modifiers, CollisionGroup::Particles);
+
+            modifiers.clear();
+            se::AnimatedSprite sprite;
+            sprite.addAnimation("Idle");
+            sprite.setSpeed("Idle", 0.2f);
+            sprite.addSprite("Idle", se::Content::getSprite("Flare1"));
+            sprite.addSprite("Idle", se::Content::getSprite("Flare2"));
+            sprite.addSprite("Idle", se::Content::getSprite("Flare3"));
+            modifiers.push_back(new AnimatedParticleModifier(se::Vector2(0.0f, 0.0f), se::Vector2(2.0f, 2.0f), sprite));
+            Spawner::spawn(this->entity->getSprite().getPosition(), "Flare1", modifiers, CollisionGroup::Particles);
 
             this->entity->dead = true;
         }

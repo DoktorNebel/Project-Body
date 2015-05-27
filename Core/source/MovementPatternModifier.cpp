@@ -54,6 +54,16 @@ namespace bc
 
 	void MovementPatternModifier::onCreate()
 	{
+        float radRot = this->entity->getSprite().getRotation() * 0.0174532925f;
+        float s = sin(radRot);
+        float c = cos(radRot);
+        for (int i = 0; i < this->waypoints.size(); ++i)
+        {
+            float newX = this->waypoints[i].position.x * c - this->waypoints[i].position.y * s;
+            float newY = this->waypoints[i].position.x * s + this->waypoints[i].position.y * c;
+
+            this->waypoints[i].position = se::Vector2(newX, newY);
+        }
         this->adjustWaypoints(0);
 	}
 
@@ -71,7 +81,7 @@ namespace bc
 				float factor = se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint - 1].position) / se::Math::Distance(this->waypoints[this->nextWaypoint - 1].position, this->waypoints[this->nextWaypoint].position);
                 float currentSpeed = se::Math::Lerp(this->waypoints[this->nextWaypoint - 1].speed, this->waypoints[this->nextWaypoint].speed, factor);
 				se::Vector2 direction = se::Math::GetNormalized(this->waypoints[this->nextWaypoint].position - this->waypoints[this->nextWaypoint - 1].position);
-                this->entity->getSprite().setRotation(atan2(direction.y, direction.x) * 57.2957795f + 90.0f);
+                this->entity->getSprite().setRotation(atan2(direction.y, direction.x) * 57.2957795f - 90.0f);
 				this->entity->getSprite().move(direction * currentSpeed * elapsedTime);
 
 				if (se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint].position) <= 2.0f)
@@ -87,7 +97,8 @@ namespace bc
 				se::Vector2 p2 = this->waypoints[this->nextWaypoint].position + (this->waypoints[this->nextWaypoint + 1].position - this->waypoints[this->nextWaypoint].position) * this->curveProgress;
                 se::Vector2 newPosition = p1 + (p2 - p1) * this->curveProgress;
                 se::Vector2 direction = newPosition - this->entity->getSprite().getPosition();
-                this->entity->getSprite().setRotation(atan2(direction.y, direction.x) * 57.2957795f + 90.0f);
+                if (!(direction == se::Vector2(0.0f, 0.0f)))
+                    this->entity->getSprite().setRotation(atan2(direction.y, direction.x) * 57.2957795f - 90.0f);
 				this->entity->getSprite().move(direction);
                 float currentSpeed = se::Math::Lerp(this->waypoints[this->nextWaypoint - 1].speed, this->waypoints[this->nextWaypoint + 1].speed, this->curveProgress);
                 this->curveProgress += (currentSpeed * elapsedTime) / se::Math::Distance(this->waypoints[this->nextWaypoint - 1].position, this->waypoints[this->nextWaypoint + 1].position);

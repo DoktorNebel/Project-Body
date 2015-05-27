@@ -11,27 +11,12 @@ namespace bc
     {
         this->direction = se::Vector2(0.0f, 0.0f);
         this->speed = 0.0f;
-        this->entity->getSprite().setScale(se::Vector2(2.0f, 2.0f));
     }
 
 
     void BoogerModifier::onUpdate(float elapsedTime)
     {
         this->entity->getSprite().move(this->direction * this->speed * elapsedTime);
-        if (this->entity->health <= 0.0f)
-        {
-            int particleCount = this->entity->maxHealth;
-            particleCount = particleCount < 20 ? 20 : particleCount;
-            particleCount = particleCount > 200 ? 200 : particleCount;
-            for (int i = 0; i < particleCount; ++i)
-            {
-                std::vector<IModifier*> modifiers;
-                modifiers.push_back(new ParticleModifier(se::Vector2(rand() % 2001 - 1000, rand() % 2001 - 1000), rand() % 501 / 1000.0f));
-                Spawner::spawn(this->entity->getSprite().getPosition(), "Funke1", modifiers, CollisionGroup::Particles);
-            }
-
-            this->entity->dead = true;
-        }
     }
 
 

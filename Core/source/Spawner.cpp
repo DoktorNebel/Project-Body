@@ -116,8 +116,14 @@ namespace bc
         else if (name == "Booger")
         {
             result.dead = false;
-            result.health = 300.0f;
-            result.maxHealth = 300.0f;
+            result.health = 200.0f;
+            result.maxHealth = 200.0f;
+            se::AnimatedSprite sprite;
+            sprite.addAnimation("Idle");
+            sprite.setSpeed("Idle", 0.5f);
+            sprite.addSprite("Idle", se::Content::getSprite("Popel"));
+            sprite.setScale(se::Vector2(2.0f, 2.0f));
+            modifiers.push_back(new EnemyModifier(sprite));
             modifiers.push_back(new BoogerModifier());
             modifiers.push_back(new HitMarkerModifier());
             result.sprite = se::Content::getSprite("Popel");
@@ -141,19 +147,33 @@ namespace bc
             result.maxHealth = 50.0f;
             se::AnimatedSprite sprite;
             sprite.addAnimation("Idle");
-            sprite.setSpeed("Idle", 0.3f);
+            sprite.setSpeed("Idle", 0.05f);
             sprite.addAnimation("Death");
-            sprite.setSpeed("Death", 0.3f);
-            sprite.addSprite("Idle", se::Content::getSprite("Worm_Head"));
+            sprite.setSpeed("Death", 0.1f);
+            sprite.addSprite("Idle", se::Content::getSprite("Neurax1"));
+            sprite.addSprite("Idle", se::Content::getSprite("Neurax2"));
+            sprite.addSprite("Idle", se::Content::getSprite("Neurax3"));
+            sprite.addSprite("Idle", se::Content::getSprite("Neurax4"));
+            sprite.addSprite("Idle", se::Content::getSprite("Neurax5"));
+            sprite.addSprite("Idle", se::Content::getSprite("Neurax6"));
+            sprite.addSprite("Idle", se::Content::getSprite("Neurax7"));
+            sprite.addSprite("Idle", se::Content::getSprite("Neurax8"));
+            sprite.addSprite("Idle", se::Content::getSprite("Neurax9"));
+            sprite.addSprite("Idle", se::Content::getSprite("Neurax10"));
+            sprite.addSprite("Idle", se::Content::getSprite("Neurax11"));
+            sprite.addSprite("Idle", se::Content::getSprite("Neurax12"));
+            sprite.addSprite("Idle", se::Content::getSprite("Neurax13"));
+            sprite.addSprite("Idle", se::Content::getSprite("Neurax14"));
             sprite.addSprite("Death", se::Content::getSprite("Worm_Explosion_1"));
             sprite.addSprite("Death", se::Content::getSprite("Worm_Explosion_2"));
             sprite.addSprite("Death", se::Content::getSprite("Worm_Explosion_3"));
             sprite.setScale(se::Vector2(1.0f, 1.0f));
+            sprite.setDepth(-1.0f);
             modifiers.push_back(new EnemyModifier(sprite));
             modifiers.push_back(new WormElementModifier(true, 10, 0));
             modifiers.push_back(new HitMarkerModifier());
-            result.sprite = se::Content::getSprite("Worm_Head");
-            result.hitbox = se::Content::getHitbox("Worm_Head");
+            result.sprite = se::Content::getSprite("Neurax1");
+            result.hitbox = se::Content::getHitbox("Neurax1");
         }
 
         IModifier* movement = 0;

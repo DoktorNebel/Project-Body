@@ -67,7 +67,7 @@ namespace bc
             for (int i = 0; i < 50; ++i)
             {
                 std::vector<IModifier*> modifiers;
-                modifiers.push_back(new ParticleModifier(se::Vector2(rand() % 2001 - 1000, rand() % 2001 - 1000), rand() % 501 / 1000.0f));
+                modifiers.push_back(new ParticleModifier(se::Vector2(rand() % 2001 - 1000, rand() % 2001 - 1000), se::Vector2(2.0f, 2.0f), rand() % 501 / 1000.0f));
                 Spawner::spawn(this->entity->getSprite().getPosition(), "Funke1", modifiers, CollisionGroup::Particles);
             }
         }

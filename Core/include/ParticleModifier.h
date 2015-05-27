@@ -10,12 +10,13 @@ namespace bc
     private:
 
         se::Vector2 velocity;
+        se::Vector2 size;
         float lifeTime;
         float startLifeTime;
 
     public:
 
-        ParticleModifier(se::Vector2(velocity), float lifeTime);
+        ParticleModifier(se::Vector2 velocity, se::Vector2 size, float lifeTime);
         ~ParticleModifier();
 
     public:

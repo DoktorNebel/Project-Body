@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "Engine.h"
 #include "ParticleModifier.h"
+#include "AnimatedParticleModifier.h"
 #include "Spawner.h"
 
 namespace bc
@@ -32,6 +33,7 @@ namespace bc
         this->animatedSprite.update(elapsedTime);
 
         this->animatedSprite.setPosition(this->entity->getSprite().getPosition());
+        this->animatedSprite.setRotation(this->entity->getSprite().getRotation());
         this->animatedSprite.setColor(this->entity->getSprite().getColor());
 
         if (this->entity->health <= 0.0f)
@@ -45,9 +47,19 @@ namespace bc
                 for (int i = 0; i < particleCount; ++i)
                 {
                     std::vector<IModifier*> modifiers;
-                    modifiers.push_back(new ParticleModifier(se::Vector2(rand() % 2001 - 1000, rand() % 2001 - 1000), rand() % 501 / 1000.0f));
+                    modifiers.push_back(new ParticleModifier(se::Vector2(rand() % 2001 - 1000, rand() % 2001 - 1000), se::Vector2(2.0f, 2.0f), rand() % 1001 / 1000.0f));
                     Spawner::spawn(this->entity->getSprite().getPosition(), "Funke1", modifiers, CollisionGroup::Particles);
                 }
+
+                std::vector<IModifier*> modifiers;
+                se::AnimatedSprite sprite;
+                sprite.addAnimation("Idle");
+                sprite.setSpeed("Idle", 0.2f);
+                sprite.addSprite("Idle", se::Content::getSprite("Flare1"));
+                sprite.addSprite("Idle", se::Content::getSprite("Flare2"));
+                sprite.addSprite("Idle", se::Content::getSprite("Flare3"));
+                modifiers.push_back(new AnimatedParticleModifier(se::Vector2(0.0f, 0.0f), se::Vector2(2.0f, 2.0f), sprite));
+                Spawner::spawn(this->entity->getSprite().getPosition(), "Flare1", modifiers, CollisionGroup::Particles);
 
                 if (!this->animatedSprite.changeAnimation("Death"))
                     this->entity->dead = true;

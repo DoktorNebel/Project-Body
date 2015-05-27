@@ -13,6 +13,8 @@ namespace bc
         se::Vector2 spawnPos;
         WormElementModifier* nextElement;
         WormElementModifier* previousElement;
+        bool spawned;
+        bool stopped;
 
     public:
 
@@ -20,6 +22,7 @@ namespace bc
 
     public:
 
+        void stop();
         virtual void onCreate();
         virtual void onUpdate(float elapsedTime);
         virtual void onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar);

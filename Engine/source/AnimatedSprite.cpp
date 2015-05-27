@@ -46,6 +46,8 @@ namespace se
             return false;
 
         this->currentAnimationIndex = pos;
+        if (this->currentSpriteIndex >= this->sprites[this->currentAnimationIndex].size())
+            this->currentSpriteIndex = 0;
 
         return true;
     }
@@ -148,20 +150,23 @@ namespace se
 
     void AnimatedSprite::update(float elapsedTime)
     {
-        this->animationTimer += elapsedTime;
-
-        if (this->animationTimer >= this->animationSpeeds[this->currentAnimationIndex])
+        if (this->sprites[this->currentAnimationIndex].size() > 1)
         {
-            this->animationTimer = 0.0f;
-            ++this->currentSpriteIndex;
-            if (this->currentSpriteIndex >= this->sprites[this->currentAnimationIndex].size())
+            this->animationTimer += elapsedTime;
+
+            if (this->animationTimer >= this->animationSpeeds[this->currentAnimationIndex])
             {
-                this->currentSpriteIndex = 0;
-                this->finished = true;
-            }
-            else
-            {
-                this->finished = false;
+                this->animationTimer = 0.0f;
+                ++this->currentSpriteIndex;
+                if (this->currentSpriteIndex >= this->sprites[this->currentAnimationIndex].size())
+                {
+                    this->currentSpriteIndex = 0;
+                    this->finished = true;
+                }
+                else
+                {
+                    this->finished = false;
+                }
             }
         }
     }
