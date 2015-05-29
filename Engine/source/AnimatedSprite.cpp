@@ -6,6 +6,11 @@ namespace se
         : currentAnimationIndex(0)
         , currentSpriteIndex(0)
         , animationTimer(0.0f)
+        , position(0, 0)
+        , size(1, 1)
+        , rotation(0.0f)
+        , depth(0.0f)
+        , color(1.0f, 1.0f, 1.0f, 1.0f)
     {
 
     }

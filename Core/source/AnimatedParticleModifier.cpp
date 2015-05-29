@@ -31,13 +31,16 @@ namespace bc
 
     void AnimatedParticleModifier::onUpdate(float elapsedTime)
     {
-        this->sprite.move(this->velocity * elapsedTime * this->lifeTime / this->startLifeTime);
-
         this->sprite.update(elapsedTime);
+
+        this->sprite.setPosition(this->entity->getSprite().getPosition());
+
+        this->entity->getSprite().move(this->velocity * elapsedTime * this->lifeTime / this->startLifeTime);
+
         if (this->sprite.finishedAnimation())
             this->entity->dead = true;
-
-        this->entity->getSprite().setPosition(this->sprite.getPosition());
+        else
+            this->entity->sprite = this->sprite.getCurrentSprite();
     }
 
 
