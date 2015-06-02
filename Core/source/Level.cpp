@@ -125,10 +125,10 @@ namespace bc
         {
             for (int j = 0; j < this->entities[i].size(); ++j)
             {
-                if (this->entities[i][j].dead)
-                    Spawner::kill(this->entities[i][j], (CollisionGroup::Type)i);
                 this->entities[i][j].update(elapsedTime);
                 this->hitboxes[i][j] = this->entities[i][j].getHitRect();
+                if (this->entities[i][j].dead)
+                    Spawner::kill(this->entities[i][j], (CollisionGroup::Type)i);
             }
         }
 

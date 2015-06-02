@@ -10,11 +10,12 @@
 namespace bc
 {
     ProjectileModifier::ProjectileModifier(se::Vector2 velocity, float lifeTime)
-        : direction(se::Math::GetNormalized(velocity))
+        : direction(velocity)
         , speed(se::Math::Length(velocity))
         , lifeTime(lifeTime)
     {
-
+        if (this->speed != 0.0f)
+            se::Math::Normalize(this->direction);
     }
 
 

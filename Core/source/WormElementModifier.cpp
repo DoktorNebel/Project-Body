@@ -6,6 +6,7 @@
 #include "EnemyModifier.h"
 #include "Content.h"
 #include "HitMarkerModifier.h"
+#include "HomingMovementModifier.h"
 
 namespace bc
 {
@@ -25,8 +26,16 @@ namespace bc
     {
         this->stopped = true;
 
-        delete this->entity->modifiers.back();
-        this->entity->modifiers.pop_back();
+        for (int i = 0; i < this->entity->modifiers.size(); ++i)
+        {
+            if (dynamic_cast<MovementPatternModifier*>(this->entity->modifiers[i]) || dynamic_cast<HomingMovementModifier*>(this->entity->modifiers[i]))
+            {
+                delete this->entity->modifiers[i];
+                this->entity->modifiers.erase(this->entity->modifiers.begin() + i);
+                break;
+            }
+        }
+
         if (this->nextElement != 0 && !this->nextElement->stopped)
             this->nextElement->stop();
         if (this->previousElement != 0 && !this->previousElement->stopped)

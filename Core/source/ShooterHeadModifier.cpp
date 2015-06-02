@@ -78,7 +78,11 @@ namespace bc
             Spawner::spawn(this->entity->getSprite().getPosition(), "Flare1", modifiers, CollisionGroup::Particles);
 
             this->entity->dead = true;
-            this->shooter->entity->dead = true;
+            if (this->shooter)
+            {
+                this->shooter->entity->dead = true;
+                this->shooter = 0;
+            }
         }
     }
 

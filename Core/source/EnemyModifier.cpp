@@ -79,7 +79,7 @@ namespace bc
 
     void EnemyModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
-        if (this->entity->health > 0.0f)
+        if (collisionGroup != CollisionGroup::LevelElements && this->entity->health > 0.0f)
             otherEntity->health -= this->entity->maxHealth / 5.0f;
     }
 }

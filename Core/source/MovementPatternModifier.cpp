@@ -5,13 +5,23 @@
 
 namespace bc
 {
-	MovementPatternModifier::MovementPatternModifier(std::vector<Waypoint> waypoints)
+    MovementPatternModifier::MovementPatternModifier(std::vector<Waypoint> waypoints, float startRotation, float speed)
 		: waypoints(waypoints)
 		, nextWaypoint(1)
 		, curveProgress(0.0f)
 		, waitTimer(0.0f)
-	{
+        , speed(speed)
+    {
+        float radRot = startRotation * 0.0174532925f;
+        float s = sin(radRot);
+        float c = cos(radRot);
+        for (int i = 0; i < this->waypoints.size(); ++i)
+        {
+            float newX = this->waypoints[i].position.x * c - this->waypoints[i].position.y * s;
+            float newY = this->waypoints[i].position.x * s + this->waypoints[i].position.y * c;
 
+            this->waypoints[i].position = se::Vector2(newX, newY);
+        }
 	}
 
 
@@ -20,6 +30,7 @@ namespace bc
         , nextWaypoint(1)
         , curveProgress(0.0f)
         , waitTimer(0.0f)
+        , speed(other.speed)
     {
 
     }
@@ -37,6 +48,7 @@ namespace bc
         this->nextWaypoint = 1; 
         this->curveProgress = 0.0f;
         this->waitTimer = 0.0f;
+        this->speed = rhs.speed;
 
         return *this;
     }
@@ -54,16 +66,6 @@ namespace bc
 
 	void MovementPatternModifier::onCreate()
 	{
-        float radRot = this->entity->getSprite().getRotation() * 0.0174532925f;
-        float s = sin(radRot);
-        float c = cos(radRot);
-        for (int i = 0; i < this->waypoints.size(); ++i)
-        {
-            float newX = this->waypoints[i].position.x * c - this->waypoints[i].position.y * s;
-            float newY = this->waypoints[i].position.x * s + this->waypoints[i].position.y * c;
-
-            this->waypoints[i].position = se::Vector2(newX, newY);
-        }
         this->adjustWaypoints(0);
 	}
 
@@ -74,7 +76,7 @@ namespace bc
 		{
 			if (this->waitTimer > 0.0f)
 			{
-				this->waitTimer -= elapsedTime;
+                this->waitTimer -= elapsedTime * this->speed;
 			}
 			else if (!this->waypoints[this->nextWaypoint].controlPoint)
 			{
@@ -82,7 +84,7 @@ namespace bc
                 float currentSpeed = se::Math::Lerp(this->waypoints[this->nextWaypoint - 1].speed, this->waypoints[this->nextWaypoint].speed, factor);
 				se::Vector2 direction = se::Math::GetNormalized(this->waypoints[this->nextWaypoint].position - this->waypoints[this->nextWaypoint - 1].position);
                 this->entity->getSprite().setRotation(atan2(direction.y, direction.x) * 57.2957795f - 90.0f);
-				this->entity->getSprite().move(direction * currentSpeed * elapsedTime);
+				this->entity->getSprite().move(direction * currentSpeed * elapsedTime * this->speed);
 
 				if (se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint].position) <= 2.0f)
 				{
@@ -101,7 +103,7 @@ namespace bc
                     this->entity->getSprite().setRotation(atan2(direction.y, direction.x) * 57.2957795f - 90.0f);
 				this->entity->getSprite().move(direction);
                 float currentSpeed = se::Math::Lerp(this->waypoints[this->nextWaypoint - 1].speed, this->waypoints[this->nextWaypoint + 1].speed, this->curveProgress);
-                this->curveProgress += (currentSpeed * elapsedTime) / se::Math::Distance(this->waypoints[this->nextWaypoint - 1].position, this->waypoints[this->nextWaypoint + 1].position);
+                this->curveProgress += (currentSpeed * elapsedTime * this->speed) / se::Math::Distance(this->waypoints[this->nextWaypoint - 1].position, this->waypoints[this->nextWaypoint + 1].position);
 
 				if (se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint + 1].position) <= 2.0f)
                 {

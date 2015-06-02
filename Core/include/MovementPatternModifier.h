@@ -24,10 +24,11 @@ namespace bc
 		int nextWaypoint;
 		float curveProgress;
 		float waitTimer;
+        float speed;
 
 	public:
 
-		MovementPatternModifier(std::vector<Waypoint> waypoints);
+		MovementPatternModifier(std::vector<Waypoint> waypoints, float startRotation, float speed);
         MovementPatternModifier(const MovementPatternModifier& other);
 		~MovementPatternModifier();
 

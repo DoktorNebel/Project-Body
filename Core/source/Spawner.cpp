@@ -26,6 +26,8 @@ namespace bc
     std::vector<Spawner::Spawn> Spawner::killList = std::vector<Spawner::Spawn>();
     std::vector<std::string> Spawner::movementPatternNames = std::vector<std::string>();
     std::vector<std::vector<MovementPatternModifier::Waypoint>> Spawner::movementPatterns = std::vector<std::vector<MovementPatternModifier::Waypoint>>();
+    std::vector<std::string> Spawner::shotPatternNames = std::vector<std::string>();
+    std::vector<ShootingModifier::ShotPattern> Spawner::shotPatterns = std::vector<ShootingModifier::ShotPattern>();
 
 
     Entity Spawner::createEnemy(std::string name, std::string movementPattern)
@@ -95,6 +97,7 @@ namespace bc
             sprite.setScale(se::Vector2(2.0f, 2.0f));
             modifiers.push_back(new EnemyModifier(sprite));
             modifiers.push_back(new HitMarkerModifier());
+            modifiers.push_back(new ShootingModifier(Spawner::shotPatterns[std::find(Spawner::shotPatternNames.begin(), Spawner::shotPatternNames.end(), "BigBug") - Spawner::shotPatternNames.begin()]));
             result.sprite = se::Content::getSprite("KillaBug1");
             result.hitbox = se::Content::getHitbox("KillaBug1");
         }
@@ -189,7 +192,7 @@ namespace bc
         {
             int pos = std::find(Spawner::movementPatternNames.begin(), Spawner::movementPatternNames.end(), movementPattern) - Spawner::movementPatternNames.begin();
             if (pos < Spawner::movementPatternNames.size())
-                movement = new MovementPatternModifier(pos < Spawner::movementPatternNames.size() ? Spawner::movementPatterns[pos] : std::vector<MovementPatternModifier::Waypoint>());
+                movement = new MovementPatternModifier(Spawner::movementPatterns[pos], 0.0f, 1.0f);
         }
 
         if (movement != 0)
@@ -216,6 +219,13 @@ namespace bc
         }
 
         return result;
+    }
+
+
+    std::vector<MovementPatternModifier::Waypoint> Spawner::getMovementPattern(std::string patternName)
+    {
+        int pos = std::find(Spawner::movementPatternNames.begin(), Spawner::movementPatternNames.end(), patternName) - Spawner::movementPatternNames.begin();
+        return pos < Spawner::movementPatterns.size() ? Spawner::movementPatterns[pos] : std::vector<MovementPatternModifier::Waypoint>();
     }
 
 
@@ -271,6 +281,63 @@ namespace bc
                 waypoints.push_back(waypoint);
             }
             Spawner::movementPatterns.push_back(waypoints);
+
+            fclose(file);
+        }
+
+        //get shot pattern filenames
+        fileNames.clear();
+        tinydir_open_sorted(&dir, "../Content/Shot Patterns/");
+
+        for (int i = 0; i < dir.n_files; ++i)
+        {
+            tinydir_file tdfile;
+            tinydir_readfile_n(&dir, &tdfile, i);
+
+            if (!tdfile.is_dir && strcmp(tdfile.name, "Thumbs.db"))
+            {
+                fileNames.push_back(tdfile.name);
+            }
+        }
+
+        tinydir_close(&dir);
+
+        //get shot patterns
+        char firstString[256];
+        char secondString[256];
+        float rotation;
+        for (int i = 0; i < fileNames.size(); ++i)
+        {
+            filePath = "../Content/Shot Patterns/" + fileNames[i];
+
+            file = fopen(filePath.c_str(), "r");
+
+            char patternName[256];
+            sscanf(fileNames[i].c_str(), "%[^.]", patternName);
+            Spawner::shotPatternNames.push_back(patternName);
+            ShootingModifier::ShotPattern shotPattern;
+            shotPattern.shotSalvos.push_back(ShootingModifier::ShotPattern::Salvo());
+            int index = 0;
+            while (fscanf(file, "%s %s %f %f", firstString, secondString, &speed, &rotation) != EOF)
+            {
+                if (strcmp(firstString, "Delay") == 0)
+                {
+                    float delay = atof(secondString);
+                    shotPattern.delays.push_back(delay);
+                    shotPattern.shotSalvos.push_back(ShootingModifier::ShotPattern::Salvo());
+                    ++index;
+                }
+                else
+                {
+                    shotPattern.shotSalvos[index].shotSpriteNames.push_back(firstString);
+                    shotPattern.shotSalvos[index].shotMovementNames.push_back(secondString);
+                    shotPattern.shotSalvos[index].speeds.push_back(speed);
+                    shotPattern.shotSalvos[index].rotations.push_back(rotation);
+                }
+            }
+            if (shotPattern.shotSalvos.size() > shotPattern.delays.size())
+                shotPattern.shotSalvos.pop_back();
+            Spawner::shotPatterns.push_back(shotPattern);
 
             fclose(file);
         }

@@ -77,11 +77,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\AnimatedParticleModifier.h" />
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\AnimationModifier.h" />
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\BigVirusModifier.h" />
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\BoogerModifier.h" />
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\ShakyMovementModifier.h" />
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\ShooterHeadModifier.h" />
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\ShooterModifier.h" />
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\ShootingModifier.h" />
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\WormElementModifier.h" />
     <ClInclude Include="include\HomingMovementModifier.h" />
     <ClInclude Include="include\Collisiongroup.h" />
@@ -102,11 +104,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\AnimatedParticleModifier.cpp" />
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\AnimationModifier.cpp" />
     <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\BigVirusModifier.cpp" />
     <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\BoogerModifier.cpp" />
     <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\ShakyMovementModifier.cpp" />
     <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\ShooterHeadModifier.cpp" />
     <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\ShooterModifier.cpp" />
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\ShootingModifier.cpp" />
     <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\WormElementModifier.cpp" />
     <ClCompile Include="source\HomingMovementModifier.cpp" />
     <ClCompile Include="source\EnemyModifier.cpp" />
