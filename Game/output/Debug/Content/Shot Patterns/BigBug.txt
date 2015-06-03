@@ -1,5 +1,5 @@
-EnemyShoot1 Down_Straight 2.0 -60
-EnemyShoot1 Down_Straight 2.0 -30
-EnemyShoot1 Down_Straight 2.0 30
-EnemyShoot1 Down_Straight 2.0 60
 Delay 1.0
+EneElek Down_Straight 2.0 -60
+EneElek Down_Straight 2.0 -20
+EneElek Down_Straight 2.0 20
+EneElek Down_Straight 2.0 60

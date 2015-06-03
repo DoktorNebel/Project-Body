@@ -28,6 +28,8 @@ namespace bc
     std::vector<std::vector<MovementPatternModifier::Waypoint>> Spawner::movementPatterns = std::vector<std::vector<MovementPatternModifier::Waypoint>>();
     std::vector<std::string> Spawner::shotPatternNames = std::vector<std::string>();
     std::vector<ShootingModifier::ShotPattern> Spawner::shotPatterns = std::vector<ShootingModifier::ShotPattern>();
+    std::vector<std::string> Spawner::animationNames = std::vector<std::string>();
+    std::vector<se::AnimatedSprite> Spawner::animations = std::vector<se::AnimatedSprite>();
 
 
     Entity Spawner::createEnemy(std::string name, std::string movementPattern)
@@ -222,6 +224,18 @@ namespace bc
     }
 
 
+    bool Spawner::getAnimation(std::string name, se::AnimatedSprite* outSprite)
+    {
+        int pos = std::find(Spawner::animationNames.begin(), Spawner::animationNames.end(), name) - Spawner::animationNames.begin();
+        if (pos < Spawner::animationNames.size())
+        {
+            *outSprite = Spawner::animations[pos];
+            return true;
+        }
+        return false;
+    }
+
+
     std::vector<MovementPatternModifier::Waypoint> Spawner::getMovementPattern(std::string patternName)
     {
         int pos = std::find(Spawner::movementPatternNames.begin(), Spawner::movementPatternNames.end(), patternName) - Spawner::movementPatternNames.begin();
@@ -316,8 +330,7 @@ namespace bc
             sscanf(fileNames[i].c_str(), "%[^.]", patternName);
             Spawner::shotPatternNames.push_back(patternName);
             ShootingModifier::ShotPattern shotPattern;
-            shotPattern.shotSalvos.push_back(ShootingModifier::ShotPattern::Salvo());
-            int index = 0;
+            int index = -1;
             while (fscanf(file, "%s %s %f %f", firstString, secondString, &speed, &rotation) != EOF)
             {
                 if (strcmp(firstString, "Delay") == 0)
@@ -335,8 +348,7 @@ namespace bc
                     shotPattern.shotSalvos[index].rotations.push_back(rotation);
                 }
             }
-            if (shotPattern.shotSalvos.size() > shotPattern.delays.size())
-                shotPattern.shotSalvos.pop_back();
+
             Spawner::shotPatterns.push_back(shotPattern);
 
             fclose(file);
@@ -379,6 +391,17 @@ namespace bc
         }
 
         fclose(file);
+
+
+        //create animations
+        se::AnimatedSprite sprite;
+        sprite.addAnimation("Idle");
+        sprite.setSpeed("Idle", 0.2f);
+        sprite.addSprite("Idle", se::Content::getSprite("EneElek0"));
+        sprite.addSprite("Idle", se::Content::getSprite("EneElek1"));
+        sprite.addSprite("Idle", se::Content::getSprite("EneElek2"));
+        Spawner::animationNames.push_back("EneElek");
+        Spawner::animations.push_back(sprite);
 
 
 
@@ -451,6 +474,17 @@ namespace bc
         spawn.entity = Entity(se::Content::getSprite(spriteName), modifiers);
         spawn.entity.hitbox = se::Content::getHitbox(spriteName);
         spawn.collisionGroup = collisionGroup;
+
+        Spawner::immediateSpawns.push_back(spawn);
+    }
+
+
+    void Spawner::spawnEnemy(se::Vector2 position, std::string enemyName, std::string movePatternName)
+    {
+        Spawn spawn;
+        spawn.collisionGroup = enemyName == "Booger" || enemyName == "Shooter" ? CollisionGroup::LevelElements : CollisionGroup::Enemies;
+        spawn.entity = Spawner::createEnemy(enemyName, movePatternName);
+        spawn.position = position;
 
         Spawner::immediateSpawns.push_back(spawn);
     }

@@ -6,6 +6,7 @@
 #include "Collisiongroup.h"
 #include "MovementPatternModifier.h"
 #include "ShootingModifier.h"
+#include "AnimatedSprite.h"
 
 namespace bc
 {
@@ -36,6 +37,8 @@ namespace bc
         static std::vector<std::vector<MovementPatternModifier::Waypoint>> movementPatterns;
         static std::vector<std::string> shotPatternNames;
         static std::vector<ShootingModifier::ShotPattern> shotPatterns;
+        static std::vector<std::string> animationNames;
+        static std::vector<se::AnimatedSprite> animations;
 
     private:
 
@@ -44,10 +47,12 @@ namespace bc
 
     public:
 
+        static bool getAnimation(std::string name, se::AnimatedSprite* outSprite);
         static std::vector<MovementPatternModifier::Waypoint> getMovementPattern(std::string patternName);
         static void initialize(std::vector<std::vector<se::Rectangle>>* hitboxes, std::vector<std::vector<bc::Entity>>* entities, std::string levelName);
         static void update(float elapsedTime);
         static void spawn(se::Vector2 position, std::string spriteName, std::vector<IModifier*> modifiers, CollisionGroup::Type collisionGroup);
+        static void spawnEnemy(se::Vector2 position, std::string enemyName, std::string movePatternName);
         static void kill(Entity entity, CollisionGroup::Type collisionGroup);
     };
 }

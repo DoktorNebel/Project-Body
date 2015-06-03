@@ -3,7 +3,8 @@
 #include "Entity.h"
 #include "Engine.h"
 #include "ParticleModifier.h"
-#include "AnimatedParticleModifier.h"
+#include "AnimatedSprite.h"
+#include "AnimationModifier.h"
 #include "Spawner.h"
 
 namespace bc
@@ -58,7 +59,8 @@ namespace bc
                 sprite.addSprite("Idle", se::Content::getSprite("Flare1"));
                 sprite.addSprite("Idle", se::Content::getSprite("Flare2"));
                 sprite.addSprite("Idle", se::Content::getSprite("Flare3"));
-                modifiers.push_back(new AnimatedParticleModifier(se::Vector2(0.0f, 0.0f), se::Vector2(1.0f, 1.0f), sprite));
+                modifiers.push_back(new ParticleModifier(se::Vector2(0.0f, 0.0f), se::Vector2(1.0f, 1.0f), 0.15f));
+                modifiers.push_back(new AnimationModifier(sprite));
                 Spawner::spawn(this->entity->getSprite().getPosition(), "Flare1", modifiers, CollisionGroup::Particles);
 
                 if (!this->animatedSprite.changeAnimation("Death"))
