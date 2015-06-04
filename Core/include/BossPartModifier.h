@@ -14,6 +14,10 @@ namespace bc
 
     public:
 
+        int id;
+
+    public:
+
         BossPartModifier(BossModifier* boss);
 
     public:

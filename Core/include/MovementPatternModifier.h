@@ -18,6 +18,17 @@ namespace bc
 			bool controlPoint;
 		};
 
+        struct Style
+        {
+            enum Type
+            {
+                Stay,
+                Kill,
+                Repeat,
+                Reverse
+            };
+        };
+
 	private:
 
 		std::vector<Waypoint> waypoints;
@@ -25,10 +36,11 @@ namespace bc
 		float curveProgress;
 		float waitTimer;
         float speed;
+        Style::Type style;
 
 	public:
 
-		MovementPatternModifier(std::vector<Waypoint> waypoints, float startRotation, float speed);
+        MovementPatternModifier(std::vector<Waypoint> waypoints, float startRotation, float speed, Style::Type style);
         MovementPatternModifier(const MovementPatternModifier& other);
 		~MovementPatternModifier();
 

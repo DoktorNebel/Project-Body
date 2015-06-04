@@ -194,7 +194,7 @@ namespace bc
         {
             int pos = std::find(Spawner::movementPatternNames.begin(), Spawner::movementPatternNames.end(), movementPattern) - Spawner::movementPatternNames.begin();
             if (pos < Spawner::movementPatternNames.size())
-                movement = new MovementPatternModifier(Spawner::movementPatterns[pos], 0.0f, 1.0f);
+                movement = new MovementPatternModifier(Spawner::movementPatterns[pos], 0.0f, 1.0f, MovementPatternModifier::Style::Kill);
         }
 
         if (movement != 0)
@@ -233,6 +233,13 @@ namespace bc
             return true;
         }
         return false;
+    }
+
+
+    ShootingModifier::ShotPattern Spawner::getShotPattern(std::string patternName)
+    {
+        int pos = std::find(Spawner::shotPatternNames.begin(), Spawner::shotPatternNames.end(), patternName) - Spawner::shotPatternNames.begin();
+        return Spawner::shotPatterns[pos];
     }
 
 

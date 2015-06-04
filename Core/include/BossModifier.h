@@ -13,38 +13,40 @@ namespace bc
     {
     public:
 
-        struct BossPattern
+        struct Phase
         {
-            struct Phase
+            struct Spawn
             {
-                struct Spawn
-                {
-                    se::Vector2 position;
-                    std::string enemyName;
-                    std::string movePatternName;
-                    float delay;
-                };
-
-                struct Part
-                {
-                    int id;
-                    se::Vector2 spawnPosition;
-                    std::string spriteName;
-                    std::string movePatternName;
-                };
-
-                ShootingModifier::ShotPattern shotPattern;
-                std::vector<Spawn> spawns;
-                std::vector<Part> parts;
+                se::Vector2 position;
+                std::string enemyName;
+                std::string movePatternName;
+                float delay;
             };
 
-            std::vector<Phase> phases;
+            struct Part
+            {
+                se::Vector2 spawnPosition;
+                std::string spriteName;
+                std::string movePatternName;
+                std::string shotPatternName;
+            };
+
+            ShootingModifier::ShotPattern shotPattern;
+            std::vector<Spawn> spawns;
+            std::vector<Part> parts;
+            float startHealth;
         };
 
     private:
 
+        std::vector<Phase> phases;
+        int nextPhase;
         std::vector<BossPartModifier*> parts;
         ShootingModifier* shootingModifier;
+
+    public:
+
+        BossModifier(std::vector<Phase> pattern);
 
     public:
 

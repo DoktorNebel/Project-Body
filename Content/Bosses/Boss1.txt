@@ -1,0 +1,4 @@
+Health 10000
+Phase 1 1.0
+Movement Boss1
+Shooting Boss1

@@ -5,12 +5,13 @@
 
 namespace bc
 {
-    MovementPatternModifier::MovementPatternModifier(std::vector<Waypoint> waypoints, float startRotation, float speed)
+    MovementPatternModifier::MovementPatternModifier(std::vector<Waypoint> waypoints, float startRotation, float speed, Style::Type style)
 		: waypoints(waypoints)
 		, nextWaypoint(1)
 		, curveProgress(0.0f)
 		, waitTimer(0.0f)
         , speed(speed)
+        , style(style)
     {
         float radRot = startRotation * 0.0174532925f;
         float s = sin(radRot);
@@ -90,7 +91,7 @@ namespace bc
 				{
                     this->adjustWaypoints(this->nextWaypoint);
 					this->waitTimer = this->waypoints[this->nextWaypoint].waitTime;
-					++this->nextWaypoint;
+					this->nextWaypoint += this->speed >= 0 ? 1 : -1;
 				}
 			}
 			else if (this->nextWaypoint + 1 < this->waypoints.size())
@@ -108,15 +109,30 @@ namespace bc
 				if (se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint + 1].position) <= 2.0f)
                 {
                     this->adjustWaypoints(this->nextWaypoint + 1);
-					this->waitTimer = this->waypoints[this->nextWaypoint + 1].waitTime;
-                    ++this->nextWaypoint;
+                    this->waitTimer = this->waypoints[this->nextWaypoint + 1].waitTime;
+                    this->nextWaypoint += this->speed >= 0 ? 1 : -1;
                     this->curveProgress = 0.0f;
 				}
 			}
 		}
 		else
 		{
-			this->entity->health = 0.0f;
+            switch (this->style)
+            {
+            case Style::Kill:
+                this->entity->health = 0.0f;
+                break;
+
+            case Style::Repeat:
+                this->nextWaypoint = 1;
+                this->entity->getSprite().setPosition(this->waypoints[0].position);
+                this->curveProgress = 0.0f;
+                break;
+
+            case Style::Reverse:
+                this->speed *= -1;
+
+            }
 		}
 	}
 
