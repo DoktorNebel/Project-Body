@@ -4,6 +4,7 @@
 
 #include <vector>
 #include "ShootingModifier.h"
+#include "MovementPatternModifier.h"
 
 namespace bc
 {
@@ -28,10 +29,13 @@ namespace bc
                 se::Vector2 spawnPosition;
                 std::string spriteName;
                 std::string movePatternName;
+                bool noRotate;
                 std::string shotPatternName;
             };
 
-            ShootingModifier::ShotPattern shotPattern;
+            std::string movementPattern;
+            MovementPatternModifier::Style::Type movementType;
+            std::string shotPattern;
             std::vector<Spawn> spawns;
             std::vector<Part> parts;
             float startHealth;
@@ -40,9 +44,8 @@ namespace bc
     private:
 
         std::vector<Phase> phases;
-        int nextPhase;
+        unsigned int nextPhase;
         std::vector<BossPartModifier*> parts;
-        ShootingModifier* shootingModifier;
 
     public:
 

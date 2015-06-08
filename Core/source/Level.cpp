@@ -121,9 +121,9 @@ namespace bc
         std::vector<se::Rectangle>::iterator rectIter;
 
         //updating
-        for (int i = 0; i < this->entities.size(); ++i)
+        for (unsigned int i = 0; i < this->entities.size(); ++i)
         {
-            for (int j = 0; j < this->entities[i].size(); ++j)
+            for (unsigned int j = 0; j < this->entities[i].size(); ++j)
             {
                 this->entities[i][j].update(elapsedTime);
                 this->hitboxes[i][j] = this->entities[i][j].getHitRect();
@@ -133,11 +133,11 @@ namespace bc
         }
 
         //collision detection
-        for (int i = 0; i < this->collisionConfigs.size(); ++i)
+        for (unsigned int i = 0; i < this->collisionConfigs.size(); ++i)
         {
-            for (int j = 0; j < this->hitboxes[this->collisionConfigs[i].first].size(); ++j)
+            for (unsigned int j = 0; j < this->hitboxes[this->collisionConfigs[i].first].size(); ++j)
             {
-                for (int k = 0; k < this->hitboxes[this->collisionConfigs[i].second].size(); ++k)
+                for (unsigned int k = 0; k < this->hitboxes[this->collisionConfigs[i].second].size(); ++k)
                 {
                     if (this->collisionConfigs[i].first == this->collisionConfigs[i].second && j == k)
                         break;
@@ -174,9 +174,9 @@ namespace bc
                 ++this->currentScrollKey;
         }
 
-        for (int i = 0; i < this->backgroundSprites.size(); ++i)
+        for (unsigned int i = 0; i < this->backgroundSprites.size(); ++i)
         {
-            for (int j = 0; j < this->backgroundSprites[i].size(); ++j)
+            for (unsigned int j = 0; j < this->backgroundSprites[i].size(); ++j)
             {
                 this->backgroundSprites[i][j].move(se::Vector2((this->camera.getActualPosition().x - this->lastCameraPos.x) * (1 - this->backgroundSpeeds[i]) * (se::Engine::getSettings().resolutionWidth / 2), currentScrollSpeed * -this->backgroundSpeeds[i] * elapsedTime));
             }
@@ -184,7 +184,7 @@ namespace bc
 
         this->lastCameraPos = this->camera.getActualPosition();
 
-        for (int i = 0; i < this->entities[CollisionGroup::LevelElements].size(); ++i)
+        for (unsigned int i = 0; i < this->entities[CollisionGroup::LevelElements].size(); ++i)
         {
             this->entities[CollisionGroup::LevelElements][i].getSprite().move(se::Vector2(0.0f, -currentScrollSpeed * elapsedTime));
         }
@@ -195,17 +195,17 @@ namespace bc
 
     void Level::draw()
     {
-        for (int i = 0; i < this->backgroundSprites.size(); ++i)
+        for (unsigned int i = 0; i < this->backgroundSprites.size(); ++i)
         {
-            for (int j = 0; j < this->backgroundSprites[i].size(); ++j)
+            for (unsigned int j = 0; j < this->backgroundSprites[i].size(); ++j)
             {
                 se::Engine::draw(this->backgroundSprites[i][j]);
             }
         }
 
-        for (int i = 0; i < this->entities.size(); ++i)
+        for (unsigned int i = 0; i < this->entities.size(); ++i)
         {
-            for (int j = 0; j < this->entities[i].size(); ++j)
+            for (unsigned int j = 0; j < this->entities[i].size(); ++j)
             {
                 se::Engine::draw(this->entities[i][j].getSprite());
             }

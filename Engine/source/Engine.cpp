@@ -23,7 +23,7 @@ namespace se
         Engine::settings = settings;
 
         Engine::window->setActive(true);
-        srand(time(0));
+        srand((unsigned int)time(0));
 
         Engine::lastUpdate = std::chrono::high_resolution_clock::now();
 

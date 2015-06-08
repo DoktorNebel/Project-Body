@@ -27,9 +27,9 @@ namespace se
 			int bla = 5;
 
         //left to right
-        for (int y = texRect.top; y < texRect.bottom; ++y)
+        for (int y = (int)texRect.top; y < (int)texRect.bottom; ++y)
         {
-            for (int x = texRect.left; x < texRect.right; ++x)
+            for (int x = (int)texRect.left; x < (int)texRect.right; ++x)
             {
                 if (image[y * imageWidth + x].a > alphaTolerance)
                 {
@@ -42,23 +42,23 @@ namespace se
                             resetAngle = false;
                         }
 
-                        if (lastPixel.x != -1.0f && se::Math::Distance(se::Vector2(x, y), lastPixel) > 20.0f)
+                        if (lastPixel.x != -1.0f && se::Math::Distance(se::Vector2((float)x, (float)y), lastPixel) > 20.0f)
                         {
                             hitboxPoints.push_back(lastPixel);
                             resetAngle = true;
                         }
 						if (abs(newAngle - angle) > tolerance)
                         {
-                            hitboxPoints.push_back(se::Vector2(x, y));
+                            hitboxPoints.push_back(se::Vector2((float)x, (float)y));
                             resetAngle = true;
                         }
                     }
                     else if (hitboxPoints.size() == 0)
                     {
-                        hitboxPoints.push_back(se::Vector2(x, y));
+                        hitboxPoints.push_back(se::Vector2((float)x, (float)y));
                     }
 
-                    lastPixel = se::Vector2(x, y);
+                    lastPixel = se::Vector2((float)x, (float)y);
 
                     break;
                 }
@@ -76,9 +76,9 @@ namespace se
 		lastPixel = se::Vector2(-1.0f, -1.0f);
 
         //bottom to top
-        for (int x = hitboxPoints.back().x + 1; x < texRect.right; ++x)
+        for (int x = (int)hitboxPoints.back().x + 1; x < (int)texRect.right; ++x)
         {
-            for (int y = texRect.bottom; y > texRect.top; --y)
+            for (int y = (int)texRect.bottom; y > (int)texRect.top; --y)
             {
 				if (image[y * imageWidth + x].a > alphaTolerance)
                 {
@@ -89,22 +89,22 @@ namespace se
                         resetAngle = false;
                     }
 
-                    if (lastPixel.x != -1.0f && se::Math::Distance(se::Vector2(x, y), lastPixel) > 20.0f)
+                    if (lastPixel.x != -1.0f && se::Math::Distance(se::Vector2((float)x, (float)y), lastPixel) > 20.0f)
                     {
                         hitboxPoints.push_back(lastPixel);
                         resetAngle = true;
                     }
 					if (abs(newAngle - angle) > tolerance)
                     {
-                        hitboxPoints.push_back(se::Vector2(x, y));
+                        hitboxPoints.push_back(se::Vector2((float)x, (float)y));
                         resetAngle = true;
                     }
 
-                    lastPixel = se::Vector2(x, y);
+                    lastPixel = se::Vector2((float)x, (float)y);
 
                     break;
                 }
-				else if (y == texRect.top + 1 && lastPixel.x != -1.0f)
+				else if (y == (int)texRect.top + 1 && lastPixel.x != -1.0f)
                 {
                     hitboxPoints.push_back(lastPixel);
                 }
@@ -118,9 +118,9 @@ namespace se
 		lastPixel = se::Vector2(-1.0f, -1.0f);
 
         //right to left
-        for (int y = hitboxPoints.back().y - 1; y > texRect.top; --y)
+        for (int y = (int)hitboxPoints.back().y - 1; y > (int)texRect.top; --y)
         {
-            for (int x = texRect.right; x > texRect.left; --x)
+            for (int x = (int)texRect.right; x > (int)texRect.left; --x)
             {
 				if (image[y * imageWidth + x].a > alphaTolerance)
                 {
@@ -131,22 +131,22 @@ namespace se
                         resetAngle = false;
                     }
 
-                    if (lastPixel.x != -1.0f && se::Math::Distance(se::Vector2(x, y), lastPixel) > 20.0f)
+                    if (lastPixel.x != -1.0f && se::Math::Distance(se::Vector2((float)x, (float)y), lastPixel) > 20.0f)
                     {
                         hitboxPoints.push_back(lastPixel);
                         resetAngle = true;
                     }
 					if (abs(newAngle - angle) > tolerance)
                     {
-                        hitboxPoints.push_back(se::Vector2(x, y));
+                        hitboxPoints.push_back(se::Vector2((float)x, (float)y));
                         resetAngle = true;
                     }
 
-                    lastPixel = se::Vector2(x, y);
+                    lastPixel = se::Vector2((float)x, (float)y);
 
                     break;
                 }
-				else if (x == texRect.left + 1 && lastPixel.x != -1.0f)
+				else if (x == (int)texRect.left + 1 && lastPixel.x != -1.0f)
                 {
                     hitboxPoints.push_back(lastPixel);
                 }
@@ -160,9 +160,9 @@ namespace se
 		lastPixel = se::Vector2(-1.0f, -1.0f);
 
         //top to bottom
-        for (int x = hitboxPoints.back().x - 1; x > hitboxPoints[0].x; --x)
+        for (int x = (int)hitboxPoints.back().x - 1; x > (int)hitboxPoints[0].x; --x)
         {
-            for (int y = texRect.top; y < texRect.bottom; ++y)
+            for (int y = (int)texRect.top; y < (int)texRect.bottom; ++y)
             {
 				if (image[y * imageWidth + x].a > alphaTolerance)
                 {
@@ -173,22 +173,22 @@ namespace se
                         resetAngle = false;
                     }
 
-                    if (lastPixel.x != -1.0f && se::Math::Distance(se::Vector2(x, y), lastPixel) > 20.0f)
+                    if (lastPixel.x != -1.0f && se::Math::Distance(se::Vector2((float)x, (float)y), lastPixel) > 20.0f)
                     {
                         hitboxPoints.push_back(lastPixel);
                         resetAngle = true;
                     }
                     if (abs(newAngle - angle) > tolerance)
                     {
-                        hitboxPoints.push_back(se::Vector2(x, y));
+                        hitboxPoints.push_back(se::Vector2((float)x, (float)y));
                         resetAngle = true;
                     }
 
-                    lastPixel = se::Vector2(x, y);
+                    lastPixel = se::Vector2((float)x, (float)y);
 
                     break;
                 }
-				else if (y == texRect.bottom - 1 && lastPixel.x != -1.0f)
+				else if (y == (int)texRect.bottom - 1 && lastPixel.x != -1.0f)
                 {
                     hitboxPoints.push_back(lastPixel);
                 }
@@ -200,8 +200,8 @@ namespace se
 			hitboxPoints.push_back(lastPixel);
 		}
 
-        int size = hitboxPoints.size() - 1;
-        for (int i = 0; i < size; ++i)
+        unsigned int size = hitboxPoints.size() - 1;
+        for (unsigned int i = 0; i < size; ++i)
         {
             if (Math::Distance(hitboxPoints[i], hitboxPoints[i + 1]) < 5.0f)
             {
@@ -220,9 +220,9 @@ namespace se
             --size;
         }
 
-		for (int i = 0; i < hitboxPoints.size(); ++i)
+        for (unsigned int i = 0; i < hitboxPoints.size(); ++i)
 		{
-			hitboxPoints[i] -= se::Vector2(texRect.left + sprite.getWidth() / 2, texRect.top + sprite.getHeight() / 2);
+			hitboxPoints[i] -= se::Vector2(texRect.left + sprite.getWidth() / 2.0f, texRect.top + sprite.getHeight() / 2.0f);
 			hitboxPoints[i] *= se::Vector2(1.0f, -1.0f);
 		}
 
@@ -239,7 +239,7 @@ namespace se
         tinydir_dir dir;
         tinydir_open_sorted(&dir, "../Content/Textures");
 
-        for (int i = 0; i < dir.n_files; ++i)
+        for (unsigned int i = 0; i < dir.n_files; ++i)
         {
             tinydir_file file;
             tinydir_readfile_n(&dir, &file, i);
@@ -254,7 +254,7 @@ namespace se
 
         tinydir_open_sorted(&dir, "../Content/Spritemaps");
 
-        for (int i = 0; i < dir.n_files; ++i)
+        for (unsigned int i = 0; i < dir.n_files; ++i)
         {
             tinydir_file file;
             tinydir_readfile_n(&dir, &file, i);
@@ -268,16 +268,13 @@ namespace se
         tinydir_close(&dir);
 
 
-        for (int i = 0; i < texturePaths.size(); ++i)
+        for (unsigned int i = 0; i < texturePaths.size(); ++i)
 		{
-			int percentage = ((float)(i + 1) / (float)texturePaths.size()) * 100;
-			printf("\bLoading Textures (%d%%)", percentage);
-
             //load texture
             int x, y, n;
             unsigned char* image = stbi_load(texturePaths[i].c_str(), &x, &y, &n, 4);
 
-            sizes.push_back(Vector2(x, y));
+            sizes.push_back(Vector2((float)x, (float)y));
             ids.push_back(0);
             glGenTextures(1, &ids[i]);
             glBindTexture(GL_TEXTURE_2D, ids[i]);
@@ -295,8 +292,8 @@ namespace se
             int xPos, yPos, width, height;
             while (fscanf(map, "%s = %d %d %d %d", name, &xPos, &yPos, &width, &height) != EOF)
             {
-                Rectangle rect(yPos, yPos + height, xPos, xPos + width);
-                Sprite sprite(ids[i], rect, Vector2(0, 0), width, height);
+                Rectangle rect((float)yPos, (float)yPos + (float)height, (float)xPos, (float)xPos + (float)width);
+                Sprite sprite(ids[i], rect, Vector2(0, 0), (float)width, (float)height);
 
                 Content::spriteNames.push_back(name);
                 Content::sprites.push_back(sprite);
@@ -308,7 +305,7 @@ namespace se
             std::vector<std::string> boxNames;
             tinydir_open_sorted(&dir, "");
 
-            for (int j = 0; j < dir.n_files; ++j)
+            for (unsigned int j = 0; j < dir.n_files; ++j)
             {
                 tinydir_file file;
                 tinydir_readfile_n(&dir, &file, j);
@@ -324,7 +321,7 @@ namespace se
             tinydir_close(&dir);
 
             //generate hitboxes
-            for (int j = startSprite; j < Content::sprites.size(); ++j)
+            for (unsigned int j = startSprite; j < Content::sprites.size(); ++j)
             {
                 if (std::find(boxNames.begin(), boxNames.end(), Content::spriteNames[j]) != boxNames.end())
                 {
@@ -352,8 +349,6 @@ namespace se
 
             stbi_image_free(image);
         }
-
-		printf("\n");
     }
 
 

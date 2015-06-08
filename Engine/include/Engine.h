@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Graphics.h"
-#include <SFML\Window.hpp>
+#include "SFML\Window.hpp"
 #include "Content.h"
 #include "Sprite.h"
 #include <chrono>

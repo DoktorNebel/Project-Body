@@ -7,7 +7,7 @@ namespace se
 	std::vector<float> Input::previousValues = std::vector<float>();
 
 
-	void Input::bindMouseButtonAction(int action, sf::Mouse::Button mouseButton)
+    void Input::bindMouseButtonAction(unsigned int action, sf::Mouse::Button mouseButton)
 	{
 		Input::InputAction inputAction;
 		inputAction.inputType = Input::InputType::Mouse;
@@ -29,7 +29,7 @@ namespace se
 	}
 
 
-	void Input::bindKeyboardKeyAction(int action, sf::Keyboard::Key keyboardKey)
+    void Input::bindKeyboardKeyAction(unsigned int action, sf::Keyboard::Key keyboardKey)
 	{
 		Input::InputAction inputAction;
 		inputAction.inputType = Input::InputType::Keyboard;
@@ -51,7 +51,7 @@ namespace se
 	}
 
 
-	void Input::bindJoystickButtonAction(int action, unsigned int joystickIndex, unsigned int button)
+    void Input::bindJoystickButtonAction(unsigned int action, unsigned int joystickIndex, unsigned int button)
 	{
 		Input::InputAction inputAction;
 		inputAction.inputType = Input::InputType::JoystickButton;
@@ -73,7 +73,7 @@ namespace se
 	}
 
 
-	void Input::bindJoystickAxisAction(int action, unsigned int joystickIndex, unsigned int axis, bool positive)
+    void Input::bindJoystickAxisAction(unsigned int action, unsigned int joystickIndex, unsigned int axis, bool positive)
 	{
 		Input::InputAction inputAction;
 		inputAction.inputType = Input::InputType::JoystickAxis;
@@ -95,7 +95,7 @@ namespace se
 	}
 
 
-	void Input::unbindAction(int action)
+    void Input::unbindAction(unsigned int action)
 	{
 		Input::inputActions[action].inputType = Input::InputType::Unbound;
 	}
@@ -107,19 +107,19 @@ namespace se
 	}
 
 
-	bool Input::actionPressed(int action)
+    bool Input::actionPressed(unsigned int action)
 	{
 		return Input::inputActions[action].pressed;
 	}
 
 
-	bool Input::actionReleased(int action)
+    bool Input::actionReleased(unsigned int action)
 	{
 		return Input::inputActions[action].released;
 	}
 
 
-	float Input::getActionValue(int action)
+    float Input::getActionValue(unsigned int action)
 	{
 		return Input::inputActions[action].value;
 	}
@@ -133,7 +133,7 @@ namespace se
 
 	void Input::update()
 	{
-		for (int i = 0; i < Input::inputActions.size(); ++i)
+		for (unsigned int i = 0; i < Input::inputActions.size(); ++i)
 		{
 			InputAction& action = Input::inputActions[i];
 

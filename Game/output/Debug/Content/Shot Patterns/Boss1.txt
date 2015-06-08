@@ -1,0 +1,72 @@
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 0.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 10.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 20.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 30.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 40.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 50.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 60.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 70.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 80.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 90.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 100.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 110.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 120.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 130.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 140.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 150.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 160.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 170.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 180.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 190.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 200.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 210.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 220.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 230.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 240.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 250.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 260.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 270.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 280.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 290.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 300.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 310.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 320.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 330.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 340.0
+Delay 0.1
+EnemyShoot1 Down_Wait_Fast 3.0 350.0

@@ -7,6 +7,7 @@
 #include "MovementPatternModifier.h"
 #include "ShootingModifier.h"
 #include "AnimatedSprite.h"
+#include "BossModifier.h"
 
 namespace bc
 {
@@ -30,7 +31,7 @@ namespace bc
         static float totalElapsedTime;
         static std::vector<std::vector<se::Rectangle>>* hitboxes;
         static std::vector<std::vector<bc::Entity>>* entities;
-        static int nextSpawn;
+        static unsigned int nextSpawn;
         static unsigned int highestId;
         static std::vector<unsigned int> freeIds;
         static std::vector<std::string> movementPatternNames;
@@ -39,6 +40,13 @@ namespace bc
         static std::vector<ShootingModifier::ShotPattern> shotPatterns;
         static std::vector<std::string> animationNames;
         static std::vector<se::AnimatedSprite> animations;
+        static std::vector<std::string> bossPatternNames;
+        static std::vector<std::vector<BossModifier::Phase>> bossPatterns;
+        static std::vector<float> bossHealth;
+
+    public:
+
+        static bool bossAlive;
 
     private:
 

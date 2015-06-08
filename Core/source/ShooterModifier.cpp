@@ -20,7 +20,7 @@ namespace bc
     {
         float dist = 1000000.0f;
         se::Vector2 pos;
-        for (int i = 0; i < (*this->entities)[CollisionGroup::LevelElements].size(); ++i)
+        for (unsigned int i = 0; i < (*this->entities)[CollisionGroup::LevelElements].size(); ++i)
         {
             float newDist;
             if ((newDist = se::Math::Distance(this->entity->getSprite().getPosition(), (*this->entities)[CollisionGroup::LevelElements][i].getSprite().getPosition())) < dist)

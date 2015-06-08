@@ -35,11 +35,13 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Propertysheets\Editor_Output.props" />
     <Import Project="..\Propertysheets\Core_Lib_Debug.props" />
+    <Import Project="..\Propertysheets\WarningLevel.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Propertysheets\Editor_Output.props" />
     <Import Project="..\Propertysheets\Core_Lib_Release.props" />
+    <Import Project="..\Propertysheets\WarningLevel.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />

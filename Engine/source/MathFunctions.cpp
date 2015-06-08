@@ -374,7 +374,7 @@ namespace se
 
         Matrix RotationMatrixX(float angle)
         {
-            angle *= 0.0174532925;
+            angle *= 0.0174532925f;
 
             Matrix result = Math::IdentityMatrix();
 
@@ -390,7 +390,7 @@ namespace se
 
         Matrix RotationMatrixY(float angle)
         {
-            angle *= 0.0174532925;
+            angle *= 0.0174532925f;
 
             Matrix result = Math::IdentityMatrix();
 
@@ -406,7 +406,7 @@ namespace se
 
         Matrix RotationMatrixZ(float angle)
         {
-            angle *= 0.0174532925;
+            angle *= 0.0174532925f;
 
             Matrix result = Math::IdentityMatrix();
 
@@ -422,9 +422,9 @@ namespace se
 
         Matrix RotationMatrixFromEuler(float roll, float pitch, float yaw)
         {
-            roll *= 0.0174532925;
-            pitch *= 0.0174532925;
-            yaw *= 0.0174532925;
+            roll *= 0.0174532925f;
+            pitch *= 0.0174532925f;
+            yaw *= 0.0174532925f;
 
             Matrix result;
 
@@ -483,7 +483,7 @@ namespace se
 
         Matrix PerspectiveMatrix(float fov, float aspectRatio, float nearZ, float farZ)
         {
-            float f = 1 / tan((fov / 2) * 0.0174532925);
+            float f = 1 / tan((fov / 2.0f) * 0.0174532925f);
 
             Matrix result = Math::IdentityMatrix();
 

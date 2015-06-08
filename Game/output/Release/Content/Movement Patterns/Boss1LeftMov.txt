@@ -1,0 +1,3 @@
+0 0 100 0 normal
+-200 0 100 0 normal
+-210 0 10 10 normal

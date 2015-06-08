@@ -29,7 +29,7 @@ namespace bc
 
         ShotPattern shotPattern;
         float timer;
-        int currentSalvo;
+        unsigned int currentSalvo;
 
     public:
 

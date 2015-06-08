@@ -32,7 +32,7 @@ namespace bc
     {
         float dist = 1000000.0f;
         se::Vector2 pos;
-        for (int i = 0; i < (*this->entities)[CollisionGroup::Players].size(); ++i)
+        for (unsigned int i = 0; i < (*this->entities)[CollisionGroup::Players].size(); ++i)
         {
             float newDist;
             if ((newDist = se::Math::Distance(this->entity->getSprite().getPosition(), (*this->entities)[CollisionGroup::Players][i].getSprite().getPosition())) < dist)
@@ -58,7 +58,7 @@ namespace bc
             this->entity->getSprite().getPosition().y + 50 < se::Engine::getSettings().resolutionHeight / -2 || this->entity->getSprite().getPosition().y - 50 > se::Engine::getSettings().resolutionHeight / 2)
         {
             se::Engine::getActiveCamera().addScreenshake(1.0f * this->entity->maxHealth / 20.0f, 0.05f * this->entity->maxHealth / 20.0f);
-            int particleCount = this->entity->maxHealth;
+            int particleCount = (int)this->entity->maxHealth;
             particleCount = particleCount < 20 ? 20 : particleCount;
             particleCount = particleCount > 200 ? 200 : particleCount;
             for (int i = 0; i < particleCount; ++i)

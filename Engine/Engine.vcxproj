@@ -69,6 +69,7 @@
     <Import Project="..\Propertysheets\Engine_Include.props" />
     <Import Project="..\Propertysheets\Glew_Lib.props" />
     <Import Project="..\Propertysheets\Other_Include.props" />
+    <Import Project="..\Propertysheets\WarningLevel.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -77,6 +78,7 @@
     <Import Project="..\Propertysheets\Engine_Include.props" />
     <Import Project="..\Propertysheets\Glew_Lib.props" />
     <Import Project="..\Propertysheets\Other_Include.props" />
+    <Import Project="..\Propertysheets\WarningLevel.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />

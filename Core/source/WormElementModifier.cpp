@@ -26,7 +26,7 @@ namespace bc
     {
         this->stopped = true;
 
-        for (int i = 0; i < this->entity->modifiers.size(); ++i)
+        for (unsigned int i = 0; i < this->entity->modifiers.size(); ++i)
         {
             if (dynamic_cast<MovementPatternModifier*>(this->entity->modifiers[i]) || dynamic_cast<HomingMovementModifier*>(this->entity->modifiers[i]))
             {

@@ -25,6 +25,13 @@ namespace se
 
         }
 
+        Vector2(int x, int y)
+            : x((float)x)
+            , y((float)y)
+        {
+
+        }
+
         inline Vector2& operator+=(const Vector2& rhs)
         {
             this->x += rhs.x;

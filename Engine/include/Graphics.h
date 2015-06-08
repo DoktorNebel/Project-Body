@@ -29,8 +29,8 @@ namespace se
         std::vector<std::vector<Matrix>> matrices;
         std::vector<std::vector<Vector2>> uvs;
         std::vector <std::vector<se::Vector4>> colors;
-		float renderWidth;
-		float renderHeight;
+		unsigned int renderWidth;
+		unsigned int renderHeight;
 
     public:
 

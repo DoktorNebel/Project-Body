@@ -64,7 +64,7 @@ namespace bc
 
     void Entity::init()
     {
-        for (int i = 0; i < this->modifiers.size(); ++i)
+        for (unsigned int i = 0; i < this->modifiers.size(); ++i)
         {
             this->modifiers[i]->entity = this;
             this->modifiers[i]->onCreate();
@@ -95,7 +95,7 @@ namespace bc
 
     void Entity::hit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
-        for (int i = 0; i < this->modifiers.size(); ++i)
+        for (unsigned int i = 0; i < this->modifiers.size(); ++i)
         {
             this->modifiers[i]->onHit(otherEntity, collisionGroup, projectionVector, projectionScalar);
         }
@@ -104,7 +104,7 @@ namespace bc
 
     void Entity::update(float elapsedTime)
     {
-        for (int i = 0; i < this->modifiers.size(); ++i)
+        for (unsigned int i = 0; i < this->modifiers.size(); ++i)
         {
             this->modifiers[i]->entity = this;
             this->modifiers[i]->onUpdate(elapsedTime);

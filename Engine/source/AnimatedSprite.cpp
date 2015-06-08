@@ -46,7 +46,7 @@ namespace se
 
     bool AnimatedSprite::changeAnimation(std::string animationName)
     {
-        int pos = std::find(this->animationNames.begin(), this->animationNames.end(), animationName) - this->animationNames.begin();
+        unsigned int pos = std::find(this->animationNames.begin(), this->animationNames.end(), animationName) - this->animationNames.begin();
         if (pos >= this->animationNames.size())
             return false;
 

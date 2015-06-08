@@ -28,7 +28,7 @@ namespace bc
         se::Camera camera;
         se::Vector2 lastCameraPos;
         float totalElapsedTime;
-        int currentScrollKey;
+        unsigned int currentScrollKey;
         std::vector<ScrollKey> scrollSpeeds;
         std::vector<float> backgroundSpeeds;
         std::vector<std::vector<se::Sprite>> backgroundSprites;

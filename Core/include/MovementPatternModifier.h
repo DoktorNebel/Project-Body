@@ -32,11 +32,15 @@ namespace bc
 	private:
 
 		std::vector<Waypoint> waypoints;
-		int nextWaypoint;
+        unsigned int nextWaypoint;
 		float curveProgress;
 		float waitTimer;
         float speed;
         Style::Type style;
+
+    public:
+
+        bool noRotate;
 
 	public:
 

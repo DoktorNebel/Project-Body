@@ -25,7 +25,7 @@ namespace se
 		{
 			InputType::Type inputType;
 			unsigned int index;
-			int action;
+            unsigned int action;
 			unsigned int input;
 			bool positive;
 			float value;
@@ -45,15 +45,15 @@ namespace se
 
 	public:
 
-		static void bindMouseButtonAction(int action, sf::Mouse::Button mouseButton);
-		static void bindKeyboardKeyAction(int action, sf::Keyboard::Key keyboardKey);
-		static void bindJoystickButtonAction(int action, unsigned int joystickIndex, unsigned int button);
-		static void bindJoystickAxisAction(int action, unsigned int joystickIndex, unsigned int axis, bool positive);
-		static void unbindAction(int action);
+        static void bindMouseButtonAction(unsigned int action, sf::Mouse::Button mouseButton);
+        static void bindKeyboardKeyAction(unsigned int action, sf::Keyboard::Key keyboardKey);
+        static void bindJoystickButtonAction(unsigned int action, unsigned int joystickIndex, unsigned int button);
+        static void bindJoystickAxisAction(unsigned int action, unsigned int joystickIndex, unsigned int axis, bool positive);
+        static void unbindAction(unsigned int action);
 		static Vector2 getMousePos();
-		static bool actionPressed(int action);
-		static bool actionReleased(int action);
-		static float getActionValue(int action);
+        static bool actionPressed(unsigned int action);
+        static bool actionReleased(unsigned int action);
+        static float getActionValue(unsigned int action);
 		static void setWindow(sf::Window* window);
 		static void update();
 	};

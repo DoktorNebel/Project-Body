@@ -5,7 +5,7 @@
 
 namespace bc
 {
-    extern class Entity;
+    class Entity;
 
     class IModifier
     {

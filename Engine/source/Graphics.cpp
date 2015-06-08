@@ -198,7 +198,7 @@ namespace se
 
             Vector3 camPos = Vector3(camera->getPosition().x, camera->getPosition().y, 0.0f);
             Matrix view = Math::RotationMatrixLookAt(camPos, camPos + Vector3(0, 0, -1));
-            Matrix projection = Math::OrthographicMatrix(this->renderWidth * camera->getZoom(), this->renderHeight * camera->getZoom(), 0, 1);
+            Matrix projection = Math::OrthographicMatrix((float)this->renderWidth * camera->getZoom(), (float)this->renderHeight * camera->getZoom(), 0, 1);
             glUniformMatrix4fv(viewID, 1, 0, &view.v00);
 			glUniformMatrix4fv(projectionID, 1, 0, &projection.v00);
 
@@ -206,7 +206,7 @@ namespace se
 
             glBindVertexArray(this->vao);
 
-            for (int i = 0; i < this->textureIds.size(); ++i)
+            for (unsigned int i = 0; i < this->textureIds.size(); ++i)
             {
                 if (this->matrices[i].size() > 0)
                 {

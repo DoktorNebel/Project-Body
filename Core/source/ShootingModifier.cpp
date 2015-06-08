@@ -27,7 +27,7 @@ namespace bc
         {
             this->timer = 0.0f;
 
-            for (int i = 0; i < this->shotPattern.shotSalvos[this->currentSalvo].shotMovementNames.size(); ++i)
+            for (unsigned int i = 0; i < this->shotPattern.shotSalvos[this->currentSalvo].shotMovementNames.size(); ++i)
             {
                 std::vector<IModifier*> modifiers;
                 modifiers.push_back(new ProjectileModifier(se::Vector2(0.0f, 0.0f), 5.0f));

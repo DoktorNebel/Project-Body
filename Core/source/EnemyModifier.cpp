@@ -42,7 +42,7 @@ namespace bc
             if (this->animatedSprite.getCurrentAnimation() != "Death")
             {
                 se::Engine::getActiveCamera().addScreenshake(1.0f * this->entity->maxHealth / 20.0f, 0.05f * this->entity->maxHealth / 20.0f);
-                int particleCount = this->entity->maxHealth;
+                int particleCount = (int)this->entity->maxHealth;
                 particleCount = particleCount < 20 ? 20 : particleCount;
                 particleCount = particleCount > 200 ? 200 : particleCount;
                 for (int i = 0; i < particleCount; ++i)

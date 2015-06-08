@@ -20,7 +20,7 @@ namespace bc
     float Spawner::totalElapsedTime = 0.0f;
     std::vector<std::vector<se::Rectangle>>* Spawner::hitboxes = 0;
     std::vector<std::vector<bc::Entity>>* Spawner::entities = 0;
-    int Spawner::nextSpawn = 0;
+    unsigned int Spawner::nextSpawn = 0;
     unsigned int Spawner::highestId = 1;
     std::vector<unsigned int> Spawner::freeIds = std::vector<unsigned int>();
     std::vector<Spawner::Spawn> Spawner::killList = std::vector<Spawner::Spawn>();
@@ -30,6 +30,10 @@ namespace bc
     std::vector<ShootingModifier::ShotPattern> Spawner::shotPatterns = std::vector<ShootingModifier::ShotPattern>();
     std::vector<std::string> Spawner::animationNames = std::vector<std::string>();
     std::vector<se::AnimatedSprite> Spawner::animations = std::vector<se::AnimatedSprite>();
+    std::vector<std::string> Spawner::bossPatternNames = std::vector<std::string>();
+    std::vector<std::vector<BossModifier::Phase>> Spawner::bossPatterns = std::vector<std::vector<BossModifier::Phase>>();
+    std::vector<float> Spawner::bossHealth = std::vector<float>();
+    bool Spawner::bossAlive = false;
 
 
     Entity Spawner::createEnemy(std::string name, std::string movementPattern)
@@ -37,6 +41,17 @@ namespace bc
         Entity result;
         std::vector<IModifier*> modifiers;
 
+        unsigned int pos;
+        if ((pos = std::find(Spawner::bossPatternNames.begin(), Spawner::bossPatternNames.end(), name) - Spawner::bossPatternNames.begin()) < Spawner::bossPatternNames.size())
+        {
+            result.dead = false;
+            result.health = Spawner::bossHealth[pos];
+            result.maxHealth = Spawner::bossHealth[pos];
+            modifiers.push_back(new BossModifier(Spawner::bossPatterns[pos]));
+            modifiers.push_back(new HitMarkerModifier());
+            result.sprite = se::Content::getSprite(name);
+            result.hitbox = se::Content::getHitbox(name);
+        }
         if (name == "Virus")
         {
             result.dead = false;
@@ -192,7 +207,7 @@ namespace bc
         }
         else
         {
-            int pos = std::find(Spawner::movementPatternNames.begin(), Spawner::movementPatternNames.end(), movementPattern) - Spawner::movementPatternNames.begin();
+            unsigned int pos = std::find(Spawner::movementPatternNames.begin(), Spawner::movementPatternNames.end(), movementPattern) - Spawner::movementPatternNames.begin();
             if (pos < Spawner::movementPatternNames.size())
                 movement = new MovementPatternModifier(Spawner::movementPatterns[pos], 0.0f, 1.0f, MovementPatternModifier::Style::Kill);
         }
@@ -226,7 +241,7 @@ namespace bc
 
     bool Spawner::getAnimation(std::string name, se::AnimatedSprite* outSprite)
     {
-        int pos = std::find(Spawner::animationNames.begin(), Spawner::animationNames.end(), name) - Spawner::animationNames.begin();
+        unsigned int pos = std::find(Spawner::animationNames.begin(), Spawner::animationNames.end(), name) - Spawner::animationNames.begin();
         if (pos < Spawner::animationNames.size())
         {
             *outSprite = Spawner::animations[pos];
@@ -245,7 +260,7 @@ namespace bc
 
     std::vector<MovementPatternModifier::Waypoint> Spawner::getMovementPattern(std::string patternName)
     {
-        int pos = std::find(Spawner::movementPatternNames.begin(), Spawner::movementPatternNames.end(), patternName) - Spawner::movementPatternNames.begin();
+        unsigned int pos = std::find(Spawner::movementPatternNames.begin(), Spawner::movementPatternNames.end(), patternName) - Spawner::movementPatternNames.begin();
         return pos < Spawner::movementPatterns.size() ? Spawner::movementPatterns[pos] : std::vector<MovementPatternModifier::Waypoint>();
     }
 
@@ -260,7 +275,7 @@ namespace bc
         tinydir_dir dir;
         tinydir_open_sorted(&dir, "../Content/Movement Patterns/");
 
-        for (int i = 0; i < dir.n_files; ++i)
+        for (unsigned int i = 0; i < dir.n_files; ++i)
         {
             tinydir_file tdfile;
             tinydir_readfile_n(&dir, &tdfile, i);
@@ -278,7 +293,7 @@ namespace bc
         FILE* file;
         float time, xPos, yPos, speed, waitTime;
         char special[256];
-        for (int i = 0; i < fileNames.size(); ++i)
+        for (unsigned int i = 0; i < fileNames.size(); ++i)
         {
             filePath = "../Content/Movement Patterns/" + fileNames[i];
 
@@ -310,7 +325,7 @@ namespace bc
         fileNames.clear();
         tinydir_open_sorted(&dir, "../Content/Shot Patterns/");
 
-        for (int i = 0; i < dir.n_files; ++i)
+        for (unsigned int i = 0; i < dir.n_files; ++i)
         {
             tinydir_file tdfile;
             tinydir_readfile_n(&dir, &tdfile, i);
@@ -327,7 +342,7 @@ namespace bc
         char firstString[256];
         char secondString[256];
         float rotation;
-        for (int i = 0; i < fileNames.size(); ++i)
+        for (unsigned int i = 0; i < fileNames.size(); ++i)
         {
             filePath = "../Content/Shot Patterns/" + fileNames[i];
 
@@ -342,7 +357,7 @@ namespace bc
             {
                 if (strcmp(firstString, "Delay") == 0)
                 {
-                    float delay = atof(secondString);
+                    float delay = (float)atof(secondString);
                     shotPattern.delays.push_back(delay);
                     shotPattern.shotSalvos.push_back(ShootingModifier::ShotPattern::Salvo());
                     ++index;
@@ -357,6 +372,104 @@ namespace bc
             }
 
             Spawner::shotPatterns.push_back(shotPattern);
+
+            fclose(file);
+        }
+
+        //get boss pattern filenames
+        fileNames.clear();
+        tinydir_open_sorted(&dir, "../Content/Bosses/");
+
+        for (unsigned int i = 0; i < dir.n_files; ++i)
+        {
+            tinydir_file tdfile;
+            tinydir_readfile_n(&dir, &tdfile, i);
+
+            if (!tdfile.is_dir && strcmp(tdfile.name, "Thumbs.db"))
+            {
+                fileNames.push_back(tdfile.name);
+            }
+        }
+
+        tinydir_close(&dir);
+
+        //get boss patterns
+        for (unsigned int i = 0; i < fileNames.size(); ++i)
+        {
+            char patternName[256];
+            sscanf(fileNames[i].c_str(), "%[^.]", patternName);
+            Spawner::bossPatternNames.push_back(patternName);
+
+            filePath = "../Content/Bosses/" + fileNames[i];
+
+            file = fopen(filePath.c_str(), "r");
+
+            std::vector<BossModifier::Phase> phases;
+            int currentPhase = -1;
+
+            while (fscanf(file, "%s %[^\n]", firstString, secondString) != EOF)
+            {
+                if (strcmp(firstString, "Health") == 0)
+                {
+                    Spawner::bossHealth.push_back((float)atof(secondString));
+                }
+
+                if (strcmp(firstString, "Phase") == 0)
+                {
+                    BossModifier::Phase phase;
+                    phase.startHealth = (float)atof(secondString);
+                    phases.push_back(phase);
+                    ++currentPhase;
+                }
+
+                if (strcmp(firstString, "Movement") == 0)
+                {
+                    char movementName[128];
+                    char modeName[128];
+                    if (sscanf(secondString, "%s %s", movementName, modeName))
+                    {
+                        phases[currentPhase].movementPattern = movementName;
+                        if (strcmp(modeName, "Stay") == 0)
+                            phases[currentPhase].movementType = MovementPatternModifier::Style::Stay;
+                        else if (strcmp(modeName, "Kill") == 0)
+                            phases[currentPhase].movementType = MovementPatternModifier::Style::Kill;
+                        else if (strcmp(modeName, "Repeat") == 0)
+                            phases[currentPhase].movementType = MovementPatternModifier::Style::Repeat;
+                        else if (strcmp(modeName, "Reverse") == 0)
+                            phases[currentPhase].movementType = MovementPatternModifier::Style::Reverse;
+                    }
+                }
+
+                if (strcmp(firstString, "Shooting") == 0)
+                {
+                    phases[currentPhase].shotPattern = secondString;
+                }
+
+                if (strcmp(firstString, "Part") == 0)
+                {
+                    float spawnX, spawnY;
+                    char spriteName[128];
+                    char movementName[128];
+                    char movementSpecial[128];
+                    char shotPatternName[128];
+
+                    if (sscanf(secondString, "%f %f %s %s %s %s", &spawnX, &spawnY, spriteName, movementName, movementSpecial, shotPatternName))
+                    {
+                        BossModifier::Phase::Part part;
+                        part.spawnPosition = se::Vector2(spawnX, spawnY);
+                        part.spriteName = spriteName;
+                        part.movePatternName = movementName;
+                        if (strcmp(movementSpecial, "NoRotate") == 0)
+                            part.noRotate = true;
+                        else
+                            part.noRotate = false;
+                        part.shotPatternName = shotPatternName;
+                        phases[currentPhase].parts.push_back(part);
+                    }
+                }
+            }
+
+            Spawner::bossPatterns.push_back(phases);
 
             fclose(file);
         }
@@ -420,9 +533,8 @@ namespace bc
 
     void Spawner::update(float elapsedTime)
     {
-        Spawner::totalElapsedTime += elapsedTime;
-
-        unsigned int id;
+        if (!Spawner::bossAlive)
+            Spawner::totalElapsedTime += elapsedTime;
 
         while (Spawner::nextSpawn < Spawner::spawnTimes.size() && Spawner::totalElapsedTime >= Spawner::spawnTimes[Spawner::nextSpawn])
         {
@@ -435,8 +547,8 @@ namespace bc
             (*Spawner::entities)[Spawner::timedSpawns[Spawner::nextSpawn].collisionGroup].push_back(Spawner::timedSpawns[Spawner::nextSpawn].entity);
             ++Spawner::nextSpawn;
         }
-
-        for (int i = 0; i < Spawner::immediateSpawns.size(); ++i)
+        
+        for (unsigned int i = 0; i < Spawner::immediateSpawns.size(); ++i)
         {
             Spawner::immediateSpawns[i].entity.id = Spawner::getFreeId();
             Spawner::immediateSpawns[i].entity.getSprite().setPosition(Spawner::immediateSpawns[i].position);
@@ -449,7 +561,7 @@ namespace bc
 
         Spawner::immediateSpawns.clear();
 
-        for (int i = 0; i < Spawner::killList.size(); ++i)
+        for (unsigned int i = 0; i < Spawner::killList.size(); ++i)
         {
             Spawner::freeIds.push_back(Spawner::killList[i].entity.id);
 

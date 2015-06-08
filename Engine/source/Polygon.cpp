@@ -32,12 +32,12 @@ namespace se
     bool Polygon::overlap(const Polygon& other, Vector2* projectionNormal, float* projectionScalar)
     {
         std::vector<Vector2> axes;
-        for (int i = 0; i < this->points.size(); ++i)
+        for (unsigned int i = 0; i < this->points.size(); ++i)
         {
             axes.push_back(Math::GetNormalized(Math::Perpendicular(this->points[(i + 1) % this->points.size()] - this->points[i])));
         }
 
-        for (int i = 0; i < other.points.size(); ++i)
+        for (unsigned int i = 0; i < other.points.size(); ++i)
         {
             axes.push_back(Math::GetNormalized(Math::Perpendicular(other.points[(i + 1) % other.points.size()] - other.points[i])));
         }
@@ -45,11 +45,11 @@ namespace se
         int minAxis = -1;
         float minLength = 1000000.0f;
 
-        for (int i = 0; i < axes.size(); ++i)
+        for (unsigned int i = 0; i < axes.size(); ++i)
         {
             float firstMin;
             float firstMax = firstMin = Math::Dot(this->points[0], axes[i]);
-            for (int j = 1; j < this->points.size(); ++j)
+            for (unsigned int j = 1; j < this->points.size(); ++j)
             {
                 float value = Math::Dot(this->points[j], axes[i]);
                 if (value < firstMin)
@@ -60,7 +60,7 @@ namespace se
 
             float secondMin;
             float secondMax = secondMin = Math::Dot(other.points[0], axes[i]);
-            for (int j = 1; j < other.points.size(); ++j)
+            for (unsigned int j = 1; j < other.points.size(); ++j)
             {
                 float value = Math::Dot(other.points[j], axes[i]);
                 if (value < secondMin)
@@ -111,7 +111,7 @@ namespace se
     void Polygon::move(Vector2 movement)
     {
         this->position += movement;
-        for (int i = 0; i < this->points.size(); ++i)
+        for (unsigned int i = 0; i < this->points.size(); ++i)
         {
             this->points[i] += movement;
         }
@@ -130,7 +130,7 @@ namespace se
         float radRot = rotation * 0.0174532925f;
         float s = sin(radRot);
         float c = cos(radRot);
-        for (int i = 0; i < this->points.size(); ++i)
+        for (unsigned int i = 0; i < this->points.size(); ++i)
         {
             this->points[i] -= this->position;
 
@@ -153,7 +153,7 @@ namespace se
         float rot = this->rotation;
         this->setRotation(0);
         this->size *= factor;
-        for (int i = 0; i < this->points.size(); ++i)
+        for (unsigned int i = 0; i < this->points.size(); ++i)
         {
             this->points[i] -= this->position;
 

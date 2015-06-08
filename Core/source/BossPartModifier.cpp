@@ -30,7 +30,10 @@ namespace bc
 
     void BossPartModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
-        if (collisionGroup == CollisionGroup::PlayerProjectiles)
+        if (collisionGroup == CollisionGroup::PlayerProjectiles && this->boss != 0)
+        {
             this->boss->entity->health -= otherEntity->damage;
+            otherEntity->dead = true;
+        }
     }
 }

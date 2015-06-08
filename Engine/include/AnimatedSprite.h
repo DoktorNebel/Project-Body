@@ -13,8 +13,8 @@ namespace se
         std::vector<std::string> animationNames;
         std::vector<float> animationSpeeds;
         std::vector<std::vector<se::Sprite>> sprites;
-        int currentAnimationIndex;
-        int currentSpriteIndex;
+        unsigned int currentAnimationIndex;
+        unsigned int currentSpriteIndex;
         float animationTimer;
         Vector2 position;
         Vector2 size;
