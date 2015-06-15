@@ -13,6 +13,7 @@ namespace bc
         , speed(speed)
         , style(style)
         , noRotate(false)
+        , shortestDistance(0.0f)
     {
         float radRot = startRotation * 0.0174532925f;
         float s = sin(radRot);
@@ -35,6 +36,7 @@ namespace bc
         , speed(other.speed)
         , style(other.style)
         , noRotate(other.noRotate)
+        , shortestDistance(other.shortestDistance)
     {
 
     }
@@ -55,6 +57,7 @@ namespace bc
         this->speed = rhs.speed;
         this->style = rhs.style;
         this->noRotate = rhs.noRotate;
+        this->shortestDistance = rhs.shortestDistance;
 
         return *this;
     }
@@ -76,6 +79,17 @@ namespace bc
 	void MovementPatternModifier::onCreate()
 	{
         this->adjustWaypoints(0);
+        if (this->nextWaypoint < this->waypoints.size())
+        {
+            if (this->waypoints[this->nextWaypoint].controlPoint)
+            {
+                shortestDistance = se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint + 1].position);
+            }
+            else
+            {
+                shortestDistance = se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint].position);
+            }
+        }
 	}
 
 
@@ -96,11 +110,27 @@ namespace bc
                     this->entity->getSprite().setRotation(atan2(direction.y, direction.x) * 57.2957795f - 90.0f);
 				this->entity->getSprite().move(direction * currentSpeed * elapsedTime * this->speed);
 
-				if (se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint].position) <= 2.0f)
-				{
+                float distance = se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint].position);
+                if (distance <= shortestDistance)
+                {
+                    shortestDistance = distance;
+                }
+                else
+                {
                     this->adjustWaypoints(this->nextWaypoint);
 					this->waitTimer = this->waypoints[this->nextWaypoint].waitTime;
-					this->nextWaypoint += this->speed >= 0 ? 1 : -1;
+                    this->nextWaypoint += this->speed >= 0 ? 1 : -1; 
+                    if (this->nextWaypoint < this->waypoints.size())
+                    {
+                        if (this->waypoints[this->nextWaypoint].controlPoint)
+                        {
+                            shortestDistance = se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint + 1].position);
+                        }
+                        else
+                        {
+                            shortestDistance = se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint].position);
+                        }
+                    }
 				}
 			}
 			else if (this->nextWaypoint + 1 < this->waypoints.size())
@@ -115,12 +145,28 @@ namespace bc
                 float currentSpeed = se::Math::Lerp(this->waypoints[this->nextWaypoint - 1].speed, this->waypoints[this->nextWaypoint + 1].speed, this->curveProgress);
                 this->curveProgress += (currentSpeed * elapsedTime * this->speed) / se::Math::Distance(this->waypoints[this->nextWaypoint - 1].position, this->waypoints[this->nextWaypoint + 1].position);
 
-				if (se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint + 1].position) <= 2.0f)
+                float distance = se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint + 1].position);
+                if (distance <= shortestDistance)
+                {
+                    shortestDistance = distance;
+                }
+                else
                 {
                     this->adjustWaypoints(this->nextWaypoint + 1);
                     this->waitTimer = this->waypoints[this->nextWaypoint + 1].waitTime;
                     this->nextWaypoint += this->speed >= 0 ? 1 : -1;
                     this->curveProgress = 0.0f;
+                    if (this->nextWaypoint + 1 < this->waypoints.size())
+                    {
+                        if (this->waypoints[this->nextWaypoint + 1].controlPoint)
+                        {
+                            shortestDistance = se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint + 2].position);
+                        }
+                        else
+                        {
+                            shortestDistance = se::Math::Distance(this->entity->getSprite().getPosition(), this->waypoints[this->nextWaypoint + 1].position);
+                        }
+                    }
 				}
 			}
 		}

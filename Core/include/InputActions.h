@@ -12,7 +12,10 @@ namespace bg
             Down,
             Shoot,
             StickyShot,
-            FasterCheat
+            FasterCheat,
+            Medicine1,
+            Medicine2,
+            Medicine3,
 		};
 	};
 }

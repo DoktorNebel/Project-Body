@@ -37,6 +37,7 @@ namespace bc
 		float waitTimer;
         float speed;
         Style::Type style;
+        float shortestDistance;
 
     public:
 

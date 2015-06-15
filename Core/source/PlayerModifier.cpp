@@ -49,7 +49,7 @@ namespace bc
         {
             this->fireCounter = 0.0f;
             std::vector<IModifier*> modifiers;
-            modifiers.push_back(new ProjectileModifier(se::Vector2(rand() % 201 - 100, 3000), 0.3f));
+            modifiers.push_back(new ProjectileModifier(se::Vector2(rand() % 101 - 50, 1500), 2.0f));
             Spawner::spawn(this->entity->getSprite().getPosition() + se::Vector2(rand() % 9 - 4, 16), "PlayerProjectile", modifiers, CollisionGroup::PlayerProjectiles);
         }
 
