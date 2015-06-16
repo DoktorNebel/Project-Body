@@ -11,6 +11,7 @@
 namespace bc
 {
     Level::Level()
+        : medicineBox(0)
     {
 
     }
@@ -47,6 +48,8 @@ namespace bc
         player.init();
         this->hitboxes[CollisionGroup::Players].push_back(player.getSprite().getRect());
         this->entities[CollisionGroup::Players].push_back(player);
+
+        this->medicineBox = MedicineBox((PlayerModifier*)modifiers[0]);
 
         Spawner::initialize(&this->hitboxes, &this->entities, source);
 
@@ -110,6 +113,7 @@ namespace bc
 
     void Level::update(float elapsedTime)
     {
+        elapsedTime *= this->medicineBox.gamespeed;
         if (se::Input::getActionValue(bg::InputAction::FasterCheat))
         {
             elapsedTime *= 5.0f;
@@ -155,6 +159,8 @@ namespace bc
                 }
             }
         }
+
+        this->medicineBox.update(elapsedTime);
 
         Spawner::update(elapsedTime);
 

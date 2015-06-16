@@ -30,7 +30,7 @@ namespace bc
         this->speed = 500.0f;
         this->fireRate = 0.01f;
         this->fireCounter = 0.0f;
-        this->entity->getSprite().setScale(se::Vector2(0.4f, 0.5f));
+        this->entity->getSprite().setScale(se::Vector2(0.5f, 0.5f));
     }
 
 

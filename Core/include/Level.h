@@ -7,6 +7,7 @@
 #include "Entity.h"
 #include "Engine.h"
 #include "Collisiongroup.h"
+#include "MedicineBox.h"
 
 namespace bc
 {
@@ -32,6 +33,7 @@ namespace bc
         std::vector<ScrollKey> scrollSpeeds;
         std::vector<float> backgroundSpeeds;
         std::vector<std::vector<se::Sprite>> backgroundSprites;
+        MedicineBox medicineBox;
 
     public:
 

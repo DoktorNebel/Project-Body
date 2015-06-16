@@ -30,6 +30,9 @@ namespace bg
         se::Input::bindKeyboardKeyAction(InputAction::Shoot, sf::Keyboard::E);
         se::Input::bindKeyboardKeyAction(InputAction::StickyShot, sf::Keyboard::Space);
         se::Input::bindKeyboardKeyAction(InputAction::FasterCheat, sf::Keyboard::C);
+        se::Input::bindKeyboardKeyAction(InputAction::Medicine1, sf::Keyboard::Num1);
+        se::Input::bindKeyboardKeyAction(InputAction::Medicine2, sf::Keyboard::Num2);
+        se::Input::bindKeyboardKeyAction(InputAction::Medicine3, sf::Keyboard::Num3);
 	}
 
 
