@@ -1,4 +1,4 @@
-Virus Down_Straight 0.0 0 400
+Virus_Golden Down_Straight 0.0 0 400
 Virus Down_Straight 0.1 100 400
 Virus Down_Straight 0.1 65 400
 Virus Down_Straight 0.3 -31 400

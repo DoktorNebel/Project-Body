@@ -102,7 +102,7 @@ namespace bc
             sprite.addSprite("Death", se::Content::getSprite("Worm_Explosion_3"));
             sprite.setScale(se::Vector2(1.0f, 1.0f));
             sprite.setDepth(-(this->elementNum - 1) / 10.0f);
-            modifiers.push_back(new EnemyModifier(sprite));
+            modifiers.push_back(new EnemyModifier(sprite, 50, 0.0f));
             modifiers.push_back(new WormElementModifier(false, this->elementNum - 1, this));
             this->nextElement = (WormElementModifier*)modifiers.back();
             modifiers.push_back(new HitMarkerModifier());

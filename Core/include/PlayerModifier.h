@@ -16,6 +16,11 @@ namespace bc
 
     public:
 
+        std::vector<float> shootingDirections;
+        std::vector<float> backShootingDirections;
+
+    public:
+
         PlayerModifier(std::vector<std::vector<Entity>>* entities);
         ~PlayerModifier();
 

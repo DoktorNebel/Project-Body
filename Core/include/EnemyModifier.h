@@ -11,10 +11,17 @@ namespace bc
 
         se::AnimatedSprite animatedSprite;
         se::Vector2 position;
+        unsigned int score;
+        float humanInfection;
+        CollisionGroup::Type lastHit;
 
     public:
 
-        EnemyModifier(se::AnimatedSprite animatedSprite);
+        bool golden;
+
+    public:
+
+        EnemyModifier(se::AnimatedSprite animatedSprite, unsigned int score, float humanInfection);
         ~EnemyModifier();
 
     public:

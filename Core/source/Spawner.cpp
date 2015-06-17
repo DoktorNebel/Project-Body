@@ -52,6 +52,14 @@ namespace bc
             result.sprite = se::Content::getSprite(name);
             result.hitbox = se::Content::getHitbox(name);
         }
+
+        bool golden = false;
+        if ((pos = name.find("_Golden")) != std::string::npos)
+        {
+            golden = true;
+            name = name.substr(0, pos);
+        }
+
         if (name == "Virus")
         {
             result.dead = false;
@@ -72,12 +80,12 @@ namespace bc
             sprite.addSprite("Death", se::Content::getSprite("VirusDie4"));
             sprite.addSprite("Death", se::Content::getSprite("VirusDie5"));
             sprite.setScale(se::Vector2(1.5f, 1.5f));
-            modifiers.push_back(new EnemyModifier(sprite));
+            modifiers.push_back(new EnemyModifier(sprite, 2, 0.02f));
             modifiers.push_back(new HitMarkerModifier());
             result.sprite = se::Content::getSprite("Virus1");
             result.hitbox = se::Content::getHitbox("Virus1");
         }
-        if (name == "Big_Virus")
+        else if (name == "Big_Virus")
         {
             result.dead = false;
             result.health = 5.0f;
@@ -85,17 +93,16 @@ namespace bc
             se::AnimatedSprite sprite;
             sprite.addAnimation("Idle");
             sprite.setSpeed("Idle", 0.3f);
-            sprite.addSprite("Idle", se::Content::getSprite("Virus1"));
-            sprite.addSprite("Idle", se::Content::getSprite("Virus2"));
-            sprite.addSprite("Idle", se::Content::getSprite("Virus3"));
-            sprite.addSprite("Idle", se::Content::getSprite("Virus4"));
-            sprite.setScale(se::Vector2(3.0f, 3.0f));
-            sprite.setColor(se::Vector4(0.5f, 1.0f, 0.5f, 1.0f));
-            modifiers.push_back(new EnemyModifier(sprite));
+            sprite.addSprite("Idle", se::Content::getSprite("V1"));
+            sprite.addSprite("Idle", se::Content::getSprite("V2"));
+            sprite.addSprite("Idle", se::Content::getSprite("V3"));
+            sprite.addSprite("Idle", se::Content::getSprite("V4"));
+            sprite.setScale(se::Vector2(2.0f, 2.0f));
+            modifiers.push_back(new EnemyModifier(sprite, 5, 0.02f));
             modifiers.push_back(new BigVirusModifier());
             modifiers.push_back(new HitMarkerModifier());
-            result.sprite = se::Content::getSprite("Virus1");
-            result.hitbox = se::Content::getHitbox("Virus1");
+            result.sprite = se::Content::getSprite("V1");
+            result.hitbox = se::Content::getHitbox("V1");
         }
         else if (name == "Bug")
         {
@@ -112,7 +119,7 @@ namespace bc
             sprite.addSprite("Idle", se::Content::getSprite("KillaBug5"));
             sprite.addSprite("Idle", se::Content::getSprite("KillaBug6"));
             sprite.setScale(se::Vector2(2.0f, 2.0f));
-            modifiers.push_back(new EnemyModifier(sprite));
+            modifiers.push_back(new EnemyModifier(sprite, 250, 0.05f));
             modifiers.push_back(new HitMarkerModifier());
             modifiers.push_back(new ShootingModifier(Spawner::shotPatterns[std::find(Spawner::shotPatternNames.begin(), Spawner::shotPatternNames.end(), "BigBug") - Spawner::shotPatternNames.begin()]));
             result.sprite = se::Content::getSprite("KillaBug1");
@@ -128,7 +135,7 @@ namespace bc
             sprite.setSpeed("Idle", 0.5f);
             sprite.addSprite("Idle", se::Content::getSprite("Kefer"));
             sprite.setScale(se::Vector2(2.0f, 2.0f));
-            modifiers.push_back(new EnemyModifier(sprite));
+            modifiers.push_back(new EnemyModifier(sprite, 20, 0.02f));
             modifiers.push_back(new HitMarkerModifier());
             result.sprite = se::Content::getSprite("Kefer");
             result.hitbox = se::Content::getHitbox("Kefer");
@@ -143,7 +150,7 @@ namespace bc
             sprite.setSpeed("Idle", 0.5f);
             sprite.addSprite("Idle", se::Content::getSprite("Popel"));
             sprite.setScale(se::Vector2(2.0f, 2.0f));
-            modifiers.push_back(new EnemyModifier(sprite));
+            modifiers.push_back(new EnemyModifier(sprite, 200, 0.0f));
             modifiers.push_back(new BoogerModifier());
             modifiers.push_back(new HitMarkerModifier());
             result.sprite = se::Content::getSprite("Popel");
@@ -189,12 +196,15 @@ namespace bc
             sprite.addSprite("Death", se::Content::getSprite("Worm_Explosion_3"));
             sprite.setScale(se::Vector2(1.0f, 1.0f));
             sprite.setDepth(-1.0f);
-            modifiers.push_back(new EnemyModifier(sprite));
+            modifiers.push_back(new EnemyModifier(sprite, 50, 0.1f));
             modifiers.push_back(new WormElementModifier(true, 10, 0));
             modifiers.push_back(new HitMarkerModifier());
             result.sprite = se::Content::getSprite("Neurax1");
             result.hitbox = se::Content::getHitbox("Neurax1");
         }
+
+        if (golden)
+            ((EnemyModifier*)modifiers[0])->golden = true;
 
         IModifier* movement = 0;
         if (movementPattern == "Seek_Player")

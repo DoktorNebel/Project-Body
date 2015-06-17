@@ -6,12 +6,17 @@
 #include "AnimatedSprite.h"
 #include "AnimationModifier.h"
 #include "Spawner.h"
+#include "ItemModifier.h"
+#include "GameData.h"
 
 namespace bc
 {
-    EnemyModifier::EnemyModifier(se::AnimatedSprite animatedSprite)
+    EnemyModifier::EnemyModifier(se::AnimatedSprite animatedSprite, unsigned int score, float humanInfection)
         : animatedSprite(animatedSprite)
         , position(0.0f, 0.0f)
+        , score(score)
+        , humanInfection(humanInfection)
+        , lastHit(CollisionGroup::Enemies)
     {
 
     }
@@ -41,27 +46,43 @@ namespace bc
         {
             if (this->animatedSprite.getCurrentAnimation() != "Death")
             {
-                se::Engine::getActiveCamera().addScreenshake(1.0f * this->entity->maxHealth / 20.0f, 0.05f * this->entity->maxHealth / 20.0f);
-                int particleCount = (int)this->entity->maxHealth;
-                particleCount = particleCount < 20 ? 20 : particleCount;
-                particleCount = particleCount > 200 ? 200 : particleCount;
-                for (int i = 0; i < particleCount; ++i)
+                if (this->lastHit == CollisionGroup::PlayerProjectiles)
                 {
-                    std::vector<IModifier*> modifiers;
-                    modifiers.push_back(new ParticleModifier(se::Vector2(rand() % 2001 - 1000, rand() % 2001 - 1000), se::Vector2(2.0f, 2.0f), rand() % 1001 / 1000.0f));
-                    Spawner::spawn(this->entity->getSprite().getPosition(), "Funke1", modifiers, CollisionGroup::Particles);
-                }
+                    se::Engine::getActiveCamera().addScreenshake(1.0f * this->entity->maxHealth / 20.0f, 0.05f * this->entity->maxHealth / 20.0f);
+                    int particleCount = (int)this->entity->maxHealth;
+                    particleCount = particleCount < 20 ? 20 : particleCount;
+                    particleCount = particleCount > 200 ? 200 : particleCount;
+                    for (int i = 0; i < particleCount; ++i)
+                    {
+                        std::vector<IModifier*> modifiers;
+                        modifiers.push_back(new ParticleModifier(se::Vector2(rand() % 2001 - 1000, rand() % 2001 - 1000), se::Vector2(2.0f, 2.0f), rand() % 1001 / 1000.0f));
+                        Spawner::spawn(this->entity->getSprite().getPosition(), "Funke1", modifiers, CollisionGroup::Particles);
+                    }
 
-                std::vector<IModifier*> modifiers;
-                se::AnimatedSprite sprite;
-                sprite.addAnimation("Idle");
-                sprite.setSpeed("Idle", 0.05f);
-                sprite.addSprite("Idle", se::Content::getSprite("Flare1"));
-                sprite.addSprite("Idle", se::Content::getSprite("Flare2"));
-                sprite.addSprite("Idle", se::Content::getSprite("Flare3"));
-                modifiers.push_back(new ParticleModifier(se::Vector2(0.0f, 0.0f), se::Vector2(1.0f, 1.0f), 0.15f));
-                modifiers.push_back(new AnimationModifier(sprite));
-                Spawner::spawn(this->entity->getSprite().getPosition(), "Flare1", modifiers, CollisionGroup::Particles);
+                    std::vector<IModifier*> modifiers;
+                    se::AnimatedSprite sprite;
+                    sprite.addAnimation("Idle");
+                    sprite.setSpeed("Idle", 0.05f);
+                    sprite.addSprite("Idle", se::Content::getSprite("Flare1"));
+                    sprite.addSprite("Idle", se::Content::getSprite("Flare2"));
+                    sprite.addSprite("Idle", se::Content::getSprite("Flare3"));
+                    modifiers.push_back(new ParticleModifier(se::Vector2(0.0f, 0.0f), se::Vector2(1.0f, 1.0f), 0.15f));
+                    modifiers.push_back(new AnimationModifier(sprite));
+                    Spawner::spawn(this->entity->getSprite().getPosition(), "Flare1", modifiers, CollisionGroup::Particles);
+
+                    if (this->golden)
+                    {
+                        std::vector<IModifier*> modifiers;
+                        modifiers.push_back(new ItemModifier((ItemModifier::Effect::Type)(rand() % 3)));
+                        Spawner::spawn(this->entity->getSprite().getPosition(), "ITEM1", modifiers, CollisionGroup::Items);
+                    }
+
+                    GameData::addScore(this->score);
+                }
+                else
+                {
+                    GameData::humanInfection += this->humanInfection;
+                }
 
                 if (!this->animatedSprite.changeAnimation("Death"))
                     this->entity->dead = true;
@@ -81,6 +102,8 @@ namespace bc
 
     void EnemyModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
+        this->lastHit = collisionGroup;
+
         if (collisionGroup != CollisionGroup::LevelElements && this->entity->health > 0.0f)
             otherEntity->health -= this->entity->maxHealth / 5.0f;
     }

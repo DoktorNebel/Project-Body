@@ -5,6 +5,7 @@
 #include "Spawner.h"
 #include "HitMarkerModifier.h"
 #include "MathFunctions.h"
+#include "GameData.h"
 
 namespace bc
 {
@@ -81,6 +82,7 @@ namespace bc
 
         if (this->entity->health <= 0.0f)
         {
+            GameData::addScore(10000);
             this->entity->dead = true;
             Spawner::bossAlive = false;
         }

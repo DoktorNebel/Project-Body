@@ -6,7 +6,7 @@ namespace bc
 {
     void HitMarkerModifier::onCreate()
     {
-        this->hitMarkerTime = 0.01f;
+        this->hitMarkerTime = 0.0167f;
         this->timer = 0.0f;
     }
 

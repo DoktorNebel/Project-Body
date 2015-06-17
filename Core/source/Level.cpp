@@ -7,6 +7,7 @@
 #include "MathFunctions.h"
 #include "Input.h"
 #include "InputActions.h"
+#include "GameData.h"
 
 namespace bc
 {
@@ -117,7 +118,8 @@ namespace bc
         if (se::Input::getActionValue(bg::InputAction::FasterCheat))
         {
             elapsedTime *= 5.0f;
-            this->entities[CollisionGroup::Players][0].health = 100.0f;
+            this->entities[CollisionGroup::Players][0].health = 1.0f;
+            this->entities[CollisionGroup::Players][0].dead = false;
         }
 
         std::vector<Entity>::iterator entIter;
@@ -163,6 +165,8 @@ namespace bc
         this->medicineBox.update(elapsedTime);
 
         Spawner::update(elapsedTime);
+
+        printf("\rScore: %u Multiplier: %f Infection: %f%%", GameData::score, GameData::multiplier, GameData::humanInfection * 100.0f);
 
         //background scrolling
         this->totalElapsedTime += elapsedTime;

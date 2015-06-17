@@ -31,6 +31,7 @@ namespace bc
         this->fireRate = 0.01f;
         this->fireCounter = 0.0f;
         this->entity->getSprite().setScale(se::Vector2(0.5f, 0.5f));
+        this->shootingDirections.push_back(0.0f + 90.0f);
     }
 
 
@@ -48,9 +49,26 @@ namespace bc
         if (this->fireCounter >= this->fireRate && se::Input::getActionValue(bg::InputAction::Shoot))
         {
             this->fireCounter = 0.0f;
-            std::vector<IModifier*> modifiers;
-            modifiers.push_back(new ProjectileModifier(se::Vector2(rand() % 101 - 50, 1500), 2.0f));
-            Spawner::spawn(this->entity->getSprite().getPosition() + se::Vector2(rand() % 9 - 4, 16), "PlayerProjectile", modifiers, CollisionGroup::PlayerProjectiles);
+
+            for (unsigned int i = 0; i < this->shootingDirections.size(); ++i)
+            {
+                std::vector<IModifier*> modifiers;
+                float spreadDirection = this->shootingDirections[i] + (float)(rand() % 11 - 5);
+                se::Vector2 directionVector(cos(spreadDirection * 0.0174532925f), sin(spreadDirection * 0.0174532925f));
+                directionVector *= 1500.0f;
+                modifiers.push_back(new ProjectileModifier(directionVector, 2.0f));
+                Spawner::spawn(this->entity->getSprite().getPosition() + se::Vector2(rand() % 9 - 4, 16), "PlayerProjectile", modifiers, CollisionGroup::PlayerProjectiles);
+            }
+
+            for (unsigned int i = 0; i < this->backShootingDirections.size(); ++i)
+            {
+                std::vector<IModifier*> modifiers;
+                float spreadDirection = this->backShootingDirections[i] + (float)(rand() % 11 - 5);
+                se::Vector2 directionVector(cos(spreadDirection * 0.0174532925f), sin(spreadDirection * 0.0174532925f));
+                directionVector *= 1500.0f;
+                modifiers.push_back(new ProjectileModifier(directionVector, 2.0f));
+                Spawner::spawn(this->entity->getSprite().getPosition() + se::Vector2(rand() % 9 - 4, -16), "PlayerProjectile", modifiers, CollisionGroup::PlayerProjectiles);
+            }
         }
 
         if (se::Input::actionPressed(bg::InputAction::StickyShot))
