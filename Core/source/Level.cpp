@@ -166,7 +166,7 @@ namespace bc
 
         Spawner::update(elapsedTime);
 
-        printf("\rScore: %u Multiplier: %f Infection: %f%%", GameData::score, GameData::multiplier, GameData::humanInfection * 100.0f);
+        printf("\rScore: %u Multiplier: %f Infection: %f%%            ", GameData::score, GameData::multiplier, GameData::humanInfection * 100.0f);
 
         //background scrolling
         this->totalElapsedTime += elapsedTime;

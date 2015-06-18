@@ -232,6 +232,12 @@ namespace se
         //
         //Miscellaneous functions
         //
+        float Clamp(float min, float max, float value)
+        {
+            return value < min ? min : value > max ? max : value;
+        }
+
+
         float Lerp(float min, float max, float lerpValue)
         {
             return min + (max - min) * lerpValue;

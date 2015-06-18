@@ -113,8 +113,6 @@ namespace se
         unsigned int vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
         unsigned int pixelShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
-        printf("Loading shaders\n");
-
         // Read the Vertex Shader code from the file
         FILE* file;
         fopen_s(&file, "..\\Content\\Shaders\\vertex.glsl", "rb");
@@ -141,8 +139,6 @@ namespace se
 
         pixelShaderCode[size] = 0;
 
-
-        printf("Compiling Shaders\n");
         // Compile Vertex Shader
         glShaderSource(vertexShaderID, 1, &vertexShaderCode, NULL);
         glCompileShader(vertexShaderID);

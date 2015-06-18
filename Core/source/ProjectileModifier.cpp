@@ -50,7 +50,7 @@ namespace bc
         if (collisionGroup == CollisionGroup::LevelElements)
         {
             std::vector<IModifier*> modifiers;
-            modifiers.push_back(new ParticleModifier(this->direction * -0.5f + se::Vector2(rand() % 1501 - 750, rand() % 1501 - 750), se::Vector2(2.0f, 2.0f), rand() % 501 / 2000.0f));
+            modifiers.push_back(new ParticleModifier(this->direction * -500.0f + se::Vector2(rand() % 1001 - 500, rand() % 1001 - 500), se::Vector2(2.5f, 2.5f), rand() % 1501 / 1000.0f));
             Spawner::spawn(this->entity->getSprite().getPosition(), "Funke1", modifiers, CollisionGroup::Particles);
 
             modifiers.clear();

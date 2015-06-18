@@ -8,6 +8,7 @@
 #include "Spawner.h"
 #include "ItemModifier.h"
 #include "GameData.h"
+#include "MathFunctions.h"
 
 namespace bc
 {
@@ -48,14 +49,15 @@ namespace bc
             {
                 if (this->lastHit == CollisionGroup::PlayerProjectiles)
                 {
-                    se::Engine::getActiveCamera().addScreenshake(1.0f * this->entity->maxHealth / 20.0f, 0.05f * this->entity->maxHealth / 20.0f);
-                    int particleCount = (int)this->entity->maxHealth;
-                    particleCount = particleCount < 20 ? 20 : particleCount;
-                    particleCount = particleCount > 200 ? 200 : particleCount;
+                    float shakeStrength = se::Math::Clamp(1.0f, 20.0f, this->entity->maxHealth / 20.0f);
+                    float shakeDuration = se::Math::Clamp(0.1f, 2.0f, 0.05f * this->entity->maxHealth / 20.0f);
+                    se::Engine::getActiveCamera().addScreenshake(shakeStrength, shakeDuration);
+                    int particleCount = (int)se::Math::Clamp(50.0f, 500.0f, this->entity->maxHealth * 2.0f);
                     for (int i = 0; i < particleCount; ++i)
                     {
+                        float lifeTime = se::Math::Clamp(1.0f, 5.0f, rand() % 2001 / 1000.0f * (this->entity->maxHealth / 10.0f));
                         std::vector<IModifier*> modifiers;
-                        modifiers.push_back(new ParticleModifier(se::Vector2(rand() % 2001 - 1000, rand() % 2001 - 1000), se::Vector2(2.0f, 2.0f), rand() % 1001 / 1000.0f));
+                        modifiers.push_back(new ParticleModifier(se::Vector2(rand() % 2001 - 1000, rand() % 2001 - 1000), se::Vector2(2.5f, 2.5f), lifeTime));
                         Spawner::spawn(this->entity->getSprite().getPosition(), "Funke1", modifiers, CollisionGroup::Particles);
                     }
 

@@ -42,6 +42,7 @@ namespace se
 
     namespace Math
     {
+        float Clamp(float min, float max, float value);
         float Lerp(float min, float max, float lerpValue);
 
         float Length(const Vector2& vector);
