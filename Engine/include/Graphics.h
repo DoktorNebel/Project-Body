@@ -30,7 +30,9 @@ namespace se
         std::vector<std::vector<Vector2>> uvs;
         std::vector <std::vector<se::Vector4>> colors;
 		unsigned int renderWidth;
-		unsigned int renderHeight;
+        unsigned int renderHeight;
+        unsigned int screenWidth;
+        unsigned int screenHeight;
 
     public:
 

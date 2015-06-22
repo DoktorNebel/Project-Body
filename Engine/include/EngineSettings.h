@@ -4,8 +4,10 @@ namespace se
 {
 	struct EngineSettings
 	{
-		unsigned int resolutionWidth;
-		unsigned int resolutionHeight;
+		unsigned int renderResolutionWidth;
+        unsigned int renderResolutionHeight;
+        unsigned int screenResolutionWidth;
+        unsigned int screenResolutionHeight;
 		bool fullscreen;
 	};
 }

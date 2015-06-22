@@ -40,10 +40,10 @@ namespace bc
         float x = this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Right) - this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Left);
         float y = this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Up) - this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Down);
         this->entity->getSprite().move(se::Vector2(x, y));
-        if (this->entity->getSprite().getPosition().y - this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2 < -(int)se::Engine::getSettings().resolutionHeight / 2)
-            this->entity->getSprite().setPosition(se::Vector2(this->entity->getSprite().getPosition().x, -(int)se::Engine::getSettings().resolutionHeight / 2 + this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2));
-        if (this->entity->getSprite().getPosition().y + this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2 > (int)se::Engine::getSettings().resolutionHeight / 2)
-            this->entity->getSprite().setPosition(se::Vector2(this->entity->getSprite().getPosition().x, (int)se::Engine::getSettings().resolutionHeight / 2 - this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2));
+        if (this->entity->getSprite().getPosition().y - this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2 < -(int)se::Engine::getSettings().renderResolutionHeight / 2)
+            this->entity->getSprite().setPosition(se::Vector2(this->entity->getSprite().getPosition().x, -(int)se::Engine::getSettings().renderResolutionHeight / 2 + this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2));
+        if (this->entity->getSprite().getPosition().y + this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2 > (int)se::Engine::getSettings().renderResolutionHeight / 2)
+            this->entity->getSprite().setPosition(se::Vector2(this->entity->getSprite().getPosition().x, (int)se::Engine::getSettings().renderResolutionHeight / 2 - this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2));
 
         this->fireCounter += elapsedTime;
         if (this->fireCounter >= this->fireRate && se::Input::getActionValue(bg::InputAction::Shoot))

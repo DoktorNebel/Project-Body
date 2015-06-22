@@ -18,7 +18,7 @@ namespace se
     void Engine::initialize(IGame* game, EngineSettings settings)
     {
         Engine::game = game;
-        Engine::window = new sf::Window(sf::VideoMode(settings.resolutionWidth, settings.resolutionHeight), "Body", settings.fullscreen ? sf::Style::Fullscreen : sf::Style::Default, sf::ContextSettings(24, 0, 2, 4, 3));
+        Engine::window = new sf::Window(sf::VideoMode(settings.screenResolutionWidth, settings.screenResolutionHeight), "Body", settings.fullscreen ? sf::Style::Fullscreen : sf::Style::Default, sf::ContextSettings(24, 0, 2, 4, 3));
         Engine::graphics = Graphics(settings);
         Engine::settings = settings;
 
@@ -26,7 +26,7 @@ namespace se
         srand((unsigned int)time(0));
 
         Engine::lastUpdate = std::chrono::high_resolution_clock::now();
-
+        
         Input::setWindow(Engine::window);
     }
 
@@ -39,7 +39,7 @@ namespace se
 
 	void Engine::reloadSettings()
 	{
-		Engine::window->create(sf::VideoMode(Engine::settings.resolutionWidth, Engine::settings.resolutionHeight), "Body", Engine::settings.fullscreen ? sf::Style::Fullscreen : sf::Style::Default, sf::ContextSettings(24, 0, 2, 4, 3));
+        Engine::window->create(sf::VideoMode(Engine::settings.screenResolutionWidth, Engine::settings.screenResolutionHeight), "Body", Engine::settings.fullscreen ? sf::Style::Fullscreen : sf::Style::Default, sf::ContextSettings(24, 0, 2, 4, 3));
 	}
 
 

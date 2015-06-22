@@ -24,8 +24,10 @@ namespace se
         , indexBuffer(0)
         , matricesBuffer(0)
         , uvBuffer(0)
-		, renderWidth(settings.resolutionWidth)
-		, renderHeight(settings.resolutionHeight)
+		, renderWidth(settings.renderResolutionWidth)
+        , renderHeight(settings.renderResolutionHeight)
+        , screenWidth(settings.screenResolutionWidth)
+        , screenHeight(settings.screenResolutionHeight)
     {
         glewInit();
 
@@ -180,7 +182,7 @@ namespace se
 
     void Graphics::draw(Camera* camera)
     {
-        glViewport(0, 0, this->renderWidth, this->renderHeight);
+        glViewport(0, 0, this->screenWidth, this->screenHeight);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         if (camera)

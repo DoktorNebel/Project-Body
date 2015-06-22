@@ -172,7 +172,7 @@ namespace bc
         this->totalElapsedTime += elapsedTime;
 
         if (this->entities[CollisionGroup::Players].size() > 0)
-            this->camera.setPosition(se::Vector2(this->entities[CollisionGroup::Players][0].getSprite().getPosition().x / (se::Engine::getSettings().resolutionWidth / 2), 0.0f));
+            this->camera.setPosition(se::Vector2(this->entities[CollisionGroup::Players][0].getSprite().getPosition().x / (se::Engine::getSettings().renderResolutionWidth / 2), 0.0f));
 
         float currentScrollSpeed = 0.0f;
         if (this->currentScrollKey + 1 < this->scrollSpeeds.size())
@@ -188,7 +188,7 @@ namespace bc
         {
             for (unsigned int j = 0; j < this->backgroundSprites[i].size(); ++j)
             {
-                this->backgroundSprites[i][j].move(se::Vector2((this->camera.getActualPosition().x - this->lastCameraPos.x) * (1 - this->backgroundSpeeds[i]) * (se::Engine::getSettings().resolutionWidth / 2), currentScrollSpeed * -this->backgroundSpeeds[i] * elapsedTime));
+                this->backgroundSprites[i][j].move(se::Vector2((this->camera.getActualPosition().x - this->lastCameraPos.x) * (1 - this->backgroundSpeeds[i]) * (se::Engine::getSettings().renderResolutionWidth / 2), currentScrollSpeed * -this->backgroundSpeeds[i] * elapsedTime));
             }
         }
 
