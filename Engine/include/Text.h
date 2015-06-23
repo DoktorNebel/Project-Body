@@ -47,8 +47,8 @@ namespace se
         void setPosition(Vector2 position);
         void scale(Vector2 factor);
         Vector2 getScale();
-        float getWidth();
-        float getHeight();
+        unsigned int getWidth();
+        unsigned int getHeight();
         void setScale(Vector2 scale);
         void rotate(float rotation);
         float getRotation();

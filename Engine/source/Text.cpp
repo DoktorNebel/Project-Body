@@ -5,7 +5,7 @@
 
 namespace se
 {
-    Text::Text(Font* font, std::string text = std::string(), se::Vector2 position = se::Vector2(0.0f, 0.0f), se::Vector2 size = se::Vector2(1.0f, 1.0f), float rotation = 0.0f, se::Vector4 color = se::Vector4(1.0f, 1.0f, 1.0f, 1.0f))
+    Text::Text(Font* font, std::string text, se::Vector2 position, se::Vector2 size, float rotation, se::Vector4 color)
         : font(font)
         , text(text)
         , position(position)
@@ -40,15 +40,22 @@ namespace se
 
         for (unsigned int i = 0; i < this->glyphs.size(); ++i)
         {
-            //TODO: kerning stuff
-            Matrix translation = Math::TranslationMatrix(origin.x + xOffset + this->glyphs[i].offset.x * this->size.x, origin.y + this->glyphs[i].offset.y * this->size.y, this->depth);
+            float kerning = 0.0f;
+            if (i + 1 < this->glyphs.size())
+            {
+                unsigned int pos = std::find(this->glyphs[i].kerningChars.begin(), this->glyphs[i].kerningChars.end(), this->glyphs[i + 1].character) - this->glyphs[i].kerningChars.begin();
+                if (pos < this->glyphs[i].kerningChars.size())
+                    kerning = (float)this->glyphs[i].kerningAdvances[pos];
+            }
+
+            Matrix translation = Math::TranslationMatrix(origin.x + xOffset + this->glyphs[i].offset.x * this->size.x + kerning * this->size.x, origin.y + this->glyphs[i].offset.y * this->size.y, this->depth);
             Matrix rotation = Math::RotationMatrixZ(this->rotation);
             Matrix scale = Math::ScalingMatrix(this->size.x * this->width, this->size.y * this->font->getHeight(), 1.0f);
 
             this->matrices.push_back(translation * rotation * scale);
             this->textureRects.push_back(this->glyphs[i].textureRect);
 
-            xOffset += this->glyphs[i].width * this->size.x;
+            xOffset += this->glyphs[i].width * (int)this->size.x;
         }
     }
 
@@ -89,11 +96,11 @@ namespace se
 
         float radRot = this->rotation * 0.0174532925f;
 
-        Vector2 pos = this->position + Vector2(-this->width / 2 * this->size.x, -this->font->getHeight() / 2 * this->size.y);
+        Vector2 pos = this->position + Vector2(this->width / 2 * -this->size.x, this->font->getHeight() / 2 * -this->size.y);
         newVerts[0] = Vector2(this->position.x + (pos.x - this->position.x) * cos(radRot) - this->position.y + (pos.y - this->position.y) * sin(radRot),
             this->position.x + (pos.x - this->position.x) * sin(radRot) + this->position.y + (pos.y - this->position.y) * cos(radRot));
 
-        pos = this->position + Vector2(-this->width / 2 * this->size.x, this->font->getHeight() / 2 * this->size.y);
+        pos = this->position + Vector2(this->width / 2 * -this->size.x, this->font->getHeight() / 2 * this->size.y);
         newVerts[1] = Vector2(this->position.x + (pos.x - this->position.x) * cos(radRot) - this->position.y + (pos.y - this->position.y) * sin(radRot),
             this->position.x + (pos.x - this->position.x) * sin(radRot) + this->position.y + (pos.y - this->position.y) * cos(radRot));
 
@@ -101,7 +108,7 @@ namespace se
         newVerts[2] = Vector2(this->position.x + (pos.x - this->position.x) * cos(radRot) - this->position.y + (pos.y - this->position.y) * sin(radRot),
             this->position.x + (pos.x - this->position.x) * sin(radRot) + this->position.y + (pos.y - this->position.y) * cos(radRot));
 
-        pos = this->position + Vector2(this->width / 2 * this->size.x, -this->font->getHeight() / 2 * this->size.y);
+        pos = this->position + Vector2(this->width / 2 * this->size.x, this->font->getHeight() / 2 * -this->size.y);
         newVerts[3] = Vector2(this->position.x + (pos.x - this->position.x) * cos(radRot) - this->position.y + (pos.y - this->position.y) * sin(radRot),
             this->position.x + (pos.x - this->position.x) * sin(radRot) + this->position.y + (pos.y - this->position.y) * cos(radRot));
 
@@ -140,13 +147,13 @@ namespace se
     }
 
 
-    float Text::getWidth()
+    unsigned int Text::getWidth()
     {
         return this->width;
     }
 
 
-    float Text::getHeight()
+    unsigned int Text::getHeight()
     {
         return this->font->getHeight();
     }

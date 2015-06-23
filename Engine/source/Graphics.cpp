@@ -2,6 +2,7 @@
 
 #include "MathFunctions.h"
 #include "EngineSettings.h"
+#include "Font.h"
 
 namespace se
 {
@@ -96,6 +97,7 @@ namespace se
         glDepthFunc(GL_LEQUAL);
 
         Content::loadTextures(this->textureIds, this->textureSizes);
+        Content::loadFonts(this->textureIds, this->textureSizes);
         this->matrices.resize(this->textureIds.size());
         this->uvs.resize(this->textureIds.size());
         this->colors.resize(this->textureIds.size());
@@ -177,6 +179,25 @@ namespace se
         this->uvs[texturePos].push_back(Vector2(textureRect.left / textureSize.x, textureRect.top / textureSize.y));
 
         this->colors[texturePos].push_back(sprite.getColor());
+    }
+
+
+    void Graphics::addText(Text& text)
+    {
+        int texturePos = std::find(this->textureIds.begin(), this->textureIds.end(), text.getFont()->getTextureId()) - this->textureIds.begin();
+        Vector2 textureSize = this->textureSizes[texturePos];
+
+        this->matrices[texturePos].insert(this->matrices[texturePos].end(), text.getMatrices().begin(), text.getMatrices().end());
+
+        for (unsigned int i = 0; i < text.getTextureRects().size(); ++i)
+        {
+            this->uvs[texturePos].push_back(Vector2(text.getTextureRects()[i].left / textureSize.x, text.getTextureRects()[i].bottom / textureSize.y));
+            this->uvs[texturePos].push_back(Vector2(text.getTextureRects()[i].right / textureSize.x, text.getTextureRects()[i].bottom / textureSize.y));
+            this->uvs[texturePos].push_back(Vector2(text.getTextureRects()[i].right / textureSize.x, text.getTextureRects()[i].top / textureSize.y));
+            this->uvs[texturePos].push_back(Vector2(text.getTextureRects()[i].left / textureSize.x, text.getTextureRects()[i].top / textureSize.y));
+
+            this->colors[texturePos].push_back(text.getColor());
+        }
     }
 
 

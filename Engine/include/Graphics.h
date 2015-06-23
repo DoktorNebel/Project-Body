@@ -7,6 +7,7 @@
 #include "Sprite.h"
 #include <vector>
 #include "Camera.h"
+#include "Text.h"
 
 namespace se
 {
@@ -47,6 +48,7 @@ namespace se
     public:
 
         void addSprite(Sprite& sprite);
+        void addText(Text& text);
         void draw(Camera* camera);
     };
 }

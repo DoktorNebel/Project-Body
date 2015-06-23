@@ -6,12 +6,16 @@
 #include "tinydir.h"
 #include "Color.h"
 #include "MathFunctions.h"
+#include <FreeType\ft2build.h>
+#include FT_FREETYPE_H
 
 namespace se
 {
 	std::vector<std::string> Content::spriteNames = std::vector<std::string>();
     std::vector<Sprite> Content::sprites = std::vector<Sprite>();
     std::vector<Polygon> Content::hitboxes = std::vector<Polygon>();
+    std::vector<Font> Content::fonts = std::vector<Font>();
+    std::vector<std::string> Content::fontNames = std::vector<std::string>();
 
 
 	std::vector<se::Vector2> Content::generateHitbox(se::Color* image, int imageWidth, int imageHeight, se::Sprite& sprite, char alphaTolerance, float angleTolerance)
@@ -352,6 +356,59 @@ namespace se
     }
 
 
+    void Content::loadFonts(std::vector<unsigned int>& ids, std::vector<Vector2>& sizes)
+    {
+        std::vector<std::string> fontPaths;
+
+        //get filenames
+        tinydir_dir dir;
+        tinydir_open_sorted(&dir, "../Content/Fonts");
+
+        for (unsigned int i = 0; i < dir.n_files; ++i)
+        {
+            tinydir_file file;
+            tinydir_readfile_n(&dir, &file, i);
+
+            if (!file.is_dir && strcmp(file.name, "Thumbs.db"))
+            {
+                fontPaths.push_back(file.path);
+            }
+        }
+
+        tinydir_close(&dir);
+        
+        FT_Library library;
+        FT_Init_FreeType(&library);
+
+        //generate fontmaps
+        for (unsigned int i = 0; i < fontPaths.size(); ++i)
+        {
+            FT_Face face;
+            FT_New_Face(library, fontPaths[i].c_str(), 0, &face);
+            FT_Set_Pixel_Sizes(face, 0, 32);
+
+            std::vector<FT_Bitmap> bitmaps;
+
+            unsigned int totalWidth = 0;
+            unsigned int index;
+            char code = (char)FT_Get_First_Char(face, &index);
+
+            while (index != 0)
+            {
+                FT_Load_Char(face, code, FT_LOAD_RENDER);
+                bitmaps.push_back(face->glyph->bitmap);
+                totalWidth += face->glyph->bitmap.width;
+                //TODO: generate complete bitmap
+                code = (char)FT_Get_Next_Char(face, code, &index);
+            }
+
+            FT_Done_Face(face);
+        }
+
+        FT_Done_FreeType(library);
+    }
+
+
     Sprite Content::getSprite(std::string name)
     {
 		int pos = std::find(Content::spriteNames.begin(), Content::spriteNames.end(), name) - Content::spriteNames.begin();
@@ -365,5 +422,13 @@ namespace se
         int pos = std::find(Content::spriteNames.begin(), Content::spriteNames.end(), spriteName) - Content::spriteNames.begin();
 
         return Content::hitboxes[pos];
+    }
+
+
+    Font* Content::getFont(std::string name)
+    {
+        int pos = std::find(Content::fontNames.begin(), Content::fontNames.end(), name) - Content::fontNames.begin();
+
+        return &Content::fonts[pos];
     }
 }

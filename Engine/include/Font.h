@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "Glyph.h"
 
 namespace se
 {
@@ -20,6 +21,7 @@ namespace se
 
     public:
 
+        unsigned int getTextureId();
         unsigned int getHeight();
         Glyph getGlyph(char character);
     };

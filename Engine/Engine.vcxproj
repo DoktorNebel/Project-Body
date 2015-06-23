@@ -33,6 +33,7 @@
     <ClInclude Include="include\Vector4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\Font.cpp" />
     <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\Text.cpp" />
     <ClCompile Include="source\Polygon.cpp" />
     <ClCompile Include="source\AnimatedSprite.cpp" />
@@ -74,6 +75,8 @@
     <Import Project="..\Propertysheets\Glew_Lib.props" />
     <Import Project="..\Propertysheets\Other_Include.props" />
     <Import Project="..\Propertysheets\WarningLevel.props" />
+    <Import Project="..\Propertysheets\FreeType_Lib_Debug.props" />
+    <Import Project="..\Propertysheets\FreeType_Include.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -83,6 +86,8 @@
     <Import Project="..\Propertysheets\Glew_Lib.props" />
     <Import Project="..\Propertysheets\Other_Include.props" />
     <Import Project="..\Propertysheets\WarningLevel.props" />
+    <Import Project="..\Propertysheets\FreeType_Lib_Release.props" />
+    <Import Project="..\Propertysheets\FreeType_Include.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />

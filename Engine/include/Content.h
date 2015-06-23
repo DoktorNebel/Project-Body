@@ -4,6 +4,7 @@
 #include "Sprite.h"
 #include "Polygon.h"
 #include "Color.h"
+#include "Font.h"
 
 namespace se
 {
@@ -14,6 +15,8 @@ namespace se
         static std::vector<std::string> spriteNames;
         static std::vector<Sprite> sprites;
         static std::vector<Polygon> hitboxes;
+        static std::vector<std::string> fontNames;
+        static std::vector<Font> fonts;
 
     private:
 
@@ -27,7 +30,9 @@ namespace se
     public:
 
         static void loadTextures(std::vector<unsigned int>& ids, std::vector<Vector2>& sizes);
+        static void loadFonts(std::vector<unsigned int>& ids, std::vector<Vector2>& sizes);
         static Sprite getSprite(std::string name);
         static Polygon getHitbox(std::string spriteName);
+        static Font* getFont(std::string name);
     };
 }
