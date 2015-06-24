@@ -12,8 +12,10 @@ namespace se
         , size(size)
         , rotation(rotation)
         , color(color)
+        , depth(0.0f)
     {
-        this->recalculate();
+        if (this->font)
+            this->recalculate();
     }
 
 

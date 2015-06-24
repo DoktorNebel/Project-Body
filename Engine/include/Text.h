@@ -30,7 +30,7 @@ namespace se
 
     public:
 
-        Text(Font* font, std::string text = std::string(), se::Vector2 position = se::Vector2(0.0f, 0.0f), se::Vector2 size = se::Vector2(1.0f, 1.0f), float rotation = 0.0f, se::Vector4 color = se::Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+        Text(Font* font = 0, std::string text = std::string(), se::Vector2 position = se::Vector2(0.0f, 0.0f), se::Vector2 size = se::Vector2(1.0f, 1.0f), float rotation = 0.0f, se::Vector4 color = se::Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 
     private:
 

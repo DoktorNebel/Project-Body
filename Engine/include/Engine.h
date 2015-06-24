@@ -34,6 +34,7 @@ namespace se
         static void setActiveCamera(Camera& camera);
         static void run();
         static void draw(Sprite& sprite);
+        static void draw(Text& text);
     };
 }
 

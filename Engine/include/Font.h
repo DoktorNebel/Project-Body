@@ -17,7 +17,7 @@ namespace se
 
     public:
 
-        Font(std::string path);
+        Font(unsigned int texture, unsigned int size, unsigned int height, std::vector<char>& characters, std::vector<Glyph>& glyphs);
 
     public:
 

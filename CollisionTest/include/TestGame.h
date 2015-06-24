@@ -11,7 +11,9 @@ namespace test
         std::vector<se::Sprite> lines;
         se::Sprite sprite;
         se::Sprite sprite2;
+        se::Text text;
 		se::Camera camera;
+        se::Sprite textureTest;
 
     public:
 

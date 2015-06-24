@@ -2,7 +2,12 @@
 
 namespace se
 {
-    Font::Font(std::string path)
+    Font::Font(unsigned int texture, unsigned int size, unsigned int height, std::vector<char>& characters, std::vector<Glyph>& glyphs)
+        : texture(texture)
+        , size(size)
+        , height(height)
+        , characters(characters)
+        , glyphs(glyphs)
     {
 
     }

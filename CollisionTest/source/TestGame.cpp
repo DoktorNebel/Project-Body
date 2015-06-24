@@ -43,6 +43,36 @@ namespace test
         this->sprite2.scale(se::Vector2(1.0f, 1.0f));
 		
         this->poly2 = se::Content::getHitbox("KillaBug1");
+
+        this->text = se::Text(se::Content::getFont("wendy.ttf"), "ABC", se::Vector2(-300.0f, -300.0f), se::Vector2(3.0f, 3.0f));
+
+        struct Test
+        {
+            unsigned int texture;
+            se::Rectangle textureRect;
+            se::Vector2 position;
+            se::Vector2 size;
+            float width;
+            float height;
+            float rotation;
+            float depth;
+            se::Vector4 color;
+        };
+
+        Test test =
+        {
+            2,
+            se::Rectangle(0, 512, 0, 256),
+            se::Vector2(-300, 0),
+            se::Vector2(1.0f, 1.0f),
+            256,
+            512,
+            0.0f,
+            0.0f,
+            se::Vector4(1.0f, 1.0f, 1.0f, 1.0f)
+        };
+
+        memcpy(&this->textureTest, &test, sizeof(test));
     }
 
 
@@ -89,7 +119,7 @@ namespace test
 
         this->lines.push_back(line);
 
-        for (int i = 1; i < this->poly.getPoints().size(); ++i)
+        for (unsigned int i = 1; i < this->poly.getPoints().size(); ++i)
         {
             pos = lastPoint + (this->poly.getPoints()[i] - lastPoint) / 2;
             scale = se::Vector2(se::Math::Distance(this->poly.getPoints()[i], lastPoint), 2.0f);
@@ -115,7 +145,7 @@ namespace test
         line.setRotation(rotation);
         this->lines.push_back(line);
 
-        for (int i = 1; i < this->poly2.getPoints().size(); ++i)
+        for (unsigned int i = 1; i < this->poly2.getPoints().size(); ++i)
         {
             pos = lastPoint + (this->poly2.getPoints()[i] - lastPoint) / 2;
             scale = se::Vector2(se::Math::Distance(this->poly2.getPoints()[i], lastPoint), 2.0f);
@@ -135,11 +165,11 @@ namespace test
     {
         se::Engine::draw(this->sprite2);
         se::Engine::draw(this->sprite);
-        for (int i = 0; i < this->lines.size(); ++i)
+        for (unsigned int i = 0; i < this->lines.size(); ++i)
         {
             se::Engine::draw(this->lines[i]);
         }
-
+        se::Engine::draw(this->textureTest);
     }
 
 

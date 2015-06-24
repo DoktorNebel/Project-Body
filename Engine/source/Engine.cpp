@@ -95,4 +95,10 @@ namespace se
     {
         Engine::graphics.addSprite(sprite);
     }
+
+
+    void Engine::draw(Text& text)
+    {
+        Engine::graphics.addText(text);
+    }
 }

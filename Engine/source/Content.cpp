@@ -385,22 +385,118 @@ namespace se
         {
             FT_Face face;
             FT_New_Face(library, fontPaths[i].c_str(), 0, &face);
-            FT_Set_Pixel_Sizes(face, 0, 32);
+            FT_Set_Pixel_Sizes(face, 0, 64);
+            
 
+            //load glyph bitmaps
+            std::vector<char> characters;
+            std::vector<Glyph> glyphs;
             std::vector<FT_Bitmap> bitmaps;
 
             unsigned int totalWidth = 0;
+            unsigned int maxHeight = 0;
             unsigned int index;
             char code = (char)FT_Get_First_Char(face, &index);
 
             while (index != 0)
             {
                 FT_Load_Char(face, code, FT_LOAD_RENDER);
+
+                characters.push_back(code);
+
+                Glyph glyph;
+                glyph.character = code;
+                glyph.offset = se::Vector2(face->glyph->bitmap_left, face->size->metrics.ascender / 64 - face->glyph->bitmap_top);
+                glyph.width = face->glyph->advance.x / 64;
+                glyphs.push_back(glyph);
+
                 bitmaps.push_back(face->glyph->bitmap);
+
                 totalWidth += face->glyph->bitmap.width;
-                //TODO: generate complete bitmap
+                if (face->glyph->bitmap.rows > maxHeight)
+                    maxHeight = face->glyph->bitmap.rows;
+
                 code = (char)FT_Get_Next_Char(face, code, &index);
             }
+
+            //find out fitting texture dimensions
+            int lowestPow2Width = 2;
+            while (lowestPow2Width < (int)totalWidth)
+            {
+                lowestPow2Width *= 2;
+            }
+
+            int lowestPow2Height = 2;
+            while (lowestPow2Height < (int)maxHeight)
+            {
+                lowestPow2Height *= 2;
+            }
+
+            int difference;
+            while ((difference = lowestPow2Width - lowestPow2Height) > 0)
+            {
+                lowestPow2Width /= 2;
+                lowestPow2Height *= 2;
+            }
+
+            //generate texture buffer
+            /*unsigned int startX = 0;
+            unsigned int startY = 0;
+            std::vector<Color> buffer(lowestPow2Width * lowestPow2Height);
+            for (unsigned int j = 0; j < bitmaps.size(); ++j)
+            {
+                if (startX + bitmaps[j].width > (unsigned int)lowestPow2Width)
+                {
+                    startX = 0;
+                    startY += maxHeight;
+                }
+
+                for (unsigned int y = 0; y < bitmaps[j].rows; ++y)
+                {
+                    for (unsigned int x = 0; x < bitmaps[j].width; ++x)
+                    {
+                        buffer[(startY + y) * lowestPow2Width + startX + x].r = 255;
+                        buffer[(startY + y) * lowestPow2Width + startX + x].g = 255;
+                        buffer[(startY + y) * lowestPow2Width + startX + x].b = 255;
+                        buffer[(startY + y) * lowestPow2Width + startX + x].a = bitmaps[j].buffer[y * bitmaps[j].width + x];
+                    }
+                }
+
+                glyphs[j].textureRect = Rectangle((float)startY, (float)startY + (float)bitmaps[j].rows, (float)startX, (float)startX + (float)bitmaps[j].width);
+
+                startX += bitmaps[j].width;
+            }*/
+            unsigned int startX = 0;
+            unsigned int startY = 0;
+            std::vector<Color> buffer(lowestPow2Width * lowestPow2Height);
+            for (unsigned int y = 0; y < bitmaps[32].rows; ++y)
+            {
+                for (unsigned int x = 0; x < (unsigned int)abs(bitmaps[32].pitch); ++x)
+                {
+                    buffer[y * lowestPow2Width + x].r = 255;
+                    buffer[y * lowestPow2Width + x].g = 255;
+                    buffer[y * lowestPow2Width + x].b = 255;
+                    buffer[y * lowestPow2Width + x].a = bitmaps[32].buffer[y * bitmaps[32].pitch + x];
+                }
+            }
+
+            //generate gl texture
+            unsigned int texture;
+            glGenTextures(1, &texture);
+            glBindTexture(GL_TEXTURE_2D, texture);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, lowestPow2Width, lowestPow2Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, &buffer[0]);
+            glBindTexture(GL_TEXTURE_2D, 0);
+            ids.push_back(texture);
+            sizes.push_back(Vector2(lowestPow2Width, lowestPow2Height));
+
+            //create font
+            Font font(texture, 64, maxHeight, characters, glyphs);
+            Content::fonts.push_back(font);
+            char fontName[128];
+            sscanf(fontPaths[i].c_str(), "../Content/Fonts/%s", fontName);
+            Content::fontNames.push_back(fontName);
 
             FT_Done_Face(face);
         }
