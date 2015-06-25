@@ -9,6 +9,8 @@ namespace se
     struct Glyph
     {
         unsigned int width;
+        unsigned int height;
+        unsigned int advance;
         se::Vector2 offset;
         Rectangle textureRect;
         char character;

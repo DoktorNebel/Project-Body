@@ -34,6 +34,7 @@ namespace se
 
     private:
 
+        void getGlyphs();
         void recalculate();
 
     public:

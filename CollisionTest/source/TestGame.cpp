@@ -44,7 +44,7 @@ namespace test
 		
         this->poly2 = se::Content::getHitbox("KillaBug1");
 
-        this->text = se::Text(se::Content::getFont("wendy.ttf"), "ABC", se::Vector2(-300.0f, -300.0f), se::Vector2(3.0f, 3.0f));
+        this->text = se::Text(se::Content::getFont("calibri.ttf"), "(GAV", se::Vector2(0.0f, 0.0f), se::Vector2(1.0f, 1.0f));
 
         struct Test
         {
@@ -62,10 +62,10 @@ namespace test
         Test test =
         {
             2,
-            se::Rectangle(0, 512, 0, 256),
+            se::Rectangle(0, 512, 0, 512),
             se::Vector2(-300, 0),
             se::Vector2(1.0f, 1.0f),
-            256,
+            512,
             512,
             0.0f,
             0.0f,
@@ -78,9 +78,9 @@ namespace test
 
     void TestGame::update(float elapsedTime)
     {
-        this->sprite.move(se::Vector2(se::Input::getActionValue(InputAction::Right) - se::Input::getActionValue(InputAction::Left), se::Input::getActionValue(InputAction::Up) - se::Input::getActionValue(InputAction::Down)) * se::Vector2(200.0f, 200.0f) * elapsedTime);
-        this->sprite.rotate((se::Input::getActionValue(InputAction::RotateLeft) - se::Input::getActionValue(InputAction::RotateRight)) * 200.0f * elapsedTime);
-        this->sprite.setScale(this->sprite.getScale() + se::Vector2(2.0f, 2.0f) * (se::Input::getActionValue(InputAction::ScaleUp) - se::Input::getActionValue(InputAction::ScaleDown)) * elapsedTime);
+        this->text.move(se::Vector2(se::Input::getActionValue(InputAction::Right) - se::Input::getActionValue(InputAction::Left), se::Input::getActionValue(InputAction::Up) - se::Input::getActionValue(InputAction::Down)) * se::Vector2(200.0f, 200.0f) * elapsedTime);
+        this->text.rotate((se::Input::getActionValue(InputAction::RotateLeft) - se::Input::getActionValue(InputAction::RotateRight)) * 200.0f * elapsedTime);
+        this->text.setScale(this->text.getScale() + se::Vector2(2.0f, 2.0f) * (se::Input::getActionValue(InputAction::ScaleUp) - se::Input::getActionValue(InputAction::ScaleDown)) * elapsedTime);
 
         this->poly.setRotation(this->sprite.getRotation());
         this->poly.setScale(this->sprite.getScale());
@@ -158,6 +158,11 @@ namespace test
 
             lastPoint = this->poly2.getPoints()[i];
         }
+
+        line.setPosition(this->text.getPosition());
+        line.setScale(se::Vector2((float)this->text.getWidth(), 1.0f));
+        line.setRotation(0.0f);
+        this->lines.push_back(line);
     }
 
 
@@ -170,6 +175,7 @@ namespace test
             se::Engine::draw(this->lines[i]);
         }
         se::Engine::draw(this->textureTest);
+        se::Engine::draw(this->text);
     }
 
 

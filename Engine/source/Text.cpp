@@ -15,15 +15,16 @@ namespace se
         , depth(0.0f)
     {
         if (this->font)
+        {
+            this->getGlyphs();
             this->recalculate();
+        }
     }
 
 
-    void Text::recalculate()
+    void Text::getGlyphs()
     {
         this->glyphs.clear();
-        this->matrices.clear();
-        this->textureRects.clear();
 
         std::string::iterator iter = this->text.begin();
 
@@ -32,32 +33,40 @@ namespace se
         while (iter != this->text.end())
         {
             this->glyphs.push_back(this->font->getGlyph(*iter));
-            this->width += this->glyphs.back().width;
+            this->width += (unsigned int)((float)this->glyphs.back().advance * this->size.x);
 
             ++iter;
         }
+    }
 
-        se::Vector2 origin = this->position - se::Vector2((float)this->width / 2 * this->size.x, -(float)this->font->getHeight() / 2 * this->size.y);
+
+    void Text::recalculate()
+    {
+        this->matrices.clear();
+        this->textureRects.clear();
+
+        se::Vector2 origin = this->position -se::Vector2((float)this->width / 2.0f * this->size.x, (float)this->font->getHeight() / 2.0f * this->size.y);
         int xOffset = 0;
 
         for (unsigned int i = 0; i < this->glyphs.size(); ++i)
         {
             float kerning = 0.0f;
-            if (i + 1 < this->glyphs.size())
+            if ((int)i - 1 >= 0)
             {
-                unsigned int pos = std::find(this->glyphs[i].kerningChars.begin(), this->glyphs[i].kerningChars.end(), this->glyphs[i + 1].character) - this->glyphs[i].kerningChars.begin();
-                if (pos < this->glyphs[i].kerningChars.size())
-                    kerning = (float)this->glyphs[i].kerningAdvances[pos];
+                unsigned int pos = std::find(this->glyphs[i - 1].kerningChars.begin(), this->glyphs[i - 1].kerningChars.end(), this->glyphs[i].character) - this->glyphs[i - 1].kerningChars.begin();
+                if (pos < this->glyphs[i - 1].kerningChars.size())
+                    kerning = (float)this->glyphs[i - 1].kerningAdvances[pos];
             }
 
-            Matrix translation = Math::TranslationMatrix(origin.x + xOffset + this->glyphs[i].offset.x * this->size.x + kerning * this->size.x, origin.y + this->glyphs[i].offset.y * this->size.y, this->depth);
-            Matrix rotation = Math::RotationMatrixZ(this->rotation);
-            Matrix scale = Math::ScalingMatrix(this->size.x * this->width, this->size.y * this->font->getHeight(), 1.0f);
+            //Matrix translation = Math::TranslationMatrix(origin.x + xOffset + this->glyphs[i].offset.x * this->size.x + kerning * this->size.x + (float)this->glyphs[i].width / 2.0f, origin.y + this->glyphs[i].offset.y * this->size.y - (float)this->glyphs[i].height / 2.0f, this->depth);
+            Matrix translation = Math::TranslationMatrix(this->position.x, this->position.y, this->depth);
+            Matrix rotation = Math::RotationMatrixZ(this->rotation) * Math::TranslationMatrix(origin.x - this->position.x + xOffset + this->glyphs[i].offset.x * this->size.x + kerning * this->size.x + (float)this->glyphs[i].width / 2.0f, origin.y - this->position.y + this->glyphs[i].offset.y * this->size.y - (float)this->glyphs[i].height / 2.0f, 0.0f);
+            Matrix scale = Math::ScalingMatrix(this->size.x * (float)this->glyphs[i].width, this->size.y * (float)this->glyphs[i].height, 1.0f);
 
             this->matrices.push_back(translation * rotation * scale);
             this->textureRects.push_back(this->glyphs[i].textureRect);
 
-            xOffset += this->glyphs[i].width * (int)this->size.x;
+            xOffset += (int)(this->glyphs[i].advance * this->size.x);
         }
     }
 
@@ -77,6 +86,7 @@ namespace se
     void Text::move(Vector2 translation)
     {
         this->position += translation;
+        this->recalculate();
     }
 
 
@@ -134,12 +144,14 @@ namespace se
     void Text::setPosition(Vector2 position)
     {
         this->position = position;
+        this->recalculate();
     }
 
 
     void Text::scale(Vector2 factor)
     {
         this->size *= factor;
+        this->recalculate();
     }
 
 
@@ -164,12 +176,14 @@ namespace se
     void Text::setScale(Vector2 scale)
     {
         this->size = scale;
+        this->recalculate();
     }
 
 
     void Text::rotate(float rotation)
     {
         this->rotation += rotation;
+        this->recalculate();
     }
 
 
@@ -182,12 +196,14 @@ namespace se
     void Text::setRotation(float rotation)
     {
         this->rotation = rotation;
+        this->recalculate();
     }
 
 
     void Text::setDepth(float depth)
     {
         this->depth = depth;
+        this->recalculate();
     }
 
 
@@ -206,6 +222,7 @@ namespace se
     void Text::setText(std::string text)
     {
         this->text = text;
+        this->getGlyphs();
         this->recalculate();
     }
 }
