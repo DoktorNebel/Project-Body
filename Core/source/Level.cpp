@@ -217,6 +217,30 @@ namespace bc
         {
             for (unsigned int j = 0; j < this->entities[i].size(); ++j)
             {
+                /*se::Rectangle textRect = this->entities[i][j].getSprite().getRect();
+
+                se::Sprite line = se::Content::getSprite("Pixel");
+
+                line.setPosition(se::Vector2(textRect.left + (textRect.right - textRect.left) / 2.0f, textRect.top));
+                line.setScale(se::Vector2((textRect.right - textRect.left), 1.0f));
+                line.setRotation(0.0f);
+                se::Engine::draw(line);
+
+                line.setPosition(se::Vector2(textRect.right, textRect.top + (textRect.bottom - textRect.top) / 2.0f));
+                line.setScale(se::Vector2((textRect.bottom - textRect.top), 1.0f));
+                line.setRotation(90.0f);
+                se::Engine::draw(line);
+
+                line.setPosition(se::Vector2(textRect.left + (textRect.right - textRect.left) / 2.0f, textRect.bottom));
+                line.setScale(se::Vector2((textRect.right - textRect.left), 1.0f));
+                line.setRotation(0.0f);
+                se::Engine::draw(line);
+
+                line.setPosition(se::Vector2(textRect.left, textRect.top + (textRect.bottom - textRect.top) / 2.0f));
+                line.setScale(se::Vector2((textRect.bottom - textRect.top), 1.0f));
+                line.setRotation(90.0f);
+                se::Engine::draw(line);*/
+
                 se::Engine::draw(this->entities[i][j].getSprite());
             }
         }

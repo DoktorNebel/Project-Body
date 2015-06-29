@@ -14,6 +14,18 @@ namespace se
 
     class Text
     {
+    public:
+
+        struct Alignment
+        {
+            enum Type
+            {
+                Left,
+                Center,
+                Right
+            };
+        };
+
     private:
 
         Font* font;
@@ -23,14 +35,17 @@ namespace se
         se::Vector4 color;
         std::string text;
         float depth;
+        std::vector<unsigned int> widths;
         unsigned int width;
+        unsigned int height;
+        Alignment::Type alignment;
         std::vector<Glyph> glyphs;
         std::vector<Matrix> matrices;
         std::vector<Rectangle> textureRects;
 
     public:
 
-        Text(Font* font = 0, std::string text = std::string(), se::Vector2 position = se::Vector2(0.0f, 0.0f), se::Vector2 size = se::Vector2(1.0f, 1.0f), float rotation = 0.0f, se::Vector4 color = se::Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+        Text(Font* font = 0, std::string text = std::string(), se::Vector2 position = se::Vector2(0.0f, 0.0f), se::Vector2 size = se::Vector2(1.0f, 1.0f), float rotation = 0.0f, se::Vector4 color = se::Vector4(1.0f, 1.0f, 1.0f, 1.0f), Alignment::Type alignment = Alignment::Center);
 
     private:
 

@@ -80,20 +80,20 @@ namespace se
         float radRot = this->rotation * 0.0174532925f;
 
         Vector2 pos = this->position + Vector2(-this->width / 2 * this->size.x, -this->height / 2 * this->size.y);
-        newVerts[0] = Vector2(this->position.x + (pos.x - this->position.x) * cos(radRot) - this->position.y + (pos.y - this->position.y) * sin(radRot),
-            this->position.x + (pos.x - this->position.x) * sin(radRot) + this->position.y + (pos.y - this->position.y) * cos(radRot));
+        newVerts[0] = Vector2(this->position.x + (pos.x - this->position.x) * cos(radRot) - (pos.y - this->position.y) * sin(radRot),
+            this->position.y + (pos.x - this->position.x) * sin(radRot) + (pos.y - this->position.y) * cos(radRot));
 
         pos = this->position + Vector2(-this->width / 2 * this->size.x, this->height / 2 * this->size.y);
-        newVerts[1] = Vector2(this->position.x + (pos.x - this->position.x) * cos(radRot) - this->position.y + (pos.y - this->position.y) * sin(radRot),
-            this->position.x + (pos.x - this->position.x) * sin(radRot) + this->position.y + (pos.y - this->position.y) * cos(radRot));
+        newVerts[1] = Vector2(this->position.x + (pos.x - this->position.x) * cos(radRot) - (pos.y - this->position.y) * sin(radRot),
+            this->position.y + (pos.x - this->position.x) * sin(radRot) + (pos.y - this->position.y) * cos(radRot));
 
         pos = this->position + Vector2(this->width / 2 * this->size.x, this->height / 2 * this->size.y);
-        newVerts[2] = Vector2(this->position.x + (pos.x - this->position.x) * cos(radRot) - this->position.y + (pos.y - this->position.y) * sin(radRot),
-            this->position.x + (pos.x - this->position.x) * sin(radRot) + this->position.y + (pos.y - this->position.y) * cos(radRot));
+        newVerts[2] = Vector2(this->position.x + (pos.x - this->position.x) * cos(radRot) - (pos.y - this->position.y) * sin(radRot),
+            this->position.y + (pos.x - this->position.x) * sin(radRot) + (pos.y - this->position.y) * cos(radRot));
 
         pos = this->position + Vector2(this->width / 2 * this->size.x, -this->height / 2 * this->size.y);
-        newVerts[3] = Vector2(this->position.x + (pos.x - this->position.x) * cos(radRot) - this->position.y + (pos.y - this->position.y) * sin(radRot),
-            this->position.x + (pos.x - this->position.x) * sin(radRot) + this->position.y + (pos.y - this->position.y) * cos(radRot));
+        newVerts[3] = Vector2(this->position.x + (pos.x - this->position.x) * cos(radRot) - (pos.y - this->position.y) * sin(radRot),
+            this->position.y + (pos.x - this->position.x) * sin(radRot) + (pos.y - this->position.y) * cos(radRot));
 
         float minX = newVerts[0].x;
         float maxX = newVerts[0].x;

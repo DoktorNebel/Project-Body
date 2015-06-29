@@ -44,7 +44,7 @@ namespace test
 		
         this->poly2 = se::Content::getHitbox("KillaBug1");
 
-        this->text = se::Text(se::Content::getFont("calibri.ttf"), "(GAV", se::Vector2(0.0f, 0.0f), se::Vector2(1.0f, 1.0f));
+        this->text = se::Text(se::Content::getFont("calibri.ttf"), "Your mother sucks cocks\nin hell!", se::Vector2(0.0f, 0.0f), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 1.0f), se::Text::Alignment::Left);
 
         struct Test
         {
@@ -159,9 +159,30 @@ namespace test
             lastPoint = this->poly2.getPoints()[i];
         }
 
-        line.setPosition(this->text.getPosition());
-        line.setScale(se::Vector2((float)this->text.getWidth(), 1.0f));
+        se::Rectangle textRect = this->text.getRect();
+        if (textRect.overlap(this->sprite.getRect()))
+        {
+            line.setColor(se::Vector4(0.0f, 0.0f, 1.0f, 1.0f));
+        }
+
+        line.setPosition(se::Vector2(textRect.left + (textRect.right - textRect.left) / 2.0f, textRect.top));
+        line.setScale(se::Vector2((textRect.right - textRect.left), 1.0f));
         line.setRotation(0.0f);
+        this->lines.push_back(line);
+
+        line.setPosition(se::Vector2(textRect.right, textRect.top + (textRect.bottom - textRect.top) / 2.0f));
+        line.setScale(se::Vector2((textRect.bottom - textRect.top), 1.0f));
+        line.setRotation(90.0f);
+        this->lines.push_back(line);
+
+        line.setPosition(se::Vector2(textRect.left + (textRect.right - textRect.left) / 2.0f, textRect.bottom));
+        line.setScale(se::Vector2((textRect.right - textRect.left), 1.0f));
+        line.setRotation(0.0f);
+        this->lines.push_back(line);
+
+        line.setPosition(se::Vector2(textRect.left, textRect.top + (textRect.bottom - textRect.top) / 2.0f));
+        line.setScale(se::Vector2((textRect.bottom - textRect.top), 1.0f));
+        line.setRotation(90.0f);
         this->lines.push_back(line);
     }
 
