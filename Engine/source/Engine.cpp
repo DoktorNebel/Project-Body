@@ -1,23 +1,24 @@
 #include "Engine.h"
 
-#include "IGame.h"
+#include "IScene.h"
 #include "Input.h"
 
 
 namespace se
 {
     bool Engine::running = true;
-    IGame* Engine::game = 0;
+    IScene* Engine::scene = 0;
+    IScene* Engine::newScene = 0;
     sf::Window* Engine::window = 0;
     Graphics Engine::graphics;
-    std::chrono::system_clock::time_point Engine::lastUpdate;
+    std::chrono::time_point<std::chrono::high_resolution_clock> Engine::lastUpdate;
     Camera* Engine::camera = 0;
     EngineSettings Engine::settings;
 
 
-    void Engine::initialize(IGame* game, EngineSettings settings)
+    void Engine::initialize(IScene* startScene, EngineSettings settings)
     {
-        Engine::game = game;
+        Engine::scene = startScene;
         Engine::window = new sf::Window(sf::VideoMode(settings.screenResolutionWidth, settings.screenResolutionHeight), "Body", settings.fullscreen ? sf::Style::Fullscreen : sf::Style::Default, sf::ContextSettings(24, 0, 2, 4, 3));
         Engine::graphics = Graphics(settings);
         Engine::settings = settings;
@@ -57,7 +58,7 @@ namespace se
 
     void Engine::run()
     {
-        Engine::game->initialize();
+        Engine::scene->initialize();
 
         while (Engine::running)
         {
@@ -79,13 +80,22 @@ namespace se
             float elapsedTime = elapsed.count();
             Engine::lastUpdate = now;
 
-            Engine::game->update(elapsedTime);
-            Engine::game->draw();
+            Engine::scene->update(elapsedTime);
+            Engine::scene->draw();
             Engine::graphics.draw(Engine::camera);
             Engine::window->display();
+
+            if (Engine::newScene)
+            {
+                Engine::scene->close();
+                delete Engine::scene;
+                Engine::scene = Engine::newScene;
+                Engine::newScene = 0;
+                Engine::scene->initialize();
+            }
         }
 
-        Engine::game->close();
+        Engine::scene->close();
 
         Engine::window->close();
     }
@@ -100,5 +110,11 @@ namespace se
     void Engine::draw(Text& text)
     {
         Engine::graphics.addText(text);
+    }
+
+
+    void Engine::changeScene(IScene* newScene)
+    {
+        Engine::newScene = newScene;
     }
 }

@@ -1,8 +1,8 @@
-#include "IGame.h"
+#include "IScene.h"
 
 namespace test
 {
-    class TestGame : public se::IGame
+    class TestGame : public se::IScene
     {
     private:
 

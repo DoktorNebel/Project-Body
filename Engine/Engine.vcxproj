@@ -13,6 +13,10 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\include\Font.h" />
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\include\Glyph.h" />
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\include\MenuMessage.h" />
+    <ClInclude Include="include\Menu.h" />
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\include\IMenuElement.h" />
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\include\MenuSystem.h" />
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\include\Text.h" />
     <ClInclude Include="include\Color.h" />
     <ClInclude Include="include\Polygon.h" />
@@ -20,7 +24,7 @@
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Content.h" />
     <ClInclude Include="include\EngineSettings.h" />
-    <ClInclude Include="include\IGame.h" />
+    <ClInclude Include="include\IScene.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\Graphics.h" />
     <ClInclude Include="include\Input.h" />
@@ -34,6 +38,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\Font.cpp" />
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\IMenuElement.cpp" />
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\Menu.cpp" />
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\MenuMessage.cpp" />
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\MenuSystem.cpp" />
     <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\Text.cpp" />
     <ClCompile Include="source\Polygon.cpp" />
     <ClCompile Include="source\AnimatedSprite.cpp" />

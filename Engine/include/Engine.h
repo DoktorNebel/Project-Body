@@ -10,7 +10,7 @@
 
 namespace se
 {
-    class IGame;
+    class IScene;
 
 
     class Engine
@@ -18,16 +18,17 @@ namespace se
     private:
 
         static bool running;
-        static IGame* game;
+        static IScene* scene;
+        static IScene* newScene;
         static sf::Window* window;
         static Graphics graphics;
-        static std::chrono::system_clock::time_point lastUpdate;
+        static std::chrono::time_point<std::chrono::high_resolution_clock> lastUpdate;
         static Camera* camera;
 		static EngineSettings settings;
 
     public:
 
-        static void initialize(IGame* game, EngineSettings settings);
+        static void initialize(IScene* startScene, EngineSettings settings);
 		static EngineSettings& getSettings();
         static void reloadSettings();
         static Camera& getActiveCamera();
@@ -35,6 +36,7 @@ namespace se
         static void run();
         static void draw(Sprite& sprite);
         static void draw(Text& text);
+        static void changeScene(IScene* newScene);
     };
 }
 

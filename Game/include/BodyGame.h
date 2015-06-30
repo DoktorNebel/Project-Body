@@ -1,12 +1,12 @@
 #pragma once
 
-#include "IGame.h"
+#include "IScene.h"
 #include "Camera.h"
 #include "Level.h"
 
 namespace bg
 {
-	class BodyGame : public se::IGame
+    class BodyGame : public se::IScene
 	{
 	private:
 
