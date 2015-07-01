@@ -7,11 +7,23 @@ namespace se
         for (unsigned int i = 0; i < this->menus.size(); ++i)
         {
             this->menus[i].update(elapsedTime);
-            std::vector<MenuMessage> messages = this->menus[i].getMessages();
-            for (unsigned int j = 0; j < messages.size(); ++j)
-            {
-
-            }
         }
+    }
+
+
+    void MenuSystem::draw()
+    {
+        for (unsigned int i = 0; i < this->menus.size(); ++i)
+        {
+            this->menus[i].draw();
+        }
+    }
+
+
+    void MenuSystem::attachCallback(std::string menuName, std::string elementName, std::string eventName, MenuCallback callback)
+    {
+        unsigned int pos = std::find(this->menuNames.begin(), this->menuNames.end(), menuName) - this->menuNames.begin();
+        if (pos < this->menus.size())
+            this->menus[pos].attachCallback(elementName, eventName, callback);
     }
 }

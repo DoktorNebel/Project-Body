@@ -84,7 +84,13 @@
     <ClInclude Include="include\Menu.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\include\MenuMessage.h">
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\include\MenuEvent.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\include\Button.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MenuInputActions.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
@@ -125,9 +131,6 @@
     <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\Font.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\MenuMessage.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\IMenuElement.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -135,6 +138,12 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\MenuSystem.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\Button.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\MenuEvent.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

@@ -6,7 +6,7 @@ namespace bg
 	{
 		enum Type
 		{
-            Left,
+            Left = 6,
             Right,
             Up,
             Down,

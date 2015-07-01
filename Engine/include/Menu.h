@@ -23,9 +23,8 @@ namespace se
     public:
 
         void update(float elapsedTime);
+        void draw();
+        void attachCallback(std::string elementName, std::string eventName, MenuCallback callback);
         void addElement(std::string name, IMenuElement* element);
-        std::vector<Sprite> getSprites();
-        std::vector<Text> getTexts();
-        std::vector<MenuMessage> getMessages();
     };
 }

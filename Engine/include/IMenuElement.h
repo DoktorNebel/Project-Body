@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include "MenuMessage.h"
+#include "MenuEvent.h"
 #include "Sprite.h"
 #include "Text.h"
 
@@ -12,15 +12,13 @@ namespace se
     {
     protected:
 
-        std::vector<Sprite> sprites;
-        std::vector<Text> texts;
-        std::vector<MenuMessage> messages;
+        std::vector<std::string> eventNames;
+        std::vector<MenuEvent> events;
 
     public:
 
         virtual void update(float elapsedTime) = 0;
-        std::vector<Sprite>& getSprites();
-        std::vector<Text>& getTexts();
-        std::vector<MenuMessage>& getMessages();
+        virtual void draw() = 0;
+        void attachCallback(std::string eventName, MenuCallback callback);
     };
 }

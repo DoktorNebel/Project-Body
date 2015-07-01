@@ -17,5 +17,7 @@ namespace se
     public:
 
         void update(float elapsedTime);
+        void draw();
+        void attachCallback(std::string menuName, std::string elementName, std::string eventName, MenuCallback callback);
     };
 }

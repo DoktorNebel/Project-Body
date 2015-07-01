@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Content.h"
 #include "InputActions.h"
+#include "MenuInputActions.h"
 
 namespace bg
 {
@@ -23,6 +24,12 @@ namespace bg
     {
         this->level.initialize("Test");
 
+        se::Input::bindKeyboardKeyAction(se::InputAction::MenuLeft, sf::Keyboard::Left);
+        se::Input::bindKeyboardKeyAction(se::InputAction::MenuRight, sf::Keyboard::Right);
+        se::Input::bindKeyboardKeyAction(se::InputAction::MenuUp, sf::Keyboard::Up);
+        se::Input::bindKeyboardKeyAction(se::InputAction::MenuDown, sf::Keyboard::Down);
+        se::Input::bindKeyboardKeyAction(se::InputAction::MenuConfirm, sf::Keyboard::Return);
+        se::Input::bindKeyboardKeyAction(se::InputAction::MenuBack, sf::Keyboard::Escape);
         se::Input::bindKeyboardKeyAction(InputAction::Left, sf::Keyboard::Left);
         se::Input::bindKeyboardKeyAction(InputAction::Right, sf::Keyboard::Right);
         se::Input::bindKeyboardKeyAction(InputAction::Up, sf::Keyboard::Up);
