@@ -1,9 +1,13 @@
 #include "Engine.h"
 #include "BodyGame.h"
+#include "GameMenus.h"
 
 int main()
 {
     bg::BodyGame* game = new bg::BodyGame();
+
+    bg::createMenus();
+
 	se::EngineSettings settings;
     settings.fullscreen = false;
     settings.renderResolutionWidth = 1280;

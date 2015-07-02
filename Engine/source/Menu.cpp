@@ -14,6 +14,15 @@ namespace se
     }
 
 
+    void Menu::initialize(MenuSystem* menuSystem)
+    {
+        for (unsigned int i = 0; i < this->elements.size(); ++i)
+        {
+            this->elements[i]->initialize(menuSystem);
+        }
+    }
+
+
     void Menu::update(float elapsedTime)
     {
         for (unsigned int i = 0; i < this->elements.size(); ++i)
@@ -44,5 +53,15 @@ namespace se
     {
         this->elementNames.push_back(name);
         this->elements.push_back(element);
+    }
+
+
+    IMenuElement* Menu::getElement(std::string elementName)
+    {
+        unsigned int pos = std::find(this->elementNames.begin(), this->elementNames.end(), elementName) - this->elementNames.begin();
+        if (pos < this->elements.size())
+            return this->elements[pos];
+
+        return 0;
     }
 }

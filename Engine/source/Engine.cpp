@@ -14,6 +14,7 @@ namespace se
     std::chrono::time_point<std::chrono::high_resolution_clock> Engine::lastUpdate;
     Camera* Engine::camera = 0;
     EngineSettings Engine::settings;
+    MenuSystem Engine::menuSystem;
 
 
     void Engine::initialize(IScene* startScene, EngineSettings settings)
@@ -22,6 +23,7 @@ namespace se
         Engine::window = new sf::Window(sf::VideoMode(settings.screenResolutionWidth, settings.screenResolutionHeight), "Body", settings.fullscreen ? sf::Style::Fullscreen : sf::Style::Default, sf::ContextSettings(24, 0, 2, 4, 3));
         Engine::graphics = Graphics(settings);
         Engine::settings = settings;
+        Engine::menuSystem.initialize();
 
         Engine::window->setActive(true);
         srand((unsigned int)time(0));
@@ -116,5 +118,11 @@ namespace se
     void Engine::changeScene(IScene* newScene)
     {
         Engine::newScene = newScene;
+    }
+
+
+    MenuSystem* Engine::getMenu()
+    {
+        return &Engine::menuSystem;
     }
 }

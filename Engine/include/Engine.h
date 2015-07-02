@@ -7,6 +7,7 @@
 #include <chrono>
 #include "Camera.h"
 #include "EngineSettings.h"
+#include "MenuSystem.h"
 
 namespace se
 {
@@ -25,6 +26,7 @@ namespace se
         static std::chrono::time_point<std::chrono::high_resolution_clock> lastUpdate;
         static Camera* camera;
 		static EngineSettings settings;
+        static MenuSystem menuSystem;
 
     public:
 
@@ -37,6 +39,7 @@ namespace se
         static void draw(Sprite& sprite);
         static void draw(Text& text);
         static void changeScene(IScene* newScene);
+        static MenuSystem* getMenu();
     };
 }
 

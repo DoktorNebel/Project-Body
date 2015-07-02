@@ -11,7 +11,8 @@ namespace se
             MenuUp,
             MenuDown,
             MenuConfirm,
-            MenuBack
+            MenuBack,
+            MenuClick
         };
     };
 }

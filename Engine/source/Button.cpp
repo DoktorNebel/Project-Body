@@ -4,16 +4,12 @@
 #include "MenuInputActions.h"
 #include "Engine.h"
 
-#define LEFT_NEIGHBOUR 0
-#define RIGHT_NEIGHBOUR 1
-#define UP_NEIGHBOUR 2
-#define DOWN_NEIGHBOUR 3
 
 namespace se
 {
     Button::Button()
     {
-        this->initialize();
+
     }
 
 
@@ -21,11 +17,11 @@ namespace se
         : sprite(sprite)
         , text(text)
     {
-        this->initialize();
+
     }
 
 
-    void Button::initialize()
+    void Button::initialize(MenuSystem* menuSystem)
     {
         this->neighbours[LEFT_NEIGHBOUR] = 0;
         this->neighbours[RIGHT_NEIGHBOUR] = 0;
@@ -35,15 +31,31 @@ namespace se
         this->eventNames.push_back("OnPress");
         this->eventNames.push_back("OnRelease");
         this->eventNames.push_back("OnHighlight");
-        this->eventNames.push_back("OnUpdate");
 
-        this->events.resize(this->eventNames.size());
+        for (unsigned int i = 0; i < this->eventNames.size(); ++i)
+        {
+            this->events.push_back(MenuEvent(this, menuSystem));
+        }
     }
 
 
     void Button::update(float elapsedTime)
     {
+        Rectangle spriteRect = this->sprite.getRect();
+        if (spriteRect.contains(Input::getMousePos()))
+            this->highlight();
 
+        if (this->highlighted && (Input::actionPressed(InputAction::MenuConfirm) || Input::actionPressed(InputAction::MenuClick)))
+        {
+            this->pressed = true;
+            this->callEvent("OnPress");
+        }
+
+        if (this->pressed && (Input::actionReleased(InputAction::MenuConfirm) || Input::actionReleased(InputAction::MenuClick)))
+        {
+            this->pressed = false;
+            this->callEvent("OnRelease");
+        }
     }
 
 
@@ -51,14 +63,5 @@ namespace se
     {
         se::Engine::draw(this->sprite);
         se::Engine::draw(this->text);
-    }
-
-
-    void Button::setNeighbours(Button* left, Button* right, Button* up, Button* down)
-    {
-        this->neighbours[LEFT_NEIGHBOUR] = left;
-        this->neighbours[RIGHT_NEIGHBOUR] = right;
-        this->neighbours[UP_NEIGHBOUR] = up;
-        this->neighbours[DOWN_NEIGHBOUR] = down;
     }
 }

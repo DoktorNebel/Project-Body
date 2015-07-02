@@ -7,97 +7,174 @@ namespace se
 	std::vector<float> Input::previousValues = std::vector<float>();
 
 
-    void Input::bindMouseButtonAction(unsigned int action, sf::Mouse::Button mouseButton)
+    void Input::bindMouseButtonAction(unsigned int action, sf::Mouse::Button mouseButton, bool alternative)
 	{
-		Input::InputAction inputAction;
-		inputAction.inputType = Input::InputType::Mouse;
-		inputAction.index = 0;
-		inputAction.action = action;
-		inputAction.input = mouseButton;
-		inputAction.positive = true;
-		inputAction.value = 0.0f;
-		inputAction.pressed = false;
-		inputAction.released = false;
-
 		if (Input::inputActions.size() <= action)
-		{
+        {
+            Input::InputAction inputAction;
+            inputAction.inputType = alternative ? Input::InputType::Unbound : Input::InputType::Mouse;
+            inputAction.alternativeInputType = alternative ? Input::InputType::Mouse : Input::InputType::Unbound;
+            inputAction.index = 0;
+            inputAction.alternativeIndex = 0;
+            inputAction.action = action;
+            inputAction.input = mouseButton;
+            inputAction.alternativeInput = mouseButton;
+            inputAction.positive = true;
+            inputAction.alternativePositive = true;
+            inputAction.value = 0.0f;
+            inputAction.pressed = false;
+            inputAction.released = false;
+
 			Input::inputActions.resize(action + 1);
 			Input::previousValues.resize(action + 1);
-		}
 
-		Input::inputActions[action] = inputAction;
+		    Input::inputActions[action] = inputAction;
+		}
+        else
+        {
+            if (alternative)
+            {
+                Input::inputActions[action].alternativeInputType = Input::InputType::Mouse;
+                Input::inputActions[action].alternativeInput = mouseButton;
+            }
+            else
+            {
+                Input::inputActions[action].inputType = Input::InputType::Mouse;
+                Input::inputActions[action].input = mouseButton;
+            }
+        }
 	}
 
 
-    void Input::bindKeyboardKeyAction(unsigned int action, sf::Keyboard::Key keyboardKey)
-	{
-		Input::InputAction inputAction;
-		inputAction.inputType = Input::InputType::Keyboard;
-		inputAction.index = 0;
-		inputAction.action = action;
-		inputAction.input = keyboardKey;
-		inputAction.positive = true;
-		inputAction.value = 0.0f;
-		inputAction.pressed = false;
-		inputAction.released = false;
+    void Input::bindKeyboardKeyAction(unsigned int action, sf::Keyboard::Key keyboardKey, bool alternative)
+    {
+        if (Input::inputActions.size() <= action)
+        {
+            Input::InputAction inputAction;
+            inputAction.inputType = alternative ? Input::InputType::Unbound : Input::InputType::Keyboard;
+            inputAction.alternativeInputType = alternative ? Input::InputType::Keyboard : Input::InputType::Unbound;
+            inputAction.index = 0;
+            inputAction.alternativeIndex = 0;
+            inputAction.action = action;
+            inputAction.input = keyboardKey;
+            inputAction.alternativeInput = keyboardKey;
+            inputAction.positive = true;
+            inputAction.alternativePositive = true;
+            inputAction.value = 0.0f;
+            inputAction.pressed = false;
+            inputAction.released = false;
 
-		if (Input::inputActions.size() <= action)
-		{
-			Input::inputActions.resize(action + 1);
-			Input::previousValues.resize(action + 1);
-		}
+            Input::inputActions.resize(action + 1);
+            Input::previousValues.resize(action + 1);
 
-		Input::inputActions[action] = inputAction;
+            Input::inputActions[action] = inputAction;
+        }
+        else
+        {
+            if (alternative)
+            {
+                Input::inputActions[action].alternativeInputType = Input::InputType::Keyboard;
+                Input::inputActions[action].alternativeInput = keyboardKey;
+            }
+            else
+            {
+                Input::inputActions[action].inputType = Input::InputType::Keyboard;
+                Input::inputActions[action].input = keyboardKey;
+            }
+        }
 	}
 
 
-    void Input::bindJoystickButtonAction(unsigned int action, unsigned int joystickIndex, unsigned int button)
-	{
-		Input::InputAction inputAction;
-		inputAction.inputType = Input::InputType::JoystickButton;
-		inputAction.index = joystickIndex;
-		inputAction.action = action;
-		inputAction.input = button;
-		inputAction.positive = true;
-		inputAction.value = 0.0f;
-		inputAction.pressed = false;
-		inputAction.released = false;
+    void Input::bindJoystickButtonAction(unsigned int action, unsigned int joystickIndex, unsigned int button, bool alternative)
+    {
+        if (Input::inputActions.size() <= action)
+        {
+            Input::InputAction inputAction;
+            inputAction.inputType = alternative ? Input::InputType::Unbound : Input::InputType::JoystickButton;
+            inputAction.alternativeInputType = alternative ? Input::InputType::JoystickButton : Input::InputType::Unbound;
+            inputAction.index = joystickIndex;
+            inputAction.alternativeIndex = joystickIndex;
+            inputAction.action = action;
+            inputAction.input = button;
+            inputAction.alternativeInput = button;
+            inputAction.positive = true;
+            inputAction.alternativePositive = true;
+            inputAction.value = 0.0f;
+            inputAction.pressed = false;
+            inputAction.released = false;
 
-		if (Input::inputActions.size() <= action)
-		{
-			Input::inputActions.resize(action + 1);
-			Input::previousValues.resize(action + 1);
-		}
+            Input::inputActions.resize(action + 1);
+            Input::previousValues.resize(action + 1);
 
-		Input::inputActions[action] = inputAction;
+            Input::inputActions[action] = inputAction;
+        }
+        else
+        {
+            if (alternative)
+            {
+                Input::inputActions[action].alternativeInputType = Input::InputType::JoystickButton;
+                Input::inputActions[action].alternativeIndex = joystickIndex;
+                Input::inputActions[action].alternativeInput = button;
+            }
+            else
+            {
+                Input::inputActions[action].inputType = Input::InputType::JoystickButton;
+                Input::inputActions[action].index = joystickIndex;
+                Input::inputActions[action].input = button;
+            }
+        }
 	}
 
 
-    void Input::bindJoystickAxisAction(unsigned int action, unsigned int joystickIndex, unsigned int axis, bool positive)
-	{
-		Input::InputAction inputAction;
-		inputAction.inputType = Input::InputType::JoystickAxis;
-		inputAction.index = joystickIndex;
-		inputAction.action = action;
-		inputAction.input = axis;
-		inputAction.positive = positive;
-		inputAction.value = 0.0f;
-		inputAction.pressed = false;
-		inputAction.released = false;
+    void Input::bindJoystickAxisAction(unsigned int action, unsigned int joystickIndex, unsigned int axis, bool positive, bool alternative)
+    {
+        if (Input::inputActions.size() <= action)
+        {
+            Input::InputAction inputAction;
+            inputAction.inputType = alternative ? Input::InputType::Unbound : Input::InputType::JoystickButton;
+            inputAction.alternativeInputType = alternative ? Input::InputType::JoystickButton : Input::InputType::Unbound;
+            inputAction.index = joystickIndex;
+            inputAction.alternativeIndex = joystickIndex;
+            inputAction.action = action;
+            inputAction.input = axis;
+            inputAction.alternativeInput = axis;
+            inputAction.positive = positive;
+            inputAction.alternativePositive = positive;
+            inputAction.value = 0.0f;
+            inputAction.pressed = false;
+            inputAction.released = false;
 
-		if (Input::inputActions.size() <= action)
-		{
-			Input::inputActions.resize(action + 1);
-			Input::previousValues.resize(action + 1);
-		}
+            Input::inputActions.resize(action + 1);
+            Input::previousValues.resize(action + 1);
 
-		Input::inputActions[action] = inputAction;
+            Input::inputActions[action] = inputAction;
+        }
+        else
+        {
+            if (alternative)
+            {
+                Input::inputActions[action].alternativeInputType = Input::InputType::JoystickButton;
+                Input::inputActions[action].alternativeIndex = joystickIndex;
+                Input::inputActions[action].alternativeInput = axis;
+                Input::inputActions[action].alternativePositive = positive;
+            }
+            else
+            {
+                Input::inputActions[action].inputType = Input::InputType::JoystickButton;
+                Input::inputActions[action].index = joystickIndex;
+                Input::inputActions[action].input = axis;
+                Input::inputActions[action].positive = positive;
+            }
+        }
 	}
 
 
-    void Input::unbindAction(unsigned int action)
+    void Input::unbindAction(unsigned int action, bool alternative)
 	{
-		Input::inputActions[action].inputType = Input::InputType::Unbound;
+        if (alternative)
+            Input::inputActions[action].alternativeInputType = Input::InputType::Unbound;
+        else
+    		Input::inputActions[action].inputType = Input::InputType::Unbound;
 	}
 
 
@@ -137,6 +214,7 @@ namespace se
 		{
 			InputAction& action = Input::inputActions[i];
 
+            //check primary bindings
 			switch (action.inputType)
 			{
 			case Input::InputType::Mouse:
@@ -214,6 +292,86 @@ namespace se
 				Input::previousValues[i] = action.value;
 				break;
 			}
+
+
+            //check alternative bindings
+            switch (action.alternativeInputType)
+            {
+            case Input::InputType::Mouse:
+                action.value = sf::Mouse::isButtonPressed((sf::Mouse::Button)action.alternativeInput);
+                if (Input::previousValues[i] != action.value)
+                {
+                    if (action.value == 1.0f)
+                        action.pressed = true;
+                    else
+                        action.released = true;
+                }
+                else
+                {
+                    action.pressed = false;
+                    action.released = false;
+                }
+                Input::previousValues[i] = action.value;
+                break;
+
+
+            case Input::InputType::Keyboard:
+                action.value = sf::Keyboard::isKeyPressed((sf::Keyboard::Key)action.alternativeInput);
+                if (Input::previousValues[i] != action.value)
+                {
+                    if (action.value == 1.0f)
+                        action.pressed = true;
+                    else
+                        action.released = true;
+                }
+                else
+                {
+                    action.pressed = false;
+                    action.released = false;
+                }
+                Input::previousValues[i] = action.value;
+                break;
+
+
+            case Input::InputType::JoystickButton:
+                action.value = sf::Joystick::isButtonPressed(action.alternativeIndex, action.alternativeInput);
+                if (Input::previousValues[i] != action.value)
+                {
+                    if (action.value == 1.0f)
+                        action.pressed = true;
+                    else
+                        action.released = true;
+                }
+                else
+                {
+                    action.pressed = false;
+                    action.released = false;
+                }
+                Input::previousValues[i] = action.value;
+                break;
+
+
+            case Input::InputType::JoystickAxis:
+                action.value = sf::Joystick::getAxisPosition(action.alternativeIndex, (sf::Joystick::Axis)action.alternativeInput) / 100.0f;
+                if (action.alternativePositive)
+                    action.value = action.value < 0.0f ? 0.0f : action.value;
+                else
+                    action.value = action.value > 0.0f ? 0.0f : action.value;
+                if (Input::previousValues[i] != action.value)
+                {
+                    if (action.value > 0.0f)
+                        action.pressed = true;
+                    else
+                        action.released = true;
+                }
+                else
+                {
+                    action.pressed = false;
+                    action.released = false;
+                }
+                Input::previousValues[i] = action.value;
+                break;
+            }
 		}
 	}
 }

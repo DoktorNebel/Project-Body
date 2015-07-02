@@ -31,4 +31,10 @@ namespace se
     {
         return this->top < rect.bottom && this->bottom > rect.top && this->left < rect.right && this->right > rect.left;
     }
+
+
+    bool Rectangle::contains(Vector2 point)
+    {
+        return point.y < this->top && point.y > this->bottom && point.x < this->right && point.x > this->left;
+    }
 }

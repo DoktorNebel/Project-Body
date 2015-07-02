@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Vector2.h"
+
 namespace se
 {
     class Rectangle
@@ -20,5 +22,6 @@ namespace se
     public:
 
         bool overlap(Rectangle rect);
+        bool contains(Vector2 point);
     };
 }

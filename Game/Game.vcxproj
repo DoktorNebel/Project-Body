@@ -80,10 +80,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Game\source\GameMenus.cpp" />
     <ClCompile Include="source\BodyGame.cpp" />
     <ClCompile Include="source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Game\include\GameMenus.h" />
     <ClInclude Include="include\BodyGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
