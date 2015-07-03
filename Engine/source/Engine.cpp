@@ -13,17 +13,21 @@ namespace se
     Graphics Engine::graphics;
     std::chrono::time_point<std::chrono::high_resolution_clock> Engine::lastUpdate;
     Camera* Engine::camera = 0;
+    Camera Engine::menuCamera = Camera();
     EngineSettings Engine::settings;
     MenuSystem Engine::menuSystem;
 
 
-    void Engine::initialize(IScene* startScene, EngineSettings settings)
+    void Engine::initialize(IScene* startScene, void(*createMenusFunction)(), void(*createMenuFunctionalityFunction)(), EngineSettings settings)
     {
         Engine::scene = startScene;
         Engine::window = new sf::Window(sf::VideoMode(settings.screenResolutionWidth, settings.screenResolutionHeight), "Body", settings.fullscreen ? sf::Style::Fullscreen : sf::Style::Default, sf::ContextSettings(24, 0, 2, 4, 3));
         Engine::graphics = Graphics(settings);
         Engine::settings = settings;
+
+        createMenusFunction();
         Engine::menuSystem.initialize();
+        createMenuFunctionalityFunction();
 
         Engine::window->setActive(true);
         srand((unsigned int)time(0));
@@ -83,8 +87,12 @@ namespace se
             Engine::lastUpdate = now;
 
             Engine::scene->update(elapsedTime);
+            Engine::menuSystem.update(elapsedTime);
+            Engine::graphics.beginDraw();
             Engine::scene->draw();
             Engine::graphics.draw(Engine::camera);
+            Engine::menuSystem.draw();
+            Engine::graphics.draw(&Engine::menuCamera);
             Engine::window->display();
 
             if (Engine::newScene)

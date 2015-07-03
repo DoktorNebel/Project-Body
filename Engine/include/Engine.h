@@ -25,12 +25,13 @@ namespace se
         static Graphics graphics;
         static std::chrono::time_point<std::chrono::high_resolution_clock> lastUpdate;
         static Camera* camera;
+        static Camera menuCamera;
 		static EngineSettings settings;
         static MenuSystem menuSystem;
 
     public:
 
-        static void initialize(IScene* startScene, EngineSettings settings);
+        static void initialize(IScene* startScene, void(*createMenusFunction)(), void(*createMenuFunctionalityFunction)(), EngineSettings settings);
 		static EngineSettings& getSettings();
         static void reloadSettings();
         static Camera& getActiveCamera();

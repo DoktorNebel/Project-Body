@@ -7,7 +7,7 @@ namespace se
     class IMenuElement;
     class MenuSystem;
 
-    typedef void (*MenuCallback)(IMenuElement* sender, MenuSystem* menuSystem);
+    typedef void MenuCallback (IMenuElement* sender, MenuSystem* menuSystem);
 
     class MenuEvent
     {
@@ -18,7 +18,7 @@ namespace se
 
     public:
 
-        std::vector<MenuCallback> callbacks;
+        std::vector<MenuCallback*> callbacks;
 
     public:
 

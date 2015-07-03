@@ -24,12 +24,18 @@
     <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Game\source\GameMenus.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Game\source\MenuScene.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\BodyGame.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Game\include\GameMenus.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Game\include\MenuScene.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

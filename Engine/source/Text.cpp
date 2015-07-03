@@ -176,7 +176,7 @@ namespace se
             maxY = newVerts[i].y > maxY ? newVerts[i].y : maxY;
         }
 
-        return Rectangle(minY, maxY, minX, maxX);
+        return Rectangle(maxY, minY, minX, maxX);
     }
 
 

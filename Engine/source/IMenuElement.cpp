@@ -1,31 +1,22 @@
 #include "IMenuElement.h"
 
+#include "Input.h"
+#include "MenuInputActions.h"
+#include "Engine.h"
+
 namespace se
 {
     void IMenuElement::highlight()
     {
-        this->unhighlight();
         this->highlighted = true;
-        this->callEvent("OnHighlight");
+        this->callEvent("onHighlight");
     }
 
 
-    bool IMenuElement::unhighlight()
+    void IMenuElement::unhighlight()
     {
-        if (this->highlighted)
-        {
-            this->highlighted = false;
-            return true;
-        }
-        else
-        {
-            for (unsigned int i = 0; i < 4; ++i)
-            {
-                if (this->neighbours[i] && this->neighbours[i]->unhighlight())
-                    return true;
-            }
-        }
-        return false;
+        this->highlighted = false;
+        this->callEvent("onUnhighlight");
     }
 
 
@@ -37,7 +28,55 @@ namespace se
     }
 
 
-    void IMenuElement::attachCallback(std::string eventName, MenuCallback callback)
+    void IMenuElement::doInitialize(MenuSystem* menuSystem, bool highlighted)
+    {
+        this->show();
+        this->eventNames.push_back("onHighlight");
+        this->eventNames.push_back("onUnhighlight");
+
+        this->initialize(menuSystem);
+
+        for (unsigned int i = 0; i < this->eventNames.size(); ++i)
+        {
+            this->events.push_back(MenuEvent(this, menuSystem));
+        }
+
+        if (highlighted)
+        {
+            this->highlighted = true;
+            this->callEvent("onHighlight");
+        }
+    }
+
+
+    void IMenuElement::doUpdate(float elapsedTime)
+    {
+        if (this->visible)
+        {
+            this->update(elapsedTime);
+            if (this->highlighted)
+            {
+                if (this->neighbours[LEFT_NEIGHBOUR] && Input::actionPressed(InputAction::MenuLeft))
+                    Engine::getMenu()->highlight(this->neighbours[LEFT_NEIGHBOUR]);
+                if (this->neighbours[RIGHT_NEIGHBOUR] && Input::actionPressed(InputAction::MenuRight))
+                    Engine::getMenu()->highlight(this->neighbours[RIGHT_NEIGHBOUR]);
+                if (this->neighbours[UP_NEIGHBOUR] && Input::actionPressed(InputAction::MenuUp))
+                    Engine::getMenu()->highlight(this->neighbours[UP_NEIGHBOUR]);
+                if (this->neighbours[DOWN_NEIGHBOUR] && Input::actionPressed(InputAction::MenuDown))
+                    Engine::getMenu()->highlight(this->neighbours[DOWN_NEIGHBOUR]);
+            }
+        }
+    }
+
+
+    void IMenuElement::doDraw()
+    {
+        if (this->visible)
+            this->draw();
+    }
+
+
+    void IMenuElement::attachCallback(std::string eventName, MenuCallback* callback)
     {
         unsigned int pos = std::find(this->eventNames.begin(), this->eventNames.end(), eventName) - this->eventNames.begin();
         if (pos < this->events.size())
@@ -51,5 +90,17 @@ namespace se
         this->neighbours[RIGHT_NEIGHBOUR] = right;
         this->neighbours[UP_NEIGHBOUR] = up;
         this->neighbours[DOWN_NEIGHBOUR] = down;
+    }
+
+
+    void IMenuElement::show()
+    {
+        this->visible = true;
+    }
+
+
+    void IMenuElement::hide()
+    {
+        this->visible = false;
     }
 }

@@ -8,17 +8,20 @@ namespace se
     {
     private:
 
+        bool pressed;
+        bool useSpriteRect;
+
+    public:
+
         Sprite sprite;
         Text text;
-        bool pressed;
 
     public:
 
         Button();
-        Button(Sprite sprite, Text text);
+        Button(Sprite sprite, Text text, bool useSpriteRect);
 
-
-    public:
+    private:
 
         virtual void initialize(MenuSystem* menuSystem);
         virtual void update(float elapsedTime);

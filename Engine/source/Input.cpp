@@ -1,5 +1,7 @@
 #include "Input.h"
 
+#include "Engine.h"
+
 namespace se
 {
 	sf::Window* Input::window = 0;
@@ -180,13 +182,19 @@ namespace se
 
 	Vector2 Input::getMousePos()
 	{
-		return *(Vector2*)&sf::Mouse::getPosition(*Input::window);
+        return Vector2(sf::Mouse::getPosition(*Input::window).x - (int)Engine::getSettings().renderResolutionWidth / 2, (sf::Mouse::getPosition(*Input::window).y - (int)Engine::getSettings().renderResolutionHeight / 2) * -1);
 	}
 
 
     bool Input::actionPressed(unsigned int action)
 	{
-		return Input::inputActions[action].pressed;
+        if (Input::inputActions[action].pressed)
+        {
+            Input::inputActions[action].pressed = false;
+            return true;
+        }
+        return false;
+		//return Input::inputActions[action].pressed;
 	}
 
 

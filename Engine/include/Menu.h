@@ -25,8 +25,9 @@ namespace se
         void initialize(MenuSystem* menuSystem);
         void update(float elapsedTime);
         void draw();
-        void attachCallback(std::string elementName, std::string eventName, MenuCallback callback);
+        void attachCallback(std::string elementName, std::string eventName, MenuCallback* callback);
         void addElement(std::string name, IMenuElement* element);
+        IMenuElement* getElement(unsigned int index);
         IMenuElement* getElement(std::string elementName);
     };
 }

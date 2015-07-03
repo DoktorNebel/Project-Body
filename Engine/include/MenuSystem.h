@@ -13,6 +13,8 @@ namespace se
         std::vector<std::string> menuNames;
         std::vector<Menu> menus;
         Menu* currentMenu;
+        bool visible;
+        IMenuElement* highlightedElement;
 
     public:
 
@@ -21,8 +23,11 @@ namespace se
         void draw();
         void addMenu(std::string name);
         void addElement(std::string menuName, std::string name, IMenuElement* element);
-        void attachCallback(std::string menuName, std::string elementName, std::string eventName, MenuCallback callback);
+        void attachCallback(std::string menuName, std::string elementName, std::string eventName, MenuCallback* callback);
         void changeMenu(std::string menuName);
         IMenuElement* getElement(std::string menuName, std::string elementName);
+        void show();
+        void hide();
+        void highlight(IMenuElement* element);
     };
 }

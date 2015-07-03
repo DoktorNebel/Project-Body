@@ -16,9 +16,13 @@ namespace se
 
     void Menu::initialize(MenuSystem* menuSystem)
     {
-        for (unsigned int i = 0; i < this->elements.size(); ++i)
+        if (this->elements.size() > 0)
         {
-            this->elements[i]->initialize(menuSystem);
+            this->elements[0]->doInitialize(menuSystem, true);
+            for (unsigned int i = 1; i < this->elements.size(); ++i)
+            {
+                this->elements[i]->doInitialize(menuSystem, false);
+            }
         }
     }
 
@@ -27,7 +31,7 @@ namespace se
     {
         for (unsigned int i = 0; i < this->elements.size(); ++i)
         {
-            this->elements[i]->update(elapsedTime);
+            this->elements[i]->doUpdate(elapsedTime);
         }
     }
 
@@ -36,12 +40,12 @@ namespace se
     {
         for (unsigned int i = 0; i < this->elements.size(); ++i)
         {
-            this->elements[i]->draw();
+            this->elements[i]->doDraw();
         }
     }
 
 
-    void Menu::attachCallback(std::string elementName, std::string eventName, MenuCallback callback)
+    void Menu::attachCallback(std::string elementName, std::string eventName, MenuCallback* callback)
     {
         unsigned int pos = std::find(this->elementNames.begin(), this->elementNames.end(), elementName) - this->elementNames.begin();
         if (pos < this->elements.size())
@@ -53,6 +57,12 @@ namespace se
     {
         this->elementNames.push_back(name);
         this->elements.push_back(element);
+    }
+
+
+    IMenuElement* Menu::getElement(unsigned int index)
+    {
+        return this->elements[index];
     }
 
 

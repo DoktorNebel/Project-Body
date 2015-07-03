@@ -49,6 +49,7 @@ namespace se
 
         void addSprite(Sprite& sprite);
         void addText(Text& text);
+        void beginDraw();
         void draw(Camera* camera);
     };
 }

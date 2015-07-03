@@ -13,9 +13,10 @@ namespace se
     }
 
 
-    Button::Button(Sprite sprite, Text text)
+    Button::Button(Sprite sprite, Text text, bool useSpriteRect)
         : sprite(sprite)
         , text(text)
+        , useSpriteRect(useSpriteRect)
     {
 
     }
@@ -28,33 +29,29 @@ namespace se
         this->neighbours[UP_NEIGHBOUR] = 0;
         this->neighbours[DOWN_NEIGHBOUR] = 0;
 
-        this->eventNames.push_back("OnPress");
-        this->eventNames.push_back("OnRelease");
-        this->eventNames.push_back("OnHighlight");
-
-        for (unsigned int i = 0; i < this->eventNames.size(); ++i)
-        {
-            this->events.push_back(MenuEvent(this, menuSystem));
-        }
+        this->eventNames.push_back("onPress");
+        this->eventNames.push_back("onRelease");
     }
 
 
     void Button::update(float elapsedTime)
     {
-        Rectangle spriteRect = this->sprite.getRect();
-        if (spriteRect.contains(Input::getMousePos()))
-            this->highlight();
+        Rectangle spriteRect = this->useSpriteRect ? this->sprite.getRect() : this->text.getRect();
+        if (!this->highlighted && spriteRect.contains(Input::getMousePos()))
+        {
+            Engine::getMenu()->highlight(this);
+        }
 
         if (this->highlighted && (Input::actionPressed(InputAction::MenuConfirm) || Input::actionPressed(InputAction::MenuClick)))
         {
             this->pressed = true;
-            this->callEvent("OnPress");
+            this->callEvent("onPress");
         }
 
         if (this->pressed && (Input::actionReleased(InputAction::MenuConfirm) || Input::actionReleased(InputAction::MenuClick)))
         {
             this->pressed = false;
-            this->callEvent("OnRelease");
+            this->callEvent("onRelease");
         }
     }
 

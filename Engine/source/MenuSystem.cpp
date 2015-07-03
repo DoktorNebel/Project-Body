@@ -4,22 +4,26 @@ namespace se
 {
     void MenuSystem::initialize()
     {
+        this->show();
         for (unsigned int i = 0; i < this->menus.size(); ++i)
         {
             this->menus[i].initialize(this);
         }
+        
     }
 
 
     void MenuSystem::update(float elapsedTime)
     {
-        this->currentMenu->update(elapsedTime);
+        if (this->visible)
+            this->currentMenu->update(elapsedTime);
     }
 
 
     void MenuSystem::draw()
     {
-        this->currentMenu->draw();
+        if (this->visible)
+            this->currentMenu->draw();
     }
 
 
@@ -38,7 +42,7 @@ namespace se
     }
 
 
-    void MenuSystem::attachCallback(std::string menuName, std::string elementName, std::string eventName, MenuCallback callback)
+    void MenuSystem::attachCallback(std::string menuName, std::string elementName, std::string eventName, MenuCallback* callback)
     {
         unsigned int pos = std::find(this->menuNames.begin(), this->menuNames.end(), menuName) - this->menuNames.begin();
         if (pos < this->menus.size())
@@ -51,6 +55,9 @@ namespace se
         unsigned int pos = std::find(this->menuNames.begin(), this->menuNames.end(), menuName) - this->menuNames.begin();
         if (pos < this->menus.size())
             this->currentMenu = &this->menus[pos];
+
+        if (this->currentMenu->getElement(0))
+            this->highlight(this->currentMenu->getElement(0));
     }
 
 
@@ -61,5 +68,26 @@ namespace se
             return this->menus[pos].getElement(elementName);
 
         return 0;
+    }
+
+
+    void MenuSystem::show()
+    {
+        this->visible = true;
+    }
+
+
+    void MenuSystem::hide()
+    {
+        this->visible = false;
+    }
+
+
+    void MenuSystem::highlight(IMenuElement* element)
+    {
+        if (this->highlightedElement)
+            this->highlightedElement->unhighlight();
+        this->highlightedElement = element;
+        this->highlightedElement->highlight();
     }
 }

@@ -201,11 +201,15 @@ namespace se
     }
 
 
-    void Graphics::draw(Camera* camera)
+    void Graphics::beginDraw()
     {
         glViewport(0, 0, this->screenWidth, this->screenHeight);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
 
+
+    void Graphics::draw(Camera* camera)
+    {
         if (camera)
         {
             glUseProgram(this->programId);

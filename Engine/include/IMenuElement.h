@@ -21,19 +21,28 @@ namespace se
         std::vector<std::string> eventNames;
         std::vector<MenuEvent> events;
         bool highlighted;
-        
-    protected:
+        bool visible;
 
-        void highlight();
-        bool unhighlight();
-        void callEvent(std::string eventName);
-
-    public:
+    private:
 
         virtual void initialize(MenuSystem* menuSystem) = 0;
         virtual void update(float elapsedTime) = 0;
         virtual void draw() = 0;
-        void attachCallback(std::string eventName, MenuCallback callback);
+        
+    protected:
+
+        void callEvent(std::string eventName);
+
+    public:
+
+        void highlight();
+        void unhighlight();
+        void doInitialize(MenuSystem* menuSystem, bool highlighted);
+        void doUpdate(float elapsedTime);
+        void doDraw();
+        void attachCallback(std::string eventName, MenuCallback* callback);
         void setNeighbours(IMenuElement* left, IMenuElement* right, IMenuElement* up, IMenuElement* down);
+        void show();
+        void hide();
     };
 }

@@ -29,7 +29,7 @@ namespace se
 
     bool Rectangle::overlap(Rectangle rect)
     {
-        return this->top < rect.bottom && this->bottom > rect.top && this->left < rect.right && this->right > rect.left;
+        return this->top > rect.bottom && this->bottom < rect.top && this->left < rect.right && this->right > rect.left;
     }
 
 
