@@ -484,43 +484,47 @@ namespace bc
             fclose(file);
         }
 
-        //get enemy spawns
-        filePath = "../Content/Levels/" + levelName + "/Enemies.txt";
 
-        file = fopen(filePath.c_str(), "r");
-
-        char enemyName[256];
-        char patternName[256];
-        while (fscanf(file, "%s %s %f %f %f", enemyName, patternName, &time, &xPos, &yPos) != EOF)
+        if (levelName != "")
         {
-            Spawner::spawnTimes.push_back(time);
-            Spawn spawn;
-            spawn.collisionGroup = strcmp(enemyName, "Booger") == 0 || strcmp(enemyName, "Shooter") == 0 ? CollisionGroup::LevelElements : CollisionGroup::Enemies;
-            spawn.entity = Spawner::createEnemy(enemyName, patternName);
-            spawn.position = se::Vector2(xPos, yPos);
-            Spawner::timedSpawns.push_back(spawn);
+            //get enemy spawns
+            filePath = "../Content/Levels/" + levelName + "/Enemies.txt";
+
+            file = fopen(filePath.c_str(), "r");
+
+            char enemyName[256];
+            char patternName[256];
+            while (fscanf(file, "%s %s %f %f %f", enemyName, patternName, &time, &xPos, &yPos) != EOF)
+            {
+                Spawner::spawnTimes.push_back(time);
+                Spawn spawn;
+                spawn.collisionGroup = strcmp(enemyName, "Booger") == 0 || strcmp(enemyName, "Shooter") == 0 ? CollisionGroup::LevelElements : CollisionGroup::Enemies;
+                spawn.entity = Spawner::createEnemy(enemyName, patternName);
+                spawn.position = se::Vector2(xPos, yPos);
+                Spawner::timedSpawns.push_back(spawn);
+            }
+
+            fclose(file);
+
+
+            //get level walls
+            filePath = "../Content/Levels/" + levelName + "/Walls.txt";
+
+            file = fopen(filePath.c_str(), "r");
+
+            char tileName[256];
+            while (fscanf(file, "%s %f %f", tileName, &xPos, &yPos) != EOF)
+            {
+                Spawn spawn;
+                spawn.collisionGroup = CollisionGroup::LevelElements;
+                spawn.entity = Entity(se::Content::getSprite(tileName), std::vector<IModifier*>());
+                spawn.entity.hitbox = se::Content::getHitbox(tileName);
+                spawn.position = se::Vector2(xPos, yPos);
+                Spawner::immediateSpawns.push_back(spawn);
+            }
+
+            fclose(file);
         }
-
-        fclose(file);
-
-
-        //get level walls
-        filePath = "../Content/Levels/" + levelName + "/Walls.txt";
-
-        file = fopen(filePath.c_str(), "r");
-
-        char tileName[256];
-        while (fscanf(file, "%s %f %f", tileName, &xPos, &yPos) != EOF)
-        {
-            Spawn spawn;
-            spawn.collisionGroup = CollisionGroup::LevelElements;
-            spawn.entity = Entity(se::Content::getSprite(tileName), std::vector<IModifier*>());
-            spawn.entity.hitbox = se::Content::getHitbox(tileName);
-            spawn.position = se::Vector2(xPos, yPos);
-            Spawner::immediateSpawns.push_back(spawn);
-        }
-
-        fclose(file);
 
 
         //create animations

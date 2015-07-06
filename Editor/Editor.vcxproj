@@ -36,12 +36,22 @@
     <Import Project="..\Propertysheets\Editor_Output.props" />
     <Import Project="..\Propertysheets\Core_Lib_Debug.props" />
     <Import Project="..\Propertysheets\WarningLevel.props" />
+    <Import Project="..\Propertysheets\Engine_Include.props" />
+    <Import Project="..\Propertysheets\Engine_Lib_Debug.props" />
+    <Import Project="..\Propertysheets\Core_Include.props" />
+    <Import Project="..\Propertysheets\SFML_Debug.props" />
+    <Import Project="Editor_Include.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Propertysheets\Editor_Output.props" />
     <Import Project="..\Propertysheets\Core_Lib_Release.props" />
     <Import Project="..\Propertysheets\WarningLevel.props" />
+    <Import Project="..\Propertysheets\Engine_Include.props" />
+    <Import Project="..\Propertysheets\Engine_Lib_Release.props" />
+    <Import Project="..\Propertysheets\Core_Include.props" />
+    <Import Project="..\Propertysheets\SFML_Release.props" />
+    <Import Project="Editor_Include.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
@@ -70,6 +80,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Editor\source\EditorMenus.cpp" />
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Editor\source\EditorScene.cpp" />
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Editor\source\Main.cpp" />
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Editor\source\StartScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Editor\include\EditorMenus.h" />
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Editor\include\EditorScene.h" />
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Editor\include\StartScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -72,6 +72,7 @@ namespace se
         void setDepth(float depth);
         Vector4 getColor();
         void setColor(Vector4 color);
+        std::string getText();
         void setText(std::string text);
     };
 }

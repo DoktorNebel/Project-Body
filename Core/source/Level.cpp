@@ -24,6 +24,113 @@ namespace bc
     }
 
 
+    void Level::createBackgrounds(Tileset::Type tileset, int length)
+    {
+        std::string bgTile1Left;
+        std::string bgTile1Right;
+        std::string bgTile2;
+        std::string bgTile3;
+        std::string bgTile4;
+
+        switch (tileset)
+        {
+        case Tileset::Flesh:
+            bgTile1Left = "BG-Tile-1-Links";
+            bgTile1Right = "BG-Tile-1-Rechts";
+            bgTile2 = "BG-Tile-2";
+            bgTile3 = "BG-Tile-3";
+            bgTile4 = "BG-Tile-4";
+            break;
+        }
+
+
+        for (int i = 0; i < length * 2; ++i)
+        {
+            this->backgroundSprites[0].push_back(se::Content::getSprite(bgTile1Left));
+            this->backgroundSprites[0].back().setScale(se::Vector2(3.0f, 3.0f));
+            this->backgroundSprites[0].back().setPosition(se::Vector2(-this->backgroundSprites[0].back().getWidth() * this->backgroundSprites[0].back().getScale().x, -this->backgroundSprites[0].back().getHeight() / 2 * this->backgroundSprites[0].back().getScale().y + i * 256 * this->backgroundSprites[0].back().getScale().y));
+            this->backgroundSprites[0].back().setDepth(0.5f);
+            this->backgroundSprites[0].push_back(se::Content::getSprite(bgTile1Right));
+            this->backgroundSprites[0].back() = this->backgroundSprites[0].back();
+            this->backgroundSprites[0].back().setScale(se::Vector2(3.0f, 3.0f));
+            this->backgroundSprites[0].back().setPosition(se::Vector2(this->backgroundSprites[0].back().getWidth() * this->backgroundSprites[0].back().getScale().x, -this->backgroundSprites[0].back().getHeight() / 2 * this->backgroundSprites[0].back().getScale().y + i * 256 * this->backgroundSprites[0].back().getScale().y));
+            this->backgroundSprites[0].back().setDepth(0.5f);
+        }
+        for (int i = 0; i < length; ++i)
+        {
+            this->backgroundSprites[1].push_back(se::Content::getSprite(bgTile2));
+            this->backgroundSprites[1].back().setScale(se::Vector2(3.0f, 3.0f));
+            this->backgroundSprites[1].back().setPosition(se::Vector2(0.0f, i * 512 * this->backgroundSprites[1].back().getScale().y));
+            this->backgroundSprites[1].back().setDepth(0.6f);
+
+            this->backgroundSprites[2].push_back(se::Content::getSprite(bgTile3));
+            this->backgroundSprites[2].back().setScale(se::Vector2(3.0f, 3.0f));
+            this->backgroundSprites[2].back().setPosition(se::Vector2(0.0f, i * 512 * this->backgroundSprites[2].back().getScale().y));
+            this->backgroundSprites[2].back().setDepth(0.7f);
+
+            this->backgroundSprites[3].push_back(se::Content::getSprite(bgTile4));
+            this->backgroundSprites[3].back().setScale(se::Vector2(3.0f, 3.0f));
+            this->backgroundSprites[3].back().setPosition(se::Vector2(0.0f, i * 511 * this->backgroundSprites[3].back().getScale().y));
+            this->backgroundSprites[3].back().setDepth(0.8f);
+        }
+    }
+
+
+    void Level::initializeEmpty(bc::Tileset::Type tileset)
+    {
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::EnemyProjectiles));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::Enemies));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::Items));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::LevelElements));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::PlayerProjectiles, CollisionGroup::LevelElements));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Enemies, CollisionGroup::PlayerProjectiles));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::LevelElements, CollisionGroup::LevelElements));
+
+        se::Engine::setActiveCamera(this->camera);
+
+        this->entities.resize(7);
+        this->hitboxes.resize(7);
+
+        //spawn player
+        std::vector<IModifier*> modifiers;
+        modifiers.push_back(new PlayerModifier(&this->entities));
+        Entity player(se::Content::getSprite("TestPlayer"), modifiers);
+        player.hitbox = se::Content::getHitbox("TestPlayer");
+        player.id = 0;
+        player.getSprite().setPosition(se::Vector2(0, -200));
+        player.init();
+        this->hitboxes[CollisionGroup::Players].push_back(player.getSprite().getRect());
+        this->entities[CollisionGroup::Players].push_back(player);
+
+        this->medicineBox = MedicineBox((PlayerModifier*)modifiers[0]);
+
+        Spawner::initialize(&this->hitboxes, &this->entities);
+
+        this->totalElapsedTime = 0.0f;
+        this->currentScrollKey = 0;
+
+        ScrollKey key;
+        key.time = 0.0f;
+        key.speed = 100.0f;
+        this->scrollSpeeds.push_back(key);
+        key.time = 120.0f;
+        key.speed = 100.0f;
+        this->scrollSpeeds.push_back(key);
+
+        this->backgroundSpeeds.push_back(1.0f);
+        this->backgroundSpeeds.push_back(0.8f);
+        this->backgroundSpeeds.push_back(0.6f);
+        this->backgroundSpeeds.push_back(0.4f);
+
+        this->backgroundSprites.push_back(std::vector<se::Sprite>());
+        this->backgroundSprites.push_back(std::vector<se::Sprite>());
+        this->backgroundSprites.push_back(std::vector<se::Sprite>());
+        this->backgroundSprites.push_back(std::vector<se::Sprite>());
+
+        this->createBackgrounds(tileset, 24);
+    }
+
+
     void Level::initialize(std::string source)
     {
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::EnemyProjectiles));
@@ -80,35 +187,35 @@ namespace bc
         this->backgroundSprites.push_back(std::vector<se::Sprite>());
         this->backgroundSprites.push_back(std::vector<se::Sprite>());
         this->backgroundSprites.push_back(std::vector<se::Sprite>());
-        for (int i = 0; i < 50; ++i)
-        {
-            this->backgroundSprites[0].push_back(se::Content::getSprite("BG-Tile-1-Links"));
-            this->backgroundSprites[0].back().setScale(se::Vector2(3.0f, 3.0f));
-            this->backgroundSprites[0].back().setPosition(se::Vector2(-this->backgroundSprites[0].back().getWidth() * this->backgroundSprites[0].back().getScale().x, -this->backgroundSprites[0].back().getHeight() / 2 * this->backgroundSprites[0].back().getScale().y + i * 256 * this->backgroundSprites[0].back().getScale().y));
-            this->backgroundSprites[0].back().setDepth(0.5f);
-            this->backgroundSprites[0].push_back(se::Content::getSprite("BG-Tile-1-Rechts"));
-            this->backgroundSprites[0].back() = this->backgroundSprites[0].back();
-            this->backgroundSprites[0].back().setScale(se::Vector2(3.0f, 3.0f));
-            this->backgroundSprites[0].back().setPosition(se::Vector2(this->backgroundSprites[0].back().getWidth() * this->backgroundSprites[0].back().getScale().x, -this->backgroundSprites[0].back().getHeight() / 2 * this->backgroundSprites[0].back().getScale().y + i * 256 * this->backgroundSprites[0].back().getScale().y));
-            this->backgroundSprites[0].back().setDepth(0.5f);
-        }
-        for (int i = 0; i < 25; ++i)
-        {
-            this->backgroundSprites[1].push_back(se::Content::getSprite("BG-Tile-2"));
-            this->backgroundSprites[1].back().setScale(se::Vector2(3.0f, 3.0f));
-            this->backgroundSprites[1].back().setPosition(se::Vector2(0.0f, i * 512 * this->backgroundSprites[1].back().getScale().y));
-            this->backgroundSprites[1].back().setDepth(0.6f);
 
-            this->backgroundSprites[2].push_back(se::Content::getSprite("BG-Tile-3"));
-            this->backgroundSprites[2].back().setScale(se::Vector2(3.0f, 3.0f));
-            this->backgroundSprites[2].back().setPosition(se::Vector2(0.0f, i * 512 * this->backgroundSprites[2].back().getScale().y));
-            this->backgroundSprites[2].back().setDepth(0.7f);
+        path = "../Content/Levels/" + source + "/Background.txt";
+        file = fopen(path.c_str(), "r");
 
-            this->backgroundSprites[3].push_back(se::Content::getSprite("BG-Tile-4"));
-            this->backgroundSprites[3].back().setScale(se::Vector2(3.0f, 3.0f));
-            this->backgroundSprites[3].back().setPosition(se::Vector2(0.0f, i * 511 * this->backgroundSprites[3].back().getScale().y));
-            this->backgroundSprites[3].back().setDepth(0.8f);
+        char tileset[32];
+        int length;
+        fscanf(file, "Tileset %s\nLength %d", tileset, &length);
+
+        fclose(file);
+
+        Tileset::Type tilesettype;
+        if (strcmp(tileset, "Flesh") == 0)
+        {
+            tilesettype = Tileset::Flesh;
         }
+        else if (strcmp(tileset, "Slime") == 0)
+        {
+            tilesettype = Tileset::Slime;
+        }
+        else if (strcmp(tileset, "Pus") == 0)
+        {
+            tilesettype = Tileset::Pus;
+        }
+        else if (strcmp(tileset, "Nerves") == 0)
+        {
+            tilesettype = Tileset::Nerves;
+        }
+
+        this->createBackgrounds(tilesettype, length);
     }
 
 

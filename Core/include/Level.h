@@ -8,6 +8,7 @@
 #include "Engine.h"
 #include "Collisiongroup.h"
 #include "MedicineBox.h"
+#include "Tilesets.h"
 
 namespace bc
 {
@@ -40,8 +41,13 @@ namespace bc
         Level();
         ~Level();
 
+    private:
+
+        void createBackgrounds(Tileset::Type tileset, int length);
+
     public:
 
+        void initializeEmpty(bc::Tileset::Type tileset);
         void initialize(std::string source);
         void update(float elapsedTime);
         void draw();

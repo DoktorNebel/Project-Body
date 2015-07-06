@@ -18,6 +18,10 @@ namespace se
 
     public:
 
+        void* data;
+
+    public:
+
         void initialize();
         void update(float elapsedTime);
         void draw();
@@ -26,6 +30,7 @@ namespace se
         void attachCallback(std::string menuName, std::string elementName, std::string eventName, MenuCallback* callback);
         void changeMenu(std::string menuName);
         IMenuElement* getElement(std::string menuName, std::string elementName);
+        IMenuElement* getHighlightedElement();
         void show();
         void hide();
         void highlight(IMenuElement* element);

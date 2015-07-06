@@ -258,6 +258,12 @@ namespace se
     }
 
 
+    std::string Text::getText()
+    {
+        return this->text;
+    }
+
+
     void Text::setText(std::string text)
     {
         this->text = text;

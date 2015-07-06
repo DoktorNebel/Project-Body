@@ -71,6 +71,12 @@ namespace se
     }
 
 
+    IMenuElement* MenuSystem::getHighlightedElement()
+    {
+        return this->highlightedElement;
+    }
+
+
     void MenuSystem::show()
     {
         this->visible = true;

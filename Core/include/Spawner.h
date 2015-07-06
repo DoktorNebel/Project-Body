@@ -58,7 +58,7 @@ namespace bc
         static bool getAnimation(std::string name, se::AnimatedSprite* outSprite);
         static ShootingModifier::ShotPattern getShotPattern(std::string patternName);
         static std::vector<MovementPatternModifier::Waypoint> getMovementPattern(std::string patternName);
-        static void initialize(std::vector<std::vector<se::Rectangle>>* hitboxes, std::vector<std::vector<bc::Entity>>* entities, std::string levelName);
+        static void initialize(std::vector<std::vector<se::Rectangle>>* hitboxes, std::vector<std::vector<bc::Entity>>* entities, std::string levelName = std::string());
         static void update(float elapsedTime);
         static void spawn(se::Vector2 position, std::string spriteName, std::vector<IModifier*> modifiers, CollisionGroup::Type collisionGroup);
         static void spawnEnemy(se::Vector2 position, std::string enemyName, std::string movePatternName);
