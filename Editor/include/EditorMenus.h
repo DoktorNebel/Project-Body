@@ -25,5 +25,6 @@ namespace be
     se::MenuCallback unhighlightSpriteFunction;
     se::MenuCallback backgroundButtonFunction;
     se::MenuCallback tileButtonFunction;
-    se::MenuCallback saveButtonFunction;
+	se::MenuCallback saveButtonFunction;
+	se::MenuCallback loadButtonFunction;
 }

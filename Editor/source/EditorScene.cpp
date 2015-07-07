@@ -10,6 +10,12 @@
 
 namespace be
 {
+	void EditorScene::load(std::string level)
+	{
+		this->level.initialize(level);
+	}
+
+
     void EditorScene::save()
     {
         int bla = _mkdir("../SavedLevels");
@@ -32,6 +38,21 @@ namespace be
         se::Engine::setActiveCamera(this->camera);
 
         ((be::MenuData*)se::Engine::getMenu()->data)->scene = this;
+
+		se::Sprite line = se::Content::getSprite("Pixel");
+		line.setColor(se::Vector4(0.0f, 1.0f, 0.0f, 1.0f));
+		line.setScale(se::Vector2(512.0f * 4.5f, 3.0f));
+		line.setPosition(se::Vector2(0, se::Engine::getSettings().renderResolutionHeight / 2));
+		this->lines.push_back(line);
+		line.setPosition(se::Vector2(0, -(int)se::Engine::getSettings().renderResolutionHeight / 2));
+		this->lines.push_back(line);
+		line.setScale(se::Vector2(3.0f, 720.0f));
+		line.setPosition(se::Vector2(-512.0f * 2.25f, 0.0f));
+		this->lines.push_back(line);
+		line.setPosition(se::Vector2(512.0f * 2.25f, 0.0f));
+		this->lines.push_back(line);
+
+		this->highestId = 1;
     }
 
 
@@ -61,9 +82,42 @@ namespace be
                 WallData data;
                 data.spritename = this->currentTile;
                 data.position = this->tileSprite.getPosition();
+				data.entityCopy = bc::Entity(this->tileSprite, std::vector<bc::IModifier*>());
+				unsigned int id;
+				if (this->freeIds.size() > 0)
+				{
+					id = this->freeIds.back();
+					this->freeIds.pop_back();
+				}
+				else
+				{
+					id = ++this->highestId;
+				}
+				data.entityCopy.id = id;
+
                 this->wallData.push_back(data);
                 bc::Spawner::spawn(this->tileSprite.getPosition(), this->currentTile, std::vector<bc::IModifier*>(), bc::CollisionGroup::LevelElements);
             }
+
+			if (se::Input::actionPressed(be::InputActions::DeleteTile))
+			{
+				unsigned int index = this->wallData.size();
+				for (unsigned int i = 0; i < this->wallData.size(); ++i)
+				{
+					if (se::Math::Distance(this->wallData[i].position, pos) < 64.0f)
+					{
+						index = i;
+						break;
+					}
+				}
+
+				if (index < this->wallData.size())
+				{
+					bc::Spawner::kill(this->wallData[index].entityCopy, bc::CollisionGroup::LevelElements);
+					this->freeIds.push_back(this->wallData[index].entityCopy.id);
+					this->wallData.erase(this->wallData.begin() + index);
+				}
+			}
         }
 
         this->camera.move(se::Vector2(-se::Input::getActionValue(InputActions::CameraLeft) * 500.0f * elapsedTime + se::Input::getActionValue(InputActions::CameraRight) * 500.0f * elapsedTime,
@@ -75,6 +129,12 @@ namespace be
     void EditorScene::draw()
     {
         this->level.draw();
+
+		for (unsigned int i = 0; i < this->lines.size(); ++i)
+		{
+			se::Engine::draw(this->lines[i]);
+		}
+
         if (this->currentTile != "")
             se::Engine::draw(this->tileSprite);
     }

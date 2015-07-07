@@ -14,6 +14,7 @@ namespace be
         {
             std::string spritename;
             se::Vector2 position;
+			bc::Entity entityCopy;
         };
 
     private:
@@ -23,9 +24,13 @@ namespace be
         std::string currentTile;
         se::Sprite tileSprite;
         std::vector<WallData> wallData;
+		std::vector<se::Sprite> lines;
+		unsigned int highestId;
+		std::vector<unsigned int> freeIds;
 
     public:
-
+		
+		void load(std::string level);
         void save();
         virtual void initialize();
         virtual void update(float elapsedTime);

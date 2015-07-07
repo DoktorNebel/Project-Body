@@ -82,16 +82,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Editor\source\EditorMenus.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Editor\source\EditorScene.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Editor\source\Main.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Editor\source\StartScene.cpp" />
+    <ClCompile Include="source\EditorMenus.cpp" />
+    <ClCompile Include="source\EditorScene.cpp" />
+    <ClCompile Include="source\Main.cpp" />
+    <ClCompile Include="source\StartScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Editor\include\EditorInputActions.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Editor\include\EditorMenus.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Editor\include\EditorScene.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Editor\include\StartScene.h" />
+    <ClInclude Include="include\EditorInputActions.h" />
+    <ClInclude Include="include\EditorMenus.h" />
+    <ClInclude Include="include\EditorScene.h" />
+    <ClInclude Include="include\StartScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,6 @@
+0 0 200 0 normal
+0 100 200 0 control
+500 100 200 0 normal
+600 100 200 0 control
+600 0 200 0 normal
+600 -700 200 0 normal

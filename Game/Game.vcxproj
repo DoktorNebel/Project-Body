@@ -80,8 +80,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Game\source\GameMenus.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Game\source\MenuScene.cpp" />
+    <ClCompile Include="source\GameMenus.cpp" />
+    <ClCompile Include="source\MenuScene.cpp" />
     <ClCompile Include="source\BodyGame.cpp" />
     <ClCompile Include="source\Main.cpp" />
   </ItemGroup>

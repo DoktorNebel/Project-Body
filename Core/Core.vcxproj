@@ -111,20 +111,20 @@
     <ClInclude Include="include\StickyShotModifier.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\AnimationModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\BigVirusModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\BoogerModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\BossModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\BossPartModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\GameData.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\ItemModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\MedicineBox.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\PlayerSatelliteModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\ShakyMovementModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\ShooterHeadModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\ShooterModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\ShootingModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\WormElementModifier.cpp" />
+    <ClCompile Include="source\AnimationModifier.cpp" />
+    <ClCompile Include="source\BigVirusModifier.cpp" />
+    <ClCompile Include="source\BoogerModifier.cpp" />
+    <ClCompile Include="source\BossModifier.cpp" />
+    <ClCompile Include="source\BossPartModifier.cpp" />
+    <ClCompile Include="source\GameData.cpp" />
+    <ClCompile Include="source\ItemModifier.cpp" />
+    <ClCompile Include="source\MedicineBox.cpp" />
+    <ClCompile Include="source\PlayerSatelliteModifier.cpp" />
+    <ClCompile Include="source\ShakyMovementModifier.cpp" />
+    <ClCompile Include="source\ShooterHeadModifier.cpp" />
+    <ClCompile Include="source\ShooterModifier.cpp" />
+    <ClCompile Include="source\ShootingModifier.cpp" />
+    <ClCompile Include="source\WormElementModifier.cpp" />
     <ClCompile Include="source\HomingMovementModifier.cpp" />
     <ClCompile Include="source\EnemyModifier.cpp" />
     <ClCompile Include="source\Entity.cpp" />

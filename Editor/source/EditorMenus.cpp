@@ -25,8 +25,7 @@ namespace be
 
 
         se::Engine::getMenu()->addElement("Editor", "NewButton", new se::Button(se::Content::getSprite("Pixel"), se::Text(se::Content::getFont("wendy.ttf"), "New", se::Vector2(-550, 300)), false));
-        se::Engine::getMenu()->addElement("Editor", "LoadButton", new se::Button(se::Content::getSprite("Pixel"), se::Text(se::Content::getFont("wendy.ttf"), "Load", se::Vector2(-400, 300)), false));
-        se::Engine::getMenu()->addElement("Editor", "SaveButton", new se::Button(se::Content::getSprite("Pixel"), se::Text(se::Content::getFont("wendy.ttf"), "Save", se::Vector2(-250, 300)), false));
+        se::Engine::getMenu()->addElement("Editor", "SaveButton", new se::Button(se::Content::getSprite("Pixel"), se::Text(se::Content::getFont("wendy.ttf"), "Save", se::Vector2(-400, 300)), false));
 
         se::Engine::getMenu()->data = new be::MenuData();
     }
@@ -61,9 +60,6 @@ namespace be
         se::Engine::getMenu()->attachCallback("Editor", "NewButton", "onPress", &newButtonFunction);
         se::Engine::getMenu()->attachCallback("Editor", "NewButton", "onHighlight", &highlightFunction);
         se::Engine::getMenu()->attachCallback("Editor", "NewButton", "onUnhighlight", &unhighlightFunction);
-
-        se::Engine::getMenu()->attachCallback("Editor", "LoadButton", "onHighlight", &highlightFunction);
-        se::Engine::getMenu()->attachCallback("Editor", "LoadButton", "onUnhighlight", &unhighlightFunction);
 
         se::Engine::getMenu()->attachCallback("Editor", "SaveButton", "onHighlight", &highlightFunction);
         se::Engine::getMenu()->attachCallback("Editor", "SaveButton", "onUnhighlight", &unhighlightFunction);
@@ -177,4 +173,10 @@ namespace be
     {
         ((MenuData*)se::Engine::getMenu()->data)->scene->save();
     }
+
+
+	void loadButtonFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
+	{
+
+	}
 }

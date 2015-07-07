@@ -39,13 +39,13 @@
     <ClInclude Include="include\Vector4.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\Button.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\Font.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\IMenuElement.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\Menu.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\MenuEvent.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\MenuSystem.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\Text.cpp" />
+    <ClCompile Include="source\Button.cpp" />
+    <ClCompile Include="source\Font.cpp" />
+    <ClCompile Include="source\IMenuElement.cpp" />
+    <ClCompile Include="source\Menu.cpp" />
+    <ClCompile Include="source\MenuEvent.cpp" />
+    <ClCompile Include="source\MenuSystem.cpp" />
+    <ClCompile Include="source\Text.cpp" />
     <ClCompile Include="source\Polygon.cpp" />
     <ClCompile Include="source\AnimatedSprite.cpp" />
     <ClCompile Include="source\Camera.cpp" />
