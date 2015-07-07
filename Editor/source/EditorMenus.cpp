@@ -67,6 +67,7 @@ namespace be
 
         se::Engine::getMenu()->attachCallback("Editor", "SaveButton", "onHighlight", &highlightFunction);
         se::Engine::getMenu()->attachCallback("Editor", "SaveButton", "onUnhighlight", &unhighlightFunction);
+        se::Engine::getMenu()->attachCallback("Editor", "SaveButton", "onPress", &saveButtonFunction);
     }
 
 
@@ -140,6 +141,7 @@ namespace be
         tilenames.push_back(prefix + "S-Kurve-Links-2");
         tilenames.push_back(prefix + "S-Kurve-Rechts-1");
         tilenames.push_back(prefix + "S-Kurve-Rechts-2");
+        tilenames.push_back(prefix + "Mitte");
 
         int y1 = 0;
         int y2 = 0;
@@ -148,11 +150,12 @@ namespace be
             se::Sprite sprite = se::Content::getSprite(tilenames[i]);
             sprite.setScale(se::Vector2(0.5f, 0.5f));
             sprite.setPosition(sprite.getWidth() == 64 ? se::Vector2(530, 300 - y1) : se::Vector2(600, 300 - y2));
-            se::Button* button = new se::Button(sprite, se::Text(se::Content::getFont("wendy.ttf")), true);
+            se::Button* button = new se::Button(sprite, se::Text(se::Content::getFont("wendy.ttf"), tilenames[i], se::Vector2(), se::Vector2()), true);
             button->doInitialize(se::Engine::getMenu(), false);
             se::Engine::getMenu()->addElement("Editor", tilenames[i], button);
             button->attachCallback("onHighlight", &highlightSpriteFunction);
             button->attachCallback("onUnhighlight", &unhighlightSpriteFunction);
+            button->attachCallback("onPress", &tileButtonFunction);
 
             y1 += sprite.getWidth() == 64.0f ? (int)(sprite.getHeight() * 0.6f) : 0;
             y2 += sprite.getWidth() == 64.0f ? 0 : (int)(sprite.getHeight() * 0.6f);
@@ -161,5 +164,17 @@ namespace be
         se::Engine::getMenu()->changeMenu("Editor");
         se::IScene* newScene = new be::EditorScene();
         se::Engine::changeScene(newScene);
+    }
+
+
+    void tileButtonFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
+    {
+        ((MenuData*)se::Engine::getMenu()->data)->currentTile = ((se::Button*)sender)->text.getText();
+    }
+
+
+    void saveButtonFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
+    {
+        ((MenuData*)se::Engine::getMenu()->data)->scene->save();
     }
 }

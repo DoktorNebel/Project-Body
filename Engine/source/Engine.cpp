@@ -86,8 +86,8 @@ namespace se
             float elapsedTime = elapsed.count();
             Engine::lastUpdate = now;
 
-            Engine::scene->update(elapsedTime);
             Engine::menuSystem.update(elapsedTime);
+            Engine::scene->update(elapsedTime);
             Engine::graphics.beginDraw();
             Engine::scene->draw();
             Engine::graphics.draw(Engine::camera);

@@ -42,7 +42,7 @@ namespace se
             Engine::getMenu()->highlight(this);
         }
 
-        if (this->highlighted && (Input::actionPressed(InputAction::MenuConfirm) || Input::actionPressed(InputAction::MenuClick)))
+        if ((this->highlighted && Input::actionPressed(InputAction::MenuConfirm)) || (spriteRect.contains(Input::getMousePos()) && Input::actionPressed(InputAction::MenuClick)))
         {
             this->pressed = true;
             this->callEvent("onPress");

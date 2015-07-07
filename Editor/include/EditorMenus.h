@@ -6,9 +6,13 @@
 
 namespace be
 {
+    class EditorScene;
+
     struct MenuData
     {
         bc::Tileset::Type levelType;
+        std::string currentTile;
+        EditorScene* scene;
     };
 
     void createMenus();
@@ -20,4 +24,6 @@ namespace be
     se::MenuCallback highlightSpriteFunction;
     se::MenuCallback unhighlightSpriteFunction;
     se::MenuCallback backgroundButtonFunction;
+    se::MenuCallback tileButtonFunction;
+    se::MenuCallback saveButtonFunction;
 }

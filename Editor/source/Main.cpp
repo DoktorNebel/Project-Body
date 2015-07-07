@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "MenuInputActions.h"
 #include "InputActions.h"
+#include "EditorInputActions.h"
 
 int main()
 {
@@ -38,6 +39,12 @@ int main()
     se::Input::bindKeyboardKeyAction(bg::InputAction::Medicine1, sf::Keyboard::Num1);
     se::Input::bindKeyboardKeyAction(bg::InputAction::Medicine2, sf::Keyboard::Num2);
     se::Input::bindKeyboardKeyAction(bg::InputAction::Medicine3, sf::Keyboard::Num3);
+
+    se::Input::bindKeyboardKeyAction(be::InputActions::CameraLeft, sf::Keyboard::A);
+    se::Input::bindKeyboardKeyAction(be::InputActions::CameraRight, sf::Keyboard::D);
+    se::Input::bindKeyboardKeyAction(be::InputActions::CameraUp, sf::Keyboard::W);
+    se::Input::bindKeyboardKeyAction(be::InputActions::CameraDown, sf::Keyboard::S);
+    se::Input::bindMouseButtonAction(be::InputActions::DeleteTile, sf::Mouse::Button::Right);
 
     se::Engine::run();
 

@@ -3,6 +3,7 @@
 #include "Button.h"
 #include "IMenuElement.h"
 #include "MenuSystem.h"
+#include "BodyGame.h"
 
 namespace bg
 {
@@ -36,6 +37,7 @@ namespace bg
 
         se::Engine::getMenu()->attachCallback("Main", "StartButton", "onHighlight", &highlightFunction);
         se::Engine::getMenu()->attachCallback("Main", "StartButton", "onUnhighlight", &unhighlightFunction);
+        se::Engine::getMenu()->attachCallback("Main", "StartButton", "onPress", &startGameButtonFunction);
 
         se::Engine::getMenu()->attachCallback("Main", "OptionsButton", "onHighlight", &highlightFunction);
         se::Engine::getMenu()->attachCallback("Main", "OptionsButton", "onUnhighlight", &unhighlightFunction);
@@ -60,5 +62,13 @@ namespace bg
     void unhighlightFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
     {
         ((se::Button*)sender)->text.setColor(se::Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+    }
+
+
+    void startGameButtonFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
+    {
+        menuSystem->hide();
+        BodyGame* newScene = new BodyGame();
+        se::Engine::changeScene(newScene);
     }
 }

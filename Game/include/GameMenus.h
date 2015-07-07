@@ -11,4 +11,5 @@ namespace bg
     se::MenuCallback startButtonFunction;
     se::MenuCallback highlightFunction;
     se::MenuCallback unhighlightFunction;
+    se::MenuCallback startGameButtonFunction;
 }
