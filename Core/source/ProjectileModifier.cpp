@@ -29,7 +29,7 @@ namespace bc
     void ProjectileModifier::onCreate()
     {
         this->entity->getSprite().setDepth(-0.1f);
-        this->entity->getSprite().setScale(se::Vector2(2.0f, 2.0f));
+        this->entity->getSprite().setScale(se::Vector2(1.5f, 1.5f));
         this->entity->getSprite().setRotation(atan2(this->direction.x, this->direction.y) * -57.2957795f);
         this->entity->damage = 1.0f;
     }
@@ -60,7 +60,7 @@ namespace bc
             sprite.addSprite("Idle", se::Content::getSprite("Flare1"));
             sprite.addSprite("Idle", se::Content::getSprite("Flare2"));
             sprite.addSprite("Idle", se::Content::getSprite("Flare3"));
-            modifiers.push_back(new ParticleModifier(se::Vector2(0.0f, 0.0f), se::Vector2(1.0f, 1.0f), 0.15f));
+            modifiers.push_back(new ParticleModifier(se::Vector2(0.0f, 0.0f), se::Vector2(0.5f, 0.5f), 0.15f));
             modifiers.push_back(new AnimationModifier(sprite));
             Spawner::spawn(this->entity->getSprite().getPosition(), "Flare1", modifiers, CollisionGroup::Particles);
 

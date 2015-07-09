@@ -133,8 +133,8 @@ namespace se
         if (Input::inputActions.size() <= action)
         {
             Input::InputAction inputAction;
-            inputAction.inputType = alternative ? Input::InputType::Unbound : Input::InputType::JoystickButton;
-            inputAction.alternativeInputType = alternative ? Input::InputType::JoystickButton : Input::InputType::Unbound;
+            inputAction.inputType = alternative ? Input::InputType::Unbound : Input::InputType::JoystickAxis;
+            inputAction.alternativeInputType = alternative ? Input::InputType::JoystickAxis : Input::InputType::Unbound;
             inputAction.index = joystickIndex;
             inputAction.alternativeIndex = joystickIndex;
             inputAction.action = action;
@@ -155,14 +155,14 @@ namespace se
         {
             if (alternative)
             {
-                Input::inputActions[action].alternativeInputType = Input::InputType::JoystickButton;
+				Input::inputActions[action].alternativeInputType = Input::InputType::JoystickAxis;
                 Input::inputActions[action].alternativeIndex = joystickIndex;
                 Input::inputActions[action].alternativeInput = axis;
                 Input::inputActions[action].alternativePositive = positive;
             }
             else
             {
-                Input::inputActions[action].inputType = Input::InputType::JoystickButton;
+				Input::inputActions[action].inputType = Input::InputType::JoystickAxis;
                 Input::inputActions[action].index = joystickIndex;
                 Input::inputActions[action].input = axis;
                 Input::inputActions[action].positive = positive;
@@ -284,7 +284,7 @@ namespace se
 				if (action.positive)
 					action.value = action.value < 0.0f ? 0.0f : action.value;
 				else
-					action.value = action.value > 0.0f ? 0.0f : action.value;
+					action.value = action.value > 0.0f ? 0.0f : abs(action.value);
 				if (Input::previousValues[i] != action.value)
 				{
 					if (action.value > 0.0f)
@@ -364,7 +364,7 @@ namespace se
                 if (action.alternativePositive)
                     action.value = action.value < 0.0f ? 0.0f : action.value;
                 else
-                    action.value = action.value > 0.0f ? 0.0f : action.value;
+                    action.value = action.value > 0.0f ? 0.0f : abs(action.value);
                 if (Input::previousValues[i] != action.value)
                 {
                     if (action.value > 0.0f)

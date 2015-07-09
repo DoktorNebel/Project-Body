@@ -29,8 +29,10 @@ namespace bc
     {
         this->speed = 500.0f;
         this->fireRate = 0.01f;
-        this->fireCounter = 0.0f;
-        this->entity->getSprite().setScale(se::Vector2(2.0f, 2.0f));
+		this->fireCounter = 0.0f;
+		this->stickyFireRate = 1.0f;
+		this->stickyFireCounter = 0.0f;
+        this->entity->getSprite().setScale(se::Vector2(1.0f, 1.0f));
         this->shootingDirections.push_back(0.0f + 90.0f);
     }
 
@@ -40,10 +42,10 @@ namespace bc
         float x = this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Right) - this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Left);
         float y = this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Up) - this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Down);
         this->entity->getSprite().move(se::Vector2(x, y));
-        if (this->entity->getSprite().getPosition().y - this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2 < -(int)se::Engine::getSettings().renderResolutionHeight / 2)
-            this->entity->getSprite().setPosition(se::Vector2(this->entity->getSprite().getPosition().x, -(int)se::Engine::getSettings().renderResolutionHeight / 2 + this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2));
-        if (this->entity->getSprite().getPosition().y + this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2 > (int)se::Engine::getSettings().renderResolutionHeight / 2)
-            this->entity->getSprite().setPosition(se::Vector2(this->entity->getSprite().getPosition().x, (int)se::Engine::getSettings().renderResolutionHeight / 2 - this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2));
+		if (this->entity->getSprite().getPosition().y - this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2 < -(int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom())
+			this->entity->getSprite().setPosition(se::Vector2(this->entity->getSprite().getPosition().x, -(int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom() + this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2));
+		if (this->entity->getSprite().getPosition().y + this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2 > (int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom())
+			this->entity->getSprite().setPosition(se::Vector2(this->entity->getSprite().getPosition().x, (int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom() - this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2));
 
         this->fireCounter += elapsedTime;
         if (this->fireCounter >= this->fireRate && se::Input::getActionValue(bg::InputAction::Shoot))
@@ -71,8 +73,11 @@ namespace bc
             }
         }
 
-        if (se::Input::actionPressed(bg::InputAction::StickyShot))
-        {
+		this->stickyFireCounter += elapsedTime;
+		if (this->stickyFireCounter >= this->stickyFireRate && se::Input::getActionValue(bg::InputAction::StickyShot))
+		{
+			this->stickyFireCounter = 0.0f;
+
             std::vector<IModifier*> modifiers;
             modifiers.push_back(new ProjectileModifier(se::Vector2(rand() % 21 - 10, 700), 2.0f));
             modifiers.push_back(new StickyShotModifier(this->entities));
@@ -89,7 +94,7 @@ namespace bc
     void PlayerModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
         if (collisionGroup == CollisionGroup::LevelElements)
-            this->entity->getSprite().move(projectionVector * projectionScalar);
+            this->entity->getSprite().move(projectionVector * projectionScalar * (this->entity->getSprite().getPosition().x < otherEntity->getSprite().getPosition().x ? 1.0f : -1.0f));
         otherEntity->health -= this->entity->maxHealth;
     }
 }

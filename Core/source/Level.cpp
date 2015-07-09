@@ -26,11 +26,13 @@ namespace bc
 
     void Level::createBackgrounds(Tileset::Type tileset, int length)
     {
-        std::string bgTile1Left;
-        std::string bgTile1Right;
-        std::string bgTile2;
-        std::string bgTile3;
-        std::string bgTile4;
+        std::string bgTile1Left = "";
+		std::string bgTile1Right = "";
+		std::string bgTile1 = "";
+        std::string bgTile2 = "";
+        std::string bgTile3 = "";
+        std::string bgTile4 = "";
+
 
         switch (tileset)
         {
@@ -40,24 +42,41 @@ namespace bc
             bgTile2 = "BG-Tile-2";
             bgTile3 = "BG-Tile-3";
             bgTile4 = "BG-Tile-4";
+			break;
+
+		case Tileset::Pus:
+			bgTile1 = "4";
+			bgTile2 = "3";
+			bgTile3 = "2";
+			bgTile4 = "1";
             break;
         }
 
-
-        for (int i = 0; i < length * 2; ++i)
-        {
-            this->backgroundSprites[0].push_back(se::Content::getSprite(bgTile1Left));
-            this->backgroundSprites[0].back().setScale(se::Vector2(3.0f, 3.0f));
-            this->backgroundSprites[0].back().setPosition(se::Vector2(-this->backgroundSprites[0].back().getWidth() * this->backgroundSprites[0].back().getScale().x, -this->backgroundSprites[0].back().getHeight() / 2 * this->backgroundSprites[0].back().getScale().y + i * 256 * this->backgroundSprites[0].back().getScale().y));
-            this->backgroundSprites[0].back().setDepth(0.5f);
-            this->backgroundSprites[0].push_back(se::Content::getSprite(bgTile1Right));
-            this->backgroundSprites[0].back() = this->backgroundSprites[0].back();
-            this->backgroundSprites[0].back().setScale(se::Vector2(3.0f, 3.0f));
-            this->backgroundSprites[0].back().setPosition(se::Vector2(this->backgroundSprites[0].back().getWidth() * this->backgroundSprites[0].back().getScale().x, -this->backgroundSprites[0].back().getHeight() / 2 * this->backgroundSprites[0].back().getScale().y + i * 256 * this->backgroundSprites[0].back().getScale().y));
-            this->backgroundSprites[0].back().setDepth(0.5f);
-        }
+		if (bgTile1Left != "")
+		{
+			for (int i = 0; i < length * 2; ++i)
+			{
+				this->backgroundSprites[0].push_back(se::Content::getSprite(bgTile1Left));
+				this->backgroundSprites[0].back().setScale(se::Vector2(3.0f, 3.0f));
+				this->backgroundSprites[0].back().setPosition(se::Vector2(-this->backgroundSprites[0].back().getWidth() * this->backgroundSprites[0].back().getScale().x, -this->backgroundSprites[0].back().getHeight() / 2 * this->backgroundSprites[0].back().getScale().y + i * 256 * this->backgroundSprites[0].back().getScale().y));
+				this->backgroundSprites[0].back().setDepth(0.5f);
+				this->backgroundSprites[0].push_back(se::Content::getSprite(bgTile1Right));
+				this->backgroundSprites[0].back() = this->backgroundSprites[0].back();
+				this->backgroundSprites[0].back().setScale(se::Vector2(3.0f, 3.0f));
+				this->backgroundSprites[0].back().setPosition(se::Vector2(this->backgroundSprites[0].back().getWidth() * this->backgroundSprites[0].back().getScale().x, -this->backgroundSprites[0].back().getHeight() / 2 * this->backgroundSprites[0].back().getScale().y + i * 256 * this->backgroundSprites[0].back().getScale().y));
+				this->backgroundSprites[0].back().setDepth(0.5f);
+			}
+		}
         for (int i = 0; i < length; ++i)
         {
+			if (bgTile1 != "")
+			{
+				this->backgroundSprites[0].push_back(se::Content::getSprite(bgTile1));
+				this->backgroundSprites[0].back().setScale(se::Vector2(3.0f, 3.0f));
+				this->backgroundSprites[0].back().setPosition(se::Vector2(0.0f, i * 512 * this->backgroundSprites[0].back().getScale().y));
+				this->backgroundSprites[0].back().setDepth(0.5f);
+			}
+
             this->backgroundSprites[1].push_back(se::Content::getSprite(bgTile2));
             this->backgroundSprites[1].back().setScale(se::Vector2(3.0f, 3.0f));
             this->backgroundSprites[1].back().setPosition(se::Vector2(0.0f, i * 512 * this->backgroundSprites[1].back().getScale().y));
@@ -142,6 +161,7 @@ namespace bc
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::LevelElements, CollisionGroup::LevelElements));
         
         se::Engine::setActiveCamera(this->camera);
+		this->camera.setZoom(0.5f);
 
         this->entities.resize(7);
         this->hitboxes.resize(7);
@@ -279,7 +299,7 @@ namespace bc
         this->totalElapsedTime += elapsedTime;
 
         if (this->entities[CollisionGroup::Players].size() > 0)
-            this->camera.setPosition(se::Vector2(this->entities[CollisionGroup::Players][0].getSprite().getPosition().x / (se::Engine::getSettings().renderResolutionWidth / 2), 0.0f));
+            this->camera.setPosition(se::Vector2(this->entities[CollisionGroup::Players][0].getSprite().getPosition().x / (se::Engine::getSettings().renderResolutionWidth / 2) / this->camera.getZoom(), 0.0f));
 
         float currentScrollSpeed = 0.0f;
         if (this->currentScrollKey + 1 < this->scrollSpeeds.size())
@@ -295,7 +315,7 @@ namespace bc
         {
             for (unsigned int j = 0; j < this->backgroundSprites[i].size(); ++j)
             {
-                this->backgroundSprites[i][j].move(se::Vector2((this->camera.getActualPosition().x - this->lastCameraPos.x) * (1 - this->backgroundSpeeds[i]) * (se::Engine::getSettings().renderResolutionWidth / 2), currentScrollSpeed * -this->backgroundSpeeds[i] * elapsedTime));
+                this->backgroundSprites[i][j].move(se::Vector2((this->camera.getActualPosition().x - this->lastCameraPos.x) * (1 - this->backgroundSpeeds[i]) * (se::Engine::getSettings().renderResolutionWidth / 2) * this->camera.getZoom(), currentScrollSpeed * -this->backgroundSpeeds[i] * elapsedTime));
             }
         }
 

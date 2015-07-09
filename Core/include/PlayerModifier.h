@@ -11,7 +11,9 @@ namespace bc
 
         float speed;
         float fireRate;
-        float fireCounter;
+		float fireCounter;
+		float stickyFireRate;
+		float stickyFireCounter;
         std::vector<std::vector<Entity>>* entities;
 
     public:

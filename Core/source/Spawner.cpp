@@ -79,7 +79,7 @@ namespace bc
             sprite.addSprite("Death", se::Content::getSprite("VirusDie3"));
             sprite.addSprite("Death", se::Content::getSprite("VirusDie4"));
             sprite.addSprite("Death", se::Content::getSprite("VirusDie5"));
-            sprite.setScale(se::Vector2(1.5f, 1.5f));
+            sprite.setScale(se::Vector2(1.0f, 1.0f));
             modifiers.push_back(new EnemyModifier(sprite, 2, 0.02f));
             modifiers.push_back(new HitMarkerModifier());
             result.sprite = se::Content::getSprite("Virus1");
@@ -97,7 +97,7 @@ namespace bc
             sprite.addSprite("Idle", se::Content::getSprite("V2"));
             sprite.addSprite("Idle", se::Content::getSprite("V3"));
             sprite.addSprite("Idle", se::Content::getSprite("V4"));
-            sprite.setScale(se::Vector2(2.0f, 2.0f));
+            sprite.setScale(se::Vector2(1.0f, 1.0f));
             modifiers.push_back(new EnemyModifier(sprite, 5, 0.02f));
             modifiers.push_back(new BigVirusModifier());
             modifiers.push_back(new HitMarkerModifier());
@@ -118,7 +118,7 @@ namespace bc
             sprite.addSprite("Idle", se::Content::getSprite("KillaBug4"));
             sprite.addSprite("Idle", se::Content::getSprite("KillaBug5"));
             sprite.addSprite("Idle", se::Content::getSprite("KillaBug6"));
-            sprite.setScale(se::Vector2(2.0f, 2.0f));
+            sprite.setScale(se::Vector2(1.0f, 1.0f));
             modifiers.push_back(new EnemyModifier(sprite, 250, 0.05f));
             modifiers.push_back(new HitMarkerModifier());
             modifiers.push_back(new ShootingModifier(Spawner::shotPatterns[std::find(Spawner::shotPatternNames.begin(), Spawner::shotPatternNames.end(), "BigBug") - Spawner::shotPatternNames.begin()]));
@@ -134,7 +134,7 @@ namespace bc
             sprite.addAnimation("Idle");
             sprite.setSpeed("Idle", 0.5f);
             sprite.addSprite("Idle", se::Content::getSprite("Kefer"));
-            sprite.setScale(se::Vector2(2.0f, 2.0f));
+            sprite.setScale(se::Vector2(1.0f, 1.0f));
             modifiers.push_back(new EnemyModifier(sprite, 20, 0.02f));
             modifiers.push_back(new HitMarkerModifier());
             result.sprite = se::Content::getSprite("Kefer");
@@ -149,7 +149,7 @@ namespace bc
             sprite.addAnimation("Idle");
             sprite.setSpeed("Idle", 0.5f);
             sprite.addSprite("Idle", se::Content::getSprite("Popel"));
-            sprite.setScale(se::Vector2(2.0f, 2.0f));
+            sprite.setScale(se::Vector2(1.5f, 1.5f));
             modifiers.push_back(new EnemyModifier(sprite, 200, 0.0f));
             modifiers.push_back(new BoogerModifier());
             modifiers.push_back(new HitMarkerModifier());
@@ -164,7 +164,7 @@ namespace bc
             modifiers.push_back(new ShooterModifier(Spawner::entities));
             modifiers.push_back(new HitMarkerModifier());
             result.sprite = se::Content::getSprite("Shooter");
-            result.sprite.scale(se::Vector2(1.5f, 1.5f));
+            result.sprite.scale(se::Vector2(1.0f, 1.0f));
             result.hitbox = se::Content::getHitbox("Shooter");
         }
         else if (name == "Neurax_Worm")
