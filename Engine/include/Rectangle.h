@@ -23,5 +23,6 @@ namespace se
 
         bool overlap(Rectangle rect);
         bool contains(Vector2 point);
+        void move(se::Vector2 translation);
     };
 }

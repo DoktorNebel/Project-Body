@@ -37,4 +37,13 @@ namespace se
     {
         return point.y < this->top && point.y > this->bottom && point.x < this->right && point.x > this->left;
     }
+
+
+    void Rectangle::move(se::Vector2 translation)
+    {
+        this->left += translation.x;
+        this->right += translation.x;
+        this->top += translation.y;
+        this->bottom += translation.y;
+    }
 }

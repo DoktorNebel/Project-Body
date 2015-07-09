@@ -24,11 +24,6 @@ namespace se
 
     void Button::initialize(MenuSystem* menuSystem)
     {
-        this->neighbours[LEFT_NEIGHBOUR] = 0;
-        this->neighbours[RIGHT_NEIGHBOUR] = 0;
-        this->neighbours[UP_NEIGHBOUR] = 0;
-        this->neighbours[DOWN_NEIGHBOUR] = 0;
-
         this->eventNames.push_back("onPress");
         this->eventNames.push_back("onRelease");
     }

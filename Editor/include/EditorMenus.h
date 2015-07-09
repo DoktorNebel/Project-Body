@@ -12,7 +12,9 @@ namespace be
     {
         bc::Tileset::Type levelType;
         std::string currentTile;
+        std::string currentEnemy;
         EditorScene* scene;
+        float currentTime;
     };
 
     void createMenus();
@@ -25,6 +27,8 @@ namespace be
     se::MenuCallback unhighlightSpriteFunction;
     se::MenuCallback backgroundButtonFunction;
     se::MenuCallback tileButtonFunction;
+    se::MenuCallback enemyButtonFunction;
 	se::MenuCallback saveButtonFunction;
-	se::MenuCallback loadButtonFunction;
+    se::MenuCallback loadButtonFunction;
+    se::MenuCallback timeSliderFunction;
 }

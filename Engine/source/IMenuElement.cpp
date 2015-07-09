@@ -30,6 +30,11 @@ namespace se
 
     void IMenuElement::doInitialize(MenuSystem* menuSystem, bool highlighted)
     {
+        this->neighbours[LEFT_NEIGHBOUR] = 0;
+        this->neighbours[RIGHT_NEIGHBOUR] = 0;
+        this->neighbours[UP_NEIGHBOUR] = 0;
+        this->neighbours[DOWN_NEIGHBOUR] = 0;
+
         this->show();
         this->eventNames.push_back("onHighlight");
         this->eventNames.push_back("onUnhighlight");

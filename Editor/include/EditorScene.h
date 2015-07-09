@@ -17,16 +17,36 @@ namespace be
 			bc::Entity entityCopy;
         };
 
+        struct SpawnData
+        {
+            std::string enemyName;
+            std::string movementPattern;
+            se::Vector2 position;
+            se::Sprite sprite;
+            se::Sprite arrowSprite;
+        };
+
     private:
 
         se::Camera camera;
         bc::Level level;
         std::string currentTile;
         se::Sprite tileSprite;
+        std::string currentEnemy;
+        se::Sprite enemySprite;
+        se::Sprite arrowSprite;
         std::vector<WallData> wallData;
+        float currentTime;
+        std::vector<float> spawnTimes;
+        std::vector<std::vector<SpawnData>> spawnData;
+        se::Rectangle playfield;
 		std::vector<se::Sprite> lines;
 		unsigned int highestId;
 		std::vector<unsigned int> freeIds;
+
+    private:
+
+        SpawnData makeSpawnData();
 
     public:
 		
