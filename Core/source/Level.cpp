@@ -33,7 +33,6 @@ namespace bc
         std::string bgTile3 = "";
         std::string bgTile4 = "";
 
-
         switch (tileset)
         {
         case Tileset::Flesh:

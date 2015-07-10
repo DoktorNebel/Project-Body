@@ -54,8 +54,8 @@ namespace bc
             Spawner::spawn(this->entity->getSprite().getPosition(), "EnemyShoot1", modifiers, CollisionGroup::EnemyProjectiles);
         }
 
-        if (this->entity->health <= 0.0f || this->entity->getSprite().getPosition().x + 50 < se::Engine::getSettings().renderResolutionWidth / -2 || this->entity->getSprite().getPosition().x - 50 > se::Engine::getSettings().renderResolutionWidth / 2 ||
-            this->entity->getSprite().getPosition().y + 50 < se::Engine::getSettings().renderResolutionHeight / -2 || this->entity->getSprite().getPosition().y - 50 > se::Engine::getSettings().renderResolutionHeight / 2)
+        if (this->entity->health <= 0.0f || this->entity->getSprite().getPosition().x + 50.0f < (float)se::Engine::getSettings().renderResolutionWidth / -2.0f || this->entity->getSprite().getPosition().x - 50.0f > (float)se::Engine::getSettings().renderResolutionWidth / 2.0f ||
+            this->entity->getSprite().getPosition().y + 50.0f < (float)se::Engine::getSettings().renderResolutionHeight / -2.0f || this->entity->getSprite().getPosition().y - 50.0f > (float)se::Engine::getSettings().renderResolutionHeight / 2.0f)
         {
             se::Engine::getActiveCamera().addScreenshake(1.0f * this->entity->maxHealth / 20.0f, 0.05f * this->entity->maxHealth / 20.0f);
             int particleCount = (int)this->entity->maxHealth;

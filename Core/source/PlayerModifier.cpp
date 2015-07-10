@@ -9,6 +9,7 @@
 #include "MathFunctions.h"
 #include "Engine.h"
 #include "StickyShotModifier.h"
+#include "AnimationModifier.h"
 
 namespace bc
 {
@@ -79,9 +80,17 @@ namespace bc
 			this->stickyFireCounter = 0.0f;
 
             std::vector<IModifier*> modifiers;
-            modifiers.push_back(new ProjectileModifier(se::Vector2(rand() % 21 - 10, 700), 2.0f));
+            se::AnimatedSprite sprite;
+            sprite.addAnimation("Idle");
+            sprite.setSpeed("Idle", 0.1f);
+            sprite.addSprite("Idle", se::Content::getSprite("KlebSchuss1"));
+            sprite.addSprite("Idle", se::Content::getSprite("KlebSchuss2"));
+            sprite.addSprite("Idle", se::Content::getSprite("KlebSchuss3"));
+            sprite.addSprite("Idle", se::Content::getSprite("KlebSchuss4"));
+            modifiers.push_back(new AnimationModifier(sprite));
+            modifiers.push_back(new ProjectileModifier(se::Vector2(rand() % 21 - 10, 200), 2.0f));
             modifiers.push_back(new StickyShotModifier(this->entities));
-            Spawner::spawn(this->entity->getSprite().getPosition() + se::Vector2(rand() % 9 - 4, 16), "PlayerProjectile", modifiers, CollisionGroup::PlayerProjectiles);
+            Spawner::spawn(this->entity->getSprite().getPosition() + se::Vector2(rand() % 9 - 4, 16), "KlebSchuss1", modifiers, CollisionGroup::PlayerProjectiles);
         }
 
         if (this->entity->health <= 0.0f)
@@ -94,7 +103,7 @@ namespace bc
     void PlayerModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
         if (collisionGroup == CollisionGroup::LevelElements)
-            this->entity->getSprite().move(projectionVector * projectionScalar * (this->entity->getSprite().getPosition().x < otherEntity->getSprite().getPosition().x ? 1.0f : -1.0f));
+            this->entity->getSprite().move(projectionVector * projectionScalar * (this->entity->getSprite().getPosition().x < otherEntity->getSprite().getPosition().x ? -1.0f : 1.0f));
         otherEntity->health -= this->entity->maxHealth;
     }
 }
