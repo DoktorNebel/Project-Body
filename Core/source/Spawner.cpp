@@ -615,7 +615,7 @@ namespace bc
     void Spawner::spawnEnemy(se::Vector2 position, std::string enemyName, std::string movePatternName)
     {
         Spawn spawn;
-        spawn.collisionGroup = enemyName == "Booger" || enemyName == "Shooter" ? CollisionGroup::LevelElements : CollisionGroup::Enemies;
+        spawn.collisionGroup = enemyName == "Booger" || enemyName == "Shooter" ? CollisionGroup::ScrollingEnemies : CollisionGroup::Enemies;
         spawn.entity = Spawner::createEnemy(enemyName, movePatternName);
         spawn.position = position;
 

@@ -12,6 +12,19 @@ namespace se
     {
     private:
 
+        struct Image
+        {
+            int x;
+            int y;
+            int n;
+            unsigned char* data;
+            std::string spriteName;
+            se::Rectangle textureRect;
+            unsigned int texture;
+        };
+
+    private:
+
         static std::vector<std::string> spriteNames;
         static std::vector<Sprite> sprites;
         static std::vector<Polygon> hitboxes;

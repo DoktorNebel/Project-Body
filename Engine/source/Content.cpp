@@ -8,6 +8,7 @@
 #include "MathFunctions.h"
 #include <FreeType\ft2build.h>
 #include FT_FREETYPE_H
+#include <algorithm>
 
 namespace se
 {
@@ -26,9 +27,6 @@ namespace se
         float tolerance = angleTolerance * 0.0174532925f;
         bool resetAngle = true;
         se::Rectangle texRect = sprite.getTextureRect();
-
-		if (sprite.getTextureRect().left == 390)
-			int bla = 5;
 
         //left to right
         for (int y = (int)texRect.top; y < (int)texRect.bottom; ++y)
@@ -197,12 +195,12 @@ namespace se
                     hitboxPoints.push_back(lastPixel);
                 }
             }
-		}
+        }
 
-		if (lastPixel.x != -1.0f)
-		{
-			hitboxPoints.push_back(lastPixel);
-		}
+        if (lastPixel.x != -1.0f)
+        {
+            hitboxPoints.push_back(lastPixel);
+        }
 
         unsigned int size = hitboxPoints.size() - 1;
         for (unsigned int i = 0; i < size; ++i)
@@ -225,10 +223,10 @@ namespace se
         }
 
         for (unsigned int i = 0; i < hitboxPoints.size(); ++i)
-		{
-			hitboxPoints[i] -= se::Vector2(texRect.left + sprite.getWidth() / 2.0f, texRect.top + sprite.getHeight() / 2.0f);
-			hitboxPoints[i] *= se::Vector2(1.0f, -1.0f);
-		}
+        {
+            hitboxPoints[i] -= se::Vector2(texRect.left + sprite.getWidth() / 2.0f, texRect.top + sprite.getHeight() / 2.0f);
+            hitboxPoints[i] *= se::Vector2(1.0f, -1.0f);
+        }
 
         return hitboxPoints;
     }
@@ -237,7 +235,6 @@ namespace se
     void Content::loadTextures(std::vector<unsigned int>& ids, std::vector<Vector2>& sizes)
     {
         std::vector<std::string> texturePaths;
-        std::vector<std::string> spritemapPaths;
 
         //get filenames
         tinydir_dir dir;
@@ -256,103 +253,178 @@ namespace se
 
         tinydir_close(&dir);
 
-        tinydir_open_sorted(&dir, "../Content/Spritemaps");
 
-        for (unsigned int i = 0; i < dir.n_files; ++i)
-        {
-            tinydir_file file;
-            tinydir_readfile_n(&dir, &file, i);
 
-			if (!file.is_dir && strcmp(file.name, "Thumbs.db"))
-            {
-                spritemapPaths.push_back(file.path);
-            }
-        }
-
-        tinydir_close(&dir);
-
+        //generate spritesheets
+        std::vector<Image> images;
 
         for (unsigned int i = 0; i < texturePaths.size(); ++i)
-		{
-            //load texture
-            int x, y, n;
-            unsigned char* image = stbi_load(texturePaths[i].c_str(), &x, &y, &n, 4);
+        {
+            images.push_back(Image());
+            images.back().data = stbi_load(texturePaths[i].c_str(), &images.back().x, &images.back().y, &images.back().n, 4);
 
-            sizes.push_back(Vector2((float)x, (float)y));
-            ids.push_back(0);
-            glGenTextures(1, &ids[i]);
-            glBindTexture(GL_TEXTURE_2D, ids[i]);
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
-            glBindTexture(GL_TEXTURE_2D, 0);
+            char name[128];
+            sscanf(texturePaths[i].c_str(), "../Content/Textures/%[^.]", name);
+            images.back().spriteName = name;
+        }
 
-            int startSprite = Content::sprites.size();
+        std::sort(images.begin(), images.end(), [](const Image& left, const Image& right)
+        {
+            return left.y > right.y;
+        });
 
-            FILE* map = fopen(spritemapPaths[i].c_str(), "r");
-
-            //generate sprites in texture
-            char name[256];
-            int xPos, yPos, width, height;
-            while (fscanf(map, "%s = %d %d %d %d", name, &xPos, &yPos, &width, &height) != EOF)
+        ids.push_back(0);
+        glGenTextures(1, &ids.back());
+        std::vector<se::Rectangle> rectangles;
+        std::vector<se::Vector2> availablePositions;
+        availablePositions.push_back(se::Vector2(0, 0));
+        float width = 0;
+        float height = 0;
+        for (unsigned int i = 0; i < images.size(); ++i)
+        {
+            std::vector<se::Vector2>::iterator iter = availablePositions.begin();
+            while (true)
             {
-                Rectangle rect((float)yPos, (float)yPos + (float)height, (float)xPos, (float)xPos + (float)width);
-                Sprite sprite(ids[i], rect, Vector2(0, 0), (float)width, (float)height);
+                se::Rectangle rect(iter->y, iter->y + images[i].y, iter->x, iter->x + images[i].x);
 
-                Content::spriteNames.push_back(name);
-                Content::sprites.push_back(sprite);
-            }
-
-            fclose(map);
-
-            //look for existing hitboxes
-            std::vector<std::string> boxNames;
-            tinydir_open_sorted(&dir, "");
-
-            for (unsigned int j = 0; j < dir.n_files; ++j)
-            {
-                tinydir_file file;
-                tinydir_readfile_n(&dir, &file, j);
-
-                if (!file.is_dir && strcmp(file.name, "Thumbs.db"))
+                bool valid = true;
+                for (unsigned int j = 0; j < rectangles.size(); ++j)
                 {
-                    char name[128];
-                    sscanf(file.name, "%[^.]", name);
-                    boxNames.push_back(name);
-                }
-            }
-                
-            tinydir_close(&dir);
-
-            //generate hitboxes
-            for (unsigned int j = startSprite; j < Content::sprites.size(); ++j)
-            {
-                if (std::find(boxNames.begin(), boxNames.end(), Content::spriteNames[j]) != boxNames.end())
-                {
-                    std::vector<se::Vector2> points;
-
-                    std::string path = "../Content/Hitboxes/" + Content::spriteNames[j] + ".txt";
-                    FILE* file = fopen(path.c_str(), "r");
-
-                    float boxX, boxY;
-                    while (scanf("%f %f", &boxX, &boxY))
+                    if (rectangles[j].overlap(rect) || rect.right > 4096.0f || rect.bottom > 4096.0f)
                     {
-                        points.push_back(se::Vector2(boxX, boxY));
+                        valid = false;
+                        break;
                     }
+                }
 
-                    fclose(file);
-
-                    Content::hitboxes.push_back(Polygon(points));
+                if (valid)
+                {
+                    iter = availablePositions.erase(iter);
+                    availablePositions.push_back(se::Vector2(rect.right + 1.0f, rect.top));
+                    availablePositions.push_back(se::Vector2(rect.left, rect.bottom + 1.0f));
+                    rectangles.push_back(rect);
+                    images[i].textureRect = rect;
+                    images[i].texture = ids.back();
+                    if (rect.right > width)
+                        width = rect.right;
+                    if (rect.bottom > height)
+                        height = rect.bottom;
+                    break;
                 }
                 else
                 {
-					std::vector<se::Vector2> bla = Content::generateHitbox((se::Color*)image, x, y, Content::sprites[j], 0, 40.0f);
-                    Content::hitboxes.push_back(Polygon(bla));
+                    ++iter;
+                    if (iter == availablePositions.end())
+                    {
+                        sizes.push_back(se::Vector2(width, height));
+                        ids.push_back(0);
+                        glGenTextures(1, &ids.back());
+                        rectangles.clear();
+                        availablePositions.clear();
+                        availablePositions.push_back(se::Vector2(0, 0));
+                        break;
+                    }
                 }
             }
 
-            stbi_image_free(image);
+
+            std::sort(availablePositions.begin(), availablePositions.end(), [](const se::Vector2& left, const se::Vector2& right)
+            {
+                return left.x < right.x;
+            });
         }
+
+        sizes.push_back(se::Vector2(width, height));
+
+        for (unsigned int i = 0; i < sizes.size(); ++i)
+        {
+            int texWidth = 2;
+            while (texWidth < sizes[i].x)
+                texWidth *= 2;
+
+            int texHeight = 2;
+            while (texHeight < sizes[i].y)
+                texHeight *= 2;
+
+            sizes[i] = se::Vector2(texWidth, texHeight);
+
+            glBindTexture(GL_TEXTURE_2D, ids[i]);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texWidth, texHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
+
+        unsigned int currentId = 0;
+        for (unsigned int i = 0; i < images.size(); ++i)
+        {
+            if (images[i].texture != currentId)
+            {
+                currentId = images[i].texture;
+                glBindTexture(GL_TEXTURE_2D, currentId);
+            }
+            Color color = *(Color*)images[i].data;
+            int bla = glGetError();
+            glTexSubImage2D(GL_TEXTURE_2D, 0, (int)images[i].textureRect.left, (int)images[i].textureRect.top, images[i].x, images[i].y, GL_RGBA, GL_UNSIGNED_BYTE, images[i].data);
+            bla = glGetError();
+            int fuck = 0;
+        }
+        glBindTexture(GL_TEXTURE_2D, 0);
+
+     //       Rectangle rect((float)yPos, (float)yPos + (float)height, (float)xPos, (float)xPos + (float)width);
+     //       Sprite sprite(ids[i], rect, Vector2(0, 0), (float)width, (float)height);
+     //       
+     //       Content::spriteNames.push_back(name);
+     //       Content::sprites.push_back(sprite);
+
+
+     //       //look for existing hitboxes
+     //       std::vector<std::string> boxNames;
+     //       tinydir_open_sorted(&dir, "");
+
+     //       for (unsigned int j = 0; j < dir.n_files; ++j)
+     //       {
+     //           tinydir_file file;
+     //           tinydir_readfile_n(&dir, &file, j);
+
+     //           if (!file.is_dir && strcmp(file.name, "Thumbs.db"))
+     //           {
+     //               char name[128];
+     //               sscanf(file.name, "%[^.]", name);
+     //               boxNames.push_back(name);
+     //           }
+     //       }
+     //           
+     //       tinydir_close(&dir);
+
+     //       //generate hitboxes
+     //       for (unsigned int j = startSprite; j < Content::sprites.size(); ++j)
+     //       {
+     //           if (std::find(boxNames.begin(), boxNames.end(), Content::spriteNames[j]) != boxNames.end())
+     //           {
+     //               std::vector<se::Vector2> points;
+     //       
+     //               std::string path = "../Content/Hitboxes/" + Content::spriteNames[j] + ".txt";
+     //               FILE* file = fopen(path.c_str(), "r");
+     //       
+     //               float boxX, boxY;
+     //               while (scanf("%f %f", &boxX, &boxY))
+     //               {
+     //                   points.push_back(se::Vector2(boxX, boxY));
+     //               }
+     //       
+     //               fclose(file);
+     //       
+     //               Content::hitboxes.push_back(Polygon(points));
+     //           }
+     //           else
+     //           {
+					//std::vector<se::Vector2> bla = Content::generateHitbox((se::Color*)image, x, y, Content::sprites[j], 0, 40.0f);
+     //               Content::hitboxes.push_back(Polygon(bla));
+     //           }
+     //       }
     }
 
 

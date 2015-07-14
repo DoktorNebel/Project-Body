@@ -147,6 +147,8 @@ namespace be
             pos += se::Vector2(xRem < 32 ? -xRem : 64 - xRem, yRem < 32 ? -yRem : 64 - yRem);
             if (this->tileSprite.getWidth() == 128.0f)
                 pos += se::Vector2(32, -32);
+            pos.x = floor(pos.x);
+            pos.y = floor(pos.y);
             this->tileSprite.setPosition(pos);
 
             if (se::Input::actionPressed(se::InputAction::MenuClick))

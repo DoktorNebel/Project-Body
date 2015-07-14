@@ -41,17 +41,17 @@ int main()
     se::Input::bindKeyboardKeyAction(bg::InputAction::Medicine2, sf::Keyboard::Num2);
     se::Input::bindKeyboardKeyAction(bg::InputAction::Medicine3, sf::Keyboard::Num3);
 
-	se::Input::bindJoystickAxisAction(se::InputAction::MenuLeft, 0, sf::Joystick::PovX, false, true);
-	se::Input::bindJoystickAxisAction(se::InputAction::MenuRight, 0, sf::Joystick::PovX, true, true);
-	se::Input::bindJoystickAxisAction(se::InputAction::MenuUp, 0, sf::Joystick::PovY, false, true);
-	se::Input::bindJoystickAxisAction(se::InputAction::MenuDown, 0, sf::Joystick::PovY, true, true);
-	se::Input::bindJoystickButtonAction(se::InputAction::MenuConfirm, 0, 0, true);
-	se::Input::bindJoystickAxisAction(bg::InputAction::Left, 0, sf::Joystick::X, false, true);
-	se::Input::bindJoystickAxisAction(bg::InputAction::Right, 0, sf::Joystick::X, true, true);
-	se::Input::bindJoystickAxisAction(bg::InputAction::Up, 0, sf::Joystick::Y, false, true);
-	se::Input::bindJoystickAxisAction(bg::InputAction::Down, 0, sf::Joystick::Y, true, true);
-	se::Input::bindJoystickButtonAction(bg::InputAction::Shoot, 0, 0, true);
-	se::Input::bindJoystickAxisAction(bg::InputAction::StickyShot, 0, sf::Joystick::Z, true, true);
+	//se::Input::bindJoystickAxisAction(se::InputAction::MenuLeft, 0, sf::Joystick::PovX, false, true);
+	//se::Input::bindJoystickAxisAction(se::InputAction::MenuRight, 0, sf::Joystick::PovX, true, true);
+	//se::Input::bindJoystickAxisAction(se::InputAction::MenuUp, 0, sf::Joystick::PovY, false, true);
+	//se::Input::bindJoystickAxisAction(se::InputAction::MenuDown, 0, sf::Joystick::PovY, true, true);
+	//se::Input::bindJoystickButtonAction(se::InputAction::MenuConfirm, 0, 0, true);
+	//se::Input::bindJoystickAxisAction(bg::InputAction::Left, 0, sf::Joystick::X, false, true);
+	//se::Input::bindJoystickAxisAction(bg::InputAction::Right, 0, sf::Joystick::X, true, true);
+	//se::Input::bindJoystickAxisAction(bg::InputAction::Up, 0, sf::Joystick::Y, false, true);
+	//se::Input::bindJoystickAxisAction(bg::InputAction::Down, 0, sf::Joystick::Y, true, true);
+	//se::Input::bindJoystickButtonAction(bg::InputAction::Shoot, 0, 0, true);
+	//se::Input::bindJoystickAxisAction(bg::InputAction::StickyShot, 0, sf::Joystick::Z, true, true);
 
     se::Engine::run();
 

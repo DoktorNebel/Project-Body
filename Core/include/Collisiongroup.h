@@ -8,6 +8,7 @@ namespace bc
         {
             Players,
             Enemies,
+            ScrollingEnemies,
             PlayerProjectiles,
             EnemyProjectiles,
             Items,

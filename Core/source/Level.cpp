@@ -98,16 +98,19 @@ namespace bc
     {
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::EnemyProjectiles));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::Enemies));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::ScrollingEnemies));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::Items));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::LevelElements));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::PlayerProjectiles, CollisionGroup::LevelElements));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Enemies, CollisionGroup::PlayerProjectiles));
-        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::LevelElements, CollisionGroup::LevelElements));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::ScrollingEnemies, CollisionGroup::ScrollingEnemies));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::ScrollingEnemies, CollisionGroup::PlayerProjectiles));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::ScrollingEnemies, CollisionGroup::LevelElements));
 
         se::Engine::setActiveCamera(this->camera);
 
-        this->entities.resize(7);
-        this->hitboxes.resize(7);
+        this->entities.resize(8);
+        this->hitboxes.resize(8);
 
         //spawn player
         std::vector<IModifier*> modifiers;
@@ -153,17 +156,20 @@ namespace bc
     {
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::EnemyProjectiles));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::Enemies));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::ScrollingEnemies));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::Items));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::LevelElements));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::PlayerProjectiles, CollisionGroup::LevelElements));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Enemies, CollisionGroup::PlayerProjectiles));
-        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::LevelElements, CollisionGroup::LevelElements));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::ScrollingEnemies, CollisionGroup::ScrollingEnemies));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::ScrollingEnemies, CollisionGroup::PlayerProjectiles));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::ScrollingEnemies, CollisionGroup::LevelElements));
         
         se::Engine::setActiveCamera(this->camera);
 		this->camera.setZoom(0.5f);
 
-        this->entities.resize(7);
-        this->hitboxes.resize(7);
+        this->entities.resize(8);
+        this->hitboxes.resize(8);
 
         //spawn player
         std::vector<IModifier*> modifiers;
@@ -323,6 +329,10 @@ namespace bc
         for (unsigned int i = 0; i < this->entities[CollisionGroup::LevelElements].size(); ++i)
         {
             this->entities[CollisionGroup::LevelElements][i].getSprite().move(se::Vector2(0.0f, -currentScrollSpeed * elapsedTime));
+        }
+        for (unsigned int i = 0; i < this->entities[CollisionGroup::ScrollingEnemies].size(); ++i)
+        {
+            this->entities[CollisionGroup::ScrollingEnemies][i].getSprite().move(se::Vector2(0.0f, -currentScrollSpeed * elapsedTime));
         }
 
         this->camera.update(elapsedTime);

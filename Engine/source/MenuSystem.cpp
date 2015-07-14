@@ -15,14 +15,14 @@ namespace se
 
     void MenuSystem::update(float elapsedTime)
     {
-        if (this->visible)
+        if (this->visible && this->currentMenu)
             this->currentMenu->update(elapsedTime);
     }
 
 
     void MenuSystem::draw()
     {
-        if (this->visible)
+        if (this->visible && this->currentMenu)
             this->currentMenu->draw();
     }
 
