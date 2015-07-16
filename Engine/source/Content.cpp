@@ -19,19 +19,18 @@ namespace se
     std::vector<std::string> Content::fontNames = std::vector<std::string>();
 
 
-	std::vector<se::Vector2> Content::generateHitbox(se::Color* image, int imageWidth, int imageHeight, se::Sprite& sprite, char alphaTolerance, float angleTolerance)
+	std::vector<se::Vector2> Content::generateHitbox(se::Color* image, int imageWidth, int imageHeight, char alphaTolerance, float angleTolerance)
     {
         std::vector<se::Vector2> hitboxPoints;
 		se::Vector2 lastPixel = se::Vector2(-1.0f, -1.0f);
         float angle;
         float tolerance = angleTolerance * 0.0174532925f;
         bool resetAngle = true;
-        se::Rectangle texRect = sprite.getTextureRect();
 
         //left to right
-        for (int y = (int)texRect.top; y < (int)texRect.bottom; ++y)
+        for (int y = 0; y < imageHeight; ++y)
         {
-            for (int x = (int)texRect.left; x < (int)texRect.right; ++x)
+            for (int x = 0; x < imageWidth; ++x)
             {
                 if (image[y * imageWidth + x].a > alphaTolerance)
                 {
@@ -64,7 +63,7 @@ namespace se
 
                     break;
                 }
-				else if (x == texRect.right - 1 && lastPixel.x != -1.0f)
+				else if (x == imageWidth - 1 && lastPixel.x != -1.0f)
                 {
                     hitboxPoints.push_back(lastPixel);
                 }
@@ -78,9 +77,9 @@ namespace se
 		lastPixel = se::Vector2(-1.0f, -1.0f);
 
         //bottom to top
-        for (int x = (int)hitboxPoints.back().x + 1; x < (int)texRect.right; ++x)
+        for (int x = (int)hitboxPoints.back().x + 1; x < imageWidth; ++x)
         {
-            for (int y = (int)texRect.bottom; y > (int)texRect.top; --y)
+            for (int y = imageHeight - 1; y > 0; --y)
             {
 				if (image[y * imageWidth + x].a > alphaTolerance)
                 {
@@ -106,7 +105,7 @@ namespace se
 
                     break;
                 }
-				else if (y == (int)texRect.top + 1 && lastPixel.x != -1.0f)
+				else if (y == 0 && lastPixel.x != -1.0f)
                 {
                     hitboxPoints.push_back(lastPixel);
                 }
@@ -120,9 +119,9 @@ namespace se
 		lastPixel = se::Vector2(-1.0f, -1.0f);
 
         //right to left
-        for (int y = (int)hitboxPoints.back().y - 1; y > (int)texRect.top; --y)
+        for (int y = (int)hitboxPoints.back().y - 1; y > 0; --y)
         {
-            for (int x = (int)texRect.right; x > (int)texRect.left; --x)
+            for (int x = imageWidth - 1; x > 0; --x)
             {
 				if (image[y * imageWidth + x].a > alphaTolerance)
                 {
@@ -148,7 +147,7 @@ namespace se
 
                     break;
                 }
-				else if (x == (int)texRect.left + 1 && lastPixel.x != -1.0f)
+				else if (x == 0 && lastPixel.x != -1.0f)
                 {
                     hitboxPoints.push_back(lastPixel);
                 }
@@ -164,7 +163,7 @@ namespace se
         //top to bottom
         for (int x = (int)hitboxPoints.back().x - 1; x > (int)hitboxPoints[0].x; --x)
         {
-            for (int y = (int)texRect.top; y < (int)texRect.bottom; ++y)
+            for (int y = 0; y < imageHeight; ++y)
             {
 				if (image[y * imageWidth + x].a > alphaTolerance)
                 {
@@ -190,7 +189,7 @@ namespace se
 
                     break;
                 }
-				else if (y == (int)texRect.bottom - 1 && lastPixel.x != -1.0f)
+				else if (y == imageHeight - 1 && lastPixel.x != -1.0f)
                 {
                     hitboxPoints.push_back(lastPixel);
                 }
@@ -224,11 +223,63 @@ namespace se
 
         for (unsigned int i = 0; i < hitboxPoints.size(); ++i)
         {
-            hitboxPoints[i] -= se::Vector2(texRect.left + sprite.getWidth() / 2.0f, texRect.top + sprite.getHeight() / 2.0f);
+            hitboxPoints[i] -= se::Vector2(imageWidth / 2.0f, imageHeight / 2.0f);
             hitboxPoints[i] *= se::Vector2(1.0f, -1.0f);
         }
 
         return hitboxPoints;
+    }
+
+
+    void Content::generateSpriteBorder(se::Color* image, int startX, int startY, int imageWidth, int imageHeight)
+    {
+        //top
+        for (int x = 0; x < imageWidth; ++x)
+        {
+            int textureX = x + startX + 1;
+
+            se::Color color = image[x];
+            glTexSubImage2D(GL_TEXTURE_2D, 0, textureX, startY + 1, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+            glTexSubImage2D(GL_TEXTURE_2D, 0, textureX, startY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+            glTexSubImage2D(GL_TEXTURE_2D, 0, textureX, startY - 1, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+            glTexSubImage2D(GL_TEXTURE_2D, 0, textureX, startY - 2, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+        }
+
+        //right
+        for (int y = 0; y < imageHeight; ++y)
+        {
+            int textureY = y + startY + 1;
+
+            se::Color color = image[y * imageWidth + imageWidth - 1];
+            glTexSubImage2D(GL_TEXTURE_2D, 0, startX + imageWidth + 3, textureY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+            glTexSubImage2D(GL_TEXTURE_2D, 0, startX + imageWidth + 2, textureY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+            glTexSubImage2D(GL_TEXTURE_2D, 0, startX + imageWidth + 1, textureY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+            glTexSubImage2D(GL_TEXTURE_2D, 0, startX + imageWidth, textureY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+        }
+
+        //bottom
+        for (int x = imageWidth - 1; x > 0; --x)
+        {
+            int textureX = x + startX + 1;
+
+            se::Color color = image[(imageHeight - 1) * imageWidth + x];
+            glTexSubImage2D(GL_TEXTURE_2D, 0, textureX, startY + imageHeight + 3, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+            glTexSubImage2D(GL_TEXTURE_2D, 0, textureX, startY + imageHeight + 2, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+            glTexSubImage2D(GL_TEXTURE_2D, 0, textureX, startY + imageHeight + 1, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+            glTexSubImage2D(GL_TEXTURE_2D, 0, textureX, startY + imageHeight, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+        }
+
+        //left
+        for (int y = imageHeight - 1; y > 0; --y)
+        {
+            int textureY = y + startY + 1;
+
+            se::Color color = image[y * imageWidth];
+            glTexSubImage2D(GL_TEXTURE_2D, 0, startX, textureY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+            glTexSubImage2D(GL_TEXTURE_2D, 0, startX + 1, textureY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+            glTexSubImage2D(GL_TEXTURE_2D, 0, startX - 1, textureY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+            glTexSubImage2D(GL_TEXTURE_2D, 0, startX - 2, textureY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+        }
     }
 
 
@@ -258,6 +309,7 @@ namespace se
         //generate spritesheets
         std::vector<Image> images;
 
+        //load sprites
         for (unsigned int i = 0; i < texturePaths.size(); ++i)
         {
             images.push_back(Image());
@@ -268,16 +320,18 @@ namespace se
             images.back().spriteName = name;
         }
 
+        //sort sprites by height
         std::sort(images.begin(), images.end(), [](const Image& left, const Image& right)
         {
             return left.y > right.y;
         });
 
+        //pack sprites
         ids.push_back(0);
         glGenTextures(1, &ids.back());
         std::vector<se::Rectangle> rectangles;
         std::vector<se::Vector2> availablePositions;
-        availablePositions.push_back(se::Vector2(0, 0));
+        availablePositions.push_back(se::Vector2(2, -2));
         float width = 0;
         float height = 0;
         for (unsigned int i = 0; i < images.size(); ++i)
@@ -285,30 +339,33 @@ namespace se
             std::vector<se::Vector2>::iterator iter = availablePositions.begin();
             while (true)
             {
-                se::Rectangle rect(iter->y, iter->y + images[i].y, iter->x, iter->x + images[i].x);
+                se::Rectangle paddedRect(iter->y, iter->y - images[i].y - 6.0f, iter->x, iter->x + images[i].x + 6.0f);
 
+                //check if sprite overlaps or doesn't fit anymore
                 bool valid = true;
                 for (unsigned int j = 0; j < rectangles.size(); ++j)
                 {
-                    if (rectangles[j].overlap(rect) || rect.right > 4096.0f || rect.bottom > 4096.0f)
+                    if (rectangles[j].overlap(paddedRect) || paddedRect.right > 4096.0f || paddedRect.bottom < -4096.0f)
                     {
                         valid = false;
                         break;
                     }
                 }
 
+                //place sprite or go to next position
                 if (valid)
                 {
-                    iter = availablePositions.erase(iter);
-                    availablePositions.push_back(se::Vector2(rect.right + 1.0f, rect.top));
-                    availablePositions.push_back(se::Vector2(rect.left, rect.bottom + 1.0f));
-                    rectangles.push_back(rect);
-                    images[i].textureRect = rect;
+                    rectangles.push_back(paddedRect);
+                    images[i].textureRect = se::Rectangle(iter->y, iter->y - images[i].y, iter->x, iter->x + images[i].x);
                     images[i].texture = ids.back();
-                    if (rect.right > width)
-                        width = rect.right;
-                    if (rect.bottom > height)
-                        height = rect.bottom;
+                    if (paddedRect.right > width)
+                        width = paddedRect.right;
+                    if (paddedRect.bottom < height)
+                        height = paddedRect.bottom;
+
+                    iter = availablePositions.erase(iter);
+                    availablePositions.push_back(se::Vector2(paddedRect.right + 1.0f, paddedRect.top));
+                    availablePositions.push_back(se::Vector2(paddedRect.left, paddedRect.bottom - 1.0f));
                     break;
                 }
                 else
@@ -316,7 +373,7 @@ namespace se
                     ++iter;
                     if (iter == availablePositions.end())
                     {
-                        sizes.push_back(se::Vector2(width, height));
+                        sizes.push_back(se::Vector2(width, -height));
                         ids.push_back(0);
                         glGenTextures(1, &ids.back());
                         rectangles.clear();
@@ -327,15 +384,16 @@ namespace se
                 }
             }
 
-
-            std::sort(availablePositions.begin(), availablePositions.end(), [](const se::Vector2& left, const se::Vector2& right)
+            
+            std::sort(availablePositions.begin(), availablePositions.end(), [width, height](const se::Vector2& left, const se::Vector2& right)
             {
-                return left.x < right.x;
+                return left.x < right.x && -height - width < 0;
             });
         }
 
-        sizes.push_back(se::Vector2(width, height));
+        sizes.push_back(se::Vector2(width, -height));
 
+        //generate gl textures
         for (unsigned int i = 0; i < sizes.size(); ++i)
         {
             int texWidth = 2;
@@ -357,6 +415,7 @@ namespace se
             glBindTexture(GL_TEXTURE_2D, 0);
         }
 
+        //write spritedata to textures
         unsigned int currentId = 0;
         for (unsigned int i = 0; i < images.size(); ++i)
         {
@@ -367,64 +426,24 @@ namespace se
             }
             Color color = *(Color*)images[i].data;
             int bla = glGetError();
-            glTexSubImage2D(GL_TEXTURE_2D, 0, (int)images[i].textureRect.left, (int)images[i].textureRect.top, images[i].x, images[i].y, GL_RGBA, GL_UNSIGNED_BYTE, images[i].data);
-            bla = glGetError();
-            int fuck = 0;
+            glTexSubImage2D(GL_TEXTURE_2D, 0, (int)images[i].textureRect.left, -(int)images[i].textureRect.top, images[i].x, images[i].y, GL_RGBA, GL_UNSIGNED_BYTE, images[i].data);
+
+            Content::generateSpriteBorder((Color*)images[i].data, (int)(images[i].textureRect.left - 1.0f), -(int)(images[i].textureRect.top + 1.0f), images[i].x, images[i].y);
+            
+            Rectangle rect(-images[i].textureRect.top, -images[i].textureRect.bottom, images[i].textureRect.left, images[i].textureRect.right);
+            Sprite sprite(images[i].texture, rect, Vector2(0, 0), (float)images[i].x, (float)images[i].y);
+
+            Content::spriteNames.push_back(images[i].spriteName);
+            Content::sprites.push_back(sprite);
+
+            //generate hitbox
+            std::vector<se::Vector2> points = Content::generateHitbox((se::Color*)images[i].data, images[i].x, images[i].y, 0, 40.0f);
+            Content::hitboxes.push_back(Polygon(points));
+
+            stbi_image_free(images[i].data);
         }
         glBindTexture(GL_TEXTURE_2D, 0);
 
-     //       Rectangle rect((float)yPos, (float)yPos + (float)height, (float)xPos, (float)xPos + (float)width);
-     //       Sprite sprite(ids[i], rect, Vector2(0, 0), (float)width, (float)height);
-     //       
-     //       Content::spriteNames.push_back(name);
-     //       Content::sprites.push_back(sprite);
-
-
-     //       //look for existing hitboxes
-     //       std::vector<std::string> boxNames;
-     //       tinydir_open_sorted(&dir, "");
-
-     //       for (unsigned int j = 0; j < dir.n_files; ++j)
-     //       {
-     //           tinydir_file file;
-     //           tinydir_readfile_n(&dir, &file, j);
-
-     //           if (!file.is_dir && strcmp(file.name, "Thumbs.db"))
-     //           {
-     //               char name[128];
-     //               sscanf(file.name, "%[^.]", name);
-     //               boxNames.push_back(name);
-     //           }
-     //       }
-     //           
-     //       tinydir_close(&dir);
-
-     //       //generate hitboxes
-     //       for (unsigned int j = startSprite; j < Content::sprites.size(); ++j)
-     //       {
-     //           if (std::find(boxNames.begin(), boxNames.end(), Content::spriteNames[j]) != boxNames.end())
-     //           {
-     //               std::vector<se::Vector2> points;
-     //       
-     //               std::string path = "../Content/Hitboxes/" + Content::spriteNames[j] + ".txt";
-     //               FILE* file = fopen(path.c_str(), "r");
-     //       
-     //               float boxX, boxY;
-     //               while (scanf("%f %f", &boxX, &boxY))
-     //               {
-     //                   points.push_back(se::Vector2(boxX, boxY));
-     //               }
-     //       
-     //               fclose(file);
-     //       
-     //               Content::hitboxes.push_back(Polygon(points));
-     //           }
-     //           else
-     //           {
-					//std::vector<se::Vector2> bla = Content::generateHitbox((se::Color*)image, x, y, Content::sprites[j], 0, 40.0f);
-     //               Content::hitboxes.push_back(Polygon(bla));
-     //           }
-     //       }
     }
 
 

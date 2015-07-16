@@ -38,7 +38,8 @@ namespace se
 
     private:
 
-        static std::vector<se::Vector2> generateHitbox(se::Color* image, int imageWidth, int imageHeight, se::Sprite& sprite, char alphaTolerance, float angleTolerance);
+        static std::vector<se::Vector2> generateHitbox(se::Color* image, int imageWidth, int imageHeight, char alphaTolerance, float angleTolerance);
+        static void generateSpriteBorder(se::Color* image, int startX, int startY, int imageWidth, int imageHeight);
 
     public:
 
