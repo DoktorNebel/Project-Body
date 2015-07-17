@@ -233,12 +233,13 @@ namespace se
 
     void Content::generateSpriteBorder(se::Color* image, int startX, int startY, int imageWidth, int imageHeight)
     {
+        se::Color color;
         //top
         for (int x = 0; x < imageWidth; ++x)
         {
             int textureX = x + startX + 1;
 
-            se::Color color = image[x];
+            color = image[x];
             glTexSubImage2D(GL_TEXTURE_2D, 0, textureX, startY + 1, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
             glTexSubImage2D(GL_TEXTURE_2D, 0, textureX, startY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
             glTexSubImage2D(GL_TEXTURE_2D, 0, textureX, startY - 1, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
@@ -250,7 +251,7 @@ namespace se
         {
             int textureY = y + startY + 1;
 
-            se::Color color = image[y * imageWidth + imageWidth - 1];
+            color = image[y * imageWidth + imageWidth - 1];
             glTexSubImage2D(GL_TEXTURE_2D, 0, startX + imageWidth + 3, textureY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
             glTexSubImage2D(GL_TEXTURE_2D, 0, startX + imageWidth + 2, textureY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
             glTexSubImage2D(GL_TEXTURE_2D, 0, startX + imageWidth + 1, textureY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
@@ -262,7 +263,7 @@ namespace se
         {
             int textureX = x + startX + 1;
 
-            se::Color color = image[(imageHeight - 1) * imageWidth + x];
+            color = image[(imageHeight - 1) * imageWidth + x];
             glTexSubImage2D(GL_TEXTURE_2D, 0, textureX, startY + imageHeight + 3, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
             glTexSubImage2D(GL_TEXTURE_2D, 0, textureX, startY + imageHeight + 2, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
             glTexSubImage2D(GL_TEXTURE_2D, 0, textureX, startY + imageHeight + 1, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
@@ -274,12 +275,25 @@ namespace se
         {
             int textureY = y + startY + 1;
 
-            se::Color color = image[y * imageWidth];
+            color = image[y * imageWidth];
             glTexSubImage2D(GL_TEXTURE_2D, 0, startX, textureY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
             glTexSubImage2D(GL_TEXTURE_2D, 0, startX + 1, textureY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
             glTexSubImage2D(GL_TEXTURE_2D, 0, startX - 1, textureY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
             glTexSubImage2D(GL_TEXTURE_2D, 0, startX - 2, textureY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
         }
+
+        //corners
+        color = image[0];
+        glTexSubImage2D(GL_TEXTURE_2D, 0, startX, startY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+
+        color = image[imageWidth - 1];
+        glTexSubImage2D(GL_TEXTURE_2D, 0, startX + imageWidth + 1, startY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+
+        color = image[(imageHeight - 1) * imageWidth];
+        glTexSubImage2D(GL_TEXTURE_2D, 0, startX, startY + imageHeight + 1, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+
+        color = image[imageHeight * imageWidth - 1];
+        glTexSubImage2D(GL_TEXTURE_2D, 0, startX + imageWidth + 1, startY + imageHeight + 1, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
     }
 
 
@@ -356,7 +370,7 @@ namespace se
                 if (valid)
                 {
                     rectangles.push_back(paddedRect);
-                    images[i].textureRect = se::Rectangle(iter->y, iter->y - images[i].y, iter->x, iter->x + images[i].x);
+                    images[i].textureRect = se::Rectangle(iter->y + 0.5f, iter->y - images[i].y - 0.5f, iter->x - 0.5f, iter->x + images[i].x + 0.5f);
                     images[i].texture = ids.back();
                     if (paddedRect.right > width)
                         width = paddedRect.right;
@@ -431,7 +445,7 @@ namespace se
             Content::generateSpriteBorder((Color*)images[i].data, (int)(images[i].textureRect.left - 1.0f), -(int)(images[i].textureRect.top + 1.0f), images[i].x, images[i].y);
             
             Rectangle rect(-images[i].textureRect.top, -images[i].textureRect.bottom, images[i].textureRect.left, images[i].textureRect.right);
-            Sprite sprite(images[i].texture, rect, Vector2(0, 0), (float)images[i].x, (float)images[i].y);
+            Sprite sprite(images[i].texture, rect, Vector2(0, 0), (float)images[i].x + 1.0f, (float)images[i].y + 1.0f);
 
             Content::spriteNames.push_back(images[i].spriteName);
             Content::sprites.push_back(sprite);

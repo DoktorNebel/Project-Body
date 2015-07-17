@@ -88,7 +88,7 @@ namespace bc
 
             this->backgroundSprites[3].push_back(se::Content::getSprite(bgTile4));
             this->backgroundSprites[3].back().setScale(se::Vector2(3.0f, 3.0f));
-            this->backgroundSprites[3].back().setPosition(se::Vector2(0.0f, i * 511 * this->backgroundSprites[3].back().getScale().y));
+            this->backgroundSprites[3].back().setPosition(se::Vector2(0.0f, i * 512 * this->backgroundSprites[3].back().getScale().y));
             this->backgroundSprites[3].back().setDepth(0.8f);
         }
     }
