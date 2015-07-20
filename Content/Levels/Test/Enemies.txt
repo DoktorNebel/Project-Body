@@ -1,4 +1,4 @@
-Virus_Golden Down_Straight 0.0 0 400
+Virus_DropNormal Down_Straight 0.0 0 400
 Virus Down_Straight 0.1 100 400
 Virus Down_Straight 0.1 65 400
 Virus Down_Straight 0.3 -31 400
@@ -31,7 +31,6 @@ Bug Down_Wait 10 0 400
 Booger None 15 0 400
 Booger None 15.3 200 400
 Booger None 15.5 -100 400
-Shooter None 15.0 360 400
 Little_Bug Seek_Player_Delayed 20.0 0 400
 Little_Bug Seek_Player_Delayed 20.5 100 400
 Little_Bug Seek_Player_Delayed 20.7 55 400

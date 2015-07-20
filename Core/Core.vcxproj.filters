@@ -108,6 +108,18 @@
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\Tilesets.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\PlayerShootingModifier.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\NormalShootingModifier.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SplitShootingModifier.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\CurvyShootingModifier.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Entity.cpp">
@@ -189,6 +201,18 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="source\WormElementModifier.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\PlayerShootingModifier.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\NormalShootingModifier.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\SplitShootingModifier.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\CurvyShootingModifier.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

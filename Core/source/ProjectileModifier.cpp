@@ -37,7 +37,8 @@ namespace bc
 
     void ProjectileModifier::onUpdate(float elapsedTime)
     {
-        this->entity->getSprite().setRotation(atan2(this->direction.x, this->direction.y) * -57.2957795f);
+        if (this->speed != 0.0f)
+            this->entity->getSprite().setRotation(atan2(this->direction.x, this->direction.y) * -57.2957795f);
         this->entity->getSprite().move(this->direction * this->speed * elapsedTime);
         this->lifeTime -= elapsedTime;
         if (this->lifeTime <= 0.0f)

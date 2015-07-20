@@ -10,20 +10,10 @@ namespace bc
     private:
 
         float speed;
-        float fireRate;
-		float fireCounter;
-		float stickyFireRate;
-		float stickyFireCounter;
-        std::vector<std::vector<Entity>>* entities;
 
     public:
 
-        std::vector<float> shootingDirections;
-        std::vector<float> backShootingDirections;
-
-    public:
-
-        PlayerModifier(std::vector<std::vector<Entity>>* entities);
+        PlayerModifier();
         ~PlayerModifier();
 
     public:

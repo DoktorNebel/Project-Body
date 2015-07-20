@@ -12,9 +12,12 @@ namespace bc
         {
             enum Type
             {
-                Spreadshot,
-                Backshot,
-                DoubleScore
+                Upgrade,
+                Normal,
+                Split,
+                Curvy,
+                Homing,
+                Laser
             };
         };
 

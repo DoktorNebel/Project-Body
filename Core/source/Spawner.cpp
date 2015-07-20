@@ -54,9 +54,15 @@ namespace bc
         }
 
         bool golden = false;
-        if ((pos = name.find("_Golden")) != std::string::npos)
+        ItemModifier::Effect::Type dropType;
+        if ((pos = name.find("_Drop")) != std::string::npos)
         {
             golden = true;
+            std::string drop = name.substr(pos, name.size());
+            if (drop == "_DropNormal")
+                dropType = ItemModifier::Effect::Normal;
+            else if (drop == "_DropSplit")
+                dropType = ItemModifier::Effect::Split;
             name = name.substr(0, pos);
         }
 
@@ -204,7 +210,10 @@ namespace bc
         }
 
         if (golden)
+        {
             ((EnemyModifier*)modifiers[0])->golden = true;
+            ((EnemyModifier*)modifiers[0])->dropType = dropType;
+        }
 
         IModifier* movement = 0;
         if (movementPattern == "Seek_Player")

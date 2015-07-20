@@ -8,6 +8,8 @@
 #include "Input.h"
 #include "InputActions.h"
 #include "GameData.h"
+#include "NormalShootingModifier.h"
+#include "CurvyShootingModifier.h"
 
 namespace bc
 {
@@ -114,7 +116,10 @@ namespace bc
 
         //spawn player
         std::vector<IModifier*> modifiers;
-        modifiers.push_back(new PlayerModifier(&this->entities));
+        modifiers.push_back(new PlayerModifier());
+        PlayerShootingModifier* shooting = new NormalShootingModifier(1);
+        shooting->setEntities(&this->entities);
+        modifiers.push_back(shooting);
         Entity player(se::Content::getSprite("TestPlayer"), modifiers);
         player.hitbox = se::Content::getHitbox("TestPlayer");
         player.id = 0;
@@ -173,7 +178,10 @@ namespace bc
 
         //spawn player
         std::vector<IModifier*> modifiers;
-        modifiers.push_back(new PlayerModifier(&this->entities));
+        modifiers.push_back(new PlayerModifier());
+        PlayerShootingModifier* shooting = new CurvyShootingModifier(1);
+        shooting->setEntities(&this->entities);
+        modifiers.push_back(shooting);
         Entity player(se::Content::getSprite("TestPlayer"), modifiers);
         player.hitbox = se::Content::getHitbox("TestPlayer");
         player.id = 0;
@@ -185,6 +193,8 @@ namespace bc
         this->medicineBox = MedicineBox((PlayerModifier*)modifiers[0]);
 
         Spawner::initialize(&this->hitboxes, &this->entities, source);
+
+        shooting->upgrade();
 
         this->totalElapsedTime = 0.0f;
         this->currentScrollKey = 0;
@@ -298,7 +308,7 @@ namespace bc
 
         Spawner::update(elapsedTime);
 
-        printf("\rScore: %u Multiplier: %f Infection: %f%%            ", GameData::score, GameData::multiplier, GameData::humanInfection * 100.0f);
+        //printf("\rScore: %u Multiplier: %f Infection: %f%%            ", GameData::score, GameData::multiplier, GameData::humanInfection * 100.0f);
 
         //background scrolling
         this->totalElapsedTime += elapsedTime;

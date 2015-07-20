@@ -75,7 +75,7 @@ namespace bc
                     if (this->golden)
                     {
                         std::vector<IModifier*> modifiers;
-                        modifiers.push_back(new ItemModifier((ItemModifier::Effect::Type)(rand() % 3)));
+                        modifiers.push_back(new ItemModifier(this->dropType));
                         Spawner::spawn(this->entity->getSprite().getPosition(), "ITEM1", modifiers, CollisionGroup::Items);
                     }
 

@@ -2,6 +2,7 @@
 
 #include "IModifier.h"
 #include "AnimatedSprite.h"
+#include "ItemModifier.h"
 
 namespace bc
 {
@@ -18,6 +19,7 @@ namespace bc
     public:
 
         bool golden;
+        ItemModifier::Effect::Type dropType;
 
     public:
 

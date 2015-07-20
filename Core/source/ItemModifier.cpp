@@ -4,6 +4,9 @@
 #include "PlayerModifier.h"
 #include "MathFunctions.h"
 #include "GameData.h"
+#include "Content.h"
+#include "PlayerShootingModifier.h"
+#include "NormalShootingModifier.h"
 
 namespace bc
 {
@@ -16,6 +19,32 @@ namespace bc
 
     void ItemModifier::onCreate()
     {
+        switch (this->effect)
+        {
+        case Effect::Upgrade:
+            this->entity->sprite = se::Content::getSprite("ITEM5");
+            break;
+
+        case Effect::Normal:
+            this->entity->sprite = se::Content::getSprite("ITEM1");
+            break;
+
+        case Effect::Split:
+            this->entity->sprite = se::Content::getSprite("ITEM3");
+            break;
+
+        case Effect::Curvy:
+            this->entity->sprite = se::Content::getSprite("ITEM2");
+            break;
+
+        case Effect::Homing:
+            this->entity->sprite = se::Content::getSprite("ITEM2");
+            break;
+
+        case Effect::Laser:
+            this->entity->sprite = se::Content::getSprite("ITEM4");
+            break;
+        }
         this->entity->getSprite().setScale(se::Vector2(2.0f, 2.0f));
     }
 
@@ -30,30 +59,27 @@ namespace bc
     {
         if (collisionGroup == CollisionGroup::Players && !this->entity->dead)
         {
-            PlayerModifier* player = (PlayerModifier*)otherEntity->modifiers[0];
-            float startRot;
+            unsigned int index = 0;
+            while (index < otherEntity->modifiers.size() && !dynamic_cast<PlayerShootingModifier*>(otherEntity->modifiers[index]))
+            {
+                ++index;
+            }
+            PlayerShootingModifier* playerShooting = (PlayerShootingModifier*)otherEntity->modifiers[index];
+            int level = playerShooting->getLevel();
+
             switch (this->effect)
             {
-            case Effect::Spreadshot:
-                player->shootingDirections.push_back(0.0f);
-                startRot = player->shootingDirections.size() % 2 == 0 ? 5.0f - 10.0f * (float)(player->shootingDirections.size() / 2) : -10.0f * (float)(player->shootingDirections.size() / 2);
-                for (unsigned int i = 0; i < player->shootingDirections.size(); ++i)
-                {
-                    player->shootingDirections[i] = startRot + (float)i * 10.0f + 90.0f;
-                }
+            case Effect::Upgrade:
+                playerShooting->upgrade();
                 break;
 
-            case Effect::Backshot:
-                player->backShootingDirections.push_back(0.0f);
-                startRot = player->backShootingDirections.size() % 2 == 0 ? 5.0f - 10.0f * (float)(player->backShootingDirections.size() / 2) : -10.0f * (float)(player->backShootingDirections.size() / 2);
-                startRot += 180.0f;
-                for (unsigned int i = 0; i < player->backShootingDirections.size(); ++i)
-                {
-                    player->backShootingDirections[i] = startRot + (float)i * 10.0f + 90.0f;
-                }
+            case Effect::Normal:
+                delete playerShooting;
+                otherEntity->modifiers.erase(otherEntity->modifiers.begin() + index);
+                otherEntity->modifiers.push_back(new NormalShootingModifier(level));
                 break;
 
-            case Effect::DoubleScore:
+            case Effect::Split:
                 GameData::multiplier *= 2.0f;
                 break;
             }
