@@ -36,6 +36,7 @@ namespace bc
 
     void NormalShootingModifier::setLevel()
     {
+        this->shootingOffsets.clear();
         switch (this->level)
         {
         case 1:

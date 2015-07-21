@@ -36,6 +36,7 @@ namespace bc
 
     void SplitShootingModifier::setLevel()
     {
+        this->shootingDirections.clear();
         float dif = 360.0f / this->level;
         for (int i = 0; i < this->level; ++i)
         {

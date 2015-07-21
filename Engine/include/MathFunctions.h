@@ -45,6 +45,7 @@ namespace se
         float Clamp(float min, float max, float value);
         float Lerp(float min, float max, float lerpValue);
 
+        Vector2 Lerp(Vector2 min, Vector2 max, float lerpValue);
         float Length(const Vector2& vector);
         float Length(const Vector3& vector);
         Vector2 Perpendicular(const Vector2& vector);

@@ -218,11 +218,11 @@ namespace bc
         IModifier* movement = 0;
         if (movementPattern == "Seek_Player")
         {
-            movement = new HomingMovementModifier(&(*Spawner::entities)[CollisionGroup::Players][0], 100.0f, false);
+            movement = new HomingMovementModifier(&(*Spawner::entities)[CollisionGroup::Players][0], 100.0f, false, 1.0f);
         }
         else if (movementPattern == "Seek_Player_Delayed")
         {
-            movement = new HomingMovementModifier(&(*Spawner::entities)[CollisionGroup::Players][0], 100.0f, true);
+            movement = new HomingMovementModifier(&(*Spawner::entities)[CollisionGroup::Players][0], 100.0f, true, 1.0f);
         }
         else
         {
@@ -640,5 +640,11 @@ namespace bc
         spawn.collisionGroup = collisionGroup;
 
         Spawner::killList.push_back(spawn);
+    }
+
+
+    std::vector<Entity>* Spawner::getEntities(CollisionGroup::Type entityType)
+    {
+        return &(*Spawner::entities)[entityType];
     }
 }

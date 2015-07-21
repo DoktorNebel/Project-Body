@@ -10,6 +10,7 @@
 #include "GameData.h"
 #include "NormalShootingModifier.h"
 #include "CurvyShootingModifier.h"
+#include "HomingShootingModifier.h"
 
 namespace bc
 {
@@ -179,7 +180,7 @@ namespace bc
         //spawn player
         std::vector<IModifier*> modifiers;
         modifiers.push_back(new PlayerModifier());
-        PlayerShootingModifier* shooting = new CurvyShootingModifier(1);
+        PlayerShootingModifier* shooting = new CurvyShootingModifier(2);
         shooting->setEntities(&this->entities);
         modifiers.push_back(shooting);
         Entity player(se::Content::getSprite("TestPlayer"), modifiers);
@@ -194,7 +195,7 @@ namespace bc
 
         Spawner::initialize(&this->hitboxes, &this->entities, source);
 
-        shooting->upgrade();
+        shooting->upgrade(5);
 
         this->totalElapsedTime = 0.0f;
         this->currentScrollKey = 0;
@@ -308,7 +309,7 @@ namespace bc
 
         Spawner::update(elapsedTime);
 
-        //printf("\rScore: %u Multiplier: %f Infection: %f%%            ", GameData::score, GameData::multiplier, GameData::humanInfection * 100.0f);
+        printf("\rScore: %u Multiplier: %f Infection: %f%%            ", GameData::score, GameData::multiplier, GameData::humanInfection * 100.0f);
 
         //background scrolling
         this->totalElapsedTime += elapsedTime;

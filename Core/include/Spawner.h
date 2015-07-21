@@ -63,5 +63,6 @@ namespace bc
         static void spawn(se::Vector2 position, std::string spriteName, std::vector<IModifier*> modifiers, CollisionGroup::Type collisionGroup);
         static void spawnEnemy(se::Vector2 position, std::string enemyName, std::string movePatternName);
         static void kill(Entity entity, CollisionGroup::Type collisionGroup);
+        static std::vector<Entity>* getEntities(CollisionGroup::Type entityType);
     };
 }

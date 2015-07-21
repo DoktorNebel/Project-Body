@@ -2,6 +2,8 @@
 
 #include "IModifier.h"
 
+#include <vector>
+
 namespace bc
 {
     class HomingMovementModifier : public IModifier
@@ -9,13 +11,17 @@ namespace bc
     private:
 
         Entity* targetEntity;
+        std::vector<Entity>* targetEntities;
         se::Vector2 targetPoint;
+        se::Vector2 direction;
         float speed;
         bool delayed;
+        float maxTurnRate;
 
     public:
 
-        HomingMovementModifier(Entity* targetEntity, float speed, bool delayed);
+        HomingMovementModifier(Entity* targetEntity, float speed, bool delayed, float maxTurnRate);
+        HomingMovementModifier(std::vector<Entity>* targetEntities, float speed, bool delayed, float maxTurnRate);
         ~HomingMovementModifier();
 
     public:

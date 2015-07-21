@@ -8,7 +8,7 @@ namespace bc
     CurvyShootingModifier::CurvyShootingModifier(int level)
     {
         this->upgrade(level);
-        this->fireRate = 0.01f;
+        this->fireRate = 0.02f;
         this->fireCounter = 0.0f;
         this->curvyfireRate = 0.05f;
         this->curvyfireCounter = 0.0f;
@@ -21,9 +21,9 @@ namespace bc
         if (this->fireCounter >= this->fireRate)
         {
             this->fireCounter = 0.0f;
-
+        
             std::vector<IModifier*> modifiers;
-            float spreadDirection = (float)(rand() % 5 - 2) + 90.0f;
+            float spreadDirection = 90.0f;
             se::Vector2 directionVector(cos(spreadDirection * 0.0174532925f), sin(spreadDirection * 0.0174532925f));
             directionVector *= 1500.0f;
             modifiers.push_back(new ProjectileModifier(directionVector, 2.0f));
@@ -39,8 +39,7 @@ namespace bc
             {
                 std::vector<IModifier*> modifiers;
                 modifiers.push_back(new ProjectileModifier(se::Vector2(0.0f, 0.0f), 2.0f));
-                MovementPatternModifier* move = new MovementPatternModifier(this->movementPatterns[i], 0.0f, 1.0f, MovementPatternModifier::Style::Kill);
-                //printf(move->noRotate ? "true" : "false");
+                MovementPatternModifier* move = new MovementPatternModifier(this->movementPatterns[i], 0.0f, 2.0f, MovementPatternModifier::Style::Kill);
                 modifiers.push_back(move);
                 Spawner::spawn(this->entity->getSprite().getPosition(), "PlayerProjectile", modifiers, CollisionGroup::PlayerProjectiles);
             }
@@ -50,10 +49,32 @@ namespace bc
 
     void CurvyShootingModifier::setLevel()
     {
+        this->movementPatterns.clear();
         switch (this->level)
         {
         case 2:
             this->movementPatterns.push_back(Spawner::getMovementPattern("CurvyShot_1"));
+            break;
+
+        case 3:
+            this->movementPatterns.push_back(Spawner::getMovementPattern("CurvyShot_1"));
+            this->movementPatterns.push_back(Spawner::getMovementPattern("CurvyShot_2"));
+            break;
+
+        case 4:
+            this->movementPatterns.push_back(Spawner::getMovementPattern("CurvyShot_1"));
+            this->movementPatterns.push_back(Spawner::getMovementPattern("CurvyShot_2"));
+            this->movementPatterns.push_back(Spawner::getMovementPattern("CurvyShot_3"));
+            this->movementPatterns.push_back(Spawner::getMovementPattern("CurvyShot_4"));
+            break;
+
+        case 5:
+            this->movementPatterns.push_back(Spawner::getMovementPattern("CurvyShot_1"));
+            this->movementPatterns.push_back(Spawner::getMovementPattern("CurvyShot_2"));
+            this->movementPatterns.push_back(Spawner::getMovementPattern("CurvyShot_3"));
+            this->movementPatterns.push_back(Spawner::getMovementPattern("CurvyShot_4"));
+            this->movementPatterns.push_back(Spawner::getMovementPattern("CurvyShot_5"));
+            this->movementPatterns.push_back(Spawner::getMovementPattern("CurvyShot_6"));
             break;
         }
     }

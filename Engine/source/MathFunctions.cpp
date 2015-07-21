@@ -247,6 +247,12 @@ namespace se
         //
         //Vector functions
         //
+        Vector2 Lerp(Vector2 min, Vector2 max, float lerpValue)
+        {
+            return min + (max - min) * lerpValue;
+        }
+
+
         float Length(const Vector2& vector)
         {
             return sqrt(vector.x * vector.x + vector.y * vector.y);
