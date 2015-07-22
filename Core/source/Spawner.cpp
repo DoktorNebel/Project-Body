@@ -218,11 +218,15 @@ namespace bc
         IModifier* movement = 0;
         if (movementPattern == "Seek_Player")
         {
-            movement = new HomingMovementModifier(&(*Spawner::entities)[CollisionGroup::Players][0], 100.0f, false, 1.0f);
+            std::vector<CollisionGroup::Type> groups;
+            groups.push_back(CollisionGroup::Players);
+            movement = new HomingMovementModifier(groups, 100.0f, false, 1.0f, 0.0f);
         }
         else if (movementPattern == "Seek_Player_Delayed")
         {
-            movement = new HomingMovementModifier(&(*Spawner::entities)[CollisionGroup::Players][0], 100.0f, true, 1.0f);
+            std::vector<CollisionGroup::Type> groups;
+            groups.push_back(CollisionGroup::Players);
+            movement = new HomingMovementModifier(groups, 100.0f, true, 1.0f, 0.0f);
         }
         else
         {
@@ -507,7 +511,7 @@ namespace bc
             {
                 Spawner::spawnTimes.push_back(time);
                 Spawn spawn;
-                spawn.collisionGroup = strcmp(enemyName, "Booger") == 0 || strcmp(enemyName, "Shooter") == 0 ? CollisionGroup::LevelElements : CollisionGroup::Enemies;
+                spawn.collisionGroup = strcmp(enemyName, "Booger") == 0 || strcmp(enemyName, "Shooter") == 0 ? CollisionGroup::ScrollingEnemies : CollisionGroup::Enemies;
                 spawn.entity = Spawner::createEnemy(enemyName, patternName);
                 spawn.position = se::Vector2(xPos, yPos);
                 Spawner::timedSpawns.push_back(spawn);

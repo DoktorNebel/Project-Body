@@ -11,7 +11,7 @@ namespace bc
     private:
 
         Entity* targetEntity;
-        std::vector<Entity>* targetEntities;
+        std::vector<CollisionGroup::Type> targetGroups;
         se::Vector2 targetPoint;
         se::Vector2 direction;
         float speed;
@@ -20,8 +20,7 @@ namespace bc
 
     public:
 
-        HomingMovementModifier(Entity* targetEntity, float speed, bool delayed, float maxTurnRate);
-        HomingMovementModifier(std::vector<Entity>* targetEntities, float speed, bool delayed, float maxTurnRate);
+        HomingMovementModifier(std::vector<CollisionGroup::Type> targetGroups, float speed, bool delayed, float maxTurnRate, float startRotation);
         ~HomingMovementModifier();
 
     public:

@@ -18,9 +18,9 @@ namespace bc
     void CurvyShootingModifier::shoot(float elapsedTime)
     {
         this->fireCounter += elapsedTime;
-        if (this->fireCounter >= this->fireRate)
+        while (this->fireCounter >= this->fireRate)
         {
-            this->fireCounter = 0.0f;
+            this->fireCounter -= this->fireRate;
         
             std::vector<IModifier*> modifiers;
             float spreadDirection = 90.0f;
@@ -31,9 +31,9 @@ namespace bc
         }
 
         this->curvyfireCounter += elapsedTime;
-        if (this->curvyfireCounter >= this->curvyfireRate)
+        while (this->curvyfireCounter >= this->curvyfireRate)
         {
-            this->curvyfireCounter = 0.0f;
+            this->curvyfireCounter -= this->curvyfireRate;
 
             for (unsigned int i = 0; i < this->movementPatterns.size(); ++i)
             {

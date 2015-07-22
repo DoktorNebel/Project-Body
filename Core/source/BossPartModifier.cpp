@@ -20,6 +20,7 @@ namespace bc
 
     void BossPartModifier::onUpdate(float elapsedTime)
     {
+        this->entity->health = 1000.0f;
         if (this->boss->entity->health <= 0.0f)
         {
             this->entity->dead = true;

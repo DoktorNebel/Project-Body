@@ -9,19 +9,27 @@ namespace bc
     HomingShootingModifier::HomingShootingModifier(int level)
     {
         this->upgrade(level);
-        this->fireRate = 0.01f;
+        this->fireRate = 0.05f;
         this->fireCounter = 0.0f;
     }
 
 
     void HomingShootingModifier::shoot(float elapsedTime)
     {
-        for (unsigned int i = 0; i < this->shootingDirections.size(); ++i)
+        this->fireCounter += elapsedTime;
+        while (this->fireCounter >= this->fireRate)
         {
-            std::vector<IModifier*> modifiers;
-            modifiers.push_back(new ProjectileModifier(se::Vector2(0.0f, 0.0f), 2.0f));
-            modifiers.push_back(new HomingMovementModifier(Spawner::getEntities(CollisionGroup::Enemies), 1500.0f, false, 0.05f));
-            Spawner::spawn(this->entity->getSprite().getPosition(), "PlayerProjectile", modifiers, CollisionGroup::PlayerProjectiles);
+            this->fireCounter -= this->fireRate;
+            for (unsigned int i = 0; i < this->shootingDirections.size(); ++i)
+            {
+                std::vector<IModifier*> modifiers;
+                modifiers.push_back(new ProjectileModifier(se::Vector2(0.0f, 0.0f), 2.0f));
+                std::vector<CollisionGroup::Type> groups;
+                groups.push_back(CollisionGroup::Enemies);
+                groups.push_back(CollisionGroup::ScrollingEnemies);
+                modifiers.push_back(new HomingMovementModifier(groups, 1500.0f, false, 0.01f, this->shootingDirections[i]));
+                Spawner::spawn(this->entity->getSprite().getPosition(), "PlayerProjectile", modifiers, CollisionGroup::PlayerProjectiles);
+            }
         }
     }
 

@@ -29,7 +29,7 @@ namespace bc
             this->speed += projectionScalar / 10.0f;
         }
 
-        if (collisionGroup == CollisionGroup::LevelElements)
+        if (collisionGroup == CollisionGroup::LevelElements || collisionGroup == CollisionGroup::ScrollingEnemies)
         {
             this->direction = this->direction - projectionVector * se::Math::Dot(this->direction, projectionVector) * 2.0f;
             this->speed -= projectionScalar;

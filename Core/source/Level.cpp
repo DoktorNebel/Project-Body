@@ -180,7 +180,7 @@ namespace bc
         //spawn player
         std::vector<IModifier*> modifiers;
         modifiers.push_back(new PlayerModifier());
-        PlayerShootingModifier* shooting = new CurvyShootingModifier(2);
+        PlayerShootingModifier* shooting = new NormalShootingModifier(1);
         shooting->setEntities(&this->entities);
         modifiers.push_back(shooting);
         Entity player(se::Content::getSprite("TestPlayer"), modifiers);
@@ -195,7 +195,7 @@ namespace bc
 
         Spawner::initialize(&this->hitboxes, &this->entities, source);
 
-        shooting->upgrade(5);
+        shooting->upgrade(1);
 
         this->totalElapsedTime = 0.0f;
         this->currentScrollKey = 0;

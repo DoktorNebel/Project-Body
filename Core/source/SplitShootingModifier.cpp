@@ -17,9 +17,9 @@ namespace bc
     void SplitShootingModifier::shoot(float elapsedTime)
     {
         this->fireCounter += elapsedTime;
-        if (this->fireCounter >= this->fireRate)
+        while (this->fireCounter >= this->fireRate)
         {
-            this->fireCounter = 0.0f;
+            this->fireCounter -= this->fireRate;
 
             for (unsigned int i = 0; i < this->shootingDirections.size(); ++i)
             {
