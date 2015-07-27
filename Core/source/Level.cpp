@@ -10,7 +10,7 @@
 #include "GameData.h"
 #include "NormalShootingModifier.h"
 #include "CurvyShootingModifier.h"
-#include "HomingShootingModifier.h"
+#include "LaserShootingModifier.h"
 
 namespace bc
 {
@@ -180,7 +180,7 @@ namespace bc
         //spawn player
         std::vector<IModifier*> modifiers;
         modifiers.push_back(new PlayerModifier());
-        PlayerShootingModifier* shooting = new NormalShootingModifier(1);
+        PlayerShootingModifier* shooting = new LaserShootingModifier();
         shooting->setEntities(&this->entities);
         modifiers.push_back(shooting);
         Entity player(se::Content::getSprite("TestPlayer"), modifiers);
