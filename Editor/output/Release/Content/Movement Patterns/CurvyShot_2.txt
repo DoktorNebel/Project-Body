@@ -1,0 +1,5 @@
+0 0 1000 0 normal
+100 90 1000 0 control
+0 180 1000 0 normal
+-100 270 1000 0 control
+0 360 1000 0 normal

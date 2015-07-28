@@ -34,7 +34,9 @@ namespace bc
         if (collisionGroup == CollisionGroup::PlayerProjectiles && this->boss != 0)
         {
             this->boss->entity->health -= otherEntity->damage;
-            otherEntity->dead = true;
+            otherEntity->health -= this->boss->entity->maxHealth;
+            if (otherEntity->health <= 0.0f)
+                otherEntity->dead = true;
         }
     }
 }

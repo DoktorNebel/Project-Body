@@ -41,6 +41,7 @@ namespace bc
         if (this->entity->health <= 0.0f)
         {
             this->entity->dead = true;
+            se::Engine::getActiveCamera().setPermanentScreenshake(0.0f);
         }
 
         if (this->part == LaserPart::Middle)
@@ -59,24 +60,22 @@ namespace bc
             this->entity->getSprite().setPosition(this->player->entity->getSprite().getPosition() + se::Vector2(0.0f, 16.0f));
         }
 
-        if (se::Input::actionReleased(bg::InputAction::Shoot))
+        if (se::Input::actionReleased(bg::InputAction::Shoot) || this->player->entity->health <= 0.0f)
         {
             this->entity->health = 0.0f;
         }
 
         this->lastPlayerPos = this->player->entity->getSprite().getPosition();
         this->elapsedTime = elapsedTime;
-
-        se::Engine::getActiveCamera().addScreenshake(0.0001f, 0.001f);
     }
 
 
     void LaserModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
         if (se::Input::getActionValue(bg::InputAction::Shoot))
-            this->entity->health = 100.0f;
+            this->entity->health = 1000000.0f;
 
-        if (collisionGroup == CollisionGroup::Enemies)
-            otherEntity->health -= 50.0f * this->elapsedTime;
+        if (collisionGroup == CollisionGroup::Enemies || collisionGroup == CollisionGroup::ScrollingEnemies)
+            otherEntity->health -= 500.0f * this->elapsedTime;
     }
 }

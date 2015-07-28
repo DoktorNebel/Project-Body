@@ -35,7 +35,7 @@ namespace bc
         std::vector<IModifier*> modifiers;
         modifiers.push_back(new ShooterHeadModifier(this->entities, this));
         modifiers.push_back(new HitMarkerModifier());
-        Spawner::spawn(this->entity->getSprite().getPosition(), "ShooterHead", modifiers, CollisionGroup::LevelElements);
+        Spawner::spawn(this->entity->getSprite().getPosition(), "ShooterHead", modifiers, CollisionGroup::ScrollingEnemies);
     }
 
 

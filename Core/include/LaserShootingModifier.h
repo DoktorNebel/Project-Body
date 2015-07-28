@@ -18,7 +18,7 @@ namespace bc
 
     public:
 
-        LaserShootingModifier();
+        LaserShootingModifier(PlayerShootingModifier* previousShot);
 
     private:
 

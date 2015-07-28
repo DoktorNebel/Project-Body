@@ -11,6 +11,7 @@ namespace se
 		, screenshake(0.0f)
 		, screenshakeDuration(0.0f)
 		, initialScreenshakeDuration(0.0f)
+        , permanentScreenshake(0.0f)
     {
 
     }
@@ -25,6 +26,7 @@ namespace se
     Vector2 Camera::getPosition()
     {
         Vector2 displacement = this->screenshakeDuration > 0.0f ? Vector2((rand() % 101 - 50) * this->screenshake, (rand() % 101 - 50) * this->screenshake) * (this->screenshakeDuration / this->initialScreenshakeDuration) * 0.0001f : Vector2();
+        displacement += Vector2((rand() % 101 - 50) * this->permanentScreenshake, (rand() % 101 - 50) * this->permanentScreenshake) * 0.0001f;
         return this->position + displacement;
     }
 
@@ -79,4 +81,10 @@ namespace se
 		this->screenshake += strength;
 		this->screenshakeDuration = this->initialScreenshakeDuration = duration;
 	}
+
+
+    void Camera::setPermanentScreenshake(float strength)
+    {
+        this->permanentScreenshake = strength;
+    }
 }

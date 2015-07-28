@@ -50,6 +50,8 @@ namespace se
         if (pos >= this->animationNames.size())
             return false;
 
+        this->finished = false;
+
         this->currentAnimationIndex = pos;
         if (this->currentSpriteIndex >= this->sprites[this->currentAnimationIndex].size())
             this->currentSpriteIndex = 0;

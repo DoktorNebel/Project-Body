@@ -7,6 +7,10 @@
 #include "Content.h"
 #include "PlayerShootingModifier.h"
 #include "NormalShootingModifier.h"
+#include "SplitShootingModifier.h"
+#include "HomingShootingModifier.h"
+#include "CurvyShootingModifier.h"
+#include "LaserShootingModifier.h"
 
 namespace bc
 {
@@ -80,7 +84,29 @@ namespace bc
                 break;
 
             case Effect::Split:
-                GameData::multiplier *= 2.0f;
+                delete playerShooting;
+                otherEntity->modifiers.erase(otherEntity->modifiers.begin() + index);
+                otherEntity->modifiers.push_back(new SplitShootingModifier(level));
+                break;
+
+
+            case Effect::Curvy:
+                delete playerShooting;
+                otherEntity->modifiers.erase(otherEntity->modifiers.begin() + index);
+                otherEntity->modifiers.push_back(new CurvyShootingModifier(level));
+                break;
+
+
+            case Effect::Homing:
+                delete playerShooting;
+                otherEntity->modifiers.erase(otherEntity->modifiers.begin() + index);
+                otherEntity->modifiers.push_back(new HomingShootingModifier(level));
+                break;
+
+
+            case Effect::Laser:
+                otherEntity->modifiers.erase(otherEntity->modifiers.begin() + index);
+                otherEntity->modifiers.push_back(new LaserShootingModifier(playerShooting));
                 break;
             }
 

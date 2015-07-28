@@ -23,7 +23,7 @@ namespace bc
             this->fireCounter -= this->fireRate;
         
             std::vector<IModifier*> modifiers;
-            float spreadDirection = 90.0f;
+            float spreadDirection = 90.0f + (float)(rand() % 101 - 50) / 50.0f;
             se::Vector2 directionVector(cos(spreadDirection * 0.0174532925f), sin(spreadDirection * 0.0174532925f));
             directionVector *= 1500.0f;
             modifiers.push_back(new ProjectileModifier(directionVector, 2.0f));
@@ -39,7 +39,7 @@ namespace bc
             {
                 std::vector<IModifier*> modifiers;
                 modifiers.push_back(new ProjectileModifier(se::Vector2(0.0f, 0.0f), 2.0f));
-                MovementPatternModifier* move = new MovementPatternModifier(this->movementPatterns[i], 0.0f, 2.0f, MovementPatternModifier::Style::Kill);
+                MovementPatternModifier* move = new MovementPatternModifier(this->movementPatterns[i], (float)(rand() % 101 - 50) / 50.0f, 2.0f, MovementPatternModifier::Style::Kill);
                 modifiers.push_back(move);
                 Spawner::spawn(this->entity->getSprite().getPosition(), "PlayerProjectile", modifiers, CollisionGroup::PlayerProjectiles);
             }

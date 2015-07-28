@@ -166,6 +166,7 @@ namespace bc
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::Items));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::LevelElements));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::PlayerProjectiles, CollisionGroup::LevelElements));
+        this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::EnemyProjectiles, CollisionGroup::LevelElements));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Enemies, CollisionGroup::PlayerProjectiles));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::ScrollingEnemies, CollisionGroup::ScrollingEnemies));
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::ScrollingEnemies, CollisionGroup::PlayerProjectiles));
@@ -180,7 +181,7 @@ namespace bc
         //spawn player
         std::vector<IModifier*> modifiers;
         modifiers.push_back(new PlayerModifier());
-        PlayerShootingModifier* shooting = new LaserShootingModifier();
+        PlayerShootingModifier* shooting = new NormalShootingModifier(1);
         shooting->setEntities(&this->entities);
         modifiers.push_back(shooting);
         Entity player(se::Content::getSprite("TestPlayer"), modifiers);

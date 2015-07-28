@@ -50,7 +50,7 @@ namespace bc
 
     private:
 
-        static Entity createEnemy(std::string name, std::string movementPattern);
+        static Entity createEnemy(std::string name, std::string movementPattern, std::string shotPattern);
         static unsigned int getFreeId();
 
     public:
@@ -61,7 +61,7 @@ namespace bc
         static void initialize(std::vector<std::vector<se::Rectangle>>* hitboxes, std::vector<std::vector<bc::Entity>>* entities, std::string levelName = std::string());
         static void update(float elapsedTime);
         static void spawn(se::Vector2 position, std::string spriteName, std::vector<IModifier*> modifiers, CollisionGroup::Type collisionGroup);
-        static void spawnEnemy(se::Vector2 position, std::string enemyName, std::string movePatternName);
+        static void spawnEnemy(se::Vector2 position, std::string enemyName, std::string movePatternName, std::string shotPatternName);
         static void kill(Entity entity, CollisionGroup::Type collisionGroup);
         static std::vector<Entity>* getEntities(CollisionGroup::Type entityType);
     };

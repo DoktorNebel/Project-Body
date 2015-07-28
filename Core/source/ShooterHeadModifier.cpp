@@ -24,7 +24,7 @@ namespace bc
 
     void ShooterHeadModifier::onCreate()
     {
-        this->entity->getSprite().scale(se::Vector2(1.5f, 1.5f));
+        this->entity->getSprite().scale(se::Vector2(1.0f, 1.0f));
     }
 
 
@@ -51,7 +51,7 @@ namespace bc
             std::vector<IModifier*> modifiers;
             se::Vector2 velocity(cos((this->entity->getSprite().getRotation() + 90.0f) * 0.0174532925f), sin((this->entity->getSprite().getRotation() + 90.0f) * 0.0174532925f));
             modifiers.push_back(new ProjectileModifier(velocity * 500.0f, 5.0f));
-            Spawner::spawn(this->entity->getSprite().getPosition(), "EnemyShoot1", modifiers, CollisionGroup::EnemyProjectiles);
+            Spawner::spawn(this->entity->getSprite().getPosition() + velocity * 20.0f, "EnemyShoot1", modifiers, CollisionGroup::EnemyProjectiles);
         }
 
         if (this->entity->health <= 0.0f || this->entity->getSprite().getPosition().x + 50.0f < (float)se::Engine::getSettings().renderResolutionWidth / -2.0f || this->entity->getSprite().getPosition().x - 50.0f > (float)se::Engine::getSettings().renderResolutionWidth / 2.0f ||

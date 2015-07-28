@@ -145,7 +145,7 @@ namespace be
             int xRem = (int)pos.x % 64;
             int yRem = (int)pos.y % 64;
             pos += se::Vector2(xRem < 32 ? -xRem : 64 - xRem, yRem < 32 ? -yRem : 64 - yRem);
-            if (this->tileSprite.getWidth() == 128.0f)
+            if (this->tileSprite.getWidth() > 100.0f)
                 pos += se::Vector2(32, -32);
             pos.x = floor(pos.x);
             pos.y = floor(pos.y);

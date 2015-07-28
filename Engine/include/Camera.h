@@ -13,6 +13,7 @@ namespace se
 		float screenshake;
 		float screenshakeDuration;
 		float initialScreenshakeDuration;
+        float permanentScreenshake;
 
     public:
 
@@ -30,5 +31,6 @@ namespace se
         void setZoom(float zoom);
 		void update(float elapsedTime);
 		void addScreenshake(float strength, float duration);
+        void setPermanentScreenshake(float strength);
     };
 }

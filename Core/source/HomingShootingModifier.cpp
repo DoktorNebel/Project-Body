@@ -27,7 +27,7 @@ namespace bc
                 std::vector<CollisionGroup::Type> groups;
                 groups.push_back(CollisionGroup::Enemies);
                 groups.push_back(CollisionGroup::ScrollingEnemies);
-                modifiers.push_back(new HomingMovementModifier(groups, 1500.0f, false, 0.01f, this->shootingDirections[i]));
+                modifiers.push_back(new HomingMovementModifier(groups, 1500.0f, false, 0.01f, this->shootingDirections[i] + (float)(rand() % 101 - 50) / 10.0f));
                 Spawner::spawn(this->entity->getSprite().getPosition(), "PlayerProjectile", modifiers, CollisionGroup::PlayerProjectiles);
             }
         }

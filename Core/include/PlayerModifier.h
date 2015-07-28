@@ -1,7 +1,10 @@
 #pragma once
 
 #include "IModifier.h"
+
 #include <vector>
+
+#include "AnimatedSprite.h"
 
 namespace bc
 {
@@ -10,6 +13,7 @@ namespace bc
     private:
 
         float speed;
+        se::AnimatedSprite sprite;
 
     public:
 

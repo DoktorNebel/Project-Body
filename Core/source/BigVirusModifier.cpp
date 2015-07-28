@@ -31,7 +31,7 @@ namespace bc
                 sprite.addSprite("Idle", se::Content::getSprite("Vverkleinert2"));
                 sprite.addSprite("Idle", se::Content::getSprite("Vverkleinert3"));
                 sprite.addSprite("Idle", se::Content::getSprite("Vverkleinert4"));
-                sprite.setScale(se::Vector2(1.5f, 1.5f));
+                sprite.setScale(se::Vector2(1.0f, 1.0f));
                 modifiers.push_back(new EnemyModifier(sprite, 2, 0.02f));
                 modifiers.push_back(new ShakyMovementModifier());
                 modifiers.push_back(new HitMarkerModifier());

@@ -152,7 +152,7 @@ namespace be
         {
             se::Sprite sprite = se::Content::getSprite(tilenames[i]);
             sprite.setScale(se::Vector2(0.5f, 0.5f));
-            sprite.setPosition(sprite.getWidth() == 64 ? se::Vector2(530, 300 - y1) : se::Vector2(600, 300 - y2));
+            sprite.setPosition(sprite.getWidth() < 100.0f ? se::Vector2(530, 300 - y1) : se::Vector2(600, 300 - y2));
             se::Button* button = new se::Button(sprite, se::Text(se::Content::getFont("wendy.ttf"), tilenames[i], se::Vector2(), se::Vector2()), true);
             button->doInitialize(se::Engine::getMenu(), false);
             se::Engine::getMenu()->addElement("Editor", tilenames[i], button);
@@ -160,8 +160,8 @@ namespace be
             button->attachCallback("onUnhighlight", &unhighlightSpriteFunction);
             button->attachCallback("onPress", &tileButtonFunction);
 
-            y1 += sprite.getWidth() == 64.0f ? (int)(sprite.getHeight() * 0.6f) : 0;
-            y2 += sprite.getWidth() == 64.0f ? 0 : (int)(sprite.getHeight() * 0.6f);
+            y1 += sprite.getWidth() < 100.0f ? (int)(sprite.getHeight() * 0.6f) : 0;
+            y2 += sprite.getWidth() < 100.0f ? 0 : (int)(sprite.getHeight() * 0.6f);
         }
 
 

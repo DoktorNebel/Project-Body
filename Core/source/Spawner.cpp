@@ -36,7 +36,7 @@ namespace bc
     bool Spawner::bossAlive = false;
 
 
-    Entity Spawner::createEnemy(std::string name, std::string movementPattern)
+    Entity Spawner::createEnemy(std::string name, std::string movementPattern, std::string shotPattern)
     {
         Entity result;
         std::vector<IModifier*> modifiers;
@@ -63,6 +63,14 @@ namespace bc
                 dropType = ItemModifier::Effect::Normal;
             else if (drop == "_DropSplit")
                 dropType = ItemModifier::Effect::Split;
+            else if (drop == "_DropCurvy")
+                dropType = ItemModifier::Effect::Curvy;
+            else if (drop == "_DropHoming")
+                dropType = ItemModifier::Effect::Homing;
+            else if (drop == "_DropLaser")
+                dropType = ItemModifier::Effect::Laser;
+            else if (drop == "_DropUpgrade")
+                dropType = ItemModifier::Effect::Upgrade;
             name = name.substr(0, pos);
         }
 
@@ -127,7 +135,6 @@ namespace bc
             sprite.setScale(se::Vector2(1.0f, 1.0f));
             modifiers.push_back(new EnemyModifier(sprite, 250, 0.05f));
             modifiers.push_back(new HitMarkerModifier());
-            modifiers.push_back(new ShootingModifier(Spawner::shotPatterns[std::find(Spawner::shotPatternNames.begin(), Spawner::shotPatternNames.end(), "BigBug") - Spawner::shotPatternNames.begin()]));
             result.sprite = se::Content::getSprite("KillaBug1");
             result.hitbox = se::Content::getHitbox("KillaBug1");
         }
@@ -230,13 +237,17 @@ namespace bc
         }
         else
         {
-            unsigned int pos = std::find(Spawner::movementPatternNames.begin(), Spawner::movementPatternNames.end(), movementPattern) - Spawner::movementPatternNames.begin();
+            pos = std::find(Spawner::movementPatternNames.begin(), Spawner::movementPatternNames.end(), movementPattern) - Spawner::movementPatternNames.begin();
             if (pos < Spawner::movementPatternNames.size())
                 movement = new MovementPatternModifier(Spawner::movementPatterns[pos], 0.0f, 1.0f, MovementPatternModifier::Style::Kill);
         }
 
         if (movement != 0)
             modifiers.push_back(movement);
+
+        pos = std::find(Spawner::shotPatternNames.begin(), Spawner::shotPatternNames.end(), shotPattern) - Spawner::shotPatternNames.begin();
+        if (pos < Spawner::shotPatternNames.size())
+            modifiers.push_back(new ShootingModifier(Spawner::shotPatterns[pos]));
 
         result.modifiers = modifiers;
 
@@ -506,13 +517,14 @@ namespace bc
             file = fopen(filePath.c_str(), "r");
 
             char enemyName[256];
-            char patternName[256];
-            while (fscanf(file, "%s %s %f %f %f", enemyName, patternName, &time, &xPos, &yPos) != EOF)
+            char movPatternName[256];
+            char shotPatternName[256];
+            while (fscanf(file, "%s %s %s %f %f %f", enemyName, movPatternName, shotPatternName, &time, &xPos, &yPos) != EOF)
             {
                 Spawner::spawnTimes.push_back(time);
                 Spawn spawn;
                 spawn.collisionGroup = strcmp(enemyName, "Booger") == 0 || strcmp(enemyName, "Shooter") == 0 ? CollisionGroup::ScrollingEnemies : CollisionGroup::Enemies;
-                spawn.entity = Spawner::createEnemy(enemyName, patternName);
+                spawn.entity = Spawner::createEnemy(enemyName, movPatternName, shotPatternName);
                 spawn.position = se::Vector2(xPos, yPos);
                 Spawner::timedSpawns.push_back(spawn);
             }
@@ -625,11 +637,11 @@ namespace bc
     }
 
 
-    void Spawner::spawnEnemy(se::Vector2 position, std::string enemyName, std::string movePatternName)
+    void Spawner::spawnEnemy(se::Vector2 position, std::string enemyName, std::string movePatternName, std::string shotPatternName)
     {
         Spawn spawn;
         spawn.collisionGroup = enemyName == "Booger" || enemyName == "Shooter" ? CollisionGroup::ScrollingEnemies : CollisionGroup::Enemies;
-        spawn.entity = Spawner::createEnemy(enemyName, movePatternName);
+        spawn.entity = Spawner::createEnemy(enemyName, movePatternName, shotPatternName);
         spawn.position = position;
 
         Spawner::immediateSpawns.push_back(spawn);
