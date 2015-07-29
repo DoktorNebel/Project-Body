@@ -13,13 +13,13 @@ namespace bc
 {
     void BigVirusModifier::onCreate()
     {
-
+        this->lastHit = CollisionGroup::Enemies;
     }
 
 
     void BigVirusModifier::onUpdate(float elapsedTime)
     {
-        if (this->entity->dead)
+        if (this->entity->dead && this->lastHit == CollisionGroup::PlayerProjectiles)
         {
             for (int i = 0; i < 5; ++i)
             {
@@ -43,6 +43,7 @@ namespace bc
 
     void BigVirusModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
-
+        if (collisionGroup != CollisionGroup::LevelElements)
+            this->lastHit = collisionGroup;
     }
 }

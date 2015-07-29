@@ -75,7 +75,7 @@ namespace bc
                 targetDirection = se::Math::GetNormalized(this->targetEntity->getSprite().getPosition() - this->entity->getSprite().getPosition());
                 this->targetPoint = this->targetEntity->getSprite().getPosition();
             }
-            this->direction = se::Math::Lerp(this->direction, targetDirection, this->maxTurnRate * elapsedTime);
+            this->direction = se::Math::Lerp(this->direction, targetDirection, se::Math::Clamp(0.0f, 1.0f, this->maxTurnRate * elapsedTime));
 
             if (this->maxTurnRate < 1.0f)
             {

@@ -6,6 +6,10 @@ namespace bc
 {
     class BigVirusModifier : public IModifier
     {
+    private:
+
+        CollisionGroup::Type lastHit;
+
     public:
 
         virtual void onCreate();

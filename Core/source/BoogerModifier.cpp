@@ -4,6 +4,7 @@
 #include "MathFunctions.h"
 #include "Spawner.h"
 #include "ParticleModifier.h"
+#include "Engine.h"
 
 namespace bc
 {

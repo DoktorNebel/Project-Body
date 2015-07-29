@@ -2,7 +2,7 @@ Virus Down_Straight None 2.143583 -60.006298 379.801422
 Virus Down_Straight None 2.143583 -38.006298 379.801422
 Virus Down_Straight None 2.143583 -18.006298 379.801422
 Virus Down_Straight None 2.143583 0.993703 379.801422
-Virus_DropLaser Down_Straight None 2.143583 20.993702 379.801422
+Virus Down_Straight None 2.143583 20.993702 379.801422
 Virus Down_Straight None 2.143583 44.993702 379.801422
 Virus Down_Straight None 2.143583 63.993702 379.801422
 Virus Down_Straight None 2.143583 82.993706 379.801422
@@ -24,10 +24,6 @@ Virus Down_Straight None 2.623584 140.993698 379.801422
 Little_Bug Seek_Player_Delayed None 4.783586 -211.505402 379.801422
 Little_Bug Seek_Player_Delayed None 4.783586 -244.505402 379.801422
 Little_Bug Seek_Player_Delayed None 4.783586 -271.505402 379.801422
-Little_Bug Seek_Player_Delayed None 5.863587 258.484467 379.801392
-Little_Bug Seek_Player_Delayed None 5.863587 349.484467 379.801392
-Little_Bug Seek_Player_Delayed None 5.863587 449.484467 379.801392
-Little_Bug Seek_Player_Delayed None 5.863587 532.484497 379.801392
 Shooter None None 8.503590 -68.507431 379.801636
 Virus Down_Straight None 11.263592 438.476257 379.801514
 Virus Down_Straight None 11.263592 464.476257 379.801514
@@ -49,8 +45,12 @@ Virus Down_Straight None 12.223593 502.480835 379.801636
 Virus Down_Straight None 12.223593 520.480835 379.801636
 Virus Down_Straight None 12.223593 545.480835 379.801636
 Virus Down_Straight None 12.223593 568.480835 379.801636
+Little_Bug Seek_Player_Delayed None 13.0 258.484467 -150.801392
+Little_Bug Seek_Player_Delayed None 13.0 349.484467 -150.801392
+Little_Bug Seek_Player_Delayed None 13.0 449.484467 -150.801392
+Little_Bug Seek_Player_Delayed None 13.0 532.484497 -150.801392
 Bug Down_Wait BigBug 16.663597 229.485229 399.001465
-Virus Down_Straight None 22.063602 -507.488800 379.801758
+Virus_DropUpgrade Down_Straight None 22.063602 -507.488800 379.801758
 Booger None None 24.583605 86.492188 379.801758
 Booger None None 25.783606 162.492188 379.801758
 Shooter None None 30.463612 -33.501812 379.801758

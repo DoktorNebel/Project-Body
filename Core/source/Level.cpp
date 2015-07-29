@@ -271,16 +271,34 @@ namespace bc
         std::vector<se::Rectangle>::iterator rectIter;
 
         //updating
+        se::Vector2 playerMidPoint;
+        int numPlayerPoints = 0;
+        se::Vector2 enemyMidPoint;
+        int numEnemyPoints = 0;
         for (unsigned int i = 0; i < this->entities.size(); ++i)
         {
             for (unsigned int j = 0; j < this->entities[i].size(); ++j)
             {
+                if (i == CollisionGroup::Enemies)
+                {
+                    enemyMidPoint += this->entities[i][j].sprite.getPosition();
+                    ++numEnemyPoints;
+                }
+                else if (i == CollisionGroup::Players)
+                {
+                    playerMidPoint += this->entities[i][j].sprite.getPosition();
+                    ++numPlayerPoints;
+                }
                 this->entities[i][j].update(elapsedTime);
                 this->hitboxes[i][j] = this->entities[i][j].getHitRect();
                 if (this->entities[i][j].dead)
                     Spawner::kill(this->entities[i][j], (CollisionGroup::Type)i);
             }
         }
+        if (numPlayerPoints > 0)
+            playerMidPoint /= (float)numPlayerPoints;
+        if (numEnemyPoints > 0)
+            enemyMidPoint /= (float)numEnemyPoints;
 
         //collision detection
         for (unsigned int i = 0; i < this->collisionConfigs.size(); ++i)
@@ -315,8 +333,18 @@ namespace bc
         //background scrolling
         this->totalElapsedTime += elapsedTime;
 
-        if (this->entities[CollisionGroup::Players].size() > 0)
-            this->camera.setPosition(se::Vector2(this->entities[CollisionGroup::Players][0].getSprite().getPosition().x / (se::Engine::getSettings().renderResolutionWidth / 2) / this->camera.getZoom(), 0.0f));
+        //if (this->entities[CollisionGroup::Players].size() > 0)
+        //    this->camera.setPosition(se::Vector2(this->entities[CollisionGroup::Players][0].getSprite().getPosition().x / (se::Engine::getSettings().renderResolutionWidth / 2) / this->camera.getZoom(), 0.0f));
+        
+        //se::Vector2 targetPos = se::Math::Lerp(se::Math::Lerp(se::Vector2(), playerMidPoint, 0.6f), enemyMidPoint, Spawner::bossAlive ? 0.3f : 0.2f) / se::Vector2((int)se::Engine::getSettings().renderResolutionWidth / 2, (int)se::Engine::getSettings().renderResolutionHeight / 2) / this->camera.getZoom();
+        //float camX = se::Math::Lerp(this->camera.getActualPosition().x, targetPos.x, 0.005f);
+        //float camY = se::Math::Lerp(this->camera.getActualPosition().y, targetPos.y, 0.001f);
+        //this->camera.setPosition(se::Math::Lerp(this->camera.getActualPosition(), targetPos, 0.003f));
+
+        se::Vector2 targetPos = se::Vector2(se::Math::Lerp(se::Math::Lerp(0.0f, playerMidPoint.x, 0.9f), enemyMidPoint.x, Spawner::bossAlive ? 0.8f : 0.2f),
+            se::Math::Lerp(se::Math::Lerp(0.0f, playerMidPoint.y, 0.3f), enemyMidPoint.y, Spawner::bossAlive ? 0.3f : 0.2f)) /
+            se::Vector2((int)se::Engine::getSettings().renderResolutionWidth / 2, (int)se::Engine::getSettings().renderResolutionHeight / 2) / this->camera.getZoom();
+        this->camera.setPosition(se::Vector2(se::Math::Lerp(this->camera.getActualPosition().x, targetPos.x, 3.0f * elapsedTime), se::Math::Lerp(this->camera.getActualPosition().y, targetPos.y, elapsedTime)));
 
         float currentScrollSpeed = 0.0f;
         if (this->currentScrollKey + 1 < this->scrollSpeeds.size())

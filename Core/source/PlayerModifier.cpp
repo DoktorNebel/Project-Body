@@ -55,10 +55,23 @@ namespace bc
         float x = this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Right) - this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Left);
         float y = this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Up) - this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Down);
         this->sprite.move(se::Vector2(x, y));
-        if (this->sprite.getPosition().y - this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2 < -(int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom())
-            this->sprite.setPosition(se::Vector2(this->sprite.getPosition().x, -(int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom() + this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2));
-        if (this->sprite.getPosition().y + this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2 > (int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom())
-            this->sprite.setPosition(se::Vector2(this->sprite.getPosition().x, (int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom() - this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2));
+        //if (this->sprite.getPosition().y - this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2 < -(int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom())
+        //    this->sprite.setPosition(se::Vector2(this->sprite.getPosition().x, -(int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom() + this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2));
+        //if (this->sprite.getPosition().y + this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2 > (int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom())
+        //    this->sprite.setPosition(se::Vector2(this->sprite.getPosition().x, (int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom() - this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2));
+
+        se::Rectangle screenRect(se::Engine::getActiveCamera().getActualPosition().y * (float)se::Engine::getSettings().renderResolutionHeight / 2.0f * se::Engine::getActiveCamera().getZoom() + (float)se::Engine::getSettings().renderResolutionHeight / 2.0f * se::Engine::getActiveCamera().getZoom() - this->entity->sprite.getHeight(),
+            se::Engine::getActiveCamera().getActualPosition().y * (float)se::Engine::getSettings().renderResolutionHeight / 2.0f * se::Engine::getActiveCamera().getZoom() - (float)se::Engine::getSettings().renderResolutionHeight / 2.0f * se::Engine::getActiveCamera().getZoom() + this->entity->sprite.getHeight(),
+            se::Engine::getActiveCamera().getActualPosition().x * (float)se::Engine::getSettings().renderResolutionWidth / 2.0f * se::Engine::getActiveCamera().getZoom() - (float)se::Engine::getSettings().renderResolutionWidth / 2.0f * se::Engine::getActiveCamera().getZoom() + this->entity->sprite.getWidth(),
+            se::Engine::getActiveCamera().getActualPosition().x * (float)se::Engine::getSettings().renderResolutionWidth / 2.0f * se::Engine::getActiveCamera().getZoom() + (float)se::Engine::getSettings().renderResolutionWidth / 2.0f * se::Engine::getActiveCamera().getZoom() - this->entity->sprite.getWidth());
+
+        se::Rectangle playerRect = this->sprite.getCurrentSprite().getRect();
+
+        while (!screenRect.overlap(playerRect))
+        {
+            this->sprite.move(se::Vector2((playerRect.right <= screenRect.left) * 0.5f - (playerRect.left >= screenRect.right) * 0.5f, (playerRect.top <= screenRect.bottom) * 0.5f - (playerRect.bottom >= screenRect.top) * 0.5f));
+            playerRect = this->sprite.getCurrentSprite().getRect();
+        }
 
         int strafing = se::Input::actionReleased(bg::InputAction::Right) - se::Input::actionReleased(bg::InputAction::Left);
         if (strafing != 0)
