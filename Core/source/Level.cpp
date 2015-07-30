@@ -316,8 +316,8 @@ namespace bc
                         float projectionScalar;
                         if (this->entities[this->collisionConfigs[i].first][j].getHitbox().overlap(this->entities[this->collisionConfigs[i].second][k].getHitbox(), &projectionNormal, &projectionScalar))
                         {
-                            this->entities[this->collisionConfigs[i].first][j].hit(&this->entities[this->collisionConfigs[i].second][k], this->collisionConfigs[i].second, projectionNormal, -projectionScalar);
-                            this->entities[this->collisionConfigs[i].second][k].hit(&this->entities[this->collisionConfigs[i].first][j], this->collisionConfigs[i].first, projectionNormal, projectionScalar);
+                            this->entities[this->collisionConfigs[i].first][j].hit(&this->entities[this->collisionConfigs[i].second][k], this->collisionConfigs[i].second, projectionNormal, projectionScalar);
+                            this->entities[this->collisionConfigs[i].second][k].hit(&this->entities[this->collisionConfigs[i].first][j], this->collisionConfigs[i].first, projectionNormal, -projectionScalar);
                         }
                     }
                 }
@@ -393,29 +393,61 @@ namespace bc
         {
             for (unsigned int j = 0; j < this->entities[i].size(); ++j)
             {
-                /*se::Rectangle textRect = this->entities[i][j].getSprite().getRect();
+                //se::Rectangle textRect = this->entities[i][j].getSprite().getRect();
+                //
+                //se::Sprite line = se::Content::getSprite("Pixel");
+                //
+                //line.setPosition(se::Vector2(textRect.left + (textRect.right - textRect.left) / 2.0f, textRect.top));
+                //line.setScale(se::Vector2((textRect.right - textRect.left), 1.0f));
+                //line.setRotation(0.0f);
+                //se::Engine::draw(line);
+                //
+                //line.setPosition(se::Vector2(textRect.right, textRect.top + (textRect.bottom - textRect.top) / 2.0f));
+                //line.setScale(se::Vector2((textRect.bottom - textRect.top), 1.0f));
+                //line.setRotation(90.0f);
+                //se::Engine::draw(line);
+                //
+                //line.setPosition(se::Vector2(textRect.left + (textRect.right - textRect.left) / 2.0f, textRect.bottom));
+                //line.setScale(se::Vector2((textRect.right - textRect.left), 1.0f));
+                //line.setRotation(0.0f);
+                //se::Engine::draw(line);
+                //
+                //line.setPosition(se::Vector2(textRect.left, textRect.top + (textRect.bottom - textRect.top) / 2.0f));
+                //line.setScale(se::Vector2((textRect.bottom - textRect.top), 1.0f));
+                //line.setRotation(90.0f);
+                //se::Engine::draw(line);
 
-                se::Sprite line = se::Content::getSprite("Pixel");
-
-                line.setPosition(se::Vector2(textRect.left + (textRect.right - textRect.left) / 2.0f, textRect.top));
-                line.setScale(se::Vector2((textRect.right - textRect.left), 1.0f));
-                line.setRotation(0.0f);
-                se::Engine::draw(line);
-
-                line.setPosition(se::Vector2(textRect.right, textRect.top + (textRect.bottom - textRect.top) / 2.0f));
-                line.setScale(se::Vector2((textRect.bottom - textRect.top), 1.0f));
-                line.setRotation(90.0f);
-                se::Engine::draw(line);
-
-                line.setPosition(se::Vector2(textRect.left + (textRect.right - textRect.left) / 2.0f, textRect.bottom));
-                line.setScale(se::Vector2((textRect.right - textRect.left), 1.0f));
-                line.setRotation(0.0f);
-                se::Engine::draw(line);
-
-                line.setPosition(se::Vector2(textRect.left, textRect.top + (textRect.bottom - textRect.top) / 2.0f));
-                line.setScale(se::Vector2((textRect.bottom - textRect.top), 1.0f));
-                line.setRotation(90.0f);
-                se::Engine::draw(line);*/
+                //se::Polygon poly = this->entities[i][j].getHitbox();
+                //se::Sprite line = se::Content::getSprite("Pixel");
+                //switch (i)
+                //{
+                //case CollisionGroup::Enemies:
+                //    line.setColor(se::Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+                //    break;
+                //
+                //case CollisionGroup::EnemyProjectiles:
+                //    line.setColor(se::Vector4(1.0f, 1.0f, 0.0f, 1.0f));
+                //    break;
+                //
+                //case CollisionGroup::Items:
+                //    line.setColor(se::Vector4(0.9f, 1.0f, 0.9f, 1.0f));
+                //    break;
+                //
+                //case CollisionGroup::ScrollingEnemies:
+                //    line.setColor(se::Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+                //    break;
+                //}
+                //
+                //for (unsigned int k = 0; k < poly.getPoints().size(); ++k)
+                //{
+                //    se::Vector2 dif = poly.getPoints()[(k + 1) % poly.getPoints().size()] - poly.getPoints()[k];
+                //    se::Vector2 pos = poly.getPoints()[k] + dif / 2.0f;
+                //    float length = se::Math::Length(dif);
+                //    line.setPosition(pos);
+                //    line.setScale(se::Vector2(length, 1.0f));
+                //    line.setRotation(atan2(dif.y, dif.x) * 57.2957795f);
+                //    se::Engine::draw(line);
+                //}
 
                 se::Engine::draw(this->entities[i][j].getSprite());
             }

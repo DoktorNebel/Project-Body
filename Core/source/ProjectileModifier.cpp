@@ -41,8 +41,14 @@ namespace bc
             this->entity->getSprite().setRotation(atan2(this->direction.x, this->direction.y) * -57.2957795f);
         this->entity->getSprite().move(this->direction * this->speed * elapsedTime);
         this->lifeTime -= elapsedTime;
-        if (this->lifeTime <= 0.0f)
+
+        if (this->lifeTime <= 0.0f ||
+            this->entity->getSprite().getPosition().y - this->entity->getSprite().getHeight() / 2.0f * this->entity->getSprite().getScale().y >
+            se::Engine::getActiveCamera().getActualPosition().y * (float)se::Engine::getSettings().renderResolutionHeight / 2.0f * se::Engine::getActiveCamera().getZoom() +
+            (float)se::Engine::getSettings().renderResolutionHeight / 2.0f * se::Engine::getActiveCamera().getZoom())
+        {
             this->entity->dead = true;
+        }
     }
 
 

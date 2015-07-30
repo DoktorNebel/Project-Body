@@ -49,7 +49,7 @@ namespace bc
 
     void ShooterModifier::onUpdate(float elapsedTime)
     {
-
+        this->entity->health = 100.0f;
     }
 
 

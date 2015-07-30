@@ -83,7 +83,7 @@ namespace bc
                     modifiers.push_back(new AnimationModifier(sprite));
                     Spawner::spawn(this->entity->getSprite().getPosition(), "Flare1", modifiers, CollisionGroup::Particles);
 
-                    unsigned int coinNum = (unsigned int)se::Math::Clamp(1.0f, 100.0f, this->entity->maxHealth);
+                    unsigned int coinNum = (unsigned int)se::Math::Clamp(1.0f, 1000.0f, this->entity->maxHealth);
                     for (unsigned int i = 0; i < coinNum; ++i)
                     {
                         modifiers.clear();
@@ -95,7 +95,7 @@ namespace bc
                     {
                         std::vector<IModifier*> modifiers;
                         modifiers.push_back(new ItemModifier(this->dropType));
-                        Spawner::spawn(this->entity->getSprite().getPosition(), "ITEM1", modifiers, CollisionGroup::Items);
+                        Spawner::spawn(this->animatedSprite.getPosition(), "ITEM1", modifiers, CollisionGroup::Items);
                     }
                 }
                 else

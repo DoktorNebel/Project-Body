@@ -33,7 +33,7 @@ Virus Down_Straight None 11.263592 571.476257 379.801514
 Virus Down_Straight None 11.263592 546.476257 379.801514
 Virus Down_Straight None 11.743592 438.480835 379.801514
 Virus Down_Straight None 11.743592 459.480835 379.801514
-Virus Down_Straight None 11.743592 478.480835 379.801514
+Virus_DropUpgrade Down_Straight None 11.743592 478.480835 379.801514
 Virus Down_Straight None 11.743592 497.480835 379.801514
 Virus Down_Straight None 11.743592 517.480835 379.801514
 Virus Down_Straight None 11.743592 542.480835 379.801514
@@ -46,11 +46,11 @@ Virus Down_Straight None 12.223593 520.480835 379.801636
 Virus Down_Straight None 12.223593 545.480835 379.801636
 Virus Down_Straight None 12.223593 568.480835 379.801636
 Little_Bug Seek_Player_Delayed None 13.0 258.484467 -150.801392
-Little_Bug Seek_Player_Delayed None 13.0 349.484467 -150.801392
+Little_Bug_DropUpgrade Seek_Player_Delayed None 13.0 349.484467 -150.801392
 Little_Bug Seek_Player_Delayed None 13.0 449.484467 -150.801392
 Little_Bug Seek_Player_Delayed None 13.0 532.484497 -150.801392
 Bug Down_Wait BigBug 16.663597 229.485229 399.001465
-Virus_DropUpgrade Down_Straight None 22.063602 -507.488800 379.801758
+Virus_DropHoming Down_Straight None 22.063602 -507.488800 379.801758
 Booger None None 24.583605 86.492188 379.801758
 Booger None None 25.783606 162.492188 379.801758
 Shooter None None 30.463612 -33.501812 379.801758
@@ -72,12 +72,12 @@ Virus Down_Straight None 33.223610 182.990173 379.801514
 Shooter None None 33.703613 113.988647 379.801514
 Virus Down_Straight None 33.943611 106.990173 379.801514
 Virus Down_Straight None 33.943611 175.990173 379.801514
-Virus Down_Straight None 33.943611 137.990173 379.801514
+Virus_DropUpgrade Down_Straight None 33.943611 137.990173 379.801514
 Virus Down_Straight None 33.943611 157.988495 379.801514
 Virus Down_Straight None 34.663612 122.988495 379.801514
 Virus Down_Straight None 34.663612 206.988495 379.801514
 Big_Virus Down_Straight None 34.903614 -470.492981 379.801758
-Big_Virus Down_Straight None 34.903614 -403.492981 379.801758
+Big_Virus_DropCurvy Down_Straight None 34.903614 -403.492981 379.801758
 Big_Virus Down_Straight None 34.903614 -305.492981 379.801758
 Virus Down_Straight None 35.623615 52.991089 379.801514
 Virus Down_Straight None 35.623615 130.991089 379.801514
@@ -107,7 +107,7 @@ Bug Down_Wait BigBug 46.183628 335.985779 399.000977
 Booger None None 48.703625 20.990356 379.800781
 Booger None None 49.183628 188.990356 379.800781
 Little_Bug Seek_Player_Delayed None 51.703632 -555.999939 379.800781
-Little_Bug Seek_Player_Delayed None 51.703632 -498.999939 379.800781
+Little_Bug_DropUpgrade Seek_Player_Delayed None 51.703632 -498.999939 379.800781
 Little_Bug Seek_Player_Delayed None 51.703632 -451.999939 379.800781
 Little_Bug Seek_Player_Delayed None 51.703632 -399.999939 379.800781
 Virus Down_Straight None 53.623631 -386.003723 379.800781
@@ -123,7 +123,7 @@ Virus Down_Straight None 56.383636 95.990814 379.800781
 Virus Down_Straight None 56.383636 230.990814 379.800781
 Virus Down_Straight None 56.383636 321.990814 379.800781
 Virus Down_Straight None 56.383636 363.990814 379.800781
-Virus Down_Straight None 56.383636 284.990814 379.800781
+Virus_DropSplit Down_Straight None 56.383636 284.990814 379.800781
 Virus Down_Straight None 56.383636 176.990814 379.800781
 Virus Down_Straight None 56.863636 73.990814 379.800781
 Virus Down_Straight None 56.863636 101.990814 379.800781

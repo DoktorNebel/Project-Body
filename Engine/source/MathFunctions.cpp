@@ -6,11 +6,17 @@
 
 namespace se
 {
-    //Vector3 operators
+    //Vector2 operators
 
     bool operator==(const Vector2& lhs, const Vector2& rhs)
     {
         return lhs.x == rhs.x && lhs.y == rhs.y;
+    }
+
+
+    bool operator!=(const Vector2& lhs, const Vector2& rhs)
+    {
+        return lhs.x != rhs.x || lhs.y != rhs.y;
     }
 
 

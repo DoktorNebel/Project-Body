@@ -78,7 +78,7 @@ namespace test
 
     void TestGame::update(float elapsedTime)
     {
-        this->textureTest.move(se::Vector2(se::Input::getActionValue(InputAction::Right) - se::Input::getActionValue(InputAction::Left), se::Input::getActionValue(InputAction::Up) - se::Input::getActionValue(InputAction::Down)) * se::Vector2(200.0f, 200.0f) * elapsedTime);
+        this->sprite.move(se::Vector2(se::Input::getActionValue(InputAction::Right) - se::Input::getActionValue(InputAction::Left), se::Input::getActionValue(InputAction::Up) - se::Input::getActionValue(InputAction::Down)) * se::Vector2(200.0f, 200.0f) * elapsedTime);
         this->sprite.rotate((se::Input::getActionValue(InputAction::RotateLeft) - se::Input::getActionValue(InputAction::RotateRight)) * 200.0f * elapsedTime);
         this->sprite.setScale(this->text.getScale() + se::Vector2(2.0f, 2.0f) * (se::Input::getActionValue(InputAction::ScaleUp) - se::Input::getActionValue(InputAction::ScaleDown)) * elapsedTime);
         
@@ -189,13 +189,13 @@ namespace test
 
     void TestGame::draw()
     {
-        //se::Engine::draw(this->sprite2);
-        //se::Engine::draw(this->sprite);
-        //for (unsigned int i = 0; i < this->lines.size(); ++i)
-        //{
-        //    se::Engine::draw(this->lines[i]);
-        //}
-        se::Engine::draw(this->textureTest);
+        se::Engine::draw(this->sprite2);
+        se::Engine::draw(this->sprite);
+        for (unsigned int i = 0; i < this->lines.size(); ++i)
+        {
+            se::Engine::draw(this->lines[i]);
+        }
+        //se::Engine::draw(this->textureTest);
         //se::Engine::draw(this->text);
     }
 

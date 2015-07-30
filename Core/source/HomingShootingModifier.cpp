@@ -9,7 +9,7 @@ namespace bc
     HomingShootingModifier::HomingShootingModifier(int level)
     {
         this->upgrade(level);
-        this->fireRate = 0.05f;
+        this->fireRate = 0.01f;
         this->fireCounter = 0.0f;
     }
 

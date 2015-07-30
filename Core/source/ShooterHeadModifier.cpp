@@ -24,6 +24,7 @@ namespace bc
 
     void ShooterHeadModifier::onCreate()
     {
+        this->entity->health = 50.0f;
         this->entity->getSprite().scale(se::Vector2(1.0f, 1.0f));
     }
 

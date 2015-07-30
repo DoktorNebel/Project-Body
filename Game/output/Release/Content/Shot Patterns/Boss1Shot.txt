@@ -1,36 +1,36 @@
 Delay 0.02
-EnemyShoot1 Down_Wait_Fast 5.0 0.0
+EnemyShoot1 Down_Wait_Fast 2.0 0.0
 Delay 0.02
-EnemyShoot1 Down_Wait_Fast 5.0 20.0
+EnemyShoot1 Down_Wait_Fast 2.0 20.0
 Delay 0.02
-EnemyShoot1 Down_Wait_Fast 5.0 40.0
+EnemyShoot1 Down_Wait_Fast 2.0 40.0
 Delay 0.02
-EnemyShoot1 Down_Wait_Fast 5.0 60.0
+EnemyShoot1 Down_Wait_Fast 2.0 60.0
 Delay 0.02
-EnemyShoot1 Down_Wait_Fast 5.0 80.0
+EnemyShoot1 Down_Wait_Fast 2.0 80.0
 Delay 0.02
-EnemyShoot1 Down_Wait_Fast 5.0 100.0
+EnemyShoot1 Down_Wait_Fast 2.0 100.0
 Delay 0.02
-EnemyShoot1 Down_Wait_Fast 5.0 120.0
+EnemyShoot1 Down_Wait_Fast 2.0 120.0
 Delay 0.02
-EnemyShoot1 Down_Wait_Fast 5.0 140.0
+EnemyShoot1 Down_Wait_Fast 2.0 140.0
 Delay 0.02
-EnemyShoot1 Down_Wait_Fast 5.0 160.0
+EnemyShoot1 Down_Wait_Fast 2.0 160.0
 Delay 0.02
-EnemyShoot1 Down_Wait_Fast 5.0 180.0
+EnemyShoot1 Down_Wait_Fast 2.0 180.0
 Delay 0.02
-EnemyShoot1 Down_Wait_Fast 5.0 200.0
+EnemyShoot1 Down_Wait_Fast 2.0 200.0
 Delay 0.02
-EnemyShoot1 Down_Wait_Fast 5.0 220.0
+EnemyShoot1 Down_Wait_Fast 2.0 220.0
 Delay 0.02
-EnemyShoot1 Down_Wait_Fast 5.0 240.0
+EnemyShoot1 Down_Wait_Fast 2.0 240.0
 Delay 0.02
-EnemyShoot1 Down_Wait_Fast 5.0 260.0
+EnemyShoot1 Down_Wait_Fast 2.0 260.0
 Delay 0.02
-EnemyShoot1 Down_Wait_Fast 5.0 280.0
+EnemyShoot1 Down_Wait_Fast 2.0 280.0
 Delay 0.02
-EnemyShoot1 Down_Wait_Fast 5.0 300.0
+EnemyShoot1 Down_Wait_Fast 2.0 300.0
 Delay 0.02
-EnemyShoot1 Down_Wait_Fast 5.0 320.0
+EnemyShoot1 Down_Wait_Fast 2.0 320.0
 Delay 0.02
-EnemyShoot1 Down_Wait_Fast 5.0 340.0
+EnemyShoot1 Down_Wait_Fast 2.0 340.0

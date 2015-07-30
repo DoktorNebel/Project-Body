@@ -23,6 +23,7 @@ namespace bc
 
     void ItemModifier::onCreate()
     {
+        se::Vector2 position = this->entity->getSprite().getPosition();
         switch (this->effect)
         {
         case Effect::Upgrade:
@@ -49,6 +50,7 @@ namespace bc
             this->entity->sprite = se::Content::getSprite("ITEM4");
             break;
         }
+        this->entity->getSprite().setPosition(position);
         this->entity->getSprite().setScale(se::Vector2(2.0f, 2.0f));
     }
 

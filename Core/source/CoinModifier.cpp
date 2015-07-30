@@ -24,9 +24,11 @@ namespace bc
         this->players = Spawner::getEntities(CollisionGroup::Players);
         this->player = false;
 
-        float rotation = (float)(rand() % 18000) / 100.0f * 0.0174532925f;
-        float speed = (float)(rand() % 1000000) / 80.0f;
-        this->velocity = se::Vector2(cos(rotation), sin(rotation)) * speed;
+        float rotation = (float)(rand() % 36000) / 100.0f * 0.0174532925f;
+        this->velocity = se::Vector2(cos(rotation), sin(rotation));
+        float dot = se::Math::Dot(this->velocity, se::Vector2(0.0f, 1.0f)) + 1.0f;
+        float speed = (float)(rand() % 1000000) / 200.0f * dot * dot;
+        this->velocity *= speed;
     }
 
 

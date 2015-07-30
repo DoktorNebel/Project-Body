@@ -13,7 +13,7 @@ namespace bc
 
     void ShakyMovementModifier::onUpdate(float elapsedTime)
     {
-        this->entity->getSprite().move(se::Vector2(rand() % 301 - 150, rand() % 301 - 150) * elapsedTime);
+        this->entity->getSprite().move(se::Vector2(rand() % 301 - 150, rand() % 126 - 175) * elapsedTime);
     }
 
 

@@ -47,6 +47,13 @@ namespace bc
 
         this->sprite.addAnimation("Idle_Strafing");
         this->sprite.addSprite("Idle_Strafing", se::Content::getSprite("s_heroD"));
+
+        std::vector<se::Vector2> points;
+        points.push_back(se::Vector2(-1.0f, 1.0f));
+        points.push_back(se::Vector2(-1.0f, -1.0f));
+        points.push_back(se::Vector2(1.0f, -1.0f));
+        points.push_back(se::Vector2(1.0f, 1.0f));
+        this->entity->hitbox = se::Polygon(points);
     }
 
 
@@ -54,7 +61,8 @@ namespace bc
     {
         float x = this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Right) - this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Left);
         float y = this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Up) - this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Down);
-        this->sprite.move(se::Vector2(x, y));
+        this->lastMove = se::Vector2(x, y);
+        this->sprite.move(this->lastMove);
         //if (this->sprite.getPosition().y - this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2 < -(int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom())
         //    this->sprite.setPosition(se::Vector2(this->sprite.getPosition().x, -(int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom() + this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2));
         //if (this->sprite.getPosition().y + this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2 > (int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom())
@@ -67,11 +75,14 @@ namespace bc
 
         se::Rectangle playerRect = this->sprite.getCurrentSprite().getRect();
 
-        while (!screenRect.overlap(playerRect))
+        while (!screenRect.overlap(playerRect) && (this->entity->getSprite().getPosition().y > 0.0f || (this->entity->getSprite().getPosition().y < 0.0f && this->lastMove.y < 0.0f)))
         {
             this->sprite.move(se::Vector2((playerRect.right <= screenRect.left) * 0.5f - (playerRect.left >= screenRect.right) * 0.5f, (playerRect.top <= screenRect.bottom) * 0.5f - (playerRect.bottom >= screenRect.top) * 0.5f));
             playerRect = this->sprite.getCurrentSprite().getRect();
         }
+
+        if (playerRect.bottom + this->entity->sprite.getHeight() * this->entity->getSprite().getScale().y * 2.0f < screenRect.bottom)
+            this->entity->health = 0.0f;
 
         int strafing = se::Input::actionReleased(bg::InputAction::Right) - se::Input::actionReleased(bg::InputAction::Left);
         if (strafing != 0)
@@ -120,7 +131,19 @@ namespace bc
     void PlayerModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
         if (collisionGroup == CollisionGroup::LevelElements)
-            this->sprite.move(projectionVector * projectionScalar);// *(this->sprite.getPosition().x < otherEntity->getSprite().getPosition().x ? -1.0f : 1.0f));
-        otherEntity->health -= this->entity->maxHealth;
+        {
+            if (this->lastMove == se::Vector2())
+            {
+                this->sprite.move(projectionVector * projectionScalar * -3.0f);
+            }
+            else
+            {
+                this->sprite.move(this->lastMove * -1.5f);
+            }
+        }
+        else
+        {
+            otherEntity->health -= this->entity->maxHealth;
+        }
     }
 }
