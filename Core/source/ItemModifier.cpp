@@ -24,40 +24,75 @@ namespace bc
     void ItemModifier::onCreate()
     {
         se::Vector2 position = this->entity->getSprite().getPosition();
+        this->sprite.addAnimation("Idle");
+        this->sprite.setSpeed("Idle", 0.2f);
         switch (this->effect)
         {
         case Effect::Upgrade:
-            this->entity->sprite = se::Content::getSprite("ITEM5");
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpX2_0"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpX2_1"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpX2_2"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpX2_3"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpX2_4"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpX2_5"));
             break;
 
         case Effect::Normal:
-            this->entity->sprite = se::Content::getSprite("ITEM1");
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpNormal_0"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpNormal_1"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpNormal_2"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpNormal_3"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpNormal_4"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpNormal_5"));
             break;
 
         case Effect::Split:
-            this->entity->sprite = se::Content::getSprite("ITEM3");
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpSplit_0"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpSplit_1"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpSplit_2"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpSplit_3"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpSplit_4"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpSplit_5"));
             break;
 
         case Effect::Curvy:
-            this->entity->sprite = se::Content::getSprite("ITEM2");
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpCurvy_0"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpCurvy_1"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpCurvy_2"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpCurvy_3"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpCurvy_4"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpCurvy_5"));
             break;
 
         case Effect::Homing:
-            this->entity->sprite = se::Content::getSprite("ITEM2");
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpCurvy_0"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpCurvy_1"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpCurvy_2"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpCurvy_3"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpCurvy_4"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpCurvy_5"));
             break;
 
         case Effect::Laser:
-            this->entity->sprite = se::Content::getSprite("ITEM4");
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpLaser_0"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpLaser_1"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpLaser_2"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpLaser_3"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpLaser_4"));
+            this->sprite.addSprite("Idle", se::Content::getSprite("PowerUpLaser_5"));
             break;
         }
-        this->entity->getSprite().setPosition(position);
-        this->entity->getSprite().setScale(se::Vector2(2.0f, 2.0f));
+        this->sprite.setPosition(position);
+        this->sprite.setScale(se::Vector2(2.0f, 2.0f));
     }
 
 
     void ItemModifier::onUpdate(float elapsedTime)
     {
-        this->entity->getSprite().move(se::Vector2(0.0f, -100.0f) * elapsedTime);
+        this->sprite.move(se::Vector2(0.0f, -100.0f) * elapsedTime);
+        this->sprite.update(elapsedTime);
+
+        this->entity->sprite = this->sprite.getCurrentSprite();
     }
 
 
@@ -108,7 +143,7 @@ namespace bc
 
             case Effect::Laser:
                 otherEntity->modifiers.erase(otherEntity->modifiers.begin() + index);
-                otherEntity->modifiers.push_back(new LaserShootingModifier(playerShooting));
+                otherEntity->modifiers.push_back(new LaserShootingModifier(level));
                 break;
             }
 

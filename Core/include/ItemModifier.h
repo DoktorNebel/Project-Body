@@ -2,6 +2,8 @@
 
 #include "IModifier.h"
 
+#include "AnimatedSprite.h"
+
 namespace bc
 {
     class ItemModifier : public IModifier
@@ -24,6 +26,7 @@ namespace bc
     private:
 
         Effect::Type effect;
+        se::AnimatedSprite sprite;
 
     public:
 

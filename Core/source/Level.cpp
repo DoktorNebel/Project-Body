@@ -300,6 +300,7 @@ namespace bc
         if (numEnemyPoints > 0)
             enemyMidPoint /= (float)numEnemyPoints;
 
+
         //collision detection
         for (unsigned int i = 0; i < this->collisionConfigs.size(); ++i)
         {
@@ -308,7 +309,7 @@ namespace bc
                 for (unsigned int k = 0; k < this->hitboxes[this->collisionConfigs[i].second].size(); ++k)
                 {
                     if (this->collisionConfigs[i].first == this->collisionConfigs[i].second && j == k)
-                        break;
+                        continue;
 
                     if (this->hitboxes[this->collisionConfigs[i].first][j].overlap(this->hitboxes[this->collisionConfigs[i].second][k]))
                     {

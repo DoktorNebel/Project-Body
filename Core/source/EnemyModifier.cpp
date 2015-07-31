@@ -83,19 +83,28 @@ namespace bc
                     modifiers.push_back(new AnimationModifier(sprite));
                     Spawner::spawn(this->entity->getSprite().getPosition(), "Flare1", modifiers, CollisionGroup::Particles);
 
+                    se::AnimatedSprite coinSprite;
+                    coinSprite.addAnimation("Idle");
+                    coinSprite.setSpeed("Idle", 0.2f);
+                    coinSprite.addSprite("Idle", se::Content::getSprite("M1"));
+                    coinSprite.addSprite("Idle", se::Content::getSprite("M2"));
+                    coinSprite.addSprite("Idle", se::Content::getSprite("M3"));
+                    coinSprite.addSprite("Idle", se::Content::getSprite("M4"));
+                    coinSprite.setScale(se::Vector2(3.0f, 3.0f));
                     unsigned int coinNum = (unsigned int)se::Math::Clamp(1.0f, 1000.0f, this->entity->maxHealth);
                     for (unsigned int i = 0; i < coinNum; ++i)
                     {
                         modifiers.clear();
                         modifiers.push_back(new CoinModifier(this->score / coinNum));
-                        Spawner::spawn(this->entity->getSprite().getPosition(), "Coin", modifiers, CollisionGroup::Items);
+                        modifiers.push_back(new AnimationModifier(coinSprite));
+                        Spawner::spawn(this->entity->getSprite().getPosition(), "M1", modifiers, CollisionGroup::Items);
                     }
 
                     if (this->golden)
                     {
                         std::vector<IModifier*> modifiers;
                         modifiers.push_back(new ItemModifier(this->dropType));
-                        Spawner::spawn(this->animatedSprite.getPosition(), "ITEM1", modifiers, CollisionGroup::Items);
+                        Spawner::spawn(this->animatedSprite.getPosition(), "PowerUpX2_0", modifiers, CollisionGroup::Items);
                     }
                 }
                 else

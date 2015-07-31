@@ -5,7 +5,7 @@ Virus Down_Straight None 2.143583 0.993703 379.801422
 Virus Down_Straight None 2.143583 20.993702 379.801422
 Virus Down_Straight None 2.143583 44.993702 379.801422
 Virus Down_Straight None 2.143583 63.993702 379.801422
-Virus Down_Straight None 2.143583 82.993706 379.801422
+Virus_DropUpgrade Down_Straight None 2.143583 82.993706 379.801422
 Virus Down_Straight None 2.143583 108.993706 379.801422
 Virus Down_Straight None 2.143583 130.993698 379.801422
 Virus Down_Straight None 2.143583 154.993698 379.801422
@@ -22,7 +22,7 @@ Virus Down_Straight None 2.623584 100.993706 379.801422
 Virus Down_Straight None 2.623584 119.993706 379.801422
 Virus Down_Straight None 2.623584 140.993698 379.801422
 Little_Bug Seek_Player_Delayed None 4.783586 -211.505402 379.801422
-Little_Bug Seek_Player_Delayed None 4.783586 -244.505402 379.801422
+Little_Bug_DropLaser Seek_Player_Delayed None 4.783586 -244.505402 379.801422
 Little_Bug Seek_Player_Delayed None 4.783586 -271.505402 379.801422
 Shooter None None 8.503590 -68.507431 379.801636
 Virus Down_Straight None 11.263592 438.476257 379.801514
@@ -46,7 +46,7 @@ Virus Down_Straight None 12.223593 520.480835 379.801636
 Virus Down_Straight None 12.223593 545.480835 379.801636
 Virus Down_Straight None 12.223593 568.480835 379.801636
 Little_Bug Seek_Player_Delayed None 13.0 258.484467 -150.801392
-Little_Bug_DropUpgrade Seek_Player_Delayed None 13.0 349.484467 -150.801392
+Little_Bug Seek_Player_Delayed None 13.0 349.484467 -150.801392
 Little_Bug Seek_Player_Delayed None 13.0 449.484467 -150.801392
 Little_Bug Seek_Player_Delayed None 13.0 532.484497 -150.801392
 Bug Down_Wait BigBug 16.663597 229.485229 399.001465
@@ -143,7 +143,7 @@ Little_Bug Seek_Player_Delayed None 66.223648 -105.505997 379.800781
 Little_Bug Seek_Player_Delayed None 66.223648 -69.505997 379.800781
 Little_Bug Seek_Player_Delayed None 66.223648 -44.505993 379.800781
 Little_Bug Seek_Player_Delayed None 66.223648 -22.505993 379.800781
-Little_Bug Seek_Player_Delayed None 66.223648 18.494007 379.800781
+Little_Bug_DropUpgrade Seek_Player_Delayed None 66.223648 18.494007 379.800781
 Little_Bug Seek_Player_Delayed None 66.223648 61.494007 379.800781
 Little_Bug Seek_Player_Delayed None 66.223648 112.494003 379.800781
 Little_Bug Seek_Player_Delayed None 66.223648 137.494003 379.800781

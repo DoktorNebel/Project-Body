@@ -8,55 +8,76 @@
 
 namespace bc
 {
-    LaserShootingModifier::LaserShootingModifier(PlayerShootingModifier* previousShot)
-        : previousShot(previousShot)
-        , timer(10.0f)
+    LaserShootingModifier::LaserShootingModifier(int level)
+        : shooting(false)
     {
-
+        this->upgrade(level);
     }
 
 
     void LaserShootingModifier::shoot(float elapsedTime)
     {
-        if (se::Input::actionPressed(bg::InputAction::Shoot))
+        if (!this->shooting)
         {
+            this->shooting = true;
             this->lasers.clear();
 
             std::vector<IModifier*> modifiers;
-            modifiers.push_back(new LaserModifier(LaserModifier::LaserPart::Bottom));
-            Spawner::spawn(this->entity->getSprite().getPosition(), "Laser_Bottom", modifiers, CollisionGroup::PlayerProjectiles);
+            modifiers.push_back(new LaserModifier(LaserModifier::LaserPart::Bottom, 0, this, (float)this->level * 50.0f));
+            Spawner::spawn(this->entity->getSprite().getPosition(), this->spriteNames[0], modifiers, CollisionGroup::PlayerProjectiles);
             this->lasers.push_back((LaserModifier*)modifiers.back());
 
             modifiers.clear();
-            modifiers.push_back(new LaserModifier(LaserModifier::LaserPart::Middle));
-            Spawner::spawn(this->entity->getSprite().getPosition(), "Laser_Middle", modifiers, CollisionGroup::PlayerProjectiles);
+            LaserModifier* middleLaser = new LaserModifier(LaserModifier::LaserPart::Middle, 0, this, (float)this->level * 50.0f);
+            modifiers.push_back(middleLaser);
+            Spawner::spawn(this->entity->getSprite().getPosition(), this->spriteNames[1], modifiers, CollisionGroup::PlayerProjectiles);
             this->lasers.push_back((LaserModifier*)modifiers.back());
 
             modifiers.clear();
-            modifiers.push_back(new LaserModifier(LaserModifier::LaserPart::Top));
-            Spawner::spawn(this->entity->getSprite().getPosition(), "Laser_Top", modifiers, CollisionGroup::PlayerProjectiles);
+            modifiers.push_back(new LaserModifier(LaserModifier::LaserPart::Top, middleLaser, this, (float)this->level * 50.0f));
+            Spawner::spawn(this->entity->getSprite().getPosition(), this->spriteNames[2], modifiers, CollisionGroup::PlayerProjectiles);
             this->lasers.push_back((LaserModifier*)modifiers.back());
 
-            se::Engine::getActiveCamera().setPermanentScreenshake(1.0f);
-        }
-
-        this->timer -= elapsedTime;
-        if (this->timer <= 0.0f)
-        {
-            for (unsigned int i = 0; i < this->lasers.size(); ++i)
-            {
-                this->lasers[i]->entity->health = 0.0f;
-            }
-            this->entity->modifiers.push_back(this->previousShot);
-            std::vector<IModifier*>::iterator iter = std::find(this->entity->modifiers.begin(), this->entity->modifiers.end(), this);
-            this->entity->modifiers.erase(iter);
-            delete this;
+            se::Engine::getActiveCamera().setPermanentScreenshake(0.2f * this->level);
         }
     }
 
 
     void LaserShootingModifier::setLevel()
     {
+        switch (this->level)
+        {
+        case 2:
+            this->spriteNames[0] = "Laser_Bottom_0";
+            this->spriteNames[1] = "Laser_Middle_0";
+            this->spriteNames[2] = "Laser_Top_0";
+            break;
 
+        case 3:
+            this->spriteNames[0] = "Laser_Bottom_1";
+            this->spriteNames[1] = "Laser_Middle_1";
+            this->spriteNames[2] = "Laser_Top_1";
+            break;
+
+        case 4:
+            this->spriteNames[0] = "Laser_Bottom_2";
+            this->spriteNames[1] = "Laser_Middle_2";
+            this->spriteNames[2] = "Laser_Top_2";
+            break;
+
+        case 5:
+            this->spriteNames[0] = "Laser_Bottom_3";
+            this->spriteNames[1] = "Laser_Middle_3";
+            this->spriteNames[2] = "Laser_Top_3";
+            break;
+        }
+
+        this->shooting = false;
+    }
+
+
+    void LaserShootingModifier::stopShooting()
+    {
+        this->shooting = false;
     }
 }

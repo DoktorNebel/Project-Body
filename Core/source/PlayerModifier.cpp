@@ -27,19 +27,19 @@ namespace bc
 
     void PlayerModifier::onCreate()
     {
-        this->speed = 500.0f;
+        this->speed = 400.0f;
         this->sprite.addAnimation("Idle");
         this->sprite.addSprite("Idle", se::Content::getSprite("s_heroA"));
 
         this->sprite.addAnimation("Strafe");
-        this->sprite.setSpeed("Strafe", 0.02f);
+        this->sprite.setSpeed("Strafe", 0.1f);
         this->sprite.addSprite("Strafe", se::Content::getSprite("s_heroA"));
         this->sprite.addSprite("Strafe", se::Content::getSprite("s_heroB"));
         this->sprite.addSprite("Strafe", se::Content::getSprite("s_heroC"));
         this->sprite.addSprite("Strafe", se::Content::getSprite("s_heroD"));
 
         this->sprite.addAnimation("Strafe_Reverse");
-        this->sprite.setSpeed("Strafe_Reverse", 0.02f);
+        this->sprite.setSpeed("Strafe_Reverse", 0.1f);
         this->sprite.addSprite("Strafe_Reverse", se::Content::getSprite("s_heroD"));
         this->sprite.addSprite("Strafe_Reverse", se::Content::getSprite("s_heroC"));
         this->sprite.addSprite("Strafe_Reverse", se::Content::getSprite("s_heroB"));
@@ -63,10 +63,6 @@ namespace bc
         float y = this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Up) - this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Down);
         this->lastMove = se::Vector2(x, y);
         this->sprite.move(this->lastMove);
-        //if (this->sprite.getPosition().y - this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2 < -(int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom())
-        //    this->sprite.setPosition(se::Vector2(this->sprite.getPosition().x, -(int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom() + this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2));
-        //if (this->sprite.getPosition().y + this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2 > (int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom())
-        //    this->sprite.setPosition(se::Vector2(this->sprite.getPosition().x, (int)se::Engine::getSettings().renderResolutionHeight / 2 * se::Engine::getActiveCamera().getZoom() - this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y / 2));
 
         se::Rectangle screenRect(se::Engine::getActiveCamera().getActualPosition().y * (float)se::Engine::getSettings().renderResolutionHeight / 2.0f * se::Engine::getActiveCamera().getZoom() + (float)se::Engine::getSettings().renderResolutionHeight / 2.0f * se::Engine::getActiveCamera().getZoom() - this->entity->sprite.getHeight(),
             se::Engine::getActiveCamera().getActualPosition().y * (float)se::Engine::getSettings().renderResolutionHeight / 2.0f * se::Engine::getActiveCamera().getZoom() - (float)se::Engine::getSettings().renderResolutionHeight / 2.0f * se::Engine::getActiveCamera().getZoom() + this->entity->sprite.getHeight(),
@@ -75,7 +71,7 @@ namespace bc
 
         se::Rectangle playerRect = this->sprite.getCurrentSprite().getRect();
 
-        while (!screenRect.overlap(playerRect) && (this->entity->getSprite().getPosition().y > 0.0f || (this->entity->getSprite().getPosition().y < 0.0f && this->lastMove.y < 0.0f)))
+        while (!screenRect.overlap(playerRect) && (this->entity->getSprite().getPosition().y > 0.0f || (this->entity->getSprite().getPosition().y < 0.0f && this->lastMove.y <= 0.0f)))
         {
             this->sprite.move(se::Vector2((playerRect.right <= screenRect.left) * 0.5f - (playerRect.left >= screenRect.right) * 0.5f, (playerRect.top <= screenRect.bottom) * 0.5f - (playerRect.bottom >= screenRect.top) * 0.5f));
             playerRect = this->sprite.getCurrentSprite().getRect();

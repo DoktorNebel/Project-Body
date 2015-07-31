@@ -20,7 +20,7 @@ namespace bc
 
     void CoinModifier::onCreate()
     {
-        //this->entity->getSprite().setColor(se::Vector4(1.0f, 1.0f, 1.0f, 0.3f));
+        this->entity->getSprite().setScale(se::Vector2(3.0f, 3.0f));
         this->players = Spawner::getEntities(CollisionGroup::Players);
         this->player = false;
 
@@ -60,7 +60,7 @@ namespace bc
             {
                 std::vector<Entity>::iterator iter = std::find_if(this->players->begin(), this->players->end(), [this](Entity& entity)
                 {
-                    return se::Math::Distance(this->entity->getSprite().getPosition(), entity.getSprite().getPosition()) < 200.0f;
+                    return se::Math::Distance(this->entity->getSprite().getPosition(), entity.getSprite().getPosition()) < 250.0f;
                 });
 
                 if (iter != this->players->end())

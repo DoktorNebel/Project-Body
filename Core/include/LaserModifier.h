@@ -6,6 +6,8 @@
 
 namespace bc
 {
+    class LaserShootingModifier;
+
     class LaserModifier : public IModifier
     {
     public:
@@ -27,10 +29,14 @@ namespace bc
         PlayerModifier* player;
         se::Vector2 lastPlayerPos;
         float elapsedTime;
+        se::Vector2 topPos;
+        LaserModifier* previous;
+        LaserShootingModifier* shooting;
+        float damage;
 
     public:
 
-        LaserModifier(LaserPart::Type part);
+        LaserModifier(LaserPart::Type part, LaserModifier* previous, LaserShootingModifier* shooting, float damage);
 
     public:
 

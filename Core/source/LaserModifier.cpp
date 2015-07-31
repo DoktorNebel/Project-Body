@@ -6,11 +6,17 @@
 #include "Spawner.h"
 #include "MathFunctions.h"
 #include "Engine.h"
+#include "ParticleModifier.h"
+#include "AnimationModifier.h"
+#include "LaserShootingModifier.h"
 
 namespace bc
 {
-    LaserModifier::LaserModifier(LaserPart::Type part)
+    LaserModifier::LaserModifier(LaserPart::Type part, LaserModifier* previous, LaserShootingModifier* shooting, float damage)
         : part(part)
+        , previous(previous)
+        , shooting(shooting)
+        , damage(damage)
     {
         this->speed = 100.0f;
         this->player = 0;
@@ -38,8 +44,10 @@ namespace bc
 
     void LaserModifier::onUpdate(float elapsedTime)
     {
-        if (this->entity->health <= 0.0f)
+        if (this->entity->health <= 0.0f || this->player->entity->health <= 0.0f)
         {
+            this->shooting->stopShooting();
+            this->previous = 0;
             this->entity->dead = true;
             se::Engine::getActiveCamera().setPermanentScreenshake(0.0f);
         }
@@ -76,6 +84,41 @@ namespace bc
             this->entity->health = 1000000.0f;
 
         if (collisionGroup == CollisionGroup::Enemies || collisionGroup == CollisionGroup::ScrollingEnemies)
-            otherEntity->health -= 500.0f * this->elapsedTime;
+        {
+            otherEntity->health -= this->damage * this->elapsedTime;
+        }
+        else if (collisionGroup == CollisionGroup::LevelElements)
+        {
+            if (this->part == LaserModifier::LaserPart::Middle)
+            {
+                float midY = se::Math::Lerp(this->player->entity->getSprite().getPosition().y, otherEntity->getSprite().getPosition().y, 0.5f);
+                this->entity->getSprite().setPosition(se::Vector2(this->entity->getSprite().getPosition().x, midY));
+
+                float distance = otherEntity->getSprite().getPosition().y - this->player->entity->getSprite().getPosition().y;
+                this->entity->getSprite().setScale(se::Vector2(1.0f, distance / 32.0f));
+
+                this->topPos = this->player->entity->getSprite().getPosition() + se::Vector2(0.0f, distance);
+
+                std::vector<IModifier*> modifiers;
+                modifiers.push_back(new ParticleModifier(se::Vector2(0.0f, -500.0f) + se::Vector2(rand() % 1001 - 500, rand() % 1001 - 500), se::Vector2(2.5f, 2.5f), rand() % 1501 / 1000.0f));
+                Spawner::spawn(this->topPos, "Funke1", modifiers, CollisionGroup::Particles);
+
+                modifiers.clear();
+                se::AnimatedSprite sprite;
+                sprite.addAnimation("Idle");
+                sprite.setSpeed("Idle", 0.01f);
+                sprite.addSprite("Idle", se::Content::getSprite("Flare1"));
+                sprite.addSprite("Idle", se::Content::getSprite("Flare2"));
+                sprite.addSprite("Idle", se::Content::getSprite("Flare3"));
+                modifiers.push_back(new ParticleModifier(se::Vector2(0.0f, 0.0f), se::Vector2(0.5f, 0.5f), 0.15f));
+                modifiers.push_back(new AnimationModifier(sprite));
+                Spawner::spawn(this->topPos, "Flare1", modifiers, CollisionGroup::Particles);
+            }
+            else if (this->part == LaserModifier::LaserPart::Top)
+            {
+                if (this->previous)
+                    this->entity->getSprite().setPosition(this->previous->topPos);
+            }
+        }
     }
 }

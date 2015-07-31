@@ -54,7 +54,7 @@ namespace bc
     void PlayerShootingModifier::upgrade(int level)
     {
         if (level == 0)
-            ++this->level;
+            this->level += this->level < 5;
         else
             this->level = level;
 

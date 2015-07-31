@@ -12,17 +12,21 @@ namespace bc
     {
     private:
 
-        PlayerShootingModifier* previousShot;
-        float timer;
         std::vector<LaserModifier*> lasers;
+        std::string spriteNames[3];
+        bool shooting;
 
     public:
 
-        LaserShootingModifier(PlayerShootingModifier* previousShot);
+        LaserShootingModifier(int level);
 
     private:
 
         virtual void shoot(float elapsedTime);
         virtual void setLevel();
+
+    public:
+
+        void stopShooting();
     };
 }
