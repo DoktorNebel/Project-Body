@@ -14,6 +14,8 @@
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\include\Button.h" />
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\include\Font.h" />
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\include\Glyph.h" />
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\include\Sound.h" />
+    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\include\SoundManager.h" />
     <ClInclude Include="include\Slider.h" />
     <ClInclude Include="include\MenuInputActions.h" />
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\include\MenuEvent.h" />
@@ -90,6 +92,8 @@
     <Import Project="..\Propertysheets\WarningLevel.props" />
     <Import Project="..\Propertysheets\FreeType_Lib_Debug.props" />
     <Import Project="..\Propertysheets\FreeType_Include.props" />
+    <Import Project="..\Propertysheets\OpenAL_Include.props" />
+    <Import Project="..\Propertysheets\OpenAL_Lib.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -101,6 +105,8 @@
     <Import Project="..\Propertysheets\WarningLevel.props" />
     <Import Project="..\Propertysheets\FreeType_Lib_Release.props" />
     <Import Project="..\Propertysheets\FreeType_Include.props" />
+    <Import Project="..\Propertysheets\OpenAL_Include.props" />
+    <Import Project="..\Propertysheets\OpenAL_Lib.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
