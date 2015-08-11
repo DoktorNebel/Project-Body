@@ -118,12 +118,14 @@ namespace bc
                 delete playerShooting;
                 otherEntity->modifiers.erase(otherEntity->modifiers.begin() + index);
                 otherEntity->modifiers.push_back(new NormalShootingModifier(level));
+                otherEntity->modifiers.back()->onCreate();
                 break;
 
             case Effect::Split:
                 delete playerShooting;
                 otherEntity->modifiers.erase(otherEntity->modifiers.begin() + index);
                 otherEntity->modifiers.push_back(new SplitShootingModifier(level));
+                otherEntity->modifiers.back()->onCreate();
                 break;
 
 
@@ -131,6 +133,7 @@ namespace bc
                 delete playerShooting;
                 otherEntity->modifiers.erase(otherEntity->modifiers.begin() + index);
                 otherEntity->modifiers.push_back(new CurvyShootingModifier(level));
+                otherEntity->modifiers.back()->onCreate();
                 break;
 
 
@@ -138,12 +141,14 @@ namespace bc
                 delete playerShooting;
                 otherEntity->modifiers.erase(otherEntity->modifiers.begin() + index);
                 otherEntity->modifiers.push_back(new HomingShootingModifier(level));
+                otherEntity->modifiers.back()->onCreate();
                 break;
 
 
             case Effect::Laser:
                 otherEntity->modifiers.erase(otherEntity->modifiers.begin() + index);
                 otherEntity->modifiers.push_back(new LaserShootingModifier(level));
+                otherEntity->modifiers.back()->onCreate();
                 break;
             }
 

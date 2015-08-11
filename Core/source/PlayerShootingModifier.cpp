@@ -15,7 +15,7 @@ namespace bc
 {
     void PlayerShootingModifier::onCreate()
     {
-
+        this->stickyFireRate = 1.0f;
     }
 
 

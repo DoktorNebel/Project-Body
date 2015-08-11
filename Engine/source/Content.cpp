@@ -9,14 +9,17 @@
 #include <FreeType\ft2build.h>
 #include FT_FREETYPE_H
 #include <algorithm>
+#include "AL\al.h"
 
 namespace se
 {
 	std::vector<std::string> Content::spriteNames = std::vector<std::string>();
     std::vector<Sprite> Content::sprites = std::vector<Sprite>();
     std::vector<Polygon> Content::hitboxes = std::vector<Polygon>();
-    std::vector<Font> Content::fonts = std::vector<Font>();
     std::vector<std::string> Content::fontNames = std::vector<std::string>();
+    std::vector<Font> Content::fonts = std::vector<Font>();
+    std::vector<std::string> Content::soundNames = std::vector<std::string>();
+    std::vector<Sound> Content::sounds = std::vector<Sound>();
 
 
 	std::vector<se::Vector2> Content::generateHitbox(se::Color* image, int imageWidth, int imageHeight, char alphaTolerance, float angleTolerance)
@@ -294,6 +297,41 @@ namespace se
 
         color = image[imageHeight * imageWidth - 1];
         glTexSubImage2D(GL_TEXTURE_2D, 0, startX + imageWidth + 1, startY + imageHeight + 1, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+    }
+
+
+    void Content::loadWav(std::string path, unsigned int bufferId)
+    {
+        struct Header
+        {
+            char riff[4];
+            unsigned int riffLength;
+            char wave[4];
+
+            char format[4];
+            unsigned int formatLength;
+            unsigned short formatTag;
+            unsigned short channels;
+            unsigned int sampleRate;
+            unsigned int bytesPerSecond;
+            unsigned short blockAlign;
+            unsigned short bitsPerSample;
+
+            char data[4];
+            unsigned int dataLength;
+        };
+
+        FILE* file = fopen(path.c_str(), "rb");
+        Header header;
+
+        fread(&header, 1, 44, file);
+
+        char* data = new char[header.dataLength];
+        fread(data, 1, header.dataLength, file);
+
+        fclose(file);
+
+        alBufferData(bufferId, AL_FORMAT_STEREO16, data, header.dataLength, header.sampleRate);
     }
 
 
@@ -624,10 +662,45 @@ namespace se
     }
 
 
+    void Content::loadSounds(std::vector<unsigned int>& ids)
+    {
+        std::vector<std::string> soundPaths;
+
+        tinydir_dir dir;
+        tinydir_open_sorted(&dir, "../Content/Sounds");
+
+        for (unsigned int i = 0; i < dir.n_files; ++i)
+        {
+            tinydir_file file;
+            tinydir_readfile_n(&dir, &file, i);
+
+            if (!file.is_dir && strcmp(file.name, "Thumbs.db"))
+            {
+                soundPaths.push_back(file.path);
+            }
+        }
+
+        tinydir_close(&dir);
+
+        for (unsigned int i = 0; i < soundPaths.size(); ++i)
+        {
+            char nameString[256];
+            sscanf(soundPaths[i].c_str(), "../Content/Sounds/%[^.]", nameString);
+            Content::soundNames.push_back(nameString);
+            unsigned int soundId;
+            alGenBuffers(1, &soundId);
+            Content::loadWav(soundPaths[i], soundId);
+            Sound sound(soundId);
+            Content::sounds.push_back(sound);
+            ids.push_back(soundId);
+        }
+    }
+
+
     Sprite Content::getSprite(std::string name)
     {
 		int pos = std::find(Content::spriteNames.begin(), Content::spriteNames.end(), name) - Content::spriteNames.begin();
-
+        
 		return Content::sprites[pos];
     }
 
@@ -645,5 +718,11 @@ namespace se
         int pos = std::find(Content::fontNames.begin(), Content::fontNames.end(), name) - Content::fontNames.begin();
 
         return &Content::fonts[pos];
+    }
+
+
+    Sound Content::getSound(std::string name)
+    {
+        return Sound();
     }
 }

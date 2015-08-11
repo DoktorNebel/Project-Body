@@ -42,6 +42,8 @@
     <ClInclude Include="include\Vector4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\Sound.cpp" />
+    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Engine\source\SoundManager.cpp" />
     <ClCompile Include="source\Slider.cpp" />
     <ClCompile Include="source\Button.cpp" />
     <ClCompile Include="source\Font.cpp" />

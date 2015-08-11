@@ -31,7 +31,7 @@ namespace se
         State::Type getState();
         void setState(State::Type state);
         bool getLooping();
-        void setLooping();
+        void setLooping(bool value);
         unsigned int getSoundId();
     };
 }

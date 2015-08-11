@@ -8,6 +8,8 @@
 #include "Camera.h"
 #include "EngineSettings.h"
 #include "MenuSystem.h"
+#include "SoundManager.h"
+#include "Sound.h"
 
 namespace se
 {
@@ -23,6 +25,7 @@ namespace se
         static IScene* newScene;
         static sf::Window* window;
         static Graphics graphics;
+        static SoundManager sound;
         static std::chrono::time_point<std::chrono::high_resolution_clock> lastUpdate;
         static Camera* camera;
         static Camera menuCamera;
@@ -39,6 +42,7 @@ namespace se
         static void run();
         static void draw(Sprite& sprite);
         static void draw(Text& text);
+        static void playSound(Sound& sound);
         static void changeScene(IScene* newScene);
         static MenuSystem* getMenu();
     };

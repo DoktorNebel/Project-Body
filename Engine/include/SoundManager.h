@@ -2,12 +2,21 @@
 
 #include <vector>
 
+#include "Sound.h"
+
 namespace se
 {
     class SoundManager
     {
-        static std::vector<unsigned int> buffers;
-        static unsigned int sources[32];
+    private:
 
+        std::vector<unsigned int> buffers;
+        unsigned int sources[32];
+        
+    public:
+
+        void initialize();
+        void update();
+        void playSound(Sound& sound);
     };
 }

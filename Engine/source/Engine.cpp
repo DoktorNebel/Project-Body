@@ -11,6 +11,7 @@ namespace se
     IScene* Engine::newScene = 0;
     sf::Window* Engine::window = 0;
     Graphics Engine::graphics;
+    SoundManager Engine::sound;
     std::chrono::time_point<std::chrono::high_resolution_clock> Engine::lastUpdate;
     Camera* Engine::camera = 0;
     Camera Engine::menuCamera = Camera();
@@ -24,6 +25,7 @@ namespace se
         Engine::window = new sf::Window(sf::VideoMode(settings.screenResolutionWidth, settings.screenResolutionHeight), "Body", settings.fullscreen ? sf::Style::Fullscreen : sf::Style::Default, sf::ContextSettings(24, 0, 2, 3, 3));
         Engine::graphics = Graphics(settings);
         Engine::settings = settings;
+        Engine::sound.initialize();
 
         createMenusFunction();
         Engine::menuSystem.initialize();
@@ -120,6 +122,12 @@ namespace se
     void Engine::draw(Text& text)
     {
         Engine::graphics.addText(text);
+    }
+
+
+    void Engine::playSound(Sound& sound)
+    {
+        Engine::sound.playSound(sound);
     }
 
 
