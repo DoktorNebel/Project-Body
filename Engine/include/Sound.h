@@ -4,23 +4,14 @@ namespace se
 {
     class Sound
     {
-    public:
-
-        struct State
-        {
-            enum Type
-            {
-                Playing,
-                Paused,
-                Stopped
-            };
-        };
-
     private:
 
-        State::Type state;
         bool looping;
+        float volume;
+        float balance;
+        float pitch;
         unsigned int soundId;
+        unsigned int sourceId;
 
     public:
 
@@ -28,10 +19,16 @@ namespace se
 
     public:
 
-        State::Type getState();
-        void setState(State::Type state);
         bool getLooping();
         void setLooping(bool value);
+        float getVolume();
+        void setVolume(float value);
+        float getBalance();
+        void setBalance(float value);
+        float getPitch();
+        void setPitch(float value);
         unsigned int getSoundId();
+        unsigned int getSourceId();
+        void setSourceId(unsigned int value);
     };
 }

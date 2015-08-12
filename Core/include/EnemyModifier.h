@@ -3,6 +3,7 @@
 #include "IModifier.h"
 #include "AnimatedSprite.h"
 #include "ItemModifier.h"
+#include "Sound.h"
 
 namespace bc
 {
@@ -15,6 +16,7 @@ namespace bc
         unsigned int score;
         float humanInfection;
         CollisionGroup::Type lastHit;
+        se::Sound deathSound;
 
     public:
 

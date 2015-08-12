@@ -90,6 +90,7 @@ namespace se
 
             Engine::menuSystem.update(elapsedTime);
             Engine::scene->update(elapsedTime);
+            Engine::sound.update();
             Engine::graphics.beginDraw();
             Engine::scene->draw();
             Engine::graphics.draw(Engine::camera);

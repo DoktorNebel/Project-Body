@@ -33,6 +33,8 @@ namespace bc
     void EnemyModifier::onCreate()
     {
         this->animatedSprite.setPosition(this->entity->getSprite().getPosition());
+        this->deathSound = se::Content::getSound("fart");
+        this->deathSound.setPitch(se::Math::Clamp(0.01f, 1.0f, 1.0f / (this->entity->maxHealth / 100.0f)));
     }
 
 
@@ -106,6 +108,8 @@ namespace bc
                         modifiers.push_back(new ItemModifier(this->dropType));
                         Spawner::spawn(this->animatedSprite.getPosition(), "PowerUpX2_0", modifiers, CollisionGroup::Items);
                     }
+
+                    se::Engine::playSound(this->deathSound);
                 }
                 else
                 {

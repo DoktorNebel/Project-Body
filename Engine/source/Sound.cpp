@@ -1,25 +1,18 @@
 #include "Sound.h"
 
+#include <cassert>
+
 namespace se
 {
     Sound::Sound(unsigned int soundId)
-        : state(Sound::State::Stopped)
-        , looping(false)
+        : looping(false)
+        , volume(1.0f)
+        , balance(0.0f)
+        , pitch(1.0f)
         , soundId(soundId)
+        , sourceId(0)
     {
 
-    }
-
-
-    Sound::State::Type Sound::getState()
-    {
-        return this->state;
-    }
-
-
-    void Sound::setState(State::Type state)
-    {
-        this->state = state;
     }
 
 
@@ -35,8 +28,59 @@ namespace se
     }
 
 
+    float Sound::getVolume()
+    {
+        return this->volume;
+    }
+
+
+    void Sound::setVolume(float value)
+    {
+        assert(value >= 0.0f && value <= 1.0f);
+        this->volume = value;
+    }
+
+
+    float Sound::getBalance()
+    {
+        return this->balance;
+    }
+
+
+    void Sound::setBalance(float value)
+    {
+        assert(value >= -1.0f && value <= 1.0f);
+        this->balance = value;
+    }
+
+
+    float Sound::getPitch()
+    {
+        return this->pitch;
+    }
+
+
+    void Sound::setPitch(float value)
+    {
+        assert(value > 0.0f);
+        this->pitch = value;
+    }
+
+
     unsigned int Sound::getSoundId()
     {
         return this->soundId;
+    }
+
+
+    unsigned int Sound::getSourceId()
+    {
+        return this->sourceId;
+    }
+
+
+    void Sound::setSourceId(unsigned int value)
+    {
+        this->sourceId = value;
     }
 }

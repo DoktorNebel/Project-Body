@@ -330,8 +330,26 @@ namespace se
         fread(data, 1, header.dataLength, file);
 
         fclose(file);
+        
+        int format;
+        if (header.channels == 1)
+        {
+            if (header.bitsPerSample == 8)
+                format = AL_FORMAT_MONO8;
+            else
+                format = AL_FORMAT_MONO16;
+        }
+        else
+        {
+            if (header.bitsPerSample == 8)
+                format = AL_FORMAT_STEREO8;
+            else
+                format = AL_FORMAT_STEREO16;
+        }
 
-        alBufferData(bufferId, AL_FORMAT_STEREO16, data, header.dataLength, header.sampleRate);
+        alBufferData(bufferId, format, data, header.dataLength, header.sampleRate);
+
+        delete[] data;
     }
 
 
@@ -690,7 +708,7 @@ namespace se
             unsigned int soundId;
             alGenBuffers(1, &soundId);
             Content::loadWav(soundPaths[i], soundId);
-            Sound sound(soundId);
+            Sound sound(i);
             Content::sounds.push_back(sound);
             ids.push_back(soundId);
         }
@@ -723,6 +741,8 @@ namespace se
 
     Sound Content::getSound(std::string name)
     {
-        return Sound();
+        int pos = std::find(Content::soundNames.begin(), Content::soundNames.end(), name) - Content::soundNames.begin();
+
+        return Content::sounds[pos];
     }
 }
