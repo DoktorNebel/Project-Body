@@ -1,2 +1,0 @@
-Delay 0.1
-EnemyShoot1 Down_Straight 3.0 0.0

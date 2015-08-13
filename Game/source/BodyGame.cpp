@@ -2,6 +2,7 @@
 
 #include "MathFunctions.h"
 #include "Content.h"
+#include "GameMenus.h"
 
 namespace bg
 {
@@ -19,7 +20,7 @@ namespace bg
 
 	void BodyGame::initialize()
     {
-        this->level.initialize("Test");
+        this->level.initialize(((MenuData*)se::Engine::getMenu()->data)->levelName);
 	}
 
 

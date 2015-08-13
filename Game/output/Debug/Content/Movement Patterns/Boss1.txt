@@ -1,3 +1,0 @@
-0 0 100 0 normal
-0 -150 100 0 normal
-0 -200 10 10 normal
