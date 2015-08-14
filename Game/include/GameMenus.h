@@ -5,12 +5,6 @@
 
 namespace bg
 {
-    struct MenuData
-    {
-        std::string levelName;
-    };
-
-
     void createMenus();
     void createFunctionality();
 
@@ -21,4 +15,6 @@ namespace bg
     se::MenuCallback unhighlightFunction2;
     se::MenuCallback startGameButtonFunction;
     se::MenuCallback levelButtonFunction;
+    se::MenuCallback exitButtonFunction;
+    se::MenuCallback uiUpdateFunction;
 }

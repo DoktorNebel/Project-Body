@@ -3,6 +3,7 @@
 #include "MathFunctions.h"
 #include "Content.h"
 #include "GameMenus.h"
+#include "MenuData.h"
 
 namespace bg
 {
@@ -21,6 +22,10 @@ namespace bg
 	void BodyGame::initialize()
     {
         this->level.initialize(((MenuData*)se::Engine::getMenu()->data)->levelName);
+
+        this->music = se::Content::getSound("first_flight");
+        this->music.setLooping(true);
+        se::Engine::playSound(this->music);
 	}
 
 

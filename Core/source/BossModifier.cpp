@@ -6,6 +6,8 @@
 #include "HitMarkerModifier.h"
 #include "MathFunctions.h"
 #include "GameData.h"
+#include "Engine.h"
+#include "MenuData.h"
 
 namespace bc
 {
@@ -20,12 +22,21 @@ namespace bc
     void BossModifier::onCreate()
     {
         Spawner::bossAlive = true;
+        se::Engine::getMenu()->getElement("UI", "BossbarText")->show();
+        for (int i = 0; i < 100; ++i)
+        {
+            char number[3];
+            _itoa(i, number, 10);
+            se::Engine::getMenu()->getElement("UI", "Bossbar" + std::string(number))->show();
+        }
     }
 
 
     void BossModifier::onUpdate(float elapsedTime)
     {
         float healthPercentage = this->entity->health / this->entity->maxHealth;
+
+        ((bg::MenuData*)se::Engine::getMenu()->data)->bossHealth = healthPercentage;
 
         if (this->nextPhase < this->phases.size() && healthPercentage <= this->phases[this->nextPhase].startHealth)
         {

@@ -10,6 +10,8 @@
 #include "AnimationModifier.h"
 #include "Content.h"
 #include "MathFunctions.h"
+#include "MenuData.h"
+#include "Engine.h"
 
 namespace bc
 {
@@ -42,6 +44,8 @@ namespace bc
             modifiers.push_back(new StickyShotModifier(this->entities));
             Spawner::spawn(this->entity->getSprite().getPosition() + se::Vector2(rand() % 9 - 4, 16), "KlebSchuss1", modifiers, CollisionGroup::PlayerProjectiles);
         }
+
+        ((bg::MenuData*)se::Engine::getMenu()->data)->stickyShotCooldown = se::Math::Clamp(0.0f, 1.0f, this->stickyFireCounter / this->stickyFireRate);
     }
 
 

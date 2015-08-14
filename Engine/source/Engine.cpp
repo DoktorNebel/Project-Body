@@ -142,4 +142,10 @@ namespace se
     {
         return &Engine::menuSystem;
     }
+
+
+    void Engine::close()
+    {
+        Engine::running = false;
+    }
 }

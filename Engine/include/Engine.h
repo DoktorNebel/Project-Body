@@ -45,6 +45,7 @@ namespace se
         static void playSound(Sound& sound);
         static void changeScene(IScene* newScene);
         static MenuSystem* getMenu();
+        static void close();
     };
 }
 

@@ -9,7 +9,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <PostBuildEvent>
-      <Command>XCOPY "$(SolutionDir)Content" "$(ProjectDir)output\$(Configuration)\Content\" /S /Y</Command>
+      <Command>XCOPY "$(SolutionDir)Content" "$(ProjectDir)output\$(Configuration)\Content\" /S /Y
+XCOPY "$(SolutionDir)external\bin" "$(ProjectDir)output\$(Configuration)\bin\" /S /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup />

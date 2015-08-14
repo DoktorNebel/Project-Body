@@ -304,50 +304,67 @@ namespace se
     {
         struct Header
         {
-            char riff[4];
-            unsigned int riffLength;
-            char wave[4];
+            char signature[4];
+            unsigned int length;
+        };
 
-            char format[4];
-            unsigned int formatLength;
+        struct FormatInfo
+        {
             unsigned short formatTag;
             unsigned short channels;
             unsigned int sampleRate;
             unsigned int bytesPerSecond;
             unsigned short blockAlign;
             unsigned short bitsPerSample;
-
-            char data[4];
-            unsigned int dataLength;
+            char overflow[4];
         };
 
         FILE* file = fopen(path.c_str(), "rb");
         Header header;
+        FormatInfo info;
+        char* data = 0;
 
-        fread(&header, 1, 44, file);
-
-        char* data = new char[header.dataLength];
-        fread(data, 1, header.dataLength, file);
+        while (fread(&header, 1, sizeof(Header), file))
+        {
+            if (strncmp(header.signature, "RIFF", 4) == 0)
+            {
+                fseek(file, 4, SEEK_CUR);
+            }
+            else if (strncmp(header.signature, "fmt ", 4) == 0)
+            {
+                fread(&info, 1, header.length, file);
+            }
+            else if (strncmp(header.signature, "data", 4) == 0)
+            {
+                data = new char[header.length];
+                fread(data, 1, header.length, file);
+                break;
+            }
+            else
+            {
+                fseek(file, header.length, SEEK_CUR);
+            }
+        }
 
         fclose(file);
         
         int format;
-        if (header.channels == 1)
+        if (info.channels == 1)
         {
-            if (header.bitsPerSample == 8)
+            if (info.bitsPerSample == 8)
                 format = AL_FORMAT_MONO8;
             else
                 format = AL_FORMAT_MONO16;
         }
         else
         {
-            if (header.bitsPerSample == 8)
+            if (info.bitsPerSample == 8)
                 format = AL_FORMAT_STEREO8;
             else
                 format = AL_FORMAT_STEREO16;
         }
 
-        alBufferData(bufferId, format, data, header.dataLength, header.sampleRate);
+        alBufferData(bufferId, format, data, header.length, info.sampleRate);
 
         delete[] data;
     }

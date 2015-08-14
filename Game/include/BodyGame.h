@@ -3,6 +3,7 @@
 #include "IScene.h"
 #include "Camera.h"
 #include "Level.h"
+#include "Sound.h"
 
 namespace bg
 {
@@ -11,6 +12,7 @@ namespace bg
 	private:
 
         bc::Level level;
+        se::Sound music;
 
 	public:
 
