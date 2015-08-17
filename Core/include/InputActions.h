@@ -13,9 +13,7 @@ namespace bg
             Shoot,
             StickyShot,
             FasterCheat,
-            Medicine1,
-            Medicine2,
-            Medicine3,
+            Pause
 		};
 	};
 }

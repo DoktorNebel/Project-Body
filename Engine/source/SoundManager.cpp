@@ -56,7 +56,9 @@ namespace se
             alGetSourcei(this->sources[i], AL_SOURCE_STATE, &state);
             if (state == AL_STOPPED)
             {
+                unsigned int tmp = this->sources[i];
                 this->sources[i] = this->sources[this->nextSource - 1];
+                this->sources[this->nextSource - 1] = tmp;
                 --this->nextSource;
             }
         }

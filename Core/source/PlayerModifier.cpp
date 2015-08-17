@@ -32,14 +32,14 @@ namespace bc
         this->sprite.addSprite("Idle", se::Content::getSprite("s_heroA"));
 
         this->sprite.addAnimation("Strafe");
-        this->sprite.setSpeed("Strafe", 0.1f);
+        this->sprite.setSpeed("Strafe", 0.05f);
         this->sprite.addSprite("Strafe", se::Content::getSprite("s_heroA"));
         this->sprite.addSprite("Strafe", se::Content::getSprite("s_heroB"));
         this->sprite.addSprite("Strafe", se::Content::getSprite("s_heroC"));
         this->sprite.addSprite("Strafe", se::Content::getSprite("s_heroD"));
 
         this->sprite.addAnimation("Strafe_Reverse");
-        this->sprite.setSpeed("Strafe_Reverse", 0.1f);
+        this->sprite.setSpeed("Strafe_Reverse", 0.05f);
         this->sprite.addSprite("Strafe_Reverse", se::Content::getSprite("s_heroD"));
         this->sprite.addSprite("Strafe_Reverse", se::Content::getSprite("s_heroC"));
         this->sprite.addSprite("Strafe_Reverse", se::Content::getSprite("s_heroB"));

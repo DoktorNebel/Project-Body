@@ -43,7 +43,9 @@ namespace se
         static void draw(Sprite& sprite);
         static void draw(Text& text);
         static void playSound(Sound& sound);
+        static void stopSound(Sound& sound);
         static void changeScene(IScene* newScene);
+        static IScene* getCurrentScene();
         static MenuSystem* getMenu();
         static void close();
     };

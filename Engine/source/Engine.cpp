@@ -132,9 +132,21 @@ namespace se
     }
 
 
+    void Engine::stopSound(Sound& sound)
+    {
+        Engine::sound.stopSound(sound);
+    }
+
+
     void Engine::changeScene(IScene* newScene)
     {
         Engine::newScene = newScene;
+    }
+
+
+    IScene* Engine::getCurrentScene()
+    {
+        return Engine::scene;
     }
 
 

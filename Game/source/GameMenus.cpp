@@ -1,5 +1,7 @@
 #include "GameMenus.h"
 
+#include "Other\tinydir.h"
+
 #include "Button.h"
 #include "IMenuElement.h"
 #include "MenuSystem.h"
@@ -7,7 +9,12 @@
 #include "MenuTimer.h"
 #include "ProgressBar.h"
 #include "UISprite.h"
+#include "UIText.h"
 #include "MenuData.h"
+#include "Spawner.h"
+#include "BodyGame.h"
+#include "MenuScene.h"
+#include "GameData.h"
 
 namespace bg
 {
@@ -20,6 +27,7 @@ namespace bg
         se::Engine::getMenu()->addMenu("Levels");
         se::Engine::getMenu()->addMenu("Highscores");
         se::Engine::getMenu()->addMenu("UI");
+        se::Engine::getMenu()->addMenu("LevelEnd");
 
         se::Sprite pixelSprite = se::Content::getSprite("Pixel");
         pixelSprite.setScale(se::Vector2(0.0f, 0.0f));
@@ -28,11 +36,20 @@ namespace bg
         se::Engine::getMenu()->addElement("Start", "StartButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Start", se::Vector2(0, -100)), false));
 
         //main menu
-        se::Engine::getMenu()->addElement("Main", "StartButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Start", se::Vector2(-100, 100)), false));
+        se::Engine::getMenu()->addElement("Main", "StartButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Start", se::Vector2(-100, 150)), false));
 
-        se::Engine::getMenu()->addElement("Main", "OptionsButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Options", se::Vector2(-100, 0)), false));
+        se::Engine::getMenu()->addElement("Main", "HighscoreButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Highscores", se::Vector2(-100, 50)), false));
 
-        se::Engine::getMenu()->addElement("Main", "QuitButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Quit", se::Vector2(-100, -100)), false));
+        se::Engine::getMenu()->addElement("Main", "OptionsButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Options", se::Vector2(-100, -50)), false));
+
+        se::Engine::getMenu()->addElement("Main", "QuitButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Quit", se::Vector2(-100, -150)), false));
+
+        //pause menu
+        se::Engine::getMenu()->addElement("Pause", "ResumeButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Resume", se::Vector2(0, 100)), false));
+
+        se::Engine::getMenu()->addElement("Pause", "RestartButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Restart", se::Vector2(0, 0)), false));
+
+        se::Engine::getMenu()->addElement("Pause", "MenuButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Main Menu", se::Vector2(0, -100)), false));
 
         //level menu
         se::Text text(se::Content::getFont("wendy.ttf"), "Flesh");
@@ -55,6 +72,28 @@ namespace bg
         sprite = se::Content::getSprite("PusLevelButton");
         sprite.setPosition(se::Vector2(300, 100));
         se::Engine::getMenu()->addElement("Levels", "Pus", new se::Button(sprite, text, true));
+
+        //highscore menu
+        se::Engine::getMenu()->addElement("Highscores", "BackButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Back", se::Vector2(-500, -300)), false));
+
+        se::Engine::getMenu()->addElement("Highscores", "FleshButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Flesh", se::Vector2(-300, 280)), false));
+
+        se::Engine::getMenu()->addElement("Highscores", "NervesButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Nerves", se::Vector2(-100, 280)), false));
+
+        se::Engine::getMenu()->addElement("Highscores", "SlimeButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Slime", se::Vector2(100, 280)), false));
+
+        se::Engine::getMenu()->addElement("Highscores", "PusButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Pus", se::Vector2(300, 280)), false));
+
+        se::Engine::getMenu()->addElement("Highscores", "HighscoreText", new se::UIText(se::Text(se::Content::getFont("wendy.ttf"), "Highscores", se::Vector2(0, 330))));
+
+        for (int i = 0; i < 10; ++i)
+        {
+            char number[3];
+            _itoa(i, number, 10);
+            se::Engine::getMenu()->addElement("Highscores", "HighscoreName" + std::string(number), new se::UIText(se::Text(se::Content::getFont("wendy.ttf"), "", se::Vector2(-300, 250 - i * 50), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 1.0f), se::Text::Alignment::Left)));
+
+            se::Engine::getMenu()->addElement("Highscores", "Highscore" + std::string(number), new se::UIText(se::Text(se::Content::getFont("wendy.ttf"), "", se::Vector2(300, 250 - i * 50), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 1.0f), se::Text::Alignment::Right)));
+        }
 
         //UI
         se::Engine::getMenu()->addElement("UI", "BossbarText", new se::UISprite(se::Content::getSprite("BOSS"), se::Vector2(0.0f, 345.0f)));
@@ -113,12 +152,29 @@ namespace bg
         se::Engine::getMenu()->attachCallback("Main", "StartButton", "onUnhighlight", &unhighlightFunction);
         se::Engine::getMenu()->attachCallback("Main", "StartButton", "onPress", &startGameButtonFunction);
 
+        se::Engine::getMenu()->attachCallback("Main", "HighscoreButton", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("Main", "HighscoreButton", "onUnhighlight", &unhighlightFunction);
+        se::Engine::getMenu()->attachCallback("Main", "HighscoreButton", "onPress", &highscoreButtonFunction);
+
         se::Engine::getMenu()->attachCallback("Main", "OptionsButton", "onHighlight", &highlightFunction);
         se::Engine::getMenu()->attachCallback("Main", "OptionsButton", "onUnhighlight", &unhighlightFunction);
 
         se::Engine::getMenu()->attachCallback("Main", "QuitButton", "onHighlight", &highlightFunction);
         se::Engine::getMenu()->attachCallback("Main", "QuitButton", "onUnhighlight", &unhighlightFunction);
         se::Engine::getMenu()->attachCallback("Main", "QuitButton", "onPress", &exitButtonFunction);
+
+
+        se::Engine::getMenu()->attachCallback("Pause", "ResumeButton", "onPress", &resumeButtonFunction);
+        se::Engine::getMenu()->attachCallback("Pause", "ResumeButton", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("Pause", "ResumeButton", "onUnhighlight", &unhighlightFunction);
+
+        se::Engine::getMenu()->attachCallback("Pause", "RestartButton", "onPress", &restartButtonFunction);
+        se::Engine::getMenu()->attachCallback("Pause", "RestartButton", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("Pause", "RestartButton", "onUnhighlight", &unhighlightFunction);
+
+        se::Engine::getMenu()->attachCallback("Pause", "MenuButton", "onPress", &mainMenuButtonFunction);
+        se::Engine::getMenu()->attachCallback("Pause", "MenuButton", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("Pause", "MenuButton", "onUnhighlight", &unhighlightFunction);
 
 
         se::Engine::getMenu()->attachCallback("Levels", "Flesh", "onHighlight", &highlightFunction2);
@@ -138,6 +194,27 @@ namespace bg
         se::Engine::getMenu()->attachCallback("Levels", "Pus", "onPress", &levelButtonFunction);
 
 
+        se::Engine::getMenu()->attachCallback("Highscores", "FleshButton", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("Highscores", "FleshButton", "onUnhighlight", &unhighlightFunction);
+        se::Engine::getMenu()->attachCallback("Highscores", "FleshButton", "onPress", &highscoreButtonFunction);
+
+        se::Engine::getMenu()->attachCallback("Highscores", "NervesButton", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("Highscores", "NervesButton", "onUnhighlight", &unhighlightFunction);
+        se::Engine::getMenu()->attachCallback("Highscores", "NervesButton", "onPress", &highscoreButtonFunction);
+
+        se::Engine::getMenu()->attachCallback("Highscores", "SlimeButton", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("Highscores", "SlimeButton", "onUnhighlight", &unhighlightFunction);
+        se::Engine::getMenu()->attachCallback("Highscores", "SlimeButton", "onPress", &highscoreButtonFunction);
+
+        se::Engine::getMenu()->attachCallback("Highscores", "PusButton", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("Highscores", "PusButton", "onUnhighlight", &unhighlightFunction);
+        se::Engine::getMenu()->attachCallback("Highscores", "PusButton", "onPress", &highscoreButtonFunction);
+
+        se::Engine::getMenu()->attachCallback("Highscores", "BackButton", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("Highscores", "BackButton", "onUnhighlight", &unhighlightFunction);
+        se::Engine::getMenu()->attachCallback("Highscores", "BackButton", "onPress", &backButtonFunction);
+
+
         se::Engine::getMenu()->attachCallback("UI", "Timer", "onTick", &uiUpdateFunction);
 
         //hide boss bar
@@ -148,12 +225,6 @@ namespace bg
             _itoa(i, number, 10);
             se::Engine::getMenu()->getElement("UI", "Bossbar" + std::string(number))->hide();
         }
-    }
-
-
-    void startButtonFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
-    {
-        menuSystem->changeMenu("Main");
     }
 
 
@@ -181,6 +252,12 @@ namespace bg
     }
 
 
+    void startButtonFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
+    {
+        menuSystem->changeMenu("Main");
+    }
+
+
     void startGameButtonFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
     {
         menuSystem->changeMenu("Levels");
@@ -202,6 +279,62 @@ namespace bg
     }
 
 
+    void resumeButtonFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
+    {
+        ((BodyGame*)se::Engine::getCurrentScene())->resume();
+    }
+
+
+    void restartButtonFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
+    {
+        menuSystem->changeMenu("UI");
+        BodyGame* newScene = new BodyGame();
+        se::Engine::changeScene(newScene);
+    }
+
+
+    void mainMenuButtonFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
+    {
+        menuSystem->changeMenu("Main");
+        MenuScene* newScene = new MenuScene();
+        se::Engine::changeScene(newScene);
+    }
+
+
+    void highscoreButtonFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
+    {
+        bc::GameData::loadScores();
+
+        unsigned int offset = 0;
+        if (((se::Button*)sender)->text.getText() == "Nerves")
+            offset = 10;
+        else if (((se::Button*)sender)->text.getText() == "Slime")
+            offset = 20;
+        else if (((se::Button*)sender)->text.getText() == "Pus")
+            offset = 30;
+
+        for (unsigned int i = 0; i < 10; ++i)
+        {
+            char number[3];
+            _itoa(i, number, 10);
+            ((se::UIText*)se::Engine::getMenu()->getElement("Highscores", "HighscoreName" + std::string(number)))->getText().setText(bc::GameData::scores[i + offset].name);
+
+            char scoreText[16] = "";
+            if (strcmp(bc::GameData::scores[i + offset].name, "   ") != 0)
+                _itoa(bc::GameData::scores[i + offset].score, scoreText, 10);
+            ((se::UIText*)se::Engine::getMenu()->getElement("Highscores", "Highscore" + std::string(number)))->getText().setText(scoreText);
+        }
+
+        menuSystem->changeMenu("Highscores");
+    }
+
+
+    void backButtonFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
+    {
+        menuSystem->changeMenu("Main");
+    }
+
+
     void uiUpdateFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
     {
         int highest = (int)(((MenuData*)menuSystem->data)->stickyShotCooldown * 8.0f);
@@ -220,12 +353,15 @@ namespace bg
             ((se::UISprite*)menuSystem->getElement("UI", "BombRing" + std::string(number)))->getSprite().setColor(i < highest ? se::Vector4(1.0f, 1.0f, 1.0f, 1.0f) : se::Vector4(1.0f, 1.0f, 1.0f, 0.0f));
         }
 
-        highest = (int)(((MenuData*)menuSystem->data)->bossHealth * 100.0f);
-        for (int i = 0; i < 100; ++i)
+        if (bc::Spawner::bossAlive)
         {
-            char number[3];
-            _itoa(i, number, 10);
-            ((se::UISprite*)menuSystem->getElement("UI", "Bossbar" + std::string(number)))->getSprite().setColor(i < highest ? se::Vector4(1.0f, 1.0f, 1.0f, 1.0f) : se::Vector4(1.0f, 1.0f, 1.0f, 0.0f));
+            highest = (int)(((MenuData*)menuSystem->data)->bossHealth * 100.0f);
+            for (int i = 0; i < 100; ++i)
+            {
+                char number[3];
+                _itoa(i, number, 10);
+                ((se::UISprite*)menuSystem->getElement("UI", "Bossbar" + std::string(number)))->getSprite().setColor(i < highest ? se::Vector4(1.0f, 1.0f, 1.0f, 1.0f) : se::Vector4(1.0f, 1.0f, 1.0f, 0.0f));
+            }
         }
     }
 }

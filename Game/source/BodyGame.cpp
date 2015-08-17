@@ -4,6 +4,9 @@
 #include "Content.h"
 #include "GameMenus.h"
 #include "MenuData.h"
+#include "Input.h"
+#include "Engine.h"
+#include "InputActions.h"
 
 namespace bg
 {
@@ -26,12 +29,23 @@ namespace bg
         this->music = se::Content::getSound("first_flight");
         this->music.setLooping(true);
         se::Engine::playSound(this->music);
+
+        this->paused = false;
 	}
 
 
 	void BodyGame::update(float elapsedTime)
 	{
-        this->level.update(elapsedTime);
+        if (!this->paused)
+            this->level.update(elapsedTime);
+
+        if (se::Input::actionPressed(InputAction::Pause))
+        {
+            if (this->paused)
+                this->resume();
+            else
+                this->pause();
+        }
 	}
 
 
@@ -42,7 +56,27 @@ namespace bg
 
 
 	void BodyGame::close()
-	{
-
+    {
+        se::Engine::stopSound(this->music);
 	}
+
+
+    void BodyGame::pause()
+    {
+        se::Engine::getMenu()->changeMenu("Pause");
+        this->paused = true;
+    }
+
+
+    void BodyGame::resume()
+    {
+        se::Engine::getMenu()->changeMenu("UI");
+        this->paused = false;
+    }
+
+
+    void BodyGame::restartLevel()
+    {
+        this->level.initialize(((MenuData*)se::Engine::getMenu()->data)->levelName);
+    }
 }

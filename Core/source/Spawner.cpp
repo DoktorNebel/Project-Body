@@ -304,6 +304,24 @@ namespace bc
         Spawner::hitboxes = hitboxes;
         Spawner::entities = entities;
 
+        Spawner::totalElapsedTime = 0.0f;
+        Spawner::nextSpawn = 0;
+        Spawner::highestId = 1;
+        Spawner::freeIds.clear();
+        Spawner::timedSpawns.clear();
+        Spawner::immediateSpawns.clear();
+        Spawner::spawnTimes.clear();
+        Spawner::animationNames.clear();
+        Spawner::animations.clear();
+        Spawner::bossPatternNames.clear();
+        Spawner::bossPatterns.clear();
+        Spawner::movementPatternNames.clear();
+        Spawner::movementPatterns.clear();
+        Spawner::killList.clear();
+        Spawner::shotPatternNames.clear();
+        Spawner::shotPatterns.clear();
+        Spawner::bossAlive = false;
+
         //get movement pattern filenames
         std::vector<std::string> fileNames;
         tinydir_dir dir;

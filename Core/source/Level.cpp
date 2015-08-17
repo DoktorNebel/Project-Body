@@ -253,6 +253,8 @@ namespace bc
         }
 
         this->createBackgrounds(tilesettype, length);
+
+        GameData::reset();
     }
 
 

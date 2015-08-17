@@ -13,6 +13,7 @@ namespace bg
 
         bc::Level level;
         se::Sound music;
+        bool paused;
 
 	public:
 
@@ -25,5 +26,8 @@ namespace bg
 		virtual void update(float elapsedTime);
 		virtual void draw();
 		virtual void close();
+        void pause();
+        void resume();
+        void restartLevel();
 	};
 }

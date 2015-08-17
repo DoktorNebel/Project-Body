@@ -37,9 +37,7 @@ int main()
     se::Input::bindKeyboardKeyAction(bg::InputAction::Shoot, sf::Keyboard::E);
     se::Input::bindKeyboardKeyAction(bg::InputAction::StickyShot, sf::Keyboard::Space);
     se::Input::bindKeyboardKeyAction(bg::InputAction::FasterCheat, sf::Keyboard::C);
-    se::Input::bindKeyboardKeyAction(bg::InputAction::Medicine1, sf::Keyboard::Num1);
-    se::Input::bindKeyboardKeyAction(bg::InputAction::Medicine2, sf::Keyboard::Num2);
-    se::Input::bindKeyboardKeyAction(bg::InputAction::Medicine3, sf::Keyboard::Num3);
+    se::Input::bindKeyboardKeyAction(bg::InputAction::Pause, sf::Keyboard::Escape);
 
 	//se::Input::bindJoystickAxisAction(se::InputAction::MenuLeft, 0, sf::Joystick::PovX, false, true);
 	//se::Input::bindJoystickAxisAction(se::InputAction::MenuRight, 0, sf::Joystick::PovX, true, true);
