@@ -25,6 +25,7 @@ namespace bc
 
         static void addScore(unsigned int score);
         static void reset();
-        static void loadScores();
+		static void loadScores();
+		static void saveScores();
     };
 }

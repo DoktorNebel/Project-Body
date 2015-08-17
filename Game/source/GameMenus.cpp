@@ -126,6 +126,11 @@ namespace bg
 
         se::Engine::getMenu()->addElement("UI", "Timer", new se::MenuTimer(0.033f));
 
+		//Level end screen
+		se::Engine::getMenu()->addElement("LevelEnd", "NextButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Next Level", se::Vector2(500, -300)), false));
+
+		se::Engine::getMenu()->addElement("LevelEnd", "MenuButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Main Menu", se::Vector2(-500, -300)), false));
+
 
         se::Engine::getMenu()->data = new MenuData();
     }

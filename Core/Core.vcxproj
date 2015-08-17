@@ -81,11 +81,11 @@
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\AnimationModifier.h" />
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\BigVirusModifier.h" />
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\BoogerModifier.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\BossModifier.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\BossPartModifier.h" />
+    <ClInclude Include="include\BossModifier.h" />
+    <ClInclude Include="include\BossPartModifier.h" />
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\CoinModifier.h" />
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\CurvyShootingModifier.h" />
-    <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\GameData.h" />
+    <ClInclude Include="include\GameData.h" />
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\HomingShootingModifier.h" />
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\ItemModifier.h" />
     <ClInclude Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\include\LaserModifier.h" />
@@ -120,14 +120,14 @@
     <ClInclude Include="include\StickyShotModifier.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\CoinModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\CurvyShootingModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\HomingShootingModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\LaserModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\LaserShootingModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\NormalShootingModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\PlayerShootingModifier.cpp" />
-    <ClCompile Include="..\..\..\..\..\ken.buczilowski%40games-academy.de\Documents\GitHub Repositories\Body\Core\source\SplitShootingModifier.cpp" />
+    <ClCompile Include="source\CoinModifier.cpp" />
+    <ClCompile Include="source\CurvyShootingModifier.cpp" />
+    <ClCompile Include="source\HomingShootingModifier.cpp" />
+    <ClCompile Include="source\LaserModifier.cpp" />
+    <ClCompile Include="source\LaserShootingModifier.cpp" />
+    <ClCompile Include="source\NormalShootingModifier.cpp" />
+    <ClCompile Include="source\PlayerShootingModifier.cpp" />
+    <ClCompile Include="source\SplitShootingModifier.cpp" />
     <ClCompile Include="source\AnimationModifier.cpp" />
     <ClCompile Include="source\BigVirusModifier.cpp" />
     <ClCompile Include="source\BoogerModifier.cpp" />

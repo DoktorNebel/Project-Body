@@ -46,6 +46,9 @@ namespace bc
         std::vector<Phase> phases;
         unsigned int nextPhase;
         std::vector<BossPartModifier*> parts;
+		float explodingTimer;
+		float coinTimer;
+		bool dying;
 
     public:
 

@@ -62,4 +62,27 @@ namespace bc
 
         CoTaskMemFree(widepath);
     }
+
+
+	void GameData::saveScores()
+	{
+		PWSTR widepath;
+		SHGetKnownFolderPath(FOLDERID_Documents, 0, 0, &widepath);
+		char documentsPath[256];
+		wcstombs(documentsPath, widepath, 256);
+
+		std::string path(documentsPath);
+		path += "\\Games";
+		CreateDirectory(path.c_str(), 0);
+		path += "\\Body";
+		CreateDirectory(path.c_str(), 0);
+		path += "\\Highscores.sav";
+		CreateFile(path.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, 0, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, 0);
+
+		FILE* file = fopen(path.c_str(), "wb");
+
+		fwrite(GameData::scores, sizeof(Highscore), 40, file);
+
+		fclose(file);
+	}
 }

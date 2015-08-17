@@ -8,6 +8,8 @@
 #include "GameData.h"
 #include "Engine.h"
 #include "MenuData.h"
+#include "CoinModifier.h"
+#include "AnimationModifier.h"
 
 namespace bc
 {
@@ -29,6 +31,9 @@ namespace bc
             _itoa(i, number, 10);
             se::Engine::getMenu()->getElement("UI", "Bossbar" + std::string(number))->show();
         }
+
+		this->explodingTimer = 5.0f;
+		this->dying = false;
     }
 
 
@@ -93,9 +98,43 @@ namespace bc
 
         if (this->entity->health <= 0.0f)
         {
-            GameData::addScore(10000);
-            this->entity->dead = true;
-            Spawner::bossAlive = false;
+			if (!this->dying)
+			{
+				this->dying = true;
+				this->entity->modifiers.erase(std::find_if(this->entity->modifiers.begin(), this->entity->modifiers.end(), [](IModifier* modifier)
+				{
+					return dynamic_cast<ShootingModifier*>(modifier);
+				}));
+			}
+			this->explodingTimer -= elapsedTime;
+			if (this->explodingTimer <= 0.0f)
+			{
+				GameData::addScore(10000);
+				this->entity->dead = true;
+				Spawner::bossAlive = false;
+				se::Engine::getMenu()->changeMenu("LevelEnd")
+			}
+			else
+			{
+				this->coinTimer += elapsedTime;
+				while (this->coinTimer >= 0.0f)
+				{
+					this->coinTimer -= 0.01f;
+
+					se::AnimatedSprite coinSprite;
+					coinSprite.addAnimation("Idle");
+					coinSprite.setSpeed("Idle", 0.2f);
+					coinSprite.addSprite("Idle", se::Content::getSprite("M1"));
+					coinSprite.addSprite("Idle", se::Content::getSprite("M2"));
+					coinSprite.addSprite("Idle", se::Content::getSprite("M3"));
+					coinSprite.addSprite("Idle", se::Content::getSprite("M4"));
+					coinSprite.setScale(se::Vector2(3.0f, 3.0f));
+					std::vector<IModifier*> modifiers;
+					modifiers.push_back(new CoinModifier(1));
+					modifiers.push_back(new AnimationModifier(coinSprite));
+					Spawner::spawn(this->entity->getSprite().getPosition(), "M1", modifiers, CollisionGroup::Items);
+				}
+			}
         }
     }
 
