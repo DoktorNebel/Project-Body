@@ -39,6 +39,7 @@
     <Import Project="..\Propertysheets\Core_Include.props" />
     <Import Project="..\Propertysheets\SFML_Debug.props" />
     <Import Project="..\Propertysheets\WarningLevel.props" />
+    <Import Project="..\Propertysheets\Game_Include.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -48,6 +49,7 @@
     <Import Project="..\Propertysheets\Core_Include.props" />
     <Import Project="..\Propertysheets\SFML_Release.props" />
     <Import Project="..\Propertysheets\WarningLevel.props" />
+    <Import Project="..\Propertysheets\Game_Include.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />

@@ -22,6 +22,10 @@ namespace bg
     se::MenuCallback mainMenuButtonFunction;
     se::MenuCallback highscoreButtonFunction;
     se::MenuCallback backButtonFunction;
+    se::MenuCallback nextLevelButtonFunction;
+    se::MenuCallback characterButtonFunction;
+    se::MenuCallback changeBackgroundFunction;
+    se::MenuCallback saveScoreFunction;
 
     se::MenuCallback uiUpdateFunction;
 }

@@ -52,26 +52,14 @@ namespace bg
         se::Engine::getMenu()->addElement("Pause", "MenuButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Main Menu", se::Vector2(0, -100)), false));
 
         //level menu
-        se::Text text(se::Content::getFont("wendy.ttf"), "Flesh");
-        text.setScale(se::Vector2(0.0f, 0.0f));
-        se::Sprite sprite = se::Content::getSprite("FleshLevelButton");
-        sprite.setPosition(se::Vector2(-300, 100));
-        se::Engine::getMenu()->addElement("Levels", "Flesh", new se::Button(sprite, text, true));
+        se::Engine::getMenu()->addElement("Levels", "Flesh", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Flesh", se::Vector2(-400, 150)), false));
 
-        text.setText("Nerves");
-        sprite = se::Content::getSprite("NervesLevelButton");
-        sprite.setPosition(se::Vector2(-100, 100));
-        se::Engine::getMenu()->addElement("Levels", "Nerves", new se::Button(sprite, text, true));
+        se::Engine::getMenu()->addElement("Levels", "Nerves", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Nerves", se::Vector2(-400, 50)), false));
 
-        text.setText("Slime");
-        sprite = se::Content::getSprite("SlimeLevelButton");
-        sprite.setPosition(se::Vector2(100, 100));
-        se::Engine::getMenu()->addElement("Levels", "Slime", new se::Button(sprite, text, true));
+        se::Engine::getMenu()->addElement("Levels", "Slime", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Slime", se::Vector2(-400, -50)), false));
 
-        text.setText("Pus");
-        sprite = se::Content::getSprite("PusLevelButton");
-        sprite.setPosition(se::Vector2(300, 100));
-        se::Engine::getMenu()->addElement("Levels", "Pus", new se::Button(sprite, text, true));
+        se::Engine::getMenu()->addElement("Levels", "Pus", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Pus", se::Vector2(-400, -150)), false));
+
 
         //highscore menu
         se::Engine::getMenu()->addElement("Highscores", "BackButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Back", se::Vector2(-500, -300)), false));
@@ -90,9 +78,9 @@ namespace bg
         {
             char number[3];
             _itoa(i, number, 10);
-            se::Engine::getMenu()->addElement("Highscores", "HighscoreName" + std::string(number), new se::UIText(se::Text(se::Content::getFont("wendy.ttf"), "", se::Vector2(-300, 250 - i * 50), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 1.0f), se::Text::Alignment::Left)));
+            se::Engine::getMenu()->addElement("Highscores", "HighscoreName" + std::string(number), new se::UIText(se::Text(se::Content::getFont("wendy.ttf"), "", se::Vector2(-300, 230 - i * 50), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 1.0f), se::Text::Alignment::Left)));
 
-            se::Engine::getMenu()->addElement("Highscores", "Highscore" + std::string(number), new se::UIText(se::Text(se::Content::getFont("wendy.ttf"), "", se::Vector2(300, 250 - i * 50), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 1.0f), se::Text::Alignment::Right)));
+            se::Engine::getMenu()->addElement("Highscores", "Highscore" + std::string(number), new se::UIText(se::Text(se::Content::getFont("wendy.ttf"), "", se::Vector2(300, 230 - i * 50), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 1.0f), se::Text::Alignment::Right)));
         }
 
         //UI
@@ -131,8 +119,20 @@ namespace bg
 
 		se::Engine::getMenu()->addElement("LevelEnd", "MenuButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Main Menu", se::Vector2(-500, -300)), false));
 
+        se::Engine::getMenu()->addElement("LevelEnd", "ScoreText", new se::UIText(se::Text(se::Content::getFont("wendy.ttf"), "Score:", se::Vector2(-300, 250))));
+
+        se::Engine::getMenu()->addElement("LevelEnd", "NameText", new se::UIText(se::Text(se::Content::getFont("wendy.ttf"), "Your Name:", se::Vector2(-300, 150))));
+
+        for (unsigned char c = 65; c < 91; ++c)
+        {
+            std::string text;
+            text += c;
+            se::Engine::getMenu()->addElement("LevelEnd", text, new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), text, se::Vector2(-500 + ((c - 65) % 8) * 50, 50 - (c - 65) / 8 * 50)), false));
+        }
+
 
         se::Engine::getMenu()->data = new MenuData();
+        ((MenuData*)se::Engine::getMenu()->data)->currentChar = 0;
     }
 
 
@@ -182,20 +182,24 @@ namespace bg
         se::Engine::getMenu()->attachCallback("Pause", "MenuButton", "onUnhighlight", &unhighlightFunction);
 
 
-        se::Engine::getMenu()->attachCallback("Levels", "Flesh", "onHighlight", &highlightFunction2);
-        se::Engine::getMenu()->attachCallback("Levels", "Flesh", "onUnhighlight", &unhighlightFunction2);
+        se::Engine::getMenu()->attachCallback("Levels", "Flesh", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("Levels", "Flesh", "onHighlight", &changeBackgroundFunction);
+        se::Engine::getMenu()->attachCallback("Levels", "Flesh", "onUnhighlight", &unhighlightFunction);
         se::Engine::getMenu()->attachCallback("Levels", "Flesh", "onPress", &levelButtonFunction);
 
-        se::Engine::getMenu()->attachCallback("Levels", "Nerves", "onHighlight", &highlightFunction2);
-        se::Engine::getMenu()->attachCallback("Levels", "Nerves", "onUnhighlight", &unhighlightFunction2);
+        se::Engine::getMenu()->attachCallback("Levels", "Nerves", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("Levels", "Nerves", "onHighlight", &changeBackgroundFunction);
+        se::Engine::getMenu()->attachCallback("Levels", "Nerves", "onUnhighlight", &unhighlightFunction);
         se::Engine::getMenu()->attachCallback("Levels", "Nerves", "onPress", &levelButtonFunction);
 
-        se::Engine::getMenu()->attachCallback("Levels", "Slime", "onHighlight", &highlightFunction2);
-        se::Engine::getMenu()->attachCallback("Levels", "Slime", "onUnhighlight", &unhighlightFunction2);
+        se::Engine::getMenu()->attachCallback("Levels", "Slime", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("Levels", "Slime", "onHighlight", &changeBackgroundFunction);
+        se::Engine::getMenu()->attachCallback("Levels", "Slime", "onUnhighlight", &unhighlightFunction);
         se::Engine::getMenu()->attachCallback("Levels", "Slime", "onPress", &levelButtonFunction);
 
-        se::Engine::getMenu()->attachCallback("Levels", "Pus", "onHighlight", &highlightFunction2);
-        se::Engine::getMenu()->attachCallback("Levels", "Pus", "onUnhighlight", &unhighlightFunction2);
+        se::Engine::getMenu()->attachCallback("Levels", "Pus", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("Levels", "Pus", "onHighlight", &changeBackgroundFunction);
+        se::Engine::getMenu()->attachCallback("Levels", "Pus", "onUnhighlight", &unhighlightFunction);
         se::Engine::getMenu()->attachCallback("Levels", "Pus", "onPress", &levelButtonFunction);
 
 
@@ -222,6 +226,26 @@ namespace bg
 
         se::Engine::getMenu()->attachCallback("UI", "Timer", "onTick", &uiUpdateFunction);
 
+
+        se::Engine::getMenu()->attachCallback("LevelEnd", "NextButton", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("LevelEnd", "NextButton", "onUnhighlight", &unhighlightFunction);
+        se::Engine::getMenu()->attachCallback("LevelEnd", "NextButton", "onPress", &nextLevelButtonFunction);
+        se::Engine::getMenu()->attachCallback("LevelEnd", "NextButton", "onPress", &saveScoreFunction);
+
+        se::Engine::getMenu()->attachCallback("LevelEnd", "MenuButton", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("LevelEnd", "MenuButton", "onUnhighlight", &unhighlightFunction);
+        se::Engine::getMenu()->attachCallback("LevelEnd", "MenuButton", "onPress", &mainMenuButtonFunction);
+        se::Engine::getMenu()->attachCallback("LevelEnd", "MenuButton", "onPress", &saveScoreFunction);
+
+        for (unsigned char c = 65; c < 91; ++c)
+        {
+            std::string text;
+            text += c;
+            se::Engine::getMenu()->attachCallback("LevelEnd", text, "onHighlight", &highlightFunction);
+            se::Engine::getMenu()->attachCallback("LevelEnd", text, "onUnhighlight", &unhighlightFunction);
+            se::Engine::getMenu()->attachCallback("LevelEnd", text, "onPress", &characterButtonFunction);
+        }
+
         //hide boss bar
         se::Engine::getMenu()->getElement("UI", "BossbarText")->hide();
         for (int i = 0; i < 100; ++i)
@@ -235,13 +259,13 @@ namespace bg
 
     void highlightFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
     {
-        ((se::Button*)sender)->text.setColor(se::Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+        ((se::Button*)sender)->text.setColor(se::Vector4(1.0f, 1.0f, 1.0f, 1.0f));
     }
 
 
     void unhighlightFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
     {
-        ((se::Button*)sender)->text.setColor(se::Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+        ((se::Button*)sender)->text.setColor(se::Vector4(1.0f, 1.0f, 1.0f, 0.5f));
     }
 
 
@@ -301,7 +325,8 @@ namespace bg
     void mainMenuButtonFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
     {
         menuSystem->changeMenu("Main");
-        MenuScene* newScene = new MenuScene();
+        se::Sprite background = se::Content::getSprite("flesh");
+        MenuScene* newScene = new MenuScene(background);
         se::Engine::changeScene(newScene);
     }
 
@@ -337,6 +362,93 @@ namespace bg
     void backButtonFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
     {
         menuSystem->changeMenu("Main");
+    }
+
+
+    void nextLevelButtonFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
+    {
+        std::string level = ((MenuData*)se::Engine::getMenu()->data)->levelName;
+
+        if (level == "Flesh")
+        {
+            ((MenuData*)se::Engine::getMenu()->data)->levelName = "Nerves";
+        }
+        else if (level == "Nerves")
+        {
+            ((MenuData*)se::Engine::getMenu()->data)->levelName = "Slime";
+        }
+        if (level == "Slime")
+        {
+            ((MenuData*)se::Engine::getMenu()->data)->levelName = "Pus";
+        }
+        menuSystem->changeMenu("UI");
+        BodyGame* newScene = new BodyGame();
+        se::Engine::changeScene(newScene);
+    }
+
+
+    void characterButtonFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
+    {
+        if (((MenuData*)menuSystem->data)->currentChar < 3)
+        {
+            ((MenuData*)menuSystem->data)->playerName[((MenuData*)menuSystem->data)->currentChar] = *((se::Button*)sender)->text.getText().c_str();
+            ++((MenuData*)menuSystem->data)->currentChar;
+            ((se::UIText*)menuSystem->getElement("LevelEnd", "NameText"))->getText().setText("Your Name: " + std::string(((MenuData*)menuSystem->data)->playerName));
+        }
+    }
+
+
+    void changeBackgroundFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
+    {
+        std::string name = "flesh";
+        std::string button = ((se::Button*)sender)->text.getText();
+        if (button == "Nerves")
+        {
+            name = "nerves";
+        }
+        else if (button == "Slime")
+        {
+            name = "snot";
+        }
+        else if (button == "Pus")
+        {
+            name = "plus";
+        }
+        ((MenuScene*)se::Engine::getCurrentScene())->setBackground(se::Content::getSprite(name));
+    }
+
+
+    void saveScoreFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
+    {
+        std::string level = ((MenuData*)se::Engine::getMenu()->data)->levelName;
+        unsigned int offset = 0;
+
+        if (level == "Nerves")
+        {
+            offset = 10;
+        }
+        else if (level == "Slime")
+        {
+            offset = 20;
+        }
+        if (level == "Pus")
+        {
+            offset = 30;
+        }
+
+        std::vector<bc::GameData::Highscore> tempVec(&bc::GameData::scores[offset], &bc::GameData::scores[offset + 10]);
+        bc::GameData::Highscore newScore;
+        memcpy(newScore.name, ((MenuData*)se::Engine::getMenu()->data)->playerName, sizeof(char) * 4);
+        newScore.name[3] = '\0';
+        newScore.score = bc::GameData::score;
+        tempVec.push_back(newScore);
+        std::sort(tempVec.begin(), tempVec.end(), [](const bc::GameData::Highscore& lhs, const bc::GameData::Highscore& rhs)
+        {
+            return lhs.score > rhs.score;
+        });
+        memcpy(&bc::GameData::scores[offset], &tempVec[0], sizeof(bc::GameData::Highscore) * 10);
+        
+        bc::GameData::saveScores();
     }
 
 

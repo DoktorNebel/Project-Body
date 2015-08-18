@@ -10,5 +10,7 @@ namespace bg
         float stickyShotCooldown;
         float bombRingCooldown;
         float bossHealth;
+        char playerName[4];
+        unsigned int currentChar;
     };
 }

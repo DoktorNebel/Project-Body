@@ -6,9 +6,13 @@ namespace bg
 {
     class MenuScene : public se::IScene
     {
+    private:
+
+        se::Sprite background;
+
     public:
 
-        MenuScene();
+        MenuScene(se::Sprite background);
         ~MenuScene();
 
     public:
@@ -17,5 +21,6 @@ namespace bg
         virtual void update(float elapsedTime);
         virtual void draw();
         virtual void close();
+        void setBackground(se::Sprite newBackground);
     };
 }

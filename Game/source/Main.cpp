@@ -10,7 +10,7 @@ int main()
 {
     bg::BodyGame* game = new bg::BodyGame();
 
-    bg::MenuScene* menuScene = new bg::MenuScene();
+    bg::MenuScene* menuScene = new bg::MenuScene(se::Sprite());
 
 	se::EngineSettings settings;
     settings.fullscreen = false;
@@ -21,6 +21,9 @@ int main()
     se::Engine::initialize(menuScene, &bg::createMenus, &bg::createFunctionality, settings);
 
     se::Engine::getMenu()->changeMenu("Start");
+
+    se::Sprite background = se::Content::getSprite("flesh");
+    menuScene->setBackground(background);
 
     se::Input::bindKeyboardKeyAction(se::InputAction::MenuLeft, sf::Keyboard::Left);
     se::Input::bindKeyboardKeyAction(se::InputAction::MenuRight, sf::Keyboard::Right);

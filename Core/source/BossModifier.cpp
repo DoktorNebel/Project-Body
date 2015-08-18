@@ -10,6 +10,8 @@
 #include "MenuData.h"
 #include "CoinModifier.h"
 #include "AnimationModifier.h"
+#include "MenuScene.h"
+#include "UIText.h"
 
 namespace bc
 {
@@ -107,14 +109,18 @@ namespace bc
 				}));
 			}
 			this->explodingTimer -= elapsedTime;
-			if (this->explodingTimer <= 0.0f)
+			if (this->explodingTimer <= -3.0f)
 			{
-				GameData::addScore(10000);
 				this->entity->dead = true;
-				Spawner::bossAlive = false;
-				se::Engine::getMenu()->changeMenu("LevelEnd")
+                se::Engine::getMenu()->changeMenu("LevelEnd");
+                se::Sprite background = se::Content::getSprite("flesh");
+                bg::MenuScene* newScene = new bg::MenuScene(background);
+                se::Engine::changeScene(newScene);
+                char scoreString[16];
+                _itoa(GameData::score, scoreString, 10);
+                ((se::UIText*)se::Engine::getMenu()->getElement("LevelEnd", "ScoreText"))->getText().setText("Score: " + std::string(scoreString));
 			}
-			else
+            else if (this->explodingTimer > 0.0f)
 			{
 				this->coinTimer += elapsedTime;
 				while (this->coinTimer >= 0.0f)
@@ -135,6 +141,11 @@ namespace bc
 					Spawner::spawn(this->entity->getSprite().getPosition(), "M1", modifiers, CollisionGroup::Items);
 				}
 			}
+            else
+            {
+                this->entity->getSprite().setScale(se::Vector2(0.0f, 0.0f));
+                Spawner::bossAlive = false;
+            }
         }
     }
 

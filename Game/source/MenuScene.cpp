@@ -2,7 +2,8 @@
 
 namespace bg
 {
-    MenuScene::MenuScene()
+    MenuScene::MenuScene(se::Sprite background)
+        : background(background)
     {
 
     }
@@ -28,12 +29,18 @@ namespace bg
 
     void MenuScene::draw()
     {
-
+        se::Engine::draw(this->background);
     }
 
 
     void MenuScene::close()
     {
 
+    }
+
+
+    void MenuScene::setBackground(se::Sprite newBackground)
+    {
+        this->background = newBackground;
     }
 }
