@@ -306,78 +306,90 @@ namespace se
             switch (action.alternativeInputType)
             {
             case Input::InputType::Mouse:
-                action.value = sf::Mouse::isButtonPressed((sf::Mouse::Button)action.alternativeInput);
-                if (Input::previousValues[i] != action.value)
-                {
-                    if (action.value == 1.0f)
-                        action.pressed = true;
-                    else
-                        action.released = true;
-                }
-                else
-                {
-                    action.pressed = false;
-                    action.released = false;
-                }
-                Input::previousValues[i] = action.value;
+				if (action.value == 0.0f)
+				{
+					action.value = sf::Mouse::isButtonPressed((sf::Mouse::Button)action.alternativeInput);
+					if (Input::previousValues[i] != action.value)
+					{
+						if (action.value == 1.0f)
+							action.pressed = true;
+						else
+							action.released = true;
+					}
+					else
+					{
+						action.pressed = false;
+						action.released = false;
+					}
+					Input::previousValues[i] = action.value;
+				}
                 break;
 
 
-            case Input::InputType::Keyboard:
-                action.value = sf::Keyboard::isKeyPressed((sf::Keyboard::Key)action.alternativeInput);
-                if (Input::previousValues[i] != action.value)
-                {
-                    if (action.value == 1.0f)
-                        action.pressed = true;
-                    else
-                        action.released = true;
-                }
-                else
-                {
-                    action.pressed = false;
-                    action.released = false;
-                }
-                Input::previousValues[i] = action.value;
+			case Input::InputType::Keyboard:
+				if (action.value == 0.0f)
+				{
+					action.value = sf::Keyboard::isKeyPressed((sf::Keyboard::Key)action.alternativeInput);
+					if (Input::previousValues[i] != action.value)
+					{
+						if (action.value == 1.0f)
+							action.pressed = true;
+						else
+							action.released = true;
+					}
+					else
+					{
+						action.pressed = false;
+						action.released = false;
+					}
+					Input::previousValues[i] = action.value;
+				}
                 break;
 
 
-            case Input::InputType::JoystickButton:
-                action.value = sf::Joystick::isButtonPressed(action.alternativeIndex, action.alternativeInput);
-                if (Input::previousValues[i] != action.value)
-                {
-                    if (action.value == 1.0f)
-                        action.pressed = true;
-                    else
-                        action.released = true;
-                }
-                else
-                {
-                    action.pressed = false;
-                    action.released = false;
-                }
-                Input::previousValues[i] = action.value;
+			case Input::InputType::JoystickButton:
+				if (action.value == 0.0f)
+				{
+					action.value = sf::Joystick::isButtonPressed(action.alternativeIndex, action.alternativeInput);
+					if (Input::previousValues[i] != action.value)
+					{
+						if (action.value == 1.0f)
+							action.pressed = true;
+						else
+							action.released = true;
+					}
+					else
+					{
+						action.pressed = false;
+						action.released = false;
+					}
+					Input::previousValues[i] = action.value;
+				}
                 break;
 
 
-            case Input::InputType::JoystickAxis:
-                action.value = sf::Joystick::getAxisPosition(action.alternativeIndex, (sf::Joystick::Axis)action.alternativeInput) / 100.0f;
-                if (action.alternativePositive)
-                    action.value = action.value < 0.0f ? 0.0f : action.value;
-                else
-                    action.value = action.value > 0.0f ? 0.0f : abs(action.value);
-                if (Input::previousValues[i] != action.value)
-                {
-                    if (action.value > 0.0f)
-                        action.pressed = true;
-                    else
-                        action.released = true;
-                }
-                else
-                {
-                    action.pressed = false;
-                    action.released = false;
-                }
-                Input::previousValues[i] = action.value;
+			case Input::InputType::JoystickAxis:
+				if (action.value == 0.0f)
+				{
+					action.value = sf::Joystick::getAxisPosition(action.alternativeIndex, (sf::Joystick::Axis)action.alternativeInput) / 100.0f;
+					if (action.alternativePositive)
+						action.value = action.value < 0.0f ? 0.0f : action.value;
+					else
+						action.value = action.value > 0.0f ? 0.0f : abs(action.value);
+					if (Input::previousValues[i] != action.value)
+					{
+						if (action.value > 0.0f)
+							action.pressed = true;
+						else
+							action.released = true;
+					}
+					else
+					{
+						action.pressed = false;
+						action.released = false;
+					}
+					Input::previousValues[i] = action.value;
+				}
                 break;
             }
 		}

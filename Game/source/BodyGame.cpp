@@ -28,7 +28,7 @@ namespace bg
 
         this->music = se::Content::getSound("first_flight");
         this->music.setLooping(true);
-        se::Engine::playSound(this->music);
+        //se::Engine::playSound(this->music);
 
         this->paused = false;
 	}
