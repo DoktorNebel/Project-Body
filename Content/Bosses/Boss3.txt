@@ -1,0 +1,10 @@
+Health 5000
+Phase 1.0
+Movement Boss1Mov Stay
+Shooting Boss3Shot
+Phase 0.66
+Movement None Stay
+Shooting Boss3ShotPhase2
+Phase 0.33
+Movement None Stay
+Shooting Boss3ShotPhase3

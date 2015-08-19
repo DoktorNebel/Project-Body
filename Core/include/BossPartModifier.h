@@ -19,6 +19,7 @@ namespace bc
         se::Sprite destroyedSprite;
         bool hasDestroyedSprite;
         bool destroyed;
+		bool hittable;
 
     public:
 

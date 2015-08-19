@@ -6,8 +6,9 @@ Part 3000 -5 -95 Boss2Middle Boss1Mov Stay NoRotate None
 Part 3000 0 -145 Boss2Tail Boss1Mov Stay NoRotate Boss2TailShot
 Phase 0.5
 Movement None Stay
-Shooting Boss1ShotPhase2
-Part 3000 -5 -95 Boss2Middle Boss2MiddleMov1 Repeat NoRotate None
-Part 3000 -5 -95 Boss2Middle Boss2MiddleMov2 Repeat NoRotate None
-Part 3000 -5 -95 Boss2Middle Boss2MiddleMov3 Repeat NoRotate None
-Part 3000 0 -145 Boss2Tail Boss2TailMov Repeat NoRotate None
+Shooting Boss2ShotPhase2
+Part 3000 -5 -95 Boss2Middle Boss2MiddleMov1 Stay NoRotate None
+Part 3000 -5 -95 Boss2Middle Boss2MiddleMov2 Stay NoRotate None
+Part 3000 -5 -95 Boss2Middle Boss2MiddleMov3 Stay NoRotate None
+Part 3000 -5 -95 Boss2Middle Boss2MiddleMov4 Stay NoRotate None
+Part 3000 0 -145 Boss2Tail Boss2TailMov Stay NoRotate Boss2TailShotPhase2

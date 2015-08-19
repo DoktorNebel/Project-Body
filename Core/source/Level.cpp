@@ -52,7 +52,14 @@ namespace bc
             bgTile2 = "BG-Tile-2-Nerves";
             bgTile3 = "BG-Tile-3-Nerves";
             bgTile4 = "BG-Tile-4-Nerves";
-            break;
+			break;
+
+		case Tileset::Slime:
+			bgTile1 = "BG-Tile-1-Slime";
+			bgTile2 = "BG-Tile-2-Slime";
+			bgTile3 = "BG-Tile-3-Slime";
+			bgTile4 = "BG-Tile-4-Slime";
+			break;
 
 		case Tileset::Pus:
 			bgTile1 = "4";

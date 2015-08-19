@@ -27,13 +27,14 @@ namespace bc
     {
         this->entity->maxHealth = this->health;
         this->entity->health = this->entity->maxHealth;
+		this->hittable = this->health > 0.0f;
     }
 
 
     void BossPartModifier::onUpdate(float elapsedTime)
     {
         //this->entity->health = 1000.0f;
-        if (this->entity->health <= 0.0f)
+        if (this->hittable && this->entity->health <= 0.0f)
         {
             if (this->hasDestroyedSprite)
             {
@@ -83,7 +84,7 @@ namespace bc
 
     void BossPartModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
-        if (collisionGroup == CollisionGroup::PlayerProjectiles && this->boss != 0 && this->entity->health > 0.0f)
+        if (this->hittable && collisionGroup == CollisionGroup::PlayerProjectiles && this->boss != 0 && this->entity->health > 0.0f)
         {
             this->boss->entity->health -= otherEntity->damage;
             otherEntity->health -= this->boss->entity->maxHealth;

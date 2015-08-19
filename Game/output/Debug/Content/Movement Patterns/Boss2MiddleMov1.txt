@@ -1,3 +1,1 @@
-0 0 100 0 normal
-0 -200 100 2 normal
-0 0 100 0 normal
+0 0 100 2 normal

@@ -1,0 +1,22 @@
+Delay 1.0
+EneElek Down_Wait_Fast 1.0 0.0
+EneElek Down_Wait_Fast 1.0 60.0
+EneElek Down_Wait_Fast 1.0 120.0
+EneElek Down_Wait_Fast 1.0 180.0
+EneElek Down_Wait_Fast 1.0 240.0
+EneElek Down_Wait_Fast 1.0 300.0
+Delay 0.5
+EnemyShoot10 Down_Straight 1.0 15.0
+EnemyShoot10 Down_Straight 1.0 75.0
+EnemyShoot10 Down_Straight 1.0 135.0
+EnemyShoot10 Down_Straight 1.0 195.0
+EnemyShoot10 Down_Straight 1.0 255.0
+EnemyShoot10 Down_Straight 1.0 315.0
+EnemyShoot10 Down_Straight 1.0 345.0
+Delay 0.5
+EneElek Down_Wait_Fast 1.0 30.0
+EneElek Down_Wait_Fast 1.0 90.0
+EneElek Down_Wait_Fast 1.0 150.0
+EneElek Down_Wait_Fast 1.0 210.0
+EneElek Down_Wait_Fast 1.0 270.0
+EneElek Down_Wait_Fast 1.0 330.0
