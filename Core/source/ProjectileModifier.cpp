@@ -29,7 +29,7 @@ namespace bc
     void ProjectileModifier::onCreate()
     {
         this->entity->getSprite().setDepth(-0.1f);
-        this->entity->getSprite().setScale(se::Vector2(1.5f, 1.5f));
+        this->entity->getSprite().setScale(se::Vector2(1.0f, 1.0f));
         this->entity->getSprite().setRotation(atan2(this->direction.x, this->direction.y) * -57.2957795f);
         this->entity->damage = 1.0f;
     }

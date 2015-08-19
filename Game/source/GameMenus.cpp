@@ -233,13 +233,13 @@ namespace bg
 
         se::Engine::getMenu()->attachCallback("LevelEnd", "NextButton", "onHighlight", &highlightFunction);
         se::Engine::getMenu()->attachCallback("LevelEnd", "NextButton", "onUnhighlight", &unhighlightFunction);
-        se::Engine::getMenu()->attachCallback("LevelEnd", "NextButton", "onPress", &nextLevelButtonFunction);
         se::Engine::getMenu()->attachCallback("LevelEnd", "NextButton", "onPress", &saveScoreFunction);
+        se::Engine::getMenu()->attachCallback("LevelEnd", "NextButton", "onPress", &nextLevelButtonFunction);
 
         se::Engine::getMenu()->attachCallback("LevelEnd", "MenuButton", "onHighlight", &highlightFunction);
         se::Engine::getMenu()->attachCallback("LevelEnd", "MenuButton", "onUnhighlight", &unhighlightFunction);
-        se::Engine::getMenu()->attachCallback("LevelEnd", "MenuButton", "onPress", &mainMenuButtonFunction);
         se::Engine::getMenu()->attachCallback("LevelEnd", "MenuButton", "onPress", &saveScoreFunction);
+        se::Engine::getMenu()->attachCallback("LevelEnd", "MenuButton", "onPress", &mainMenuButtonFunction);
 
         for (unsigned char c = 65; c < 91; ++c)
         {
@@ -426,6 +426,8 @@ namespace bg
     {
 		if (strcmp(((MenuData*)se::Engine::getMenu()->data)->playerName, "   ") != 0)
 		{
+            bc::GameData::loadScores();
+
 			std::string level = ((MenuData*)se::Engine::getMenu()->data)->levelName;
 			unsigned int offset = 0;
 

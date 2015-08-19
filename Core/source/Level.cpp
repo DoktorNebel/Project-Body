@@ -46,6 +46,14 @@ namespace bc
             bgTile4 = "BG-Tile-4";
 			break;
 
+        case Tileset::Nerves:
+            bgTile1Left = "BG-Tile-1-Links-Nerves";
+            bgTile1Right = "BG-Tile-1-Rechts-Nerves";
+            bgTile2 = "BG-Tile-2-Nerves";
+            bgTile3 = "BG-Tile-3-Nerves";
+            bgTile4 = "BG-Tile-4-Nerves";
+            break;
+
 		case Tileset::Pus:
 			bgTile1 = "4";
 			bgTile2 = "3";

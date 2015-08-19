@@ -2,6 +2,10 @@
 
 #include "IModifier.h"
 
+#include <string>
+
+#include "Sprite.h"
+
 namespace bc
 {
     class BossModifier;
@@ -11,6 +15,10 @@ namespace bc
     private:
 
         BossModifier* boss;
+        float health;
+        se::Sprite destroyedSprite;
+        bool hasDestroyedSprite;
+        bool destroyed;
 
     public:
 
@@ -18,7 +26,7 @@ namespace bc
 
     public:
 
-        BossPartModifier(BossModifier* boss);
+        BossPartModifier(BossModifier* boss, float health, std::string spriteName);
 
     public:
 

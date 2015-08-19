@@ -1,0 +1,14 @@
+0 0 100 0 normal
+0 -250 10 0 normal
+-250 -250 50 0 control
+-250 0 50 0 normal
+-250 250 50 0 control
+0 250 50 0 normal
+250 250 50 0 control
+250 0 50 0 normal
+250 -250 50 0 control
+0 -250 50 0 normal
+-250 -250 50 0 control
+-250 0 50 0 normal
+-250 250 50 0 control
+0 250 50 0 normal

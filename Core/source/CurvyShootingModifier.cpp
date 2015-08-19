@@ -8,7 +8,7 @@ namespace bc
     CurvyShootingModifier::CurvyShootingModifier(int level)
     {
         this->upgrade(level);
-        this->fireRate = 0.02f;
+        this->fireRate = 0.01f;
         this->fireCounter = 0.0f;
         this->curvyfireRate = 0.01f;
         this->curvyfireCounter = 0.0f;
@@ -27,7 +27,7 @@ namespace bc
             se::Vector2 directionVector(cos(spreadDirection * 0.0174532925f), sin(spreadDirection * 0.0174532925f));
             directionVector *= 1500.0f;
             modifiers.push_back(new ProjectileModifier(directionVector, 2.0f));
-            Spawner::spawn(this->entity->getSprite().getPosition(), "PlayerProjectile", modifiers, CollisionGroup::PlayerProjectiles);
+            Spawner::spawn(this->entity->getSprite().getPosition(), "SchussKurvig", modifiers, CollisionGroup::PlayerProjectiles);
         }
 
         this->curvyfireCounter += elapsedTime;
@@ -41,7 +41,7 @@ namespace bc
                 modifiers.push_back(new ProjectileModifier(se::Vector2(0.0f, 0.0f), 2.0f));
                 MovementPatternModifier* move = new MovementPatternModifier(this->movementPatterns[i], (float)(rand() % 101 - 50) / 50.0f, 0.5f, MovementPatternModifier::Style::Kill);
                 modifiers.push_back(move);
-                Spawner::spawn(this->entity->getSprite().getPosition(), "PlayerProjectile", modifiers, CollisionGroup::PlayerProjectiles);
+                Spawner::spawn(this->entity->getSprite().getPosition(), "SchussKurvig", modifiers, CollisionGroup::PlayerProjectiles);
             }
         }
     }

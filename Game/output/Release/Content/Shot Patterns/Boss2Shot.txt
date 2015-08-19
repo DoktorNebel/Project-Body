@@ -1,0 +1,33 @@
+Delay 3.0
+EnemyShoot30 Down_LeftCurve 2.0 0.0
+EnemyShoot30 Down_RightCurve 2.0 0.0
+Delay 0.1
+EnemyShoot30 Down_LeftCurve 2.0 0.0
+EnemyShoot30 Down_RightCurve 2.0 0.0
+Delay 0.1
+EnemyShoot30 Down_LeftCurve 2.0 0.0
+EnemyShoot30 Down_RightCurve 2.0 0.0
+Delay 0.1
+EnemyShoot30 Down_LeftCurve 2.0 0.0
+EnemyShoot30 Down_RightCurve 2.0 0.0
+Delay 0.1
+EnemyShoot30 Down_LeftCurve 2.0 0.0
+EnemyShoot30 Down_RightCurve 2.0 0.0
+Delay 0.1
+EnemyShoot30 Down_LeftCurve 2.0 0.0
+EnemyShoot30 Down_RightCurve 2.0 0.0
+Delay 0.1
+EnemyShoot30 Down_LeftCurve 2.0 0.0
+EnemyShoot30 Down_RightCurve 2.0 0.0
+Delay 0.1
+EnemyShoot30 Down_LeftCurve 2.0 0.0
+EnemyShoot30 Down_RightCurve 2.0 0.0
+Delay 0.1
+EnemyShoot30 Down_LeftCurve 2.0 0.0
+EnemyShoot30 Down_RightCurve 2.0 0.0
+Delay 0.1
+EnemyShoot30 Down_LeftCurve 2.0 0.0
+EnemyShoot30 Down_RightCurve 2.0 0.0
+Delay 0.1
+EnemyShoot30 Down_LeftCurve 2.0 0.0
+EnemyShoot30 Down_RightCurve 2.0 0.0

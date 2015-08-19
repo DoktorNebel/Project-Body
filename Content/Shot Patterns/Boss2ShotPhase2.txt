@@ -1,0 +1,114 @@
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 0.0
+EnemyShoot30 Down_Straight 1.0 0.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -10.0
+EnemyShoot30 Down_Straight 1.0 10.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -20.0
+EnemyShoot30 Down_Straight 1.0 20.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -30.0
+EnemyShoot30 Down_Straight 1.0 30.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -40.0
+EnemyShoot30 Down_Straight 1.0 40.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -50.0
+EnemyShoot30 Down_Straight 1.0 50.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -60.0
+EnemyShoot30 Down_Straight 1.0 60.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -70.0
+EnemyShoot30 Down_Straight 1.0 70.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -80.0
+EnemyShoot30 Down_Straight 1.0 80.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -90.0
+EnemyShoot30 Down_Straight 1.0 90.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -100.0
+EnemyShoot30 Down_Straight 1.0 100.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -110.0
+EnemyShoot30 Down_Straight 1.0 110.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -120.0
+EnemyShoot30 Down_Straight 1.0 120.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -130.0
+EnemyShoot30 Down_Straight 1.0 130.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -140.0
+EnemyShoot30 Down_Straight 1.0 140.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -150.0
+EnemyShoot30 Down_Straight 1.0 150.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -160.0
+EnemyShoot30 Down_Straight 1.0 160.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -170.0
+EnemyShoot30 Down_Straight 1.0 170.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -180.0
+EnemyShoot30 Down_Straight 1.0 180.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -180.0
+EnemyShoot30 Down_Straight 1.0 180.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -170.0
+EnemyShoot30 Down_Straight 1.0 170.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -160.0
+EnemyShoot30 Down_Straight 1.0 160.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -150.0
+EnemyShoot30 Down_Straight 1.0 150.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -140.0
+EnemyShoot30 Down_Straight 1.0 140.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -130.0
+EnemyShoot30 Down_Straight 1.0 130.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -120.0
+EnemyShoot30 Down_Straight 1.0 120.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -110.0
+EnemyShoot30 Down_Straight 1.0 110.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -100.0
+EnemyShoot30 Down_Straight 1.0 100.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -90.0
+EnemyShoot30 Down_Straight 1.0 90.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -80.0
+EnemyShoot30 Down_Straight 1.0 80.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -70.0
+EnemyShoot30 Down_Straight 1.0 70.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -60.0
+EnemyShoot30 Down_Straight 1.0 60.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -50.0
+EnemyShoot30 Down_Straight 1.0 50.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -40.0
+EnemyShoot30 Down_Straight 1.0 40.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -30.0
+EnemyShoot30 Down_Straight 1.0 30.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -20.0
+EnemyShoot30 Down_Straight 1.0 20.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 -10.0
+EnemyShoot30 Down_Straight 1.0 10.0
+Delay 0.1
+EnemyShoot30 Down_Straight 1.0 0.0
+EnemyShoot30 Down_Straight 1.0 0.0

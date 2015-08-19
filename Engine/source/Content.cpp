@@ -734,9 +734,9 @@ namespace se
 
     Sprite Content::getSprite(std::string name)
     {
-		int pos = std::find(Content::spriteNames.begin(), Content::spriteNames.end(), name) - Content::spriteNames.begin();
+		unsigned int pos = std::find(Content::spriteNames.begin(), Content::spriteNames.end(), name) - Content::spriteNames.begin();
         
-		return Content::sprites[pos];
+		return pos < Content::sprites.size() ? Content::sprites[pos] : se::Sprite();
     }
 
 

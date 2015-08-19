@@ -26,9 +26,11 @@ namespace bc
 
             struct Part
             {
+                float health;
                 se::Vector2 spawnPosition;
                 std::string spriteName;
                 std::string movePatternName;
+                MovementPatternModifier::Style::Type movementType;
                 bool noRotate;
                 std::string shotPatternName;
             };
@@ -59,5 +61,7 @@ namespace bc
         virtual void onCreate();
         virtual void onUpdate(float elapsedTime);
         virtual void onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar);
+        void destroyPart(BossPartModifier* part);
+        void deleteBullets();
     };
 }

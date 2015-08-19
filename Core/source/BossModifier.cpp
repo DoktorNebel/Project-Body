@@ -81,18 +81,41 @@ namespace bc
             for (unsigned int i = 0; i < this->phases[this->nextPhase].parts.size(); ++i)
             {
                 std::vector<IModifier*> modifiers;
-                modifiers.push_back(new BossPartModifier(this));
+                modifiers.push_back(new BossPartModifier(this, this->phases[this->nextPhase].parts[i].health, this->phases[this->nextPhase].parts[i].spriteName));
                 this->parts.push_back((BossPartModifier*)modifiers.back());
                 modifiers.push_back(new HitMarkerModifier());
-                if (this->phases[this->nextPhase].parts[i].movePatternName != "")
+                if (this->phases[this->nextPhase].parts[i].movePatternName != "None")
                 {
-                    modifiers.push_back(new MovementPatternModifier(Spawner::getMovementPattern(this->phases[this->nextPhase].parts[i].movePatternName), 0.0f, 1.0f, MovementPatternModifier::Style::Stay));
+                    modifiers.push_back(new MovementPatternModifier(Spawner::getMovementPattern(this->phases[this->nextPhase].parts[i].movePatternName), 0.0f, 1.0f, this->phases[this->nextPhase].parts[i].movementType));
                     if (this->phases[this->nextPhase].parts[i].noRotate)
                         ((MovementPatternModifier*)modifiers.back())->noRotate = true;
                 }
-                if (this->phases[this->nextPhase].parts[i].shotPatternName != "")
+                if (this->phases[this->nextPhase].parts[i].shotPatternName != "None")
                     modifiers.push_back(new ShootingModifier(Spawner::getShotPattern(this->phases[this->nextPhase].parts[i].shotPatternName)));
                 Spawner::spawn(this->entity->getSprite().getPosition() + this->phases[this->nextPhase].parts[i].spawnPosition, this->phases[this->nextPhase].parts[i].spriteName, modifiers, CollisionGroup::Enemies);
+            }
+
+            if (healthPercentage != 1.0f)
+            {
+                this->deleteBullets();
+                se::Engine::getActiveCamera().addScreenshake(10.0f, 1.0f);
+
+                se::AnimatedSprite coinSprite;
+                coinSprite.addAnimation("Idle");
+                coinSprite.setSpeed("Idle", 0.2f);
+                coinSprite.addSprite("Idle", se::Content::getSprite("M1"));
+                coinSprite.addSprite("Idle", se::Content::getSprite("M2"));
+                coinSprite.addSprite("Idle", se::Content::getSprite("M3"));
+                coinSprite.addSprite("Idle", se::Content::getSprite("M4"));
+                coinSprite.setScale(se::Vector2(3.0f, 3.0f));
+                std::vector<IModifier*> modifiers;
+                for (unsigned int i = 0; i < 200; ++i)
+                {
+                    modifiers.clear();
+                    modifiers.push_back(new CoinModifier(1));
+                    modifiers.push_back(new AnimationModifier(coinSprite));
+                    Spawner::spawn(this->entity->getSprite().getPosition(), "M1", modifiers, CollisionGroup::Items);
+                }
             }
 
             ++this->nextPhase;
@@ -103,10 +126,12 @@ namespace bc
 			if (!this->dying)
 			{
 				this->dying = true;
-				this->entity->modifiers.erase(std::find_if(this->entity->modifiers.begin(), this->entity->modifiers.end(), [](IModifier* modifier)
+				this->entity->modifiers.erase(std::find_if(this->entity->modifiers.begin(), this->entity->modifiers.end(), [](IModifier*& modifier)
 				{
 					return dynamic_cast<ShootingModifier*>(modifier);
-				}));
+                }));
+                this->deleteBullets();
+                se::Engine::getActiveCamera().addScreenshake(15.0f, 1.0f);
 			}
 			this->explodingTimer -= elapsedTime;
 			if (this->explodingTimer <= -3.0f)
@@ -153,5 +178,38 @@ namespace bc
     void BossModifier::onHit(Entity* otherEntity, CollisionGroup::Type collisionGroup, se::Vector2 projectionVector, float projectionScalar)
     {
 
+    }
+
+
+    void BossModifier::destroyPart(BossPartModifier* part)
+    {
+        part->entity->dead = true;
+        this->parts.erase(std::find(this->parts.begin(), this->parts.end(), part));
+    }
+
+
+    void BossModifier::deleteBullets()
+    {
+        std::vector<Entity>* projectiles = Spawner::getEntities(CollisionGroup::EnemyProjectiles);
+
+        se::AnimatedSprite coinSprite;
+        coinSprite.addAnimation("Idle");
+        coinSprite.setSpeed("Idle", 0.2f);
+        coinSprite.addSprite("Idle", se::Content::getSprite("M1"));
+        coinSprite.addSprite("Idle", se::Content::getSprite("M2"));
+        coinSprite.addSprite("Idle", se::Content::getSprite("M3"));
+        coinSprite.addSprite("Idle", se::Content::getSprite("M4"));
+        coinSprite.setScale(se::Vector2(3.0f, 3.0f));
+        std::vector<IModifier*> modifiers;
+
+        for (unsigned int i = 0; i < projectiles->size(); ++i)
+        {
+            modifiers.clear();
+            modifiers.push_back(new CoinModifier(1));
+            modifiers.push_back(new AnimationModifier(coinSprite));
+            Spawner::spawn((*projectiles)[i].getSprite().getPosition(), "M1", modifiers, CollisionGroup::Items);
+
+            (*projectiles)[i].dead = true;
+        }
     }
 }

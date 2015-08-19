@@ -30,7 +30,7 @@ namespace bc
             for (unsigned int i = 0; i < this->shotPattern.shotSalvos[this->currentSalvo].shotMovementNames.size(); ++i)
             {
                 std::vector<IModifier*> modifiers;
-                modifiers.push_back(new ProjectileModifier(se::Vector2(0.0f, 0.0f), 5.0f));
+                modifiers.push_back(new ProjectileModifier(se::Vector2(0.0f, 0.0f), 50.0f));
                 modifiers.push_back(new MovementPatternModifier(Spawner::getMovementPattern(this->shotPattern.shotSalvos[this->currentSalvo].shotMovementNames[i]), this->shotPattern.shotSalvos[this->currentSalvo].rotations[i], this->shotPattern.shotSalvos[this->currentSalvo].speeds[i], MovementPatternModifier::Style::Kill));
                 se::AnimatedSprite sprite;
                 bool result;

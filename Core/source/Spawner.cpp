@@ -499,18 +499,28 @@ namespace bc
 
                 if (strcmp(firstString, "Part") == 0)
                 {
-                    float spawnX, spawnY;
+                    float health, spawnX, spawnY;
                     char spriteName[128];
                     char movementName[128];
+                    char movementType[128];
                     char movementSpecial[128];
                     char shotPatternName[128];
 
-                    if (sscanf(secondString, "%f %f %s %s %s %s", &spawnX, &spawnY, spriteName, movementName, movementSpecial, shotPatternName))
+                    if (sscanf(secondString, "%f %f %f %s %s %s %s %s", &health, &spawnX, &spawnY, spriteName, movementName, movementType, movementSpecial, shotPatternName))
                     {
                         BossModifier::Phase::Part part;
+                        part.health = health;
                         part.spawnPosition = se::Vector2(spawnX, spawnY);
                         part.spriteName = spriteName;
                         part.movePatternName = movementName;
+                        if (strcmp(movementType, "Stay") == 0)
+                            part.movementType = MovementPatternModifier::Style::Stay;
+                        else if (strcmp(movementType, "Kill") == 0)
+                            part.movementType = MovementPatternModifier::Style::Kill;
+                        else if (strcmp(movementType, "Repeat") == 0)
+                            part.movementType = MovementPatternModifier::Style::Repeat;
+                        else if (strcmp(movementType, "Reverse") == 0)
+                            part.movementType = MovementPatternModifier::Style::Reverse;
                         if (strcmp(movementSpecial, "NoRotate") == 0)
                             part.noRotate = true;
                         else
@@ -573,11 +583,35 @@ namespace bc
         //create animations
         se::AnimatedSprite sprite;
         sprite.addAnimation("Idle");
-        sprite.setSpeed("Idle", 0.2f);
+        sprite.setSpeed("Idle", 0.1f);
         sprite.addSprite("Idle", se::Content::getSprite("EneElek0"));
         sprite.addSprite("Idle", se::Content::getSprite("EneElek1"));
         sprite.addSprite("Idle", se::Content::getSprite("EneElek2"));
         Spawner::animationNames.push_back("EneElek");
+        Spawner::animations.push_back(sprite);
+
+        sprite = se::AnimatedSprite();
+        sprite.addAnimation("Idle");
+        sprite.setSpeed("Idle", 0.3f);
+        sprite.addSprite("Idle", se::Content::getSprite("EnemyShoot10"));
+        sprite.addSprite("Idle", se::Content::getSprite("EnemyShoot11"));
+        Spawner::animationNames.push_back("EnemyShoot1");
+        Spawner::animations.push_back(sprite);
+
+        sprite = se::AnimatedSprite();
+        sprite.addAnimation("Idle");
+        sprite.setSpeed("Idle", 0.3f);
+        sprite.addSprite("Idle", se::Content::getSprite("EnemyShoot20"));
+        sprite.addSprite("Idle", se::Content::getSprite("EnemyShoot21"));
+        Spawner::animationNames.push_back("EnemyShoot2");
+        Spawner::animations.push_back(sprite);
+
+        sprite = se::AnimatedSprite();
+        sprite.addAnimation("Idle");
+        sprite.setSpeed("Idle", 0.3f);
+        sprite.addSprite("Idle", se::Content::getSprite("EnemyShoot30"));
+        sprite.addSprite("Idle", se::Content::getSprite("EnemyShoot31"));
+        Spawner::animationNames.push_back("EnemyShoot3");
         Spawner::animations.push_back(sprite);
 
 

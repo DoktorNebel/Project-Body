@@ -28,7 +28,7 @@ namespace bc
                 se::Vector2 directionVector(cos(spreadDirection * 0.0174532925f), sin(spreadDirection * 0.0174532925f));
                 directionVector *= 1500.0f;
                 modifiers.push_back(new ProjectileModifier(directionVector, 2.0f));
-                Spawner::spawn(this->entity->getSprite().getPosition() + se::Vector2(0.0f, 10.0f), "PlayerProjectile", modifiers, CollisionGroup::PlayerProjectiles);
+                Spawner::spawn(this->entity->getSprite().getPosition() + se::Vector2(0.0f, 10.0f), "SchussTeilbar", modifiers, CollisionGroup::PlayerProjectiles);
             }
         }
     }

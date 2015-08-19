@@ -1,0 +1,22 @@
+Delay 0.25
+EneElek Down_Straight 1.5 0.0
+Delay 0.25
+EneElek Down_Straight 1.5 -13.0
+Delay 0.25
+EneElek Down_Straight 1.5 5.0
+Delay 0.25
+EneElek Down_Straight 1.5 28.0
+Delay 0.25
+EneElek Down_Straight 1.5 -23.0
+Delay 0.25
+EneElek Down_Straight 1.5 45.0
+Delay 0.25
+EneElek Down_Straight 1.5 63.0
+Delay 0.25
+EneElek Down_Straight 1.5 -32.0
+Delay 0.25
+EneElek Down_Straight 1.5 -10.0
+Delay 0.25
+EneElek Down_Straight 1.5 -46.0
+Delay 0.25
+EneElek Down_Straight 1.5 -67.0

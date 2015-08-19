@@ -1,0 +1,14 @@
+0 0 100 0 normal
+0 -400 10 0 normal
+-400 -400 50 0 control
+-400 0 50 0 normal
+-400 400 50 0 control
+0 400 50 0 normal
+400 400 50 0 control
+400 0 50 0 normal
+400 -400 50 0 control
+0 -400 50 0 normal
+-400 -400 50 0 control
+-400 0 50 0 normal
+-400 400 50 0 control
+0 400 50 0 normal

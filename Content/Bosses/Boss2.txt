@@ -1,0 +1,14 @@
+Health 3000
+Phase 1.0
+Movement Boss1Mov Stay
+Shooting Boss2Shot
+Part 3000 -5 -95 Boss2Middle Boss1Mov Stay NoRotate None
+Part 3000 0 -145 Boss2Tail Boss1Mov Stay NoRotate Boss2TailShot
+Phase 0.5
+Movement None Stay
+Shooting Boss2ShotPhase2
+Part 3000 -5 -95 Boss2Middle Boss2MiddleMov1 Stay NoRotate None
+Part 3000 -5 -95 Boss2Middle Boss2MiddleMov2 Stay NoRotate None
+Part 3000 -5 -95 Boss2Middle Boss2MiddleMov3 Stay NoRotate None
+Part 3000 -5 -95 Boss2Middle Boss2MiddleMov4 Stay NoRotate None
+Part 3000 0 -145 Boss2Tail Boss2TailMov Stay NoRotate Boss2TailShotPhase2
