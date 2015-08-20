@@ -1,5 +1,5 @@
 Delay 1.0
-EnemyShoot1 Down_Straight 2.0 -60
-EnemyShoot1 Down_Straight 2.0 -20
-EnemyShoot1 Down_Straight 2.0 20
-EnemyShoot1 Down_Straight 2.0 60
+EnemyShoot10 Down_Straight 2.0 -60
+EnemyShoot10 Down_Straight 2.0 -20
+EnemyShoot10 Down_Straight 2.0 20
+EnemyShoot10 Down_Straight 2.0 60

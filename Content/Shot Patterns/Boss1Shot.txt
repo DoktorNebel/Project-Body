@@ -1,55 +1,55 @@
 Delay 1.0
-EnemyShoot10 Down_Slow_Circle_1 8.0 90.0
-EnemyShoot10 Down_Slow_Circle_2 7.0 90.0
-EnemyShoot10 Down_Slow_Circle_3 6.0 90.0
-EnemyShoot10 Down_Slow_Circle_4 5.0 90.0
-EnemyShoot10 Down_Slow_Circle_5 4.0 90.0
-EnemyShoot10 Down_Slow_Circle_6 3.0 90.0
-EnemyShoot10 Down_Slow_Circle_7 2.0 90.0
-EnemyShoot10 Down_Slow_Circle_8 1.0 90.0
+EnemyShoot10 Down_Slow_Circle_1 8.0 -90.0
+EnemyShoot10 Down_Slow_Circle_2 7.0 -90.0
+EnemyShoot10 Down_Slow_Circle_3 6.0 -90.0
+EnemyShoot10 Down_Slow_Circle_4 5.0 -90.0
+EnemyShoot10 Down_Slow_Circle_5 4.0 -90.0
+EnemyShoot10 Down_Slow_Circle_6 3.0 -90.0
+EnemyShoot10 Down_Slow_Circle_7 2.0 -90.0
+EnemyShoot10 Down_Slow_Circle_8 1.0 -90.0
 Delay 1.0
-EnemyShoot10 Down_Slow_Circle_1 8.0 90.0
-EnemyShoot10 Down_Slow_Circle_2 7.0 90.0
-EnemyShoot10 Down_Slow_Circle_3 6.0 90.0
-EnemyShoot10 Down_Slow_Circle_4 5.0 90.0
-EnemyShoot10 Down_Slow_Circle_5 4.0 90.0
-EnemyShoot10 Down_Slow_Circle_6 3.0 90.0
-EnemyShoot10 Down_Slow_Circle_7 2.0 90.0
-EnemyShoot10 Down_Slow_Circle_8 1.0 90.0
+EnemyShoot10 Down_Slow_Circle_1 8.0 -90.0
+EnemyShoot10 Down_Slow_Circle_2 7.0 -90.0
+EnemyShoot10 Down_Slow_Circle_3 6.0 -90.0
+EnemyShoot10 Down_Slow_Circle_4 5.0 -90.0
+EnemyShoot10 Down_Slow_Circle_5 4.0 -90.0
+EnemyShoot10 Down_Slow_Circle_6 3.0 -90.0
+EnemyShoot10 Down_Slow_Circle_7 2.0 -90.0
+EnemyShoot10 Down_Slow_Circle_8 1.0 -90.0
 Delay 1.0
-EnemyShoot10 Down_Slow_Circle_1 8.0 90.0
-EnemyShoot10 Down_Slow_Circle_2 7.0 90.0
-EnemyShoot10 Down_Slow_Circle_3 6.0 90.0
-EnemyShoot10 Down_Slow_Circle_4 5.0 90.0
-EnemyShoot10 Down_Slow_Circle_5 4.0 90.0
-EnemyShoot10 Down_Slow_Circle_6 3.0 90.0
-EnemyShoot10 Down_Slow_Circle_7 2.0 90.0
-EnemyShoot10 Down_Slow_Circle_8 1.0 90.0
+EnemyShoot10 Down_Slow_Circle_1 8.0 -90.0
+EnemyShoot10 Down_Slow_Circle_2 7.0 -90.0
+EnemyShoot10 Down_Slow_Circle_3 6.0 -90.0
+EnemyShoot10 Down_Slow_Circle_4 5.0 -90.0
+EnemyShoot10 Down_Slow_Circle_5 4.0 -90.0
+EnemyShoot10 Down_Slow_Circle_6 3.0 -90.0
+EnemyShoot10 Down_Slow_Circle_7 2.0 -90.0
+EnemyShoot10 Down_Slow_Circle_8 1.0 -90.0
 Delay 1.0
-EnemyShoot10 Down_Slow_Circle_1 8.0 90.0
-EnemyShoot10 Down_Slow_Circle_2 7.0 90.0
-EnemyShoot10 Down_Slow_Circle_3 6.0 90.0
-EnemyShoot10 Down_Slow_Circle_4 5.0 90.0
-EnemyShoot10 Down_Slow_Circle_5 4.0 90.0
-EnemyShoot10 Down_Slow_Circle_6 3.0 90.0
-EnemyShoot10 Down_Slow_Circle_7 2.0 90.0
-EnemyShoot10 Down_Slow_Circle_8 1.0 90.0
+EnemyShoot10 Down_Slow_Circle_1 8.0 -90.0
+EnemyShoot10 Down_Slow_Circle_2 7.0 -90.0
+EnemyShoot10 Down_Slow_Circle_3 6.0 -90.0
+EnemyShoot10 Down_Slow_Circle_4 5.0 -90.0
+EnemyShoot10 Down_Slow_Circle_5 4.0 -90.0
+EnemyShoot10 Down_Slow_Circle_6 3.0 -90.0
+EnemyShoot10 Down_Slow_Circle_7 2.0 -90.0
+EnemyShoot10 Down_Slow_Circle_8 1.0 -90.0
 Delay 1.0
-EnemyShoot10 Down_Slow_Circle_1 8.0 90.0
-EnemyShoot10 Down_Slow_Circle_2 7.0 90.0
-EnemyShoot10 Down_Slow_Circle_3 6.0 90.0
-EnemyShoot10 Down_Slow_Circle_4 5.0 90.0
-EnemyShoot10 Down_Slow_Circle_5 4.0 90.0
-EnemyShoot10 Down_Slow_Circle_6 3.0 90.0
-EnemyShoot10 Down_Slow_Circle_7 2.0 90.0
-EnemyShoot10 Down_Slow_Circle_8 1.0 90.0
+EnemyShoot10 Down_Slow_Circle_1 8.0 -90.0
+EnemyShoot10 Down_Slow_Circle_2 7.0 -90.0
+EnemyShoot10 Down_Slow_Circle_3 6.0 -90.0
+EnemyShoot10 Down_Slow_Circle_4 5.0 -90.0
+EnemyShoot10 Down_Slow_Circle_5 4.0 -90.0
+EnemyShoot10 Down_Slow_Circle_6 3.0 -90.0
+EnemyShoot10 Down_Slow_Circle_7 2.0 -90.0
+EnemyShoot10 Down_Slow_Circle_8 1.0 -90.0
 Delay 1.0
-EneElek Down_Straight 1.0 0.0
+EneElek Down_Straight 1.0 180.0
 Delay 0.2
-EneElek Down_Straight 1.0 10.0
+EneElek Down_Straight 1.0 190.0
 Delay 0.2
-EneElek Down_Straight 1.0 -6.0
+EneElek Down_Straight 1.0 174.0
 Delay 0.2
-EneElek Down_Straight 1.0 17.0
+EneElek Down_Straight 1.0 197.0
 Delay 0.2
-EneElek Down_Straight 1.0 -30.0
+EneElek Down_Straight 1.0 150.0

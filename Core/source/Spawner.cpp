@@ -614,6 +614,15 @@ namespace bc
         Spawner::animationNames.push_back("EnemyShoot3");
         Spawner::animations.push_back(sprite);
 
+        sprite = se::AnimatedSprite();
+        sprite.addAnimation("Idle");
+        sprite.setSpeed("Idle", 0.3f);
+        sprite.addSprite("Idle", se::Content::getSprite("ElectroShot0"));
+        sprite.addSprite("Idle", se::Content::getSprite("ElectroShot1"));
+        sprite.addSprite("Idle", se::Content::getSprite("ElectroShot2"));
+        Spawner::animationNames.push_back("ElectroShot");
+        Spawner::animations.push_back(sprite);
+
 
 
         (*Spawner::entities)[CollisionGroup::Enemies].reserve(Spawner::timedSpawns.size());

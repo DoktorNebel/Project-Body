@@ -1,11 +1,11 @@
-Health 3000
+Health 4000
 Phase 1.0
 Movement Boss1Mov Stay
 Shooting Boss1Shot
-Part 3000 0 0 Boss1Left Boss1Mov Stay None Boss1LeftShot
-Part 3000 0 0 Boss1Right Boss1Mov Stay None Boss1RightShot
+Part 4000 0 0 Boss1Left Boss1Mov Stay None Boss1LeftShot
+Part 4000 0 0 Boss1Right Boss1Mov Stay None Boss1RightShot
 Phase 0.5
 Movement None Stay
 Shooting Boss1ShotPhase2
-Part 500 0 0 Boss1Left Boss1LeftMov Stay NoRotate Boss1LeftShot2
-Part 500 0 0 Boss1Right Boss1RightMov Stay NoRotate Boss1RightShot2
+Part 700 0 0 Boss1Left Boss1LeftMov Stay NoRotate Boss1LeftShot2
+Part 700 0 0 Boss1Right Boss1RightMov Stay NoRotate Boss1RightShot2

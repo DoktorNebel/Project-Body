@@ -52,7 +52,7 @@ namespace bc
             std::vector<IModifier*> modifiers;
             se::Vector2 velocity(cos((this->entity->getSprite().getRotation() + 90.0f) * 0.0174532925f), sin((this->entity->getSprite().getRotation() + 90.0f) * 0.0174532925f));
             modifiers.push_back(new ProjectileModifier(velocity * 200.0f, 5.0f));
-            Spawner::spawn(this->entity->getSprite().getPosition() + velocity * 20.0f, "EnemyShoot1", modifiers, CollisionGroup::EnemyProjectiles);
+            Spawner::spawn(this->entity->getSprite().getPosition() + velocity * 20.0f, "EnemyShoot10", modifiers, CollisionGroup::EnemyProjectiles);
         }
 
         if (this->entity->health <= 0.0f)

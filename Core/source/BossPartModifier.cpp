@@ -48,10 +48,12 @@ namespace bc
             if (!this->destroyed)
             {
                 this->destroyed = true;
-                this->entity->modifiers.erase(std::find_if(this->entity->modifiers.begin(), this->entity->modifiers.end(), [](IModifier*& modifier)
+                std::vector<IModifier*>::iterator iter = std::find_if(this->entity->modifiers.begin(), this->entity->modifiers.end(), [](IModifier*& modifier)
                 {
                     return dynamic_cast<ShootingModifier*>(modifier);
-                }));
+                });
+                if (iter != this->entity->modifiers.end())
+                    this->entity->modifiers.erase(iter);
 
                 for (unsigned int i = 0; i < (unsigned int)this->health; ++i)
                 {
@@ -90,6 +92,10 @@ namespace bc
             otherEntity->health -= this->boss->entity->maxHealth;
             if (otherEntity->health <= 0.0f)
                 otherEntity->dead = true;
+        }
+        else if (!this->hittable)
+        {
+            otherEntity->dead = false;
         }
     }
 }

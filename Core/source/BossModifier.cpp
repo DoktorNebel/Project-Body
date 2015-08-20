@@ -83,7 +83,8 @@ namespace bc
                 std::vector<IModifier*> modifiers;
                 modifiers.push_back(new BossPartModifier(this, this->phases[this->nextPhase].parts[i].health, this->phases[this->nextPhase].parts[i].spriteName));
                 this->parts.push_back((BossPartModifier*)modifiers.back());
-                modifiers.push_back(new HitMarkerModifier());
+                if (this->phases[this->nextPhase].parts[i].health > 0.0f)
+                    modifiers.push_back(new HitMarkerModifier());
                 if (this->phases[this->nextPhase].parts[i].movePatternName != "None")
                 {
                     modifiers.push_back(new MovementPatternModifier(Spawner::getMovementPattern(this->phases[this->nextPhase].parts[i].movePatternName), 0.0f, 1.0f, this->phases[this->nextPhase].parts[i].movementType));
@@ -125,11 +126,11 @@ namespace bc
         {
 			if (!this->dying)
 			{
-				this->dying = true;
-				this->entity->modifiers.erase(std::find_if(this->entity->modifiers.begin(), this->entity->modifiers.end(), [](IModifier*& modifier)
+                this->dying = true;
+				this->entity->modifiers.erase(std::remove_if(this->entity->modifiers.begin(), this->entity->modifiers.end(), [](IModifier*& modifier)
 				{
-					return dynamic_cast<ShootingModifier*>(modifier);
-                }));
+                    return dynamic_cast<MovementPatternModifier*>(modifier) || dynamic_cast<ShootingModifier*>(modifier);
+                }), this->entity->modifiers.end());
                 this->deleteBullets();
                 se::Engine::getActiveCamera().addScreenshake(15.0f, 1.0f);
 			}
