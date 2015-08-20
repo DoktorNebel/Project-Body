@@ -13,7 +13,7 @@ int main()
     bg::MenuScene* menuScene = new bg::MenuScene(se::Sprite());
 
 	se::EngineSettings settings;
-    settings.fullscreen = true;
+    settings.fullscreen = false;
     settings.renderResolutionWidth = 1280;
     settings.renderResolutionHeight = 720;
 	settings.screenResolutionWidth = 1280;

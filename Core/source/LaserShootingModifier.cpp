@@ -71,6 +71,12 @@ namespace bc
     {
         switch (this->level)
         {
+        case 1:
+            this->spriteNames[0] = "Laser_Bottom_0";
+            this->spriteNames[1] = "Laser_Middle_0";
+            this->spriteNames[2] = "Laser_Top_0";
+            break;
+
         case 2:
             this->spriteNames[0] = "Laser_Bottom_0";
             this->spriteNames[1] = "Laser_Middle_0";

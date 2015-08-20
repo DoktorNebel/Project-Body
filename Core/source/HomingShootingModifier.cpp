@@ -23,7 +23,7 @@ namespace bc
             for (unsigned int i = 0; i < this->shootingDirections.size(); ++i)
             {
                 std::vector<IModifier*> modifiers;
-                modifiers.push_back(new ProjectileModifier(se::Vector2(0.0f, 0.0f), 2.0f, 1.0f / this->level));
+                modifiers.push_back(new ProjectileModifier(se::Vector2(0.0f, 0.0f), 2.0f, 0.5f / this->level));
                 std::vector<CollisionGroup::Type> groups;
                 groups.push_back(CollisionGroup::Enemies);
                 groups.push_back(CollisionGroup::ScrollingEnemies);
@@ -39,6 +39,10 @@ namespace bc
         this->shootingDirections.clear();
         switch (this->level)
         {
+        case 1:
+            this->shootingDirections.push_back(90.0f);
+            break;
+
         case 2:
             this->shootingDirections.push_back(90.0f);
             break;

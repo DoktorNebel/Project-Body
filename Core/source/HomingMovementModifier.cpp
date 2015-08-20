@@ -53,9 +53,10 @@ namespace bc
 
     void HomingMovementModifier::onUpdate(float elapsedTime)
     {
-        if (this->targetEntity && this->targetEntity->health <= 0.0f)
+        if ((this->targetEntity && this->targetEntity->health <= 0.0f) || this->entity->getSprite().getPosition().x < -1000.0f || this->entity->getSprite().getPosition().x > 1000.0f)
         {
             this->targetEntity = 0;
+            this->entity->dead = true;
         }
 
         if (this->targetEntity)
