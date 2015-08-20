@@ -3,6 +3,7 @@
 #include "IModifier.h"
 
 #include "AnimatedSprite.h"
+#include "Sound.h"
 
 namespace bc
 {
@@ -27,6 +28,7 @@ namespace bc
 
         Effect::Type effect;
         se::AnimatedSprite sprite;
+        se::Sound collectSound;
 
     public:
 

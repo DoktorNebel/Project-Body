@@ -27,7 +27,7 @@ namespace bc
                 float spreadDirection = (float)(rand() % 11 - 5) + 90.0f;
                 se::Vector2 directionVector(cos(spreadDirection * 0.0174532925f), sin(spreadDirection * 0.0174532925f));
                 directionVector *= 1500.0f;
-                modifiers.push_back(new ProjectileModifier(directionVector, 2.0f));
+                modifiers.push_back(new ProjectileModifier(directionVector, 2.0f, 1.0f / this->level));
                 Spawner::spawn(this->entity->getSprite().getPosition() + this->shootingOffsets[i], "PlayerProjectile", modifiers, CollisionGroup::PlayerProjectiles);
             }
         }

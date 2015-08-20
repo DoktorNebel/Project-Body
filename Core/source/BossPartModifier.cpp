@@ -28,6 +28,8 @@ namespace bc
         this->entity->maxHealth = this->health;
         this->entity->health = this->entity->maxHealth;
 		this->hittable = this->health > 0.0f;
+
+        this->explosionSound = se::Content::getSound("Ex1");
     }
 
 
@@ -74,6 +76,8 @@ namespace bc
                 this->boss->deleteBullets();
 
                 se::Engine::getActiveCamera().addScreenshake(15.0f, 0.5f);
+
+                se::Engine::playSound(this->explosionSound);
             }
         }
         if (this->boss->entity->health <= 0.0f)

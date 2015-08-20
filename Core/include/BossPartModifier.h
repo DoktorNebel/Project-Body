@@ -5,6 +5,7 @@
 #include <string>
 
 #include "Sprite.h"
+#include "Sound.h"
 
 namespace bc
 {
@@ -20,6 +21,7 @@ namespace bc
         bool hasDestroyedSprite;
         bool destroyed;
 		bool hittable;
+        se::Sound explosionSound;
 
     public:
 

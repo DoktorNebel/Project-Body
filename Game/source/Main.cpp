@@ -13,7 +13,7 @@ int main()
     bg::MenuScene* menuScene = new bg::MenuScene(se::Sprite());
 
 	se::EngineSettings settings;
-    settings.fullscreen = false;
+    settings.fullscreen = true;
     settings.renderResolutionWidth = 1280;
     settings.renderResolutionHeight = 720;
 	settings.screenResolutionWidth = 1280;
@@ -39,7 +39,6 @@ int main()
     se::Input::bindKeyboardKeyAction(bg::InputAction::Down, sf::Keyboard::Down);
     se::Input::bindKeyboardKeyAction(bg::InputAction::Shoot, sf::Keyboard::E);
     se::Input::bindKeyboardKeyAction(bg::InputAction::StickyShot, sf::Keyboard::Space);
-    se::Input::bindKeyboardKeyAction(bg::InputAction::FasterCheat, sf::Keyboard::C);
     se::Input::bindKeyboardKeyAction(bg::InputAction::Pause, sf::Keyboard::Escape);
 
 	//se::Input::bindJoystickAxisAction(se::InputAction::MenuLeft, 0, sf::Joystick::PovX, false, true);

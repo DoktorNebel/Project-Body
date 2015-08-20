@@ -8,7 +8,8 @@ namespace bc
 {
     unsigned int GameData::score = 0;
     float GameData::multiplier = 1.0f;
-    int GameData::lives = 1;
+    int GameData::lives = 5;
+    bool GameData::playerDead = false;
     float GameData::humanInfection = 0.0f;
     unsigned int GameData::currentLevel = 1;
     GameData::Highscore GameData::scores[40];
@@ -23,7 +24,8 @@ namespace bc
     {
         GameData::score = 0;
         GameData::multiplier = 1.0f;
-        GameData::lives = 1;
+        GameData::lives = 5;
+        GameData::playerDead = false;
     }
 
 

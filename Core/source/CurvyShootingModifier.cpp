@@ -8,7 +8,7 @@ namespace bc
     CurvyShootingModifier::CurvyShootingModifier(int level)
     {
         this->upgrade(level);
-        this->fireRate = 0.01f;
+        this->fireRate = 0.02f;
         this->fireCounter = 0.0f;
         this->curvyfireRate = 0.01f;
         this->curvyfireCounter = 0.0f;
@@ -38,7 +38,7 @@ namespace bc
             for (unsigned int i = 0; i < this->movementPatterns.size(); ++i)
             {
                 std::vector<IModifier*> modifiers;
-                modifiers.push_back(new ProjectileModifier(se::Vector2(0.0f, 0.0f), 2.0f));
+                modifiers.push_back(new ProjectileModifier(se::Vector2(0.0f, 0.0f), 2.0f, 1.0f / this->level));
                 MovementPatternModifier* move = new MovementPatternModifier(this->movementPatterns[i], (float)(rand() % 101 - 50) / 50.0f, 0.5f, MovementPatternModifier::Style::Kill);
                 modifiers.push_back(move);
                 Spawner::spawn(this->entity->getSprite().getPosition(), "SchussKurvig", modifiers, CollisionGroup::PlayerProjectiles);

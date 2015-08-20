@@ -10,6 +10,7 @@
 #include "Engine.h"
 #include "StickyShotModifier.h"
 #include "AnimationModifier.h"
+#include "GameData.h"
 
 namespace bc
 {
@@ -120,6 +121,8 @@ namespace bc
         if (this->entity->health <= 0.0f)
         {
             this->entity->dead = true;
+            --GameData::lives;
+            GameData::playerDead = true;
         }
     }
 

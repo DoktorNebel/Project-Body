@@ -17,6 +17,7 @@ namespace bc
         static unsigned int score;
         static float multiplier;
         static int lives;
+        static bool playerDead;
         static float humanInfection;
         static unsigned int currentLevel;
         static Highscore scores[40];

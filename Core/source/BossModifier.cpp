@@ -36,6 +36,8 @@ namespace bc
 
 		this->explodingTimer = 5.0f;
 		this->dying = false;
+
+        this->explosionSound = se::Content::getSound("Ex1");
     }
 
 
@@ -117,6 +119,8 @@ namespace bc
                     modifiers.push_back(new AnimationModifier(coinSprite));
                     Spawner::spawn(this->entity->getSprite().getPosition(), "M1", modifiers, CollisionGroup::Items);
                 }
+
+                se::Engine::playSound(this->explosionSound);
             }
 
             ++this->nextPhase;
@@ -133,6 +137,25 @@ namespace bc
                 }), this->entity->modifiers.end());
                 this->deleteBullets();
                 se::Engine::getActiveCamera().addScreenshake(15.0f, 1.0f);
+
+                se::AnimatedSprite coinSprite;
+                coinSprite.addAnimation("Idle");
+                coinSprite.setSpeed("Idle", 0.2f);
+                coinSprite.addSprite("Idle", se::Content::getSprite("M1"));
+                coinSprite.addSprite("Idle", se::Content::getSprite("M2"));
+                coinSprite.addSprite("Idle", se::Content::getSprite("M3"));
+                coinSprite.addSprite("Idle", se::Content::getSprite("M4"));
+                coinSprite.setScale(se::Vector2(3.0f, 3.0f));
+                std::vector<IModifier*> modifiers;
+                for (unsigned int i = 0; i < 200; ++i)
+                {
+                    modifiers.clear();
+                    modifiers.push_back(new CoinModifier(1));
+                    modifiers.push_back(new AnimationModifier(coinSprite));
+                    Spawner::spawn(this->entity->getSprite().getPosition(), "M1", modifiers, CollisionGroup::Items);
+                }
+
+                se::Engine::playSound(this->explosionSound);
 			}
 			this->explodingTimer -= elapsedTime;
 			if (this->explodingTimer <= -3.0f)
@@ -166,11 +189,13 @@ namespace bc
 					modifiers.push_back(new AnimationModifier(coinSprite));
 					Spawner::spawn(this->entity->getSprite().getPosition(), "M1", modifiers, CollisionGroup::Items);
 				}
+                se::Engine::getActiveCamera().setPermanentScreenshake(0.1f);
 			}
             else
             {
                 this->entity->getSprite().setScale(se::Vector2(0.0f, 0.0f));
                 Spawner::bossAlive = false;
+                se::Engine::getActiveCamera().setPermanentScreenshake(0.0f);
             }
         }
     }

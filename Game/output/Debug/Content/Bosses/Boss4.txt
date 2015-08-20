@@ -1,8 +1,26 @@
-Health 5000
+Health 6000
 Phase 1.0
 Movement Boss4Mov Stay
 Shooting Boss4Shot
 Part 0 0 0 Boss4Link Boss4MovPart1 Stay None None
-Part 500 0 0 Boss4Middle Boss4MovPart2 Stay None None
+Part 400 0 0 Boss4Middle Boss4MovPart2 Stay None Boss4MiddleShot
 Part 0 0 0 Boss4Link Boss4MovPart3 Stay None None
-Part 5000 0 0 Boss4Tail Boss4MovPart4 Stay None None
+Part 400 0 0 Boss4Middle Boss4MovPart4 Stay None Boss4MiddleShot
+Part 0 0 0 Boss4Link Boss4MovPart5 Stay None None
+Part 400 0 0 Boss4Middle Boss4MovPart6 Stay None Boss4MiddleShot
+Part 0 0 0 Boss4Link Boss4MovPart7 Stay None None
+Part 400 0 0 Boss4Middle Boss4MovPart8 Stay None Boss4MiddleShot
+Part 0 0 0 Boss4Link Boss4MovPart9 Stay None None
+Part 400 0 0 Boss4Middle Boss4MovPart10 Stay None Boss4MiddleShot
+Part 0 0 0 Boss4Link Boss4MovPart11 Stay None None
+Part 400 0 0 Boss4Middle Boss4MovPart12 Stay None Boss4MiddleShot
+Part 0 0 0 Boss4Link Boss4MovPart13 Stay None None
+Part 400 0 0 Boss4Middle Boss4MovPart14 Stay None Boss4MiddleShot
+Part 0 0 0 Boss4Link Boss4MovPart15 Stay None None
+Part 400 0 0 Boss4Middle Boss4MovPart16 Stay None Boss4MiddleShot
+Part 0 0 0 Boss4Link Boss4MovPart17 Stay None None
+Part 400 0 0 Boss4Middle Boss4MovPart18 Stay None Boss4MiddleShot
+Part 0 0 0 Boss4Link Boss4MovPart19 Stay None None
+Part 400 0 0 Boss4Middle Boss4MovPart20 Stay None Boss4MiddleShot
+Part 0 0 0 Boss4Link Boss4MovPart21 Stay None None
+Part 6000 0 0 Boss4Tail Boss4MovPart22 Stay None None

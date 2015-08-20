@@ -12,10 +12,11 @@ namespace bc
         se::Vector2 direction;
         float speed;
         float lifeTime;
+        float damage;
 
     public:
 
-        ProjectileModifier(se::Vector2(velocity), float lifeTime);
+        ProjectileModifier(se::Vector2(velocity), float lifeTime, float damage = 1.0f);
         ~ProjectileModifier();
 
     public:

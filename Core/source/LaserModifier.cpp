@@ -18,7 +18,7 @@ namespace bc
         , shooting(shooting)
         , damage(damage)
     {
-        this->speed = 100.0f;
+        this->speed = 25.0f;
         this->player = 0;
     }
 
@@ -39,6 +39,20 @@ namespace bc
             this->player = (PlayerModifier*)iter->modifiers[0];
 
         this->lastPlayerPos = this->player->entity->getSprite().getPosition();
+
+        if (this->part == LaserModifier::LaserPart::Bottom)
+            this->entity->getSprite().setScale(se::Vector2(this->damage / 50.0f, this->damage / 50.0f));
+
+        if (this->part == LaserModifier::LaserPart::Middle)
+        {
+            std::vector<se::Vector2> points;
+            points.push_back(se::Vector2(-5.0f, -64.0f));
+            points.push_back(se::Vector2(5.0f, -64.0f));
+            points.push_back(se::Vector2(5.0f, 64.0f));
+            points.push_back(se::Vector2(-5.0f, 64.0f));
+            se::Polygon poly(points);
+            this->entity->hitbox = poly;
+        }
     }
 
 
@@ -54,13 +68,13 @@ namespace bc
 
         if (this->part == LaserPart::Middle)
         {
-            if (this->entity->getSprite().getScale().y < 10.0f)
-                this->entity->getSprite().setScale(se::Vector2(1.0f, this->entity->getSprite().getScale().y + this->speed * elapsedTime));
-            this->entity->getSprite().setPosition(this->player->entity->getSprite().getPosition() + se::Vector2(0.0f, this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y * 0.5f + 32.0f));
+            if (this->entity->getSprite().getScale().y < 4.0f)
+                this->entity->getSprite().setScale(se::Vector2(this->damage / 25.0f, this->entity->getSprite().getScale().y + this->speed * elapsedTime));
+            this->entity->getSprite().setPosition(this->player->entity->getSprite().getPosition() + se::Vector2(0.0f, this->entity->getSprite().getHeight() * this->entity->getSprite().getScale().y * 0.5f - 16.0f));
         }
         else if (this->part == LaserPart::Top)
         {
-            this->entity->getSprite().setPosition(se::Vector2(this->player->entity->getSprite().getPosition().x, this->entity->getSprite().getPosition().y + this->speed * 33.0f * elapsedTime));
+            this->entity->getSprite().setPosition(se::Vector2(this->player->entity->getSprite().getPosition().x, this->entity->getSprite().getPosition().y + this->speed * 128.0f * elapsedTime));
             this->entity->getSprite().move(this->player->entity->getSprite().getPosition() - this->lastPlayerPos);
         }
         else
@@ -95,7 +109,7 @@ namespace bc
                 this->entity->getSprite().setPosition(se::Vector2(this->entity->getSprite().getPosition().x, midY));
 
                 float distance = otherEntity->getSprite().getPosition().y - this->player->entity->getSprite().getPosition().y;
-                this->entity->getSprite().setScale(se::Vector2(1.0f, distance / 32.0f));
+                this->entity->getSprite().setScale(se::Vector2(this->damage / 25.0f, distance / 128.0f));
 
                 this->topPos = this->player->entity->getSprite().getPosition() + se::Vector2(0.0f, distance);
 

@@ -10,10 +10,11 @@
 
 namespace bc
 {
-    ProjectileModifier::ProjectileModifier(se::Vector2 velocity, float lifeTime)
+    ProjectileModifier::ProjectileModifier(se::Vector2 velocity, float lifeTime, float damage)
         : direction(velocity)
         , speed(se::Math::Length(velocity))
         , lifeTime(lifeTime)
+        , damage(damage)
     {
         if (this->speed != 0.0f)
             se::Math::Normalize(this->direction);
@@ -31,7 +32,7 @@ namespace bc
         this->entity->getSprite().setDepth(-0.1f);
         this->entity->getSprite().setScale(se::Vector2(1.0f, 1.0f));
         this->entity->getSprite().setRotation(atan2(this->direction.x, this->direction.y) * -57.2957795f);
-        this->entity->damage = 1.0f;
+        this->entity->damage = this->damage;
     }
 
 

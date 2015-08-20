@@ -12,7 +12,7 @@ namespace bg
 {
 	BodyGame::BodyGame()
 	{
-
+        
 	}
 
 
@@ -27,10 +27,14 @@ namespace bg
         this->level.initialize(((MenuData*)se::Engine::getMenu()->data)->levelName);
 
         this->music = se::Content::getSound("first_flight");
-        this->music.setLooping(true);
-        //se::Engine::playSound(this->music);
+        this->musicLoop = se::Content::getSound("first_flight_loop");
+        this->musicLoop.setLooping(true);
+        se::Engine::playSound(this->music);
 
         this->paused = false;
+
+        this->musicTimer = 59.0f;
+        this->loopPlaying = false;
 	}
 
 
@@ -46,6 +50,13 @@ namespace bg
             else
                 this->pause();
         }
+
+        this->musicTimer -= elapsedTime;
+        if (this->musicTimer <= 0.0f && !this->loopPlaying)
+        {
+            this->loopPlaying = true;
+            se::Engine::playSound(this->musicLoop);
+        }
 	}
 
 
@@ -58,6 +69,7 @@ namespace bg
 	void BodyGame::close()
     {
         se::Engine::stopSound(this->music);
+        se::Engine::stopSound(this->musicLoop);
 	}
 
 

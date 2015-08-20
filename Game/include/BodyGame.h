@@ -13,6 +13,9 @@ namespace bg
 
         bc::Level level;
         se::Sound music;
+        se::Sound musicLoop;
+        float musicTimer;
+        bool loopPlaying;
         bool paused;
 
 	public:

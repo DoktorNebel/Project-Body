@@ -1,5 +1,7 @@
 #include "MenuScene.h"
 
+#include "Content.h"
+
 namespace bg
 {
     MenuScene::MenuScene(se::Sprite background)

@@ -15,6 +15,9 @@
 #include "BodyGame.h"
 #include "MenuScene.h"
 #include "GameData.h"
+#include "Input.h"
+#include "InputActions.h"
+#include "MenuInputActions.h"
 
 namespace bg
 {
@@ -28,22 +31,36 @@ namespace bg
         se::Engine::getMenu()->addMenu("Highscores");
         se::Engine::getMenu()->addMenu("UI");
         se::Engine::getMenu()->addMenu("LevelEnd");
+        se::Engine::getMenu()->addMenu("GameOver");
 
         se::Sprite pixelSprite = se::Content::getSprite("Pixel");
         pixelSprite.setScale(se::Vector2(0.0f, 0.0f));
 
         //start screen
-        se::Engine::getMenu()->addElement("Start", "StartButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Start", se::Vector2(0, -100), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 0.5f)), false));
+        se::Engine::getMenu()->addElement("Start", "StartButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Start", se::Vector2(-400, -100), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 0.5f)), false));
+
+        se::Engine::getMenu()->addElement("Start", "Title", new se::UISprite(se::Content::getSprite("Title"), se::Vector2(0.0f, 250.0f)));
+
+        se::Engine::getMenu()->addElement("Start", "Team", new se::UISprite(se::Content::getSprite("TeamLogo"), se::Vector2(400.0f, 100.0f), 0.0f, se::Vector2(0.25f, 0.25f)));
+
+        se::Engine::getMenu()->addElement("Start", "GA", new se::UISprite(se::Content::getSprite("galogo"), se::Vector2(500.0f, -250.0f), 0.0f, se::Vector2(0.25f, 0.25f)));
 
         //main menu
-		se::Engine::getMenu()->addElement("Main", "StartButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Start", se::Vector2(-100, 150), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 0.5f)), false));
+		se::Engine::getMenu()->addElement("Main", "StartButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Start", se::Vector2(-400, 50), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 0.5f)), false));
 
-		se::Engine::getMenu()->addElement("Main", "HighscoreButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Highscores", se::Vector2(-100, 50), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 0.5f)), false));
+        se::Engine::getMenu()->addElement("Main", "HighscoreButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Highscores", se::Vector2(-400, -50), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 0.5f)), false));
 
-		se::Engine::getMenu()->addElement("Main", "OptionsButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Options", se::Vector2(-100, -50), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 0.5f)), false));
+        se::Engine::getMenu()->addElement("Main", "OptionsButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Options", se::Vector2(-400, -150), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 0.5f)), false));
 
-		se::Engine::getMenu()->addElement("Main", "QuitButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Quit", se::Vector2(-100, -150), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 0.5f)), false));
+        se::Engine::getMenu()->addElement("Main", "QuitButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Quit", se::Vector2(-400, -250), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 0.5f)), false));
 
+        se::Engine::getMenu()->addElement("Main", "Title", new se::UISprite(se::Content::getSprite("Title"), se::Vector2(0.0f, 250.0f)));
+
+        //options menu
+        se::Engine::getMenu()->addElement("Options", "ControlsButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Controls: Keyboard", se::Vector2(-400, 0), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 0.5f)), false));
+
+        se::Engine::getMenu()->addElement("Options", "BackButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Back", se::Vector2(-500, -300), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 0.5f)), false));
+        
         //pause menu
 		se::Engine::getMenu()->addElement("Pause", "ResumeButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Resume", se::Vector2(0, 100), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 0.5f)), false));
 
@@ -92,25 +109,31 @@ namespace bg
             se::Engine::getMenu()->addElement("UI", "Bossbar" + std::string(number), new se::UISprite(se::Content::getSprite("BossHP"), se::Vector2(-197.0f + (float)i * 4.0f, 330.0f)));
         }
 
-        se::Engine::getMenu()->addElement("UI", "StickyShotIcon", new se::UISprite(se::Content::getSprite("HUDshot"), se::Vector2(600.0f, -250.0f)));
-        se::Engine::getMenu()->addElement("UI", "StickyShot0", new se::UISprite(se::Content::getSprite("U"), se::Vector2(600.0f, -250.0f)));
-        se::Engine::getMenu()->addElement("UI", "StickyShot1", new se::UISprite(se::Content::getSprite("LU"), se::Vector2(600.0f, -250.0f)));
-        se::Engine::getMenu()->addElement("UI", "StickyShot2", new se::UISprite(se::Content::getSprite("L"), se::Vector2(600.0f, -250.0f)));
-        se::Engine::getMenu()->addElement("UI", "StickyShot3", new se::UISprite(se::Content::getSprite("LO"), se::Vector2(600.0f, -250.0f)));
-        se::Engine::getMenu()->addElement("UI", "StickyShot4", new se::UISprite(se::Content::getSprite("O"), se::Vector2(600.0f, -250.0f)));
-        se::Engine::getMenu()->addElement("UI", "StickyShot5", new se::UISprite(se::Content::getSprite("RO"), se::Vector2(600.0f, -250.0f)));
-        se::Engine::getMenu()->addElement("UI", "StickyShot6", new se::UISprite(se::Content::getSprite("R"), se::Vector2(600.0f, -250.0f)));
-        se::Engine::getMenu()->addElement("UI", "StickyShot7", new se::UISprite(se::Content::getSprite("RU"), se::Vector2(600.0f, -250.0f)));
+        se::Engine::getMenu()->addElement("UI", "StickyShotIcon", new se::UISprite(se::Content::getSprite("HUDshot"), se::Vector2(600.0f, -320.0f)));
+        se::Engine::getMenu()->addElement("UI", "StickyShot0", new se::UISprite(se::Content::getSprite("U"), se::Vector2(600.0f, -320.0f)));
+        se::Engine::getMenu()->addElement("UI", "StickyShot1", new se::UISprite(se::Content::getSprite("LU"), se::Vector2(600.0f, -320.0f)));
+        se::Engine::getMenu()->addElement("UI", "StickyShot2", new se::UISprite(se::Content::getSprite("L"), se::Vector2(600.0f, -320.0f)));
+        se::Engine::getMenu()->addElement("UI", "StickyShot3", new se::UISprite(se::Content::getSprite("LO"), se::Vector2(600.0f, -320.0f)));
+        se::Engine::getMenu()->addElement("UI", "StickyShot4", new se::UISprite(se::Content::getSprite("O"), se::Vector2(600.0f, -320.0f)));
+        se::Engine::getMenu()->addElement("UI", "StickyShot5", new se::UISprite(se::Content::getSprite("RO"), se::Vector2(600.0f, -320.0f)));
+        se::Engine::getMenu()->addElement("UI", "StickyShot6", new se::UISprite(se::Content::getSprite("R"), se::Vector2(600.0f, -320.0f)));
+        se::Engine::getMenu()->addElement("UI", "StickyShot7", new se::UISprite(se::Content::getSprite("RU"), se::Vector2(600.0f, -320.0f)));
 
-        se::Engine::getMenu()->addElement("UI", "BombRingIcon", new se::UISprite(se::Content::getSprite("HUDring"), se::Vector2(600.0f, -320.0f)));
-        se::Engine::getMenu()->addElement("UI", "BombRing0", new se::UISprite(se::Content::getSprite("U"), se::Vector2(600.0f, -320.0f)));
-        se::Engine::getMenu()->addElement("UI", "BombRing1", new se::UISprite(se::Content::getSprite("LU"), se::Vector2(600.0f, -320.0f)));
-        se::Engine::getMenu()->addElement("UI", "BombRing2", new se::UISprite(se::Content::getSprite("L"), se::Vector2(600.0f, -320.0f)));
-        se::Engine::getMenu()->addElement("UI", "BombRing3", new se::UISprite(se::Content::getSprite("LO"), se::Vector2(600.0f, -320.0f)));
-        se::Engine::getMenu()->addElement("UI", "BombRing4", new se::UISprite(se::Content::getSprite("O"), se::Vector2(600.0f, -320.0f)));
-        se::Engine::getMenu()->addElement("UI", "BombRing5", new se::UISprite(se::Content::getSprite("RO"), se::Vector2(600.0f, -320.0f)));
-        se::Engine::getMenu()->addElement("UI", "BombRing6", new se::UISprite(se::Content::getSprite("R"), se::Vector2(600.0f, -320.0f)));
-        se::Engine::getMenu()->addElement("UI", "BombRing7", new se::UISprite(se::Content::getSprite("RU"), se::Vector2(600.0f, -320.0f)));
+        //se::Engine::getMenu()->addElement("UI", "BombRingIcon", new se::UISprite(se::Content::getSprite("HUDring"), se::Vector2(600.0f, -320.0f)));
+        //se::Engine::getMenu()->addElement("UI", "BombRing0", new se::UISprite(se::Content::getSprite("U"), se::Vector2(600.0f, -320.0f)));
+        //se::Engine::getMenu()->addElement("UI", "BombRing1", new se::UISprite(se::Content::getSprite("LU"), se::Vector2(600.0f, -320.0f)));
+        //se::Engine::getMenu()->addElement("UI", "BombRing2", new se::UISprite(se::Content::getSprite("L"), se::Vector2(600.0f, -320.0f)));
+        //se::Engine::getMenu()->addElement("UI", "BombRing3", new se::UISprite(se::Content::getSprite("LO"), se::Vector2(600.0f, -320.0f)));
+        //se::Engine::getMenu()->addElement("UI", "BombRing4", new se::UISprite(se::Content::getSprite("O"), se::Vector2(600.0f, -320.0f)));
+        //se::Engine::getMenu()->addElement("UI", "BombRing5", new se::UISprite(se::Content::getSprite("RO"), se::Vector2(600.0f, -320.0f)));
+        //se::Engine::getMenu()->addElement("UI", "BombRing6", new se::UISprite(se::Content::getSprite("R"), se::Vector2(600.0f, -320.0f)));
+        //se::Engine::getMenu()->addElement("UI", "BombRing7", new se::UISprite(se::Content::getSprite("RU"), se::Vector2(600.0f, -320.0f)));
+
+        se::Engine::getMenu()->addElement("UI", "LifeBar0", new se::UISprite(se::Content::getSprite("LifeBarBottom"), se::Vector2(-600.0f, -320.0f)));
+        se::Engine::getMenu()->addElement("UI", "LifeBar1", new se::UISprite(se::Content::getSprite("LifeBar"), se::Vector2(-600.0f, -290.0f)));
+        se::Engine::getMenu()->addElement("UI", "LifeBar2", new se::UISprite(se::Content::getSprite("LifeBar"), se::Vector2(-600.0f, -260.0f)));
+        se::Engine::getMenu()->addElement("UI", "LifeBar3", new se::UISprite(se::Content::getSprite("LifeBar"), se::Vector2(-600.0f, -230.0f)));
+        se::Engine::getMenu()->addElement("UI", "LifeBar4", new se::UISprite(se::Content::getSprite("LifeBar"), se::Vector2(-600.0f, -200.0f)));
 
         se::Engine::getMenu()->addElement("UI", "Timer", new se::MenuTimer(0.033f));
 
@@ -131,6 +154,14 @@ namespace bg
         }
 
 
+        //Game over screen
+        se::Engine::getMenu()->addElement("GameOver", "MenuButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Main Menu", se::Vector2(-200, 0), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 0.5f)), false));
+
+        se::Engine::getMenu()->addElement("GameOver", "RestartButton", new se::Button(pixelSprite, se::Text(se::Content::getFont("wendy.ttf"), "Restart", se::Vector2(200, 0), se::Vector2(1.0f, 1.0f), 0.0f, se::Vector4(1.0f, 1.0f, 1.0f, 0.5f)), false));
+
+        se::Engine::getMenu()->addElement("GameOver", "Text", new se::UIText(se::Text(se::Content::getFont("wendy.ttf"), "Game Over", se::Vector2(0, 300))));
+
+
 		se::Engine::getMenu()->data = new MenuData();
 		((MenuData*)se::Engine::getMenu()->data)->playerName[0] = ' ';
 		((MenuData*)se::Engine::getMenu()->data)->playerName[1] = ' ';
@@ -143,14 +174,56 @@ namespace bg
     void createFunctionality()
     {
         //neighbours
-        se::Engine::getMenu()->getElement("Main", "StartButton")->setNeighbours(0, 0, 0, se::Engine::getMenu()->getElement("Main", "OptionsButton"));
-        se::Engine::getMenu()->getElement("Main", "OptionsButton")->setNeighbours(0, 0, se::Engine::getMenu()->getElement("Main", "StartButton"), se::Engine::getMenu()->getElement("Main", "QuitButton"));
+        se::Engine::getMenu()->getElement("Main", "StartButton")->setNeighbours(0, 0, 0, se::Engine::getMenu()->getElement("Main", "HighscoreButton"));
+        se::Engine::getMenu()->getElement("Main", "HighscoreButton")->setNeighbours(0, 0, se::Engine::getMenu()->getElement("Main", "StartButton"), se::Engine::getMenu()->getElement("Main", "OptionsButton"));
+        se::Engine::getMenu()->getElement("Main", "OptionsButton")->setNeighbours(0, 0, se::Engine::getMenu()->getElement("Main", "HighscoreButton"), se::Engine::getMenu()->getElement("Main", "QuitButton"));
         se::Engine::getMenu()->getElement("Main", "QuitButton")->setNeighbours(0, 0, se::Engine::getMenu()->getElement("Main", "OptionsButton"), 0);
 
-        se::Engine::getMenu()->getElement("Levels", "Flesh")->setNeighbours(0, se::Engine::getMenu()->getElement("Levels", "Nerves"), 0, 0);
-        se::Engine::getMenu()->getElement("Levels", "Nerves")->setNeighbours(se::Engine::getMenu()->getElement("Levels", "Flesh"), se::Engine::getMenu()->getElement("Levels", "Slime"), 0, 0);
-        se::Engine::getMenu()->getElement("Levels", "Slime")->setNeighbours(se::Engine::getMenu()->getElement("Levels", "Nerves"), se::Engine::getMenu()->getElement("Levels", "Pus"), 0, 0);
-        se::Engine::getMenu()->getElement("Levels", "Pus")->setNeighbours(se::Engine::getMenu()->getElement("Levels", "Slime"), 0, 0, 0);
+        se::Engine::getMenu()->getElement("Options", "ControlsButton")->setNeighbours(0, 0, 0, se::Engine::getMenu()->getElement("Options", "BackButton"));
+        se::Engine::getMenu()->getElement("Options", "BackButton")->setNeighbours(0, 0, se::Engine::getMenu()->getElement("Options", "ControlsButton"), 0);
+
+        se::Engine::getMenu()->getElement("Pause", "ResumeButton")->setNeighbours(0, 0, 0, se::Engine::getMenu()->getElement("Pause", "RestartButton"));
+        se::Engine::getMenu()->getElement("Pause", "RestartButton")->setNeighbours(0, 0, se::Engine::getMenu()->getElement("Pause", "ResumeButton"), se::Engine::getMenu()->getElement("Pause", "MenuButton"));
+        se::Engine::getMenu()->getElement("Pause", "MenuButton")->setNeighbours(0, 0, se::Engine::getMenu()->getElement("Pause", "RestartButton"), 0);
+
+        se::Engine::getMenu()->getElement("Levels", "Flesh")->setNeighbours(0, 0, 0, se::Engine::getMenu()->getElement("Levels", "Nerves"));
+        se::Engine::getMenu()->getElement("Levels", "Nerves")->setNeighbours(0, 0, se::Engine::getMenu()->getElement("Levels", "Flesh"), se::Engine::getMenu()->getElement("Levels", "Slime"));
+        se::Engine::getMenu()->getElement("Levels", "Slime")->setNeighbours(0, 0, se::Engine::getMenu()->getElement("Levels", "Nerves"), se::Engine::getMenu()->getElement("Levels", "Pus"));
+        se::Engine::getMenu()->getElement("Levels", "Pus")->setNeighbours(0, 0, se::Engine::getMenu()->getElement("Levels", "Slime"), 0);
+
+        se::Engine::getMenu()->getElement("Highscores", "BackButton")->setNeighbours(0, 0, se::Engine::getMenu()->getElement("Highscores", "FleshButton"), 0);
+        se::Engine::getMenu()->getElement("Highscores", "FleshButton")->setNeighbours(0, se::Engine::getMenu()->getElement("Highscores", "NervesButton"), 0, se::Engine::getMenu()->getElement("Highscores", "BackButton"));
+        se::Engine::getMenu()->getElement("Highscores", "NervesButton")->setNeighbours(se::Engine::getMenu()->getElement("Highscores", "FleshButton"), se::Engine::getMenu()->getElement("Highscores", "SlimeButton"), 0, se::Engine::getMenu()->getElement("Highscores", "BackButton"));
+        se::Engine::getMenu()->getElement("Highscores", "SlimeButton")->setNeighbours(se::Engine::getMenu()->getElement("Highscores", "NervesButton"), se::Engine::getMenu()->getElement("Highscores", "PusButton"), 0, se::Engine::getMenu()->getElement("Highscores", "BackButton"));
+        se::Engine::getMenu()->getElement("Highscores", "PusButton")->setNeighbours(se::Engine::getMenu()->getElement("Highscores", "SlimeButton"), 0, 0, se::Engine::getMenu()->getElement("Highscores", "BackButton"));
+
+        se::Engine::getMenu()->getElement("LevelEnd", "NextButton")->setNeighbours(se::Engine::getMenu()->getElement("LevelEnd", "MenuButton"), 0, se::Engine::getMenu()->getElement("LevelEnd", "Z"), 0);
+        se::Engine::getMenu()->getElement("LevelEnd", "MenuButton")->setNeighbours(0, se::Engine::getMenu()->getElement("LevelEnd", "NextButton"), se::Engine::getMenu()->getElement("LevelEnd", "Y"), 0);
+        for (unsigned char c = 65; c < 91; ++c)
+        {
+            std::string text;
+            text += c;
+            unsigned char leftChar = c - 1;
+            unsigned char rightChar = c + 1;
+            unsigned char upChar = c - 8;
+            unsigned char downChar = c + 8;
+            std::string leftText, rightText, upText, downText;
+            if (leftChar >= 65)
+                leftText += leftChar;
+            if (rightChar < 91)
+                rightText += rightChar;
+            if (upChar >= 65)
+                upText += upChar;
+            if (downChar < 91)
+                downText += downChar;
+            se::Engine::getMenu()->getElement("LevelEnd", text)->setNeighbours(leftText == "" ? 0 : se::Engine::getMenu()->getElement("LevelEnd", leftText),
+                rightText == "" ? 0 : se::Engine::getMenu()->getElement("LevelEnd", rightText),
+                upText == "" ? 0 : se::Engine::getMenu()->getElement("LevelEnd", upText),
+                downText == "" ? se::Engine::getMenu()->getElement("LevelEnd", "MenuButton") : se::Engine::getMenu()->getElement("LevelEnd", downText));
+        }
+
+        se::Engine::getMenu()->getElement("GameOver", "MenuButton")->setNeighbours(0, se::Engine::getMenu()->getElement("GameOver", "RestartButton"), 0, 0);
+        se::Engine::getMenu()->getElement("GameOver", "RestartButton")->setNeighbours(se::Engine::getMenu()->getElement("GameOver", "MenuButton"), 0, 0, 0);
 
         //functionality
         se::Engine::getMenu()->attachCallback("Start", "StartButton", "onPress", &startButtonFunction);
@@ -167,10 +240,20 @@ namespace bg
 
         se::Engine::getMenu()->attachCallback("Main", "OptionsButton", "onHighlight", &highlightFunction);
         se::Engine::getMenu()->attachCallback("Main", "OptionsButton", "onUnhighlight", &unhighlightFunction);
+        se::Engine::getMenu()->attachCallback("Main", "OptionsButton", "onPress", &optionsButtonFunction);
 
         se::Engine::getMenu()->attachCallback("Main", "QuitButton", "onHighlight", &highlightFunction);
         se::Engine::getMenu()->attachCallback("Main", "QuitButton", "onUnhighlight", &unhighlightFunction);
         se::Engine::getMenu()->attachCallback("Main", "QuitButton", "onPress", &exitButtonFunction);
+
+
+        se::Engine::getMenu()->attachCallback("Options", "ControlsButton", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("Options", "ControlsButton", "onUnhighlight", &unhighlightFunction);
+        se::Engine::getMenu()->attachCallback("Options", "ControlsButton", "onPress", &changeControlsFunction);
+
+        se::Engine::getMenu()->attachCallback("Options", "BackButton", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("Options", "BackButton", "onUnhighlight", &unhighlightFunction);
+        se::Engine::getMenu()->attachCallback("Options", "BackButton", "onPress", &backButtonFunction);
 
 
         se::Engine::getMenu()->attachCallback("Pause", "ResumeButton", "onPress", &resumeButtonFunction);
@@ -249,6 +332,15 @@ namespace bg
             se::Engine::getMenu()->attachCallback("LevelEnd", text, "onUnhighlight", &unhighlightFunction);
             se::Engine::getMenu()->attachCallback("LevelEnd", text, "onPress", &characterButtonFunction);
         }
+
+
+        se::Engine::getMenu()->attachCallback("GameOver", "MenuButton", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("GameOver", "MenuButton", "onUnhighlight", &unhighlightFunction);
+        se::Engine::getMenu()->attachCallback("GameOver", "MenuButton", "onPress", &mainMenuButtonFunction);
+
+        se::Engine::getMenu()->attachCallback("GameOver", "RestartButton", "onHighlight", &highlightFunction);
+        se::Engine::getMenu()->attachCallback("GameOver", "RestartButton", "onUnhighlight", &unhighlightFunction);
+        se::Engine::getMenu()->attachCallback("GameOver", "RestartButton", "onPress", &restartButtonFunction);
 
         //hide boss bar
         se::Engine::getMenu()->getElement("UI", "BossbarText")->hide();
@@ -468,23 +560,76 @@ namespace bg
     }
 
 
+    void changeControlsFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
+    {
+        if (((se::Button*)sender)->text.getText() == "Controls: Keyboard")
+        {
+            ((se::Button*)sender)->text.setText("Controls: Gamepad");
+
+            se::Input::bindJoystickAxisAction(se::InputAction::MenuLeft, 0, sf::Joystick::PovX, false);
+            se::Input::bindJoystickAxisAction(se::InputAction::MenuRight, 0, sf::Joystick::PovX, true);
+            se::Input::bindJoystickAxisAction(se::InputAction::MenuUp, 0, sf::Joystick::PovY, true);
+            se::Input::bindJoystickAxisAction(se::InputAction::MenuDown, 0, sf::Joystick::PovY, false);
+            se::Input::bindJoystickButtonAction(se::InputAction::MenuConfirm, 0, 0);
+
+            se::Input::bindJoystickAxisAction(bg::InputAction::Left, 0, sf::Joystick::X, false);
+            se::Input::bindJoystickAxisAction(bg::InputAction::Right, 0, sf::Joystick::X, true);
+            se::Input::bindJoystickAxisAction(bg::InputAction::Up, 0, sf::Joystick::Y, false);
+            se::Input::bindJoystickAxisAction(bg::InputAction::Down, 0, sf::Joystick::Y, true);
+            se::Input::bindJoystickButtonAction(bg::InputAction::Shoot, 0, 0);
+            se::Input::bindJoystickAxisAction(bg::InputAction::StickyShot, 0, sf::Joystick::Z, true);
+            se::Input::bindJoystickButtonAction(bg::InputAction::Pause, 0, 7);
+        }
+        else
+        {
+            ((se::Button*)sender)->text.setText("Controls: Keyboard");
+
+            se::Input::bindKeyboardKeyAction(se::InputAction::MenuLeft, sf::Keyboard::Left);
+            se::Input::bindKeyboardKeyAction(se::InputAction::MenuRight, sf::Keyboard::Right);
+            se::Input::bindKeyboardKeyAction(se::InputAction::MenuUp, sf::Keyboard::Up);
+            se::Input::bindKeyboardKeyAction(se::InputAction::MenuDown, sf::Keyboard::Down);
+            se::Input::bindKeyboardKeyAction(se::InputAction::MenuConfirm, sf::Keyboard::Return);
+            se::Input::bindKeyboardKeyAction(se::InputAction::MenuBack, sf::Keyboard::Escape);
+
+            se::Input::bindKeyboardKeyAction(bg::InputAction::Left, sf::Keyboard::Left);
+            se::Input::bindKeyboardKeyAction(bg::InputAction::Right, sf::Keyboard::Right);
+            se::Input::bindKeyboardKeyAction(bg::InputAction::Up, sf::Keyboard::Up);
+            se::Input::bindKeyboardKeyAction(bg::InputAction::Down, sf::Keyboard::Down);
+            se::Input::bindKeyboardKeyAction(bg::InputAction::Shoot, sf::Keyboard::E);
+            se::Input::bindKeyboardKeyAction(bg::InputAction::StickyShot, sf::Keyboard::Space);
+            se::Input::bindKeyboardKeyAction(bg::InputAction::Pause, sf::Keyboard::Escape);
+        }
+    }
+
+
+    void optionsButtonFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
+    {
+        menuSystem->changeMenu("Options");
+    }
+
+
     void uiUpdateFunction(se::IMenuElement* sender, se::MenuSystem* menuSystem)
     {
         int highest = (int)(((MenuData*)menuSystem->data)->stickyShotCooldown * 8.0f);
         for (int i = 0; i < 8; ++i)
         {
-            char number[3];
+            char number[2];
             _itoa(i, number, 10);
             ((se::UISprite*)menuSystem->getElement("UI", "StickyShot" + std::string(number)))->getSprite().setColor(i < highest ? se::Vector4(1.0f, 1.0f, 1.0f, 1.0f) : se::Vector4(1.0f, 1.0f, 1.0f, 0.0f));
         }
-
-        highest = (int)(((MenuData*)menuSystem->data)->bombRingCooldown * 8.0f);
-        for (int i = 0; i < 8; ++i)
+        for (int i = 0; i < 5; ++i)
         {
-            char number[3];
+            char number[2];
             _itoa(i, number, 10);
-            ((se::UISprite*)menuSystem->getElement("UI", "BombRing" + std::string(number)))->getSprite().setColor(i < highest ? se::Vector4(1.0f, 1.0f, 1.0f, 1.0f) : se::Vector4(1.0f, 1.0f, 1.0f, 0.0f));
+            ((se::UISprite*)menuSystem->getElement("UI", "LifeBar" + std::string(number)))->getSprite().setColor(i < bc::GameData::lives ? se::Vector4(1.0f, 1.0f, 1.0f, 1.0f) : se::Vector4(1.0f, 1.0f, 1.0f, 0.0f));
         }
+        //highest = (int)(((MenuData*)menuSystem->data)->bombRingCooldown * 8.0f);
+        //for (int i = 0; i < 8; ++i)
+        //{
+        //    char number[3];
+        //    _itoa(i, number, 10);
+        //    ((se::UISprite*)menuSystem->getElement("UI", "BombRing" + std::string(number)))->getSprite().setColor(i < highest ? se::Vector4(1.0f, 1.0f, 1.0f, 1.0f) : se::Vector4(1.0f, 1.0f, 1.0f, 0.0f));
+        //}
 
         if (bc::Spawner::bossAlive)
         {

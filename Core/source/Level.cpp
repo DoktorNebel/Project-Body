@@ -11,11 +11,13 @@
 #include "NormalShootingModifier.h"
 #include "CurvyShootingModifier.h"
 #include "LaserShootingModifier.h"
+#include "MenuScene.h"
 
 namespace bc
 {
     Level::Level()
         : medicineBox(0)
+        , playerDeadTimer(2.0f)
     {
 
     }
@@ -112,6 +114,23 @@ namespace bc
     }
 
 
+    void Level::spawnPlayer()
+    {
+        std::vector<IModifier*> modifiers;
+        modifiers.push_back(new PlayerModifier());
+        PlayerShootingModifier* shooting = new NormalShootingModifier(1);
+        shooting->setEntities(&this->entities);
+        modifiers.push_back(shooting);
+        Entity player(se::Content::getSprite("TestPlayer"), modifiers);
+        player.hitbox = se::Content::getHitbox("TestPlayer");
+        player.id = 0;
+        player.getSprite().setPosition(se::Vector2(0, -200));
+        player.init();
+        this->hitboxes[CollisionGroup::Players].push_back(player.getSprite().getRect());
+        this->entities[CollisionGroup::Players].push_back(player);
+    }
+
+
     void Level::initializeEmpty(bc::Tileset::Type tileset)
     {
         this->collisionConfigs.push_back(std::pair<CollisionGroup::Type, CollisionGroup::Type>(CollisionGroup::Players, CollisionGroup::EnemyProjectiles));
@@ -130,21 +149,11 @@ namespace bc
         this->entities.resize(8);
         this->hitboxes.resize(8);
 
-        //spawn player
-        std::vector<IModifier*> modifiers;
-        modifiers.push_back(new PlayerModifier());
-        PlayerShootingModifier* shooting = new NormalShootingModifier(1);
-        shooting->setEntities(&this->entities);
-        modifiers.push_back(shooting);
-        Entity player(se::Content::getSprite("TestPlayer"), modifiers);
-        player.hitbox = se::Content::getHitbox("TestPlayer");
-        player.id = 0;
-        player.getSprite().setPosition(se::Vector2(0, -200));
-        player.init();
-        this->hitboxes[CollisionGroup::Players].push_back(player.getSprite().getRect());
-        this->entities[CollisionGroup::Players].push_back(player);
+        
+        this->spawnPlayer();
+        
 
-        this->medicineBox = MedicineBox((PlayerModifier*)modifiers[0]);
+        //this->medicineBox = MedicineBox((PlayerModifier*)modifiers[0]);
 
         Spawner::initialize(&this->hitboxes, &this->entities);
 
@@ -193,25 +202,15 @@ namespace bc
         this->entities.resize(8);
         this->hitboxes.resize(8);
 
-        //spawn player
-        std::vector<IModifier*> modifiers;
-        modifiers.push_back(new PlayerModifier());
-        PlayerShootingModifier* shooting = new NormalShootingModifier(1);
-        shooting->setEntities(&this->entities);
-        modifiers.push_back(shooting);
-        Entity player(se::Content::getSprite("TestPlayer"), modifiers);
-        player.hitbox = se::Content::getHitbox("TestPlayer");
-        player.id = 0;
-        player.getSprite().setPosition(se::Vector2(0, -200));
-        player.init();
-        this->hitboxes[CollisionGroup::Players].push_back(player.getSprite().getRect());
-        this->entities[CollisionGroup::Players].push_back(player);
+        
+        this->spawnPlayer();
 
-        this->medicineBox = MedicineBox((PlayerModifier*)modifiers[0]);
+
+        //this->medicineBox = MedicineBox((PlayerModifier*)modifiers[0]);
 
         Spawner::initialize(&this->hitboxes, &this->entities, source);
 
-        shooting->upgrade(1);
+        ((PlayerShootingModifier*)this->entities[CollisionGroup::Players][0].modifiers[1])->upgrade(1);
 
         this->totalElapsedTime = 0.0f;
         this->currentScrollKey = 0;
@@ -276,11 +275,28 @@ namespace bc
     void Level::update(float elapsedTime)
     {
         elapsedTime *= this->medicineBox.gamespeed;
-        if (se::Input::getActionValue(bg::InputAction::FasterCheat))
+        //if (se::Input::getActionValue(bg::InputAction::FasterCheat))
+        //{
+        //    elapsedTime *= 5.0f;
+        //    this->entities[CollisionGroup::Players][0].health = 1.0f;
+        //    this->entities[CollisionGroup::Players][0].dead = false;
+        //}
+        if (GameData::playerDead)
         {
-            elapsedTime *= 5.0f;
-            this->entities[CollisionGroup::Players][0].health = 1.0f;
-            this->entities[CollisionGroup::Players][0].dead = false;
+            if (GameData::lives == 0)
+            {
+                se::Engine::getMenu()->changeMenu("GameOver");
+                se::IScene* newScene = new bg::MenuScene(se::Content::getSprite("flesh"));
+                se::Engine::changeScene(newScene);
+            }
+            this->playerDeadTimer -= elapsedTime;
+            if (this->playerDeadTimer <= 0.0f)
+            {
+                GameData::playerDead = false;
+                this->playerDeadTimer = 2.0f;
+
+                this->spawnPlayer();
+            }
         }
 
         std::vector<Entity>::iterator entIter;

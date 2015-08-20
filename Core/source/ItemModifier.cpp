@@ -11,6 +11,7 @@
 #include "HomingShootingModifier.h"
 #include "CurvyShootingModifier.h"
 #include "LaserShootingModifier.h"
+#include "Engine.h"
 
 namespace bc
 {
@@ -84,6 +85,7 @@ namespace bc
         }
         this->sprite.setPosition(position);
         this->sprite.setScale(se::Vector2(2.0f, 2.0f));
+        this->collectSound = se::Content::getSound("Item");
     }
 
 
@@ -151,6 +153,8 @@ namespace bc
                 otherEntity->modifiers.back()->onCreate();
                 break;
             }
+            
+            se::Engine::playSound(this->collectSound);
 
             this->entity->dead = true;
         }

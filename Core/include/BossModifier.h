@@ -5,6 +5,7 @@
 #include <vector>
 #include "ShootingModifier.h"
 #include "MovementPatternModifier.h"
+#include "Sound.h"
 
 namespace bc
 {
@@ -51,6 +52,7 @@ namespace bc
 		float explodingTimer;
 		float coinTimer;
 		bool dying;
+        se::Sound explosionSound;
 
     public:
 

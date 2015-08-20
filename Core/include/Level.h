@@ -35,6 +35,7 @@ namespace bc
         std::vector<float> backgroundSpeeds;
         std::vector<std::vector<se::Sprite>> backgroundSprites;
         MedicineBox medicineBox;
+        float playerDeadTimer;
 
     public:
 
@@ -44,6 +45,7 @@ namespace bc
     private:
 
         void createBackgrounds(Tileset::Type tileset, int length);
+        void spawnPlayer();
 
     public:
 

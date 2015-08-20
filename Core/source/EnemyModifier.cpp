@@ -33,8 +33,9 @@ namespace bc
     void EnemyModifier::onCreate()
     {
         this->animatedSprite.setPosition(this->entity->getSprite().getPosition());
-        this->deathSound = se::Content::getSound("fart");
+        this->deathSound = this->entity->health > 200.0f ? se::Content::getSound("Ex1") : (rand() % 100 < 50 ? se::Content::getSound("Ex2") : se::Content::getSound("Ex4"));
         this->deathSound.setPitch(se::Math::Clamp(0.01f, 1.0f, 1.0f / (this->entity->maxHealth / 100.0f)));
+        this->deathSound.setVolume(0.5f);
     }
 
 

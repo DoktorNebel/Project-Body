@@ -1,4 +1,4 @@
-Health 5000
+Health 6000
 Phase 1.0
 Movement Boss1Mov Stay
 Shooting Boss3Shot

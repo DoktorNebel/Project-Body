@@ -282,9 +282,9 @@ namespace se
 			case Input::InputType::JoystickAxis:
 				action.value = sf::Joystick::getAxisPosition(action.index, (sf::Joystick::Axis)action.input) / 100.0f;
 				if (action.positive)
-					action.value = action.value < 0.0f ? 0.0f : action.value;
+					action.value = action.value < 0.3f ? 0.0f : action.value;
 				else
-					action.value = action.value > 0.0f ? 0.0f : abs(action.value);
+					action.value = action.value > -0.3f ? 0.0f : abs(action.value);
 				if (Input::previousValues[i] != action.value)
 				{
 					if (action.value > 0.0f)
