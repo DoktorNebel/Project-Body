@@ -55,11 +55,24 @@ namespace bc
         points.push_back(se::Vector2(1.0f, -1.0f));
         points.push_back(se::Vector2(1.0f, 1.0f));
         this->entity->hitbox = se::Polygon(points);
+
+        this->invulnerabilityTimer = 2.0f;
     }
 
 
     void PlayerModifier::onUpdate(float elapsedTime)
     {
+        this->invulnerabilityTimer -= elapsedTime;
+        if (this->invulnerabilityTimer > 0.0f)
+        {
+            this->sprite.setColor(se::Vector4(1.0f, 1.0f, 1.0f, 0.5f));
+            this->entity->health = 1.0f;
+        }
+        else
+        {
+            this->sprite.setColor(se::Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+            this->invulnerabilityTimer = 0.0f;
+        }
         float x = this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Right) - this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Left);
         float y = this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Up) - this->speed * elapsedTime * se::Input::getActionValue(bg::InputAction::Down);
         this->lastMove = se::Vector2(x, y);
@@ -140,7 +153,7 @@ namespace bc
                 this->sprite.move(this->lastMove * -1.5f);
             }
         }
-        else
+        else if (this->invulnerabilityTimer <= 0.0f)
         {
             otherEntity->health -= this->entity->maxHealth;
         }

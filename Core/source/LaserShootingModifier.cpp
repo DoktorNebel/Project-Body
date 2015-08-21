@@ -25,7 +25,7 @@ namespace bc
             this->lasers.clear();
 
             std::vector<IModifier*> modifiers;
-            modifiers.push_back(new LaserModifier(LaserModifier::LaserPart::Bottom, 0, this, (1.0f + (float)this->level * 0.1f) * 50.0f));
+            modifiers.push_back(new LaserModifier(LaserModifier::LaserPart::Bottom, 0, this, (1.0f + (float)this->level * 0.5f) * 50.0f));
             se::AnimatedSprite start;
             start.addAnimation("Idle");
             start.setSpeed("Idle", 0.1f);
@@ -39,7 +39,7 @@ namespace bc
             this->lasers.push_back((LaserModifier*)modifiers.back());
 
             modifiers.clear();
-            LaserModifier* middleLaser = new LaserModifier(LaserModifier::LaserPart::Middle, 0, this, (1.0f + (float)this->level * 0.1f) * 50.0f);
+            LaserModifier* middleLaser = new LaserModifier(LaserModifier::LaserPart::Middle, 0, this, (1.0f + (float)this->level * 0.5f) * 50.0f);
             modifiers.push_back(middleLaser);
             se::AnimatedSprite middle;
             middle.addAnimation("Idle");

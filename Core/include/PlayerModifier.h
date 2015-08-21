@@ -15,6 +15,7 @@ namespace bc
         float speed;
         se::AnimatedSprite sprite;
         se::Vector2 lastMove;
+        float invulnerabilityTimer;
 
     public:
 
